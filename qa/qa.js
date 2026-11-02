@@ -26,6 +26,41 @@ async function catalogImages(page) {
   });
 }
 
+async function migracao(label, viewport, mobile) {
+  const vm = require('vm');
+  const sb = { window: {} };
+  vm.createContext(sb);
+  vm.runInContext(fs.readFileSync(path.join(__dirname, '../data/seed.js'), 'utf8'), sb);
+  const seed = JSON.parse(JSON.stringify(sb.window.TFT_SEED));
+  const legado = seed.filter((c) => c.id !== 'seed-16').map((c) => { delete c.desde; return c; });
+  legado[0].nome = 'Vivaz EDITADA';
+  const browser = await chromium.launch({ executablePath: exe, headless: true });
+  const ctx = await browser.newContext({ viewport, deviceScaleFactor: mobile ? 2 : 1, hasTouch: mobile, isMobile: mobile });
+  const page = await ctx.newPage();
+  const errors = [];
+  page.on('console', (m) => { if (['error', 'warning'].includes(m.type()) && !/kaspersky/i.test(m.text())) errors.push(m.text()); });
+  page.on('pageerror', (e) => errors.push(e.message));
+  await page.goto(URL);
+  await page.evaluate((d) => { localStorage.clear(); localStorage.setItem('tft-comps:v1', JSON.stringify({ versao: 1, comps: d })); }, legado);
+  await page.reload();
+  await page.waitForSelector('article.comp');
+  ok(`[${label}] migracao: legado 15 -> 16 comps`, (await page.locator('article.comp').count()) === 16, 'legado=' + legado.length);
+  ok(`[${label}] migracao: edicao preservada`, (await page.locator('article.comp h2').allTextContents()).includes('Vivaz EDITADA'));
+  const nomes = await page.locator('article.comp h2').allTextContents();
+  ok(`[${label}] migracao: comp nova entrou`, nomes.includes('Defendente Congregação das Bruxas Rengar'));
+  await page.reload();
+  await page.waitForSelector('article.comp');
+  ok(`[${label}] migracao: idempotente apos recarregar`, (await page.locator('article.comp').count()) === 16);
+  const novo = page.locator('article.comp', { has: page.locator('h2', { hasText: 'Defendente Congregação' }) });
+  await novo.locator('button[aria-label^="Excluir"]').click();
+  await page.locator('#ask-actions button', { hasText: 'Excluir' }).click();
+  await page.reload();
+  await page.waitForSelector('article.comp');
+  ok(`[${label}] migracao: comp excluida nao volta`, (await page.locator('article.comp').count()) === 15 && (await page.locator('article.comp h2').allTextContents()).includes('Vivaz EDITADA'));
+  ok(`[${label}] migracao: sem erros de console`, errors.length === 0, errors.slice(0, 3).join(' | '));
+  await browser.close();
+}
+
 async function run(label, viewport, mobile) {
   const browser = await chromium.launch({ executablePath: exe, headless: true });
   const ctx = await browser.newContext({ viewport, deviceScaleFactor: mobile ? 2 : 1, hasTouch: mobile, isMobile: mobile, acceptDownloads: true });
@@ -39,7 +74,7 @@ async function run(label, viewport, mobile) {
   await page.goto(URL);
   await page.waitForSelector('article.comp');
   const n = await page.locator('article.comp').count();
-  ok(`[${label}] 15 comps renderizadas`, n === 15, 'n=' + n);
+  ok(`[${label}] 16 comps renderizadas`, n === 16, 'n=' + n);
 
   ok(`[${label}] botao Limpar oculto sem busca`, !(await page.locator('#btn-clear').isVisible()));
   const rep = await imgReport(page);
@@ -54,11 +89,19 @@ async function run(label, viewport, mobile) {
   const hasHex = await page.locator('article.comp:nth-child(9) .hex.has').count();
   ok(`[${label}] tabuleiro hex com unidades`, hasHex === 8, 'hex=' + hasHex);
 
+  // comp nova (print 14)
+  const novo = page.locator('article.comp', { has: page.locator('h2', { hasText: 'Defendente Congregação das Bruxas Rengar' }) });
+  ok(`[${label}] comp nova (print 14) na lista`, (await novo.count()) === 1);
+  await novo.scrollIntoViewIfNeeded();
+  ok(`[${label}] comp nova tem 8 campeoes`, (await novo.locator('.uname').count()) === 8, (await novo.locator('.uname').allTextContents()).join(','));
+  ok(`[${label}] comp nova mostra traco Defendente`, (await novo.innerText()).includes('Defendente'));
+  await novo.screenshot({ path: path.join(OUT, `${label}-7-comp-nova.png`) });
+
   // busca
   await page.fill('#q', 'diana');
   const dn = await page.locator('article.comp').count();
   const names = await page.locator('article.comp h2').allTextContents();
-  ok(`[${label}] busca "diana" filtra`, dn > 0 && dn < 15, `n=${dn}`);
+  ok(`[${label}] busca "diana" filtra`, dn > 0 && dn < 16, `n=${dn}`);
   ok(`[${label}] busca destaca campeao`, (await page.locator('.unit.hit').count()) >= dn);
   await page.screenshot({ path: path.join(OUT, `${label}-3-busca.png`) });
   await page.fill('#q', 'guinsoo');
@@ -122,28 +165,28 @@ async function run(label, viewport, mobile) {
   await page.fill('#pk-q', 'ahri');
   await page.locator('#pk-grid .pcell').first().click();
   await page.click('#ed-save');
-  ok(`[${label}] nova comp criada no topo`, (await page.locator('article.comp h2').first().textContent()) === 'Teste QA' && (await page.locator('article.comp').count()) === 16);
+  ok(`[${label}] nova comp criada no topo`, (await page.locator('article.comp h2').first().textContent()) === 'Teste QA' && (await page.locator('article.comp').count()) === 17);
   await page.locator('article.comp').first().locator('button[aria-label^="Duplicar"]').click();
-  ok(`[${label}] duplicar`, (await page.locator('article.comp').count()) === 17 && (await page.locator('article.comp h2').nth(1).textContent()) === 'Teste QA (cópia)');
+  ok(`[${label}] duplicar`, (await page.locator('article.comp').count()) === 18 && (await page.locator('article.comp h2').nth(1).textContent()) === 'Teste QA (cópia)');
   await page.locator('article.comp').nth(1).locator('button[aria-label^="Excluir"]').click();
   ok(`[${label}] excluir pede confirmacao`, await page.locator('#ask').evaluate((d) => d.open));
   await page.locator('#ask-actions button', { hasText: 'Cancelar' }).click();
-  ok(`[${label}] cancelar mantem comp`, (await page.locator('article.comp').count()) === 17);
+  ok(`[${label}] cancelar mantem comp`, (await page.locator('article.comp').count()) === 18);
   await page.locator('article.comp').nth(1).locator('button[aria-label^="Excluir"]').click();
   await page.locator('#ask-actions button', { hasText: 'Excluir' }).click();
-  ok(`[${label}] excluir remove`, (await page.locator('article.comp').count()) === 16);
+  ok(`[${label}] excluir remove`, (await page.locator('article.comp').count()) === 17);
 
   // exportar / importar
   const [dl] = await Promise.all([page.waitForEvent('download'), page.click('#btn-export')]);
   const file = path.join(OUT, `${label}-export.json`);
   await dl.saveAs(file);
   const json = JSON.parse(fs.readFileSync(file, 'utf8'));
-  ok(`[${label}] exportar gera JSON valido`, json.versao === 1 && json.comps.length === 16);
+  ok(`[${label}] exportar gera JSON valido`, json.versao === 1 && json.comps.length === 17);
   await page.locator('article.comp').first().locator('button[aria-label^="Excluir"]').click();
   await page.locator('#ask-actions button', { hasText: 'Excluir' }).click();
   await page.setInputFiles('#file', file);
   await page.locator('#ask-actions button', { hasText: 'Substituir tudo' }).click();
-  ok(`[${label}] importar restaura 16`, (await page.locator('article.comp').count()) === 16);
+  ok(`[${label}] importar restaura 17`, (await page.locator('article.comp').count()) === 17);
   fs.writeFileSync(path.join(OUT, 'ruim.json'), '{"comps":[{"nome":"<script>alert(1)</script>","main":[{"c":"NAO_EXISTE"}]}]}');
   await page.setInputFiles('#file', path.join(OUT, 'ruim.json'));
   await page.locator('#ask-actions button', { hasText: 'Adicionar' }).click();
@@ -156,7 +199,7 @@ async function run(label, viewport, mobile) {
   await page.click('#btn-help');
   await page.click('#btn-reset');
   await page.locator('#ask-actions button', { hasText: 'Restaurar' }).click();
-  ok(`[${label}] restaurar originais`, (await page.locator('article.comp').count()) === 15);
+  ok(`[${label}] restaurar originais`, (await page.locator('article.comp').count()) === 16);
 
   const final = await imgReport(page);
   ok(`[${label}] imagens apos todos os fluxos`, final.bad.length === 0, `total=${final.total} falhas=${final.bad.length}`);
@@ -167,6 +210,8 @@ async function run(label, viewport, mobile) {
 (async () => {
   await run('desktop', { width: 1440, height: 900 }, false);
   await run('mobile', { width: 390, height: 844 }, true);
+  await migracao('desktop', { width: 1440, height: 900 }, false);
+  await migracao('mobile', { width: 390, height: 844 }, true);
   const fails = results.filter((r) => !r.pass);
   console.log(`\nTOTAL ${results.length} | FALHAS ${fails.length}`);
   fs.writeFileSync(path.join(OUT, 'resultado.json'), JSON.stringify(results, null, 1));

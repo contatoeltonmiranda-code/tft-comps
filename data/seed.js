@@ -1170,5 +1170,80 @@ window.TFT_SEED = [
   ],
   "flex": [],
   "id": "seed-15"
+ },
+ {
+  "nome": "Defendente Congregação das Bruxas Rengar",
+  "estilo": "Nível 8 (5-3)",
+  "nota": "Rengar leva o Emblema de Defendente (6 Defendentes com 5 campeões). Estrelas lidas do ícone da barra de vida.",
+  "fonte": "refs/14.png",
+  "main": [
+   {
+    "c": "DA_18_Rengar",
+    "s": 3,
+    "i": [
+     "DA_TitansResolve",
+     "DA_GuinsoosRageblade",
+     "DA_18_EmblemDefender"
+    ],
+    "a": []
+   },
+   {
+    "c": "DA_18_Cassiopeia",
+    "s": 3,
+    "i": [
+     "DA_RedBuff",
+     "DA_AdaptiveHelm",
+     "DA_SpearOfShojin"
+    ],
+    "a": []
+   },
+   {
+    "c": "DA_18_Morgana",
+    "s": 2,
+    "i": [],
+    "a": []
+   },
+   {
+    "c": "DA_Fiddlesticks18",
+    "s": 1,
+    "i": [
+     "DA_RedBuff",
+     "DA_InfinityEdge",
+     "DA_ThiefsGloves"
+    ],
+    "a": []
+   },
+   {
+    "c": "DA_18_Rammus",
+    "s": 1,
+    "i": [
+     "DA_SunfireCape",
+     "DA_Evenshroud"
+    ],
+    "a": []
+   },
+   {
+    "c": "DA_18_Ornn",
+    "s": 1,
+    "i": [],
+    "a": []
+   },
+   {
+    "c": "DA_18_Lillia",
+    "s": 1,
+    "i": [],
+    "a": []
+   },
+   {
+    "c": "DA_18_Shen",
+    "s": 1,
+    "i": [],
+    "a": []
+   }
+  ],
+  "flex": [],
+  "id": "seed-16",
+  "desde": 2
  }
 ];
+window.TFT_SEED_VERSION = 2;

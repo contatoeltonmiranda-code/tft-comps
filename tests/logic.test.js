@@ -147,3 +147,49 @@ test('sanitizeImport rejeita entrada que nao e objeto/array', () => {
   assert.deepEqual(L.sanitizeImport(null, catalog).comps, []);
   assert.deepEqual(L.sanitizeImport('x', catalog).comps, []);
 });
+
+const seedRaw = [
+  { id: 's1', nome: 'Um', main: [u('A')], flex: [] },
+  { id: 's2', nome: 'Dois', main: [u('B')], flex: [] },
+  { id: 's3', nome: 'Tres', desde: 2, main: [u('C')], flex: [] },
+];
+
+test('mergeSeed sem dados salvos usa o seed inteiro', () => {
+  const r = L.mergeSeed(null, seedRaw, 2, catalog);
+  assert.deepEqual(r.comps.map((c) => c.id), ['s1', 's2', 's3']);
+  assert.equal(r.seedVersao, 2);
+  assert.deepEqual(r.excluidos, []);
+});
+
+test('mergeSeed legado (sem seedVersao) acrescenta so comps novas e preserva edicao', () => {
+  const stored = { versao: 1, comps: [{ id: 's1', nome: 'Um editado', main: [u('A', { s: 3 })], flex: [] }, { id: 's2', nome: 'Dois', main: [u('B')], flex: [] }] };
+  const r = L.mergeSeed(stored, seedRaw, 2, catalog);
+  assert.deepEqual(r.comps.map((c) => c.id), ['s1', 's2', 's3']);
+  assert.equal(r.comps[0].nome, 'Um editado');
+  assert.equal(r.comps[0].main[0].s, 3);
+  assert.equal(r.seedVersao, 2);
+  assert.deepEqual(r.added, ['s3']);
+});
+
+test('mergeSeed nao recria comp que o usuario excluiu (legado e excluidos)', () => {
+  const legado = { versao: 1, comps: [{ id: 's2', nome: 'Dois', main: [], flex: [] }] };
+  assert.deepEqual(L.mergeSeed(legado, seedRaw, 2, catalog).comps.map((c) => c.id), ['s2', 's3']);
+  const excl = { versao: 1, seedVersao: 1, excluidos: ['s3'], comps: [{ id: 's1', nome: 'Um', main: [], flex: [] }] };
+  const r = L.mergeSeed(excl, seedRaw, 2, catalog);
+  assert.deepEqual(r.comps.map((c) => c.id), ['s1']);
+  assert.deepEqual(r.excluidos, ['s3']);
+});
+
+test('mergeSeed e idempotente quando a versao ja foi vista', () => {
+  const stored = { versao: 1, seedVersao: 2, excluidos: [], comps: [{ id: 's1', nome: 'Um', main: [], flex: [] }] };
+  const r = L.mergeSeed(stored, seedRaw, 2, catalog);
+  assert.deepEqual(r.comps.map((c) => c.id), ['s1']);
+  assert.deepEqual(r.added, []);
+});
+
+test('mergeSeed ignora excluidos invalidos e nao quebra com lixo', () => {
+  const r = L.mergeSeed({ comps: [], excluidos: [5, null, 'x'.repeat(99), 's3'], seedVersao: 'a' }, seedRaw, 2, catalog);
+  assert.deepEqual(r.excluidos, ['s3']);
+  assert.deepEqual(r.comps, []);
+  assert.deepEqual(L.mergeSeed('lixo', seedRaw, 2, catalog).comps.length, 3);
+});

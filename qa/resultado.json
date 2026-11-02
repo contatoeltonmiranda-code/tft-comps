@@ -1,8 +1,8 @@
 [
  {
-  "name": "[desktop] 15 comps renderizadas",
+  "name": "[desktop] 16 comps renderizadas",
   "pass": true,
-  "extra": "n=15"
+  "extra": "n=16"
  },
  {
   "name": "[desktop] botao Limpar oculto sem busca",
@@ -11,7 +11,7 @@
  {
   "name": "[desktop] imagens da lista carregam",
   "pass": true,
-  "extra": "total=411 falhas=0 "
+  "extra": "total=434 falhas=0 "
  },
  {
   "name": "[desktop] imagens do catalogo completo carregam",
@@ -27,6 +27,19 @@
   "name": "[desktop] tabuleiro hex com unidades",
   "pass": true,
   "extra": "hex=8"
+ },
+ {
+  "name": "[desktop] comp nova (print 14) na lista",
+  "pass": true
+ },
+ {
+  "name": "[desktop] comp nova tem 8 campeoes",
+  "pass": true,
+  "extra": "Rengar,Cassiopeia,Morgana,Fiddlesticks,Rammus,Ornn,Lillia,Shen"
+ },
+ {
+  "name": "[desktop] comp nova mostra traco Defendente",
+  "pass": true
  },
  {
   "name": "[desktop] busca \"diana\" filtra",
@@ -127,7 +140,7 @@
   "pass": true
  },
  {
-  "name": "[desktop] importar restaura 16",
+  "name": "[desktop] importar restaura 17",
   "pass": true
  },
  {
@@ -141,7 +154,7 @@
  {
   "name": "[desktop] imagens apos todos os fluxos",
   "pass": true,
-  "extra": "total=413 falhas=0"
+  "extra": "total=436 falhas=0"
  },
  {
   "name": "[desktop] sem erros de console/rede",
@@ -149,9 +162,9 @@
   "extra": ""
  },
  {
-  "name": "[mobile] 15 comps renderizadas",
+  "name": "[mobile] 16 comps renderizadas",
   "pass": true,
-  "extra": "n=15"
+  "extra": "n=16"
  },
  {
   "name": "[mobile] botao Limpar oculto sem busca",
@@ -160,7 +173,7 @@
  {
   "name": "[mobile] imagens da lista carregam",
   "pass": true,
-  "extra": "total=411 falhas=0 "
+  "extra": "total=434 falhas=0 "
  },
  {
   "name": "[mobile] imagens do catalogo completo carregam",
@@ -176,6 +189,19 @@
   "name": "[mobile] tabuleiro hex com unidades",
   "pass": true,
   "extra": "hex=8"
+ },
+ {
+  "name": "[mobile] comp nova (print 14) na lista",
+  "pass": true
+ },
+ {
+  "name": "[mobile] comp nova tem 8 campeoes",
+  "pass": true,
+  "extra": "Rengar,Cassiopeia,Morgana,Fiddlesticks,Rammus,Ornn,Lillia,Shen"
+ },
+ {
+  "name": "[mobile] comp nova mostra traco Defendente",
+  "pass": true
  },
  {
   "name": "[mobile] busca \"diana\" filtra",
@@ -276,7 +302,7 @@
   "pass": true
  },
  {
-  "name": "[mobile] importar restaura 16",
+  "name": "[mobile] importar restaura 17",
   "pass": true
  },
  {
@@ -290,10 +316,62 @@
  {
   "name": "[mobile] imagens apos todos os fluxos",
   "pass": true,
-  "extra": "total=413 falhas=0"
+  "extra": "total=436 falhas=0"
  },
  {
   "name": "[mobile] sem erros de console/rede",
+  "pass": true,
+  "extra": ""
+ },
+ {
+  "name": "[desktop] migracao: legado 15 -> 16 comps",
+  "pass": true,
+  "extra": "legado=15"
+ },
+ {
+  "name": "[desktop] migracao: edicao preservada",
+  "pass": true
+ },
+ {
+  "name": "[desktop] migracao: comp nova entrou",
+  "pass": true
+ },
+ {
+  "name": "[desktop] migracao: idempotente apos recarregar",
+  "pass": true
+ },
+ {
+  "name": "[desktop] migracao: comp excluida nao volta",
+  "pass": true
+ },
+ {
+  "name": "[desktop] migracao: sem erros de console",
+  "pass": true,
+  "extra": ""
+ },
+ {
+  "name": "[mobile] migracao: legado 15 -> 16 comps",
+  "pass": true,
+  "extra": "legado=15"
+ },
+ {
+  "name": "[mobile] migracao: edicao preservada",
+  "pass": true
+ },
+ {
+  "name": "[mobile] migracao: comp nova entrou",
+  "pass": true
+ },
+ {
+  "name": "[mobile] migracao: idempotente apos recarregar",
+  "pass": true
+ },
+ {
+  "name": "[mobile] migracao: comp excluida nao volta",
+  "pass": true
+ },
+ {
+  "name": "[mobile] migracao: sem erros de console",
   "pass": true,
   "extra": ""
  }

@@ -2,13 +2,14 @@
   'use strict';
   const CAT = window.TFT_CATALOG;
   const SEED = window.TFT_SEED;
+  const SEED_VERSION = window.TFT_SEED_VERSION || 1;
   const L = window.TFTLogic;
   const IDX = L.indexCatalog(CAT);
   const KEY = 'tft-comps:v1';
   const SVG = 'http://www.w3.org/2000/svg';
 
   const $ = (sel, root) => (root || document).querySelector(sel);
-  const state = { comps: [], query: '', boardOpen: new Map(), draft: null, isNew: false, initial: '', sel: null };
+  const state = { comps: [], query: '', boardOpen: new Map(), draft: null, isNew: false, initial: '', sel: null, excluidos: [], seedVersao: SEED_VERSION };
 
   function h(tag, attrs, ...kids) {
     const el = document.createElement(tag);
@@ -50,24 +51,33 @@
   }
 
   function load() {
+    let stored = null;
     try {
       const raw = localStorage.getItem(KEY);
-      if (raw) {
-        const data = JSON.parse(raw);
-        if (data && Array.isArray(data.comps)) return L.sanitizeImport(data, CAT).comps;
-      }
+      if (raw) stored = JSON.parse(raw);
     } catch (e) { /* armazenamento corrompido: cai no seed */ }
-    return seedComps();
+    const r = L.mergeSeed(stored, SEED, SEED_VERSION, CAT);
+    state.excluidos = r.excluidos;
+    state.seedVersao = r.seedVersao;
+    if (stored && r.added.length) { state.comps = r.comps; save(); }
+    if (stored && r.added.length) setTimeout(() => toast(r.added.length === 1 ? '1 comp nova adicionada.' : r.added.length + ' comps novas adicionadas.'), 300);
+    return r.comps;
   }
 
   function save() {
     try {
-      localStorage.setItem(KEY, JSON.stringify({ versao: 1, comps: state.comps }));
+      localStorage.setItem(KEY, JSON.stringify({ versao: 1, seedVersao: state.seedVersao, excluidos: state.excluidos, comps: state.comps }));
       return true;
     } catch (e) {
       toast('Não foi possível salvar neste navegador.');
       return false;
     }
+  }
+
+  function syncExcluidos() {
+    const have = new Set(state.comps.map((c) => c.id));
+    state.excluidos = SEED.map((c) => c.id).filter((id) => !have.has(id));
+    state.seedVersao = SEED_VERSION;
   }
 
   /* ---------- elementos reutilizaveis ---------- */
@@ -256,6 +266,7 @@
     const ok = await ask('Excluir comp', 'Excluir “' + comp.nome + '”? Essa ação não pode ser desfeita.', [CANCEL, { label: 'Excluir', value: true, kind: 'danger' }]);
     if (!ok) return;
     state.comps = state.comps.filter((c) => c.id !== comp.id);
+    if (SEED.some((c) => c.id === comp.id) && !state.excluidos.includes(comp.id)) state.excluidos.push(comp.id);
     save();
     render();
     toast('Comp excluída.');
@@ -425,7 +436,7 @@
       { label: 'Adicionar às existentes', value: 'merge', kind: 'primary' },
     ]);
     if (!mode) return;
-    if (mode === 'replace') state.comps = comps;
+    if (mode === 'replace') { state.comps = comps; syncExcluidos(); }
     else {
       const used = new Set(state.comps.map((c) => c.id));
       comps.forEach((c) => { if (used.has(c.id)) c.id = L.newId(); used.add(c.id); });
@@ -461,6 +472,8 @@
       const ok = await ask('Restaurar originais', 'Substituir todas as comps atuais pelas ' + SEED.length + ' comps originais?', [CANCEL, { label: 'Restaurar', value: true, kind: 'danger' }]);
       if (!ok) return;
       state.comps = seedComps();
+      state.excluidos = [];
+      state.seedVersao = SEED_VERSION;
       save();
       render();
       $('#help').close();

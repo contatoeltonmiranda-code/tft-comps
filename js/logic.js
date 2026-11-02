@@ -198,7 +198,24 @@
     return { comps, dropped };
   }
 
-  const api = { ROWS, COLS, MAX_ITEMS, MAX_ALT, norm, indexCatalog, activeTraits, searchComps, duplicateComp, sanitizeImport, newId, clone };
+  function mergeSeed(stored, seed, seedVersion, catalog) {
+    const valid = stored && typeof stored === 'object' && !Array.isArray(stored) && Array.isArray(stored.comps);
+    if (!valid) {
+      return { comps: sanitizeImport(seed, catalog).comps, seedVersao: seedVersion, excluidos: [], added: [] };
+    }
+    const comps = sanitizeImport(stored, catalog).comps;
+    const excluidos = [];
+    (Array.isArray(stored.excluidos) ? stored.excluidos : []).forEach((id) => {
+      if (typeof id === 'string' && id.length <= 60 && !excluidos.includes(id) && excluidos.length < 500) excluidos.push(id);
+    });
+    const seen = Number.isInteger(stored.seedVersao) ? stored.seedVersao : 1;
+    const used = new Set(comps.map((c) => c.id));
+    const fresh = (Array.isArray(seed) ? seed : []).filter((s) => s && (Number.isInteger(s.desde) ? s.desde : 1) > seen && !used.has(s.id) && !excluidos.includes(s.id));
+    const added = sanitizeImport(fresh, catalog).comps;
+    return { comps: comps.concat(added), seedVersao: Math.max(seen, seedVersion), excluidos, added: added.map((c) => c.id) };
+  }
+
+  const api = { ROWS, COLS, MAX_ITEMS, MAX_ALT, norm, indexCatalog, activeTraits, searchComps, duplicateComp, sanitizeImport, mergeSeed, newId, clone };
   root.TFTLogic = api;
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
 })(typeof window !== 'undefined' ? window : globalThis);
