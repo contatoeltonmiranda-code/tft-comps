@@ -1,0 +1,300 @@
+[
+ {
+  "name": "[desktop] 15 comps renderizadas",
+  "pass": true,
+  "extra": "n=15"
+ },
+ {
+  "name": "[desktop] botao Limpar oculto sem busca",
+  "pass": true
+ },
+ {
+  "name": "[desktop] imagens da lista carregam",
+  "pass": true,
+  "extra": "total=411 falhas=0 "
+ },
+ {
+  "name": "[desktop] imagens do catalogo completo carregam",
+  "pass": true,
+  "extra": "total=243 falhas=0 "
+ },
+ {
+  "name": "[desktop] sem rolagem horizontal",
+  "pass": true,
+  "extra": "overflow=0"
+ },
+ {
+  "name": "[desktop] tabuleiro hex com unidades",
+  "pass": true,
+  "extra": "hex=8"
+ },
+ {
+  "name": "[desktop] busca \"diana\" filtra",
+  "pass": true,
+  "extra": "n=7"
+ },
+ {
+  "name": "[desktop] busca destaca campeao",
+  "pass": true
+ },
+ {
+  "name": "[desktop] busca por item",
+  "pass": true
+ },
+ {
+  "name": "[desktop] busca por traco",
+  "pass": true,
+  "extra": "7"
+ },
+ {
+  "name": "[desktop] busca sem resultado mostra aviso",
+  "pass": true
+ },
+ {
+  "name": "[desktop] \"?\" abre ajuda",
+  "pass": true
+ },
+ {
+  "name": "[desktop] \"?\" fecha ajuda",
+  "pass": true
+ },
+ {
+  "name": "[desktop] editor abre",
+  "pass": true
+ },
+ {
+  "name": "[desktop] checkbox e tabuleiro do editor coexistem",
+  "pass": true
+ },
+ {
+  "name": "[desktop] campeao adicionado no editor",
+  "pass": true
+ },
+ {
+  "name": "[desktop] item alternativo adicionado",
+  "pass": true
+ },
+ {
+  "name": "[desktop] item principal adicionado",
+  "pass": true
+ },
+ {
+  "name": "[desktop] posicionamento no hex",
+  "pass": true
+ },
+ {
+  "name": "[desktop] editor fecha ao salvar",
+  "pass": true
+ },
+ {
+  "name": "[desktop] comp mostra Leona",
+  "pass": true
+ },
+ {
+  "name": "[desktop] item alternativo marcado na lista",
+  "pass": true
+ },
+ {
+  "name": "[desktop] persistencia apos recarregar",
+  "pass": true
+ },
+ {
+  "name": "[desktop] \"n\" abre nova comp",
+  "pass": true
+ },
+ {
+  "name": "[desktop] nova comp criada no topo",
+  "pass": true
+ },
+ {
+  "name": "[desktop] duplicar",
+  "pass": true
+ },
+ {
+  "name": "[desktop] excluir pede confirmacao",
+  "pass": true
+ },
+ {
+  "name": "[desktop] cancelar mantem comp",
+  "pass": true
+ },
+ {
+  "name": "[desktop] excluir remove",
+  "pass": true
+ },
+ {
+  "name": "[desktop] exportar gera JSON valido",
+  "pass": true
+ },
+ {
+  "name": "[desktop] importar restaura 16",
+  "pass": true
+ },
+ {
+  "name": "[desktop] import sanitiza (texto, sem executar)",
+  "pass": true
+ },
+ {
+  "name": "[desktop] restaurar originais",
+  "pass": true
+ },
+ {
+  "name": "[desktop] imagens apos todos os fluxos",
+  "pass": true,
+  "extra": "total=413 falhas=0"
+ },
+ {
+  "name": "[desktop] sem erros de console/rede",
+  "pass": true,
+  "extra": ""
+ },
+ {
+  "name": "[mobile] 15 comps renderizadas",
+  "pass": true,
+  "extra": "n=15"
+ },
+ {
+  "name": "[mobile] botao Limpar oculto sem busca",
+  "pass": true
+ },
+ {
+  "name": "[mobile] imagens da lista carregam",
+  "pass": true,
+  "extra": "total=411 falhas=0 "
+ },
+ {
+  "name": "[mobile] imagens do catalogo completo carregam",
+  "pass": true,
+  "extra": "total=243 falhas=0 "
+ },
+ {
+  "name": "[mobile] sem rolagem horizontal",
+  "pass": true,
+  "extra": "overflow=0"
+ },
+ {
+  "name": "[mobile] tabuleiro hex com unidades",
+  "pass": true,
+  "extra": "hex=8"
+ },
+ {
+  "name": "[mobile] busca \"diana\" filtra",
+  "pass": true,
+  "extra": "n=7"
+ },
+ {
+  "name": "[mobile] busca destaca campeao",
+  "pass": true
+ },
+ {
+  "name": "[mobile] busca por item",
+  "pass": true
+ },
+ {
+  "name": "[mobile] busca por traco",
+  "pass": true,
+  "extra": "7"
+ },
+ {
+  "name": "[mobile] busca sem resultado mostra aviso",
+  "pass": true
+ },
+ {
+  "name": "[mobile] \"?\" abre ajuda",
+  "pass": true
+ },
+ {
+  "name": "[mobile] \"?\" fecha ajuda",
+  "pass": true
+ },
+ {
+  "name": "[mobile] editor abre",
+  "pass": true
+ },
+ {
+  "name": "[mobile] checkbox e tabuleiro do editor coexistem",
+  "pass": true
+ },
+ {
+  "name": "[mobile] campeao adicionado no editor",
+  "pass": true
+ },
+ {
+  "name": "[mobile] item alternativo adicionado",
+  "pass": true
+ },
+ {
+  "name": "[mobile] item principal adicionado",
+  "pass": true
+ },
+ {
+  "name": "[mobile] posicionamento no hex",
+  "pass": true
+ },
+ {
+  "name": "[mobile] editor fecha ao salvar",
+  "pass": true
+ },
+ {
+  "name": "[mobile] comp mostra Leona",
+  "pass": true
+ },
+ {
+  "name": "[mobile] item alternativo marcado na lista",
+  "pass": true
+ },
+ {
+  "name": "[mobile] persistencia apos recarregar",
+  "pass": true
+ },
+ {
+  "name": "[mobile] \"n\" abre nova comp",
+  "pass": true
+ },
+ {
+  "name": "[mobile] nova comp criada no topo",
+  "pass": true
+ },
+ {
+  "name": "[mobile] duplicar",
+  "pass": true
+ },
+ {
+  "name": "[mobile] excluir pede confirmacao",
+  "pass": true
+ },
+ {
+  "name": "[mobile] cancelar mantem comp",
+  "pass": true
+ },
+ {
+  "name": "[mobile] excluir remove",
+  "pass": true
+ },
+ {
+  "name": "[mobile] exportar gera JSON valido",
+  "pass": true
+ },
+ {
+  "name": "[mobile] importar restaura 16",
+  "pass": true
+ },
+ {
+  "name": "[mobile] import sanitiza (texto, sem executar)",
+  "pass": true
+ },
+ {
+  "name": "[mobile] restaurar originais",
+  "pass": true
+ },
+ {
+  "name": "[mobile] imagens apos todos os fluxos",
+  "pass": true,
+  "extra": "total=413 falhas=0"
+ },
+ {
+  "name": "[mobile] sem erros de console/rede",
+  "pass": true,
+  "extra": ""
+ }
+]
