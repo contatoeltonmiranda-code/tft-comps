@@ -194,6 +194,66 @@ test('mergeSeed ignora excluidos invalidos e nao quebra com lixo', () => {
   assert.deepEqual(L.mergeSeed('lixo', seedRaw, 2, catalog).comps.length, 3);
 });
 
+/* ---------- posicoes novas do seed (posDesde) ---------- */
+const posSeed = [
+  { id: 'p1', nome: 'Pos', posDesde: 3, main: [u('A', { p: [1, 1] }), u('B', { p: [4, 7] }), u('C', { p: [2, 2] })], flex: [u('D')] },
+];
+const posStored = (comps, extra = {}) => ({ versao: 1, seedVersao: 2, excluidos: [], comps, ...extra });
+
+test('mergeSeed posicao: comp sem posicao recebe as posicoes do seed', () => {
+  const stored = posStored([{ id: 'p1', nome: 'Pos editada', main: [u('A', { s: 3 }), u('B')], flex: [] }]);
+  const r = L.mergeSeed(stored, posSeed, 3, catalog);
+  const c = r.comps[0];
+  assert.equal(c.nome, 'Pos editada');
+  assert.equal(c.main[0].s, 3);
+  assert.deepEqual(c.main[0].p, [1, 1]);
+  assert.deepEqual(c.main[1].p, [4, 7]);
+  assert.deepEqual(r.positioned, ['p1']);
+  assert.equal(r.seedVersao, 3);
+  assert.equal(r.comps.length, 1);
+});
+
+test('mergeSeed posicao: comp posicionada pelo usuario fica intacta', () => {
+  const stored = posStored([{ id: 'p1', nome: 'Pos', main: [u('A', { p: [3, 3] }), u('B'), u('C')], flex: [] }]);
+  const r = L.mergeSeed(stored, posSeed, 3, catalog);
+  assert.deepEqual(r.comps[0].main[0].p, [3, 3]);
+  assert.equal(r.comps[0].main[1].p, undefined);
+  assert.equal(r.comps[0].main[2].p, undefined);
+  assert.deepEqual(r.positioned, []);
+});
+
+test('mergeSeed posicao: nao ocupa casa ja usada e ignora campeao ausente ou flex', () => {
+  const stored = posStored([{ id: 'p1', nome: 'Pos', main: [u('B')], flex: [u('A')] }]);
+  const r = L.mergeSeed(stored, posSeed, 3, catalog);
+  assert.deepEqual(r.comps[0].main[0].p, [4, 7]);
+  assert.equal(r.comps[0].flex[0].p, undefined);
+  assert.equal(r.comps[0].main.length, 1);
+});
+
+test('mergeSeed posicao: comp excluida nao volta', () => {
+  const stored = posStored([{ id: 'x', nome: 'Outra', main: [], flex: [] }], { excluidos: ['p1'] });
+  const r = L.mergeSeed(stored, posSeed, 3, catalog);
+  assert.deepEqual(r.comps.map((c) => c.id), ['x']);
+  assert.deepEqual(r.positioned, []);
+});
+
+test('mergeSeed posicao: so aplica uma vez (versao ja vista) e respeita unplace posterior', () => {
+  const visto = posStored([{ id: 'p1', nome: 'Pos', main: [u('A'), u('B')], flex: [] }], { seedVersao: 3 });
+  const r = L.mergeSeed(visto, posSeed, 3, catalog);
+  assert.equal(r.comps[0].main[0].p, undefined);
+  assert.deepEqual(r.positioned, []);
+  const fut = [{ id: 'p1', nome: 'Pos', posDesde: 5, main: [u('A', { p: [1, 1] })], flex: [] }];
+  assert.deepEqual(L.mergeSeed(posStored([{ id: 'p1', nome: 'Pos', main: [u('A')], flex: [] }]), fut, 3, catalog).positioned, []);
+});
+
+test('mergeSeed posicao: posicao invalida do seed e ignorada', () => {
+  const ruim = [{ id: 'p1', nome: 'Pos', posDesde: 3, main: [u('A', { p: [9, 1] }), u('B', { p: [1, 1] }), u('C', { p: [1, 1] })], flex: [] }];
+  const r = L.mergeSeed(posStored([{ id: 'p1', nome: 'Pos', main: [u('A'), u('B'), u('C')], flex: [] }]), ruim, 3, catalog);
+  assert.equal(r.comps[0].main[0].p, undefined);
+  assert.deepEqual(r.comps[0].main[1].p, [1, 1]);
+  assert.equal(r.comps[0].main[2].p, undefined);
+});
+
 /* ---------- checks "ja peguei" e busca na comp ---------- */
 const pickComp = { id: 'k1', nome: 'K', main: [u('A'), u('B'), u('C')], flex: [u('D'), u('E')] };
 

@@ -17,6 +17,7 @@ Atalhos do app: `?` ajuda, `/` busca, `N` nova comp, `Esc` fecha.
 - O set que o Elton chama de "Set 17" está em `sets["18"]` / mutator `TFTSet18` no CommunityDragon (itens `DA_*`). O "Set17" do CommunityDragon é outro set.
 - As comps de exemplo vêm dos prints em `refs/` e ficam em `data/seed.js` (campo `fonte` indica o print). O botão "Restaurar comps originais" (em Atalhos) volta a esse estado.
 - Comps novas do seed chegam para quem já tem dados salvos: `data/seed.js` define `TFT_SEED_VERSION` e a comp nova leva `desde: <versão>`. No carregamento, `mergeSeed` (`js/logic.js`) acrescenta só comps com `desde` maior que a `seedVersao` salva, cujo id não exista e não esteja em `excluidos` (ids de comps do seed que o usuário excluiu). Edições nunca são sobrescritas. Para publicar comp nova: adicionar ao seed com `desde: N` e subir `TFT_SEED_VERSION` para N.
+- Posições novas do seed para comps que o usuário já tem: a comp do seed leva `posDesde: N` (e `p: [linha, coluna]` nos campeões de `main`). `mergeSeed` aplica só se `N` for maior que a `seedVersao` salva, a comp existir com o mesmo id, o campeão estiver no `main` dela e a comp não tiver nenhuma posição (se o usuário posicionou qualquer unidade, a comp inteira fica intacta). Comp excluída não volta. Para publicar: `posDesde: N` na comp e `TFT_SEED_VERSION` = N. Testes em `tests/logic.test.js` (`mergeSeed posicao`).
 
 ## Testes
 
@@ -33,6 +34,22 @@ Atalhos do app: `?` ajuda, `/` busca, `N` nova comp, `Esc` fecha.
 6. Print 4 chama o traço de "Primitiva"; no CommunityDragon o traço é "Primordial" (o emblema se chama "Emblema de Primitiva").
 7. Print 10 (tactics.tools) mostra "9" unidades mas só 8 aparecem no tabuleiro.
 8. Print 14 (comp "Defendente Congregação das Bruxas Rengar", seed-16, nível 8 em 5-3): o overlay "Sugerindo comp Sabugueiro Draven" foi ignorado. As 8 unidades foram deduzidas do tabuleiro e conferidas contra o painel de traços (Defendente 6, Rival 1, Enfeitiçador 2, Flora Fatalis 1, Congregação 2/3, Emanador 1, Feérico 1, Inferno 1: bate exato). Rengar leva o Emblema de Defendente. Há um segundo Rammus no fundo do tabuleiro, tratado como unidade adversária (não entra na comp). Sem posicionamento: a câmera inclinada não permite ler as casas do hex. Menor confiança: Morgana (silhueta escura de longe; poderia ser Elise), estrelas (lidas do ícone da barra de vida: losango = 1, 1 divisa dourada = 2, 2 divisas = 3; Rengar e Cassiopeia 3 estrelas é incomum para nível 8), e itens do Fiddlesticks (Efeito Vermelho, Gume do Infinito, Luvas do Ladrão) e da Cassiopeia (Elmo Adaptativo, Lança de Shojin). Itens do Rammus (Capa de Fogo Solar, Proteção Imutável) e do Rengar (Determinação Titânica, Lâmina de Guinsoo) vieram do match de pixels. Ornn, Lillia e Shen sem itens visíveis. Espada flutuante no chão não é item equipado.
+
+## Posicionamento no tabuleiro (avaliação dos prints, 02/11/2026)
+
+Já tinham posição: Vivaz (print 1), Solar Lunar Lillia (9), Fera do Rift Dragão Ancião Draven (10), Florescer Invocador (11). Nenhuma comp ganhou posição nova: os prints in-game não permitem ler casas com confiança.
+
+| Print | Comp | Motivo |
+|---|---|---|
+| 5 | Vivaz com Sabugueiro | Combate em andamento, unidades fora do centro das casas, sem grade visível e dois ursos (um deles é adversário). Só um hex colorido fica visível. |
+| 7 | Vivaz Sabugueiro Veigar, Rubrivira | Poucas unidades próprias visíveis, em movimento. |
+| 8 | Devastador com Fera do Rift | Unidades aglomeradas, câmera corta o tabuleiro, hexes azuis são efeito de traço. |
+| 12 | Eclipse, Sabugueiro Draven Taric | Tabuleiro próprio vazio; unidades visíveis são do adversário. |
+| 13 | Sabugueiro Draven | Combate no centro da arena, sem grade. |
+| 14 | Defendente Rengar | Câmera inclinada (ver dúvida 8). |
+| 2, 3, 4, 6 | Prints de lista (6 não gerou comp) | Sem posição no print. |
+
+Quando houver print de board com grade legível (como tactics.tools), usar `posDesde` (ver Dados).
 
 ## Segurança (checklist de 20 itens, app estático local)
 

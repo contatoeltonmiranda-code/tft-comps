@@ -254,10 +254,36 @@
     return { comps, dropped };
   }
 
+  function validCell(p) {
+    return Array.isArray(p) && p.length === 2 && Number.isInteger(p[0]) && Number.isInteger(p[1]) && p[0] >= 1 && p[0] <= ROWS && p[1] >= 1 && p[1] <= COLS;
+  }
+
+  function applySeedPositions(comps, seed, seen, seedVersion) {
+    const positioned = [];
+    (Array.isArray(seed) ? seed : []).forEach((s) => {
+      if (!s || !Number.isInteger(s.posDesde) || s.posDesde <= seen || s.posDesde > seedVersion) return;
+      const comp = comps.find((c) => c.id === s.id);
+      if (!comp || comp.main.some((u) => u.p)) return;
+      const taken = new Set();
+      let changed = false;
+      (Array.isArray(s.main) ? s.main : []).forEach((su) => {
+        const unit = su && comp.main.find((u) => u.c === su.c);
+        if (!unit || !validCell(su.p)) return;
+        const key = su.p[0] + ',' + su.p[1];
+        if (taken.has(key)) return;
+        taken.add(key);
+        unit.p = [su.p[0], su.p[1]];
+        changed = true;
+      });
+      if (changed) positioned.push(comp.id);
+    });
+    return positioned;
+  }
+
   function mergeSeed(stored, seed, seedVersion, catalog) {
     const valid = stored && typeof stored === 'object' && !Array.isArray(stored) && Array.isArray(stored.comps);
     if (!valid) {
-      return { comps: sanitizeImport(seed, catalog).comps, seedVersao: seedVersion, excluidos: [], added: [] };
+      return { comps: sanitizeImport(seed, catalog).comps, seedVersao: seedVersion, excluidos: [], added: [], positioned: [] };
     }
     const comps = sanitizeImport(stored, catalog).comps;
     const excluidos = [];
@@ -268,7 +294,8 @@
     const used = new Set(comps.map((c) => c.id));
     const fresh = (Array.isArray(seed) ? seed : []).filter((s) => s && (Number.isInteger(s.desde) ? s.desde : 1) > seen && !used.has(s.id) && !excluidos.includes(s.id));
     const added = sanitizeImport(fresh, catalog).comps;
-    return { comps: comps.concat(added), seedVersao: Math.max(seen, seedVersion), excluidos, added: added.map((c) => c.id) };
+    const positioned = applySeedPositions(comps, seed, seen, seedVersion);
+    return { comps: comps.concat(added), seedVersao: Math.max(seen, seedVersion), excluidos, added: added.map((c) => c.id), positioned };
   }
 
   const api = { ROWS, COLS, MAX_ITEMS, MAX_ALT, norm, indexCatalog, activeTraits, searchComps, filterUnits, sanitizeChecks, isChecked, toggleCheck, clearChecks, countChecked, duplicateComp, sanitizeImport, mergeSeed, newId, clone };
