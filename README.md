@@ -20,7 +20,7 @@ Atalhos do app: `?` ajuda, `/` busca, `N` nova comp, `Esc` fecha.
 
 ## Testes
 
-- Lógica e seed (traços, busca, importação, merge de seed): `node --test tests/`
+- Lógica e seed (traços, busca, importação, merge de seed): `node --test tests/*.test.js`
 - QA de navegador (Playwright, desktop 1440 e mobile 390): subir o servidor e rodar `node qa/qa.js`. Screenshots e `resultado.json` em `qa/`.
 
 ## Dúvidas de identificação (conferir)
