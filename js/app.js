@@ -6,10 +6,11 @@
   const L = window.TFTLogic;
   const IDX = L.indexCatalog(CAT);
   const KEY = 'tft-comps:v1';
+  const PICKS_KEY = 'tft-comps:picks:v1';
   const SVG = 'http://www.w3.org/2000/svg';
 
   const $ = (sel, root) => (root || document).querySelector(sel);
-  const state = { comps: [], query: '', boardOpen: new Map(), draft: null, isNew: false, initial: '', sel: null, excluidos: [], seedVersao: SEED_VERSION };
+  const state = { comps: [], query: '', boardOpen: new Map(), draft: null, isNew: false, initial: '', sel: null, excluidos: [], seedVersao: SEED_VERSION, picks: {}, compQuery: new Map() };
 
   function h(tag, attrs, ...kids) {
     const el = document.createElement(tag);
@@ -74,6 +75,21 @@
     }
   }
 
+  function loadPicks() {
+    try {
+      const raw = localStorage.getItem(PICKS_KEY);
+      return L.sanitizeChecks(raw ? JSON.parse(raw).checks : null);
+    } catch (e) { return {}; }
+  }
+
+  function savePicks() {
+    try {
+      localStorage.setItem(PICKS_KEY, JSON.stringify({ versao: 1, checks: state.picks }));
+    } catch (e) {
+      toast('Não foi possível salvar os checks neste navegador.');
+    }
+  }
+
   function syncExcluidos() {
     const have = new Set(state.comps.map((c) => c.id));
     state.excluidos = SEED.map((c) => c.id).filter((id) => !have.has(id));
@@ -103,12 +119,17 @@
     return el;
   }
 
-  function unitEl(u, hits) {
+  function unitEl(u, hits, pk) {
     const c = champ(u.c);
     const hit = hits && hits.champs.has(u.c);
-    const wrap = h('div', { class: 'unit c' + c.c + (hit ? ' hit' : '') });
+    const wrap = h('div', { class: 'unit c' + c.c + (hit ? ' hit' : '') + (pk && pk.on ? ' picked' : '') });
+    const portrait = h('div', { class: 'portrait c' + c.c }, img(c.img, c.n, 'pic', 64), starsEl(u.s), h('span', { class: 'cost' }, c.c));
+    if (pk) {
+      const btn = h('button', { type: 'button', class: 'pick', 'aria-pressed': String(pk.on), 'aria-label': 'Já peguei ' + c.n, title: 'Já peguei', onclick: () => pk.toggle(btn, wrap) }, icon('check'));
+      portrait.append(btn);
+    }
     wrap.append(
-      h('div', { class: 'portrait c' + c.c }, img(c.img, c.n, 'pic', 64), starsEl(u.s), h('span', { class: 'cost' }, c.c)),
+      portrait,
       h('span', { class: 'uname' }, c.n),
       h('div', { class: 'items' }, u.i.map((id) => itemImg(id, false, hits)))
     );
@@ -179,10 +200,49 @@
         actions),
       traits.length ? h('div', { class: 'traits', 'aria-label': 'Traços ativos' }, traits.map((t) => traitEl(t, hits))) : null
     );
-    const groups = h('div', { class: 'groups' }, h('section', { class: 'group' }, h('h3', {}, 'Principal'), h('div', { class: 'units' }, comp.main.map((u) => unitEl(u, hits)))));
-    if (comp.flex.length) groups.append(h('section', { class: 'group' }, h('h3', {}, 'Flex'), h('div', { class: 'units' }, comp.flex.map((u) => unitEl(u, hits)))));
-    if (!comp.main.length && !comp.flex.length) groups.replaceChildren(h('p', { class: 'muted' }, 'Sem campeões. Use Editar para adicionar.'));
-    el.append(groups);
+    const groups = h('div', { class: 'groups' });
+    if (!comp.main.length && !comp.flex.length) {
+      groups.append(h('p', { class: 'muted' }, 'Sem campeões. Use Editar para adicionar.'));
+      el.append(groups);
+    } else {
+      const count = h('span', { class: 'pcount', 'aria-live': 'polite' });
+      const clear = h('button', { type: 'button', class: 'btn ghost sm', onclick: () => { state.picks = L.clearChecks(state.picks, comp.id); savePicks(); fill(); } }, 'Limpar checks');
+      const input = h('input', { type: 'search', class: 'cq', autocomplete: 'off', spellcheck: 'false', maxlength: '40', placeholder: 'Buscar campeão na comp', 'aria-label': 'Buscar campeão em ' + comp.nome, value: state.compQuery.get(comp.id) || '' });
+      const updateCount = () => {
+        const { done, total } = L.countChecked(state.picks, comp);
+        count.textContent = done + '/' + total + ' pegos';
+        count.classList.toggle('done', done === total);
+        clear.disabled = done === 0;
+      };
+      const unit = (u) => unitEl(u, hits, {
+        on: L.isChecked(state.picks, comp.id, u.c),
+        toggle: (btn, wrap) => {
+          state.picks = L.toggleCheck(state.picks, comp.id, u.c);
+          const on = L.isChecked(state.picks, comp.id, u.c);
+          btn.setAttribute('aria-pressed', String(on));
+          wrap.classList.toggle('picked', on);
+          savePicks();
+          updateCount();
+        },
+      });
+      const fill = () => {
+        const term = state.compQuery.get(comp.id) || '';
+        const main = L.filterUnits(comp.main, term, CAT);
+        const flex = L.filterUnits(comp.flex, term, CAT);
+        const nodes = [];
+        if (main.length) nodes.push(h('section', { class: 'group' }, h('h3', {}, 'Principal'), h('div', { class: 'units' }, main.map(unit))));
+        if (flex.length) nodes.push(h('section', { class: 'group' }, h('h3', {}, 'Flex'), h('div', { class: 'units' }, flex.map(unit))));
+        if (!nodes.length) nodes.push(h('p', { class: 'muted cnone' }, 'Nenhum campeão com esse nome nesta comp.'));
+        groups.replaceChildren(...nodes);
+        updateCount();
+      };
+      input.addEventListener('input', () => {
+        if (input.value.trim()) state.compQuery.set(comp.id, input.value); else state.compQuery.delete(comp.id);
+        fill();
+      });
+      fill();
+      el.append(h('div', { class: 'ctools' }, input, count, clear), groups);
+    }
     if (hasBoard && open) el.append(boardEl(comp.main, { hits }));
     if (comp.nota) el.append(h('p', { class: 'note' }, comp.nota));
     if (comp.fonte) el.append(h('p', { class: 'src' }, 'Fonte: ' + comp.fonte));
@@ -266,6 +326,9 @@
     const ok = await ask('Excluir comp', 'Excluir “' + comp.nome + '”? Essa ação não pode ser desfeita.', [CANCEL, { label: 'Excluir', value: true, kind: 'danger' }]);
     if (!ok) return;
     state.comps = state.comps.filter((c) => c.id !== comp.id);
+    state.picks = L.clearChecks(state.picks, comp.id);
+    state.compQuery.delete(comp.id);
+    savePicks();
     if (SEED.some((c) => c.id === comp.id) && !state.excluidos.includes(comp.id)) state.excluidos.push(comp.id);
     save();
     render();
@@ -459,6 +522,7 @@
 
   function init() {
     state.comps = load();
+    state.picks = loadPicks();
     render();
     $('#q').addEventListener('input', (e) => { state.query = e.target.value; render(); });
     $('#btn-clear').addEventListener('click', () => { state.query = ''; $('#q').value = ''; render(); $('#q').focus(); });

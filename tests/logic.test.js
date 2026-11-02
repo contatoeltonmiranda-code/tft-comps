@@ -193,3 +193,70 @@ test('mergeSeed ignora excluidos invalidos e nao quebra com lixo', () => {
   assert.deepEqual(r.comps, []);
   assert.deepEqual(L.mergeSeed('lixo', seedRaw, 2, catalog).comps.length, 3);
 });
+
+/* ---------- checks "ja peguei" e busca na comp ---------- */
+const pickComp = { id: 'k1', nome: 'K', main: [u('A'), u('B'), u('C')], flex: [u('D'), u('E')] };
+
+test('toggleCheck marca, desmarca e nao muta o estado anterior', () => {
+  const a = {};
+  const b = L.toggleCheck(a, 'k1', 'A');
+  assert.deepEqual(a, {});
+  assert.deepEqual(b, { k1: ['A'] });
+  assert.equal(L.isChecked(b, 'k1', 'A'), true);
+  assert.equal(L.isChecked(b, 'k1', 'B'), false);
+  assert.equal(L.isChecked(b, 'k2', 'A'), false);
+  const c = L.toggleCheck(b, 'k1', 'A');
+  assert.deepEqual(c, {});
+});
+
+test('check e por comp + campeao', () => {
+  let s = L.toggleCheck({}, 'k1', 'A');
+  s = L.toggleCheck(s, 'k2', 'A');
+  s = L.toggleCheck(s, 'k1', 'B');
+  assert.deepEqual(s, { k1: ['A', 'B'], k2: ['A'] });
+  s = L.toggleCheck(s, 'k2', 'A');
+  assert.deepEqual(s, { k1: ['A', 'B'] });
+});
+
+test('clearChecks limpa so a comp pedida', () => {
+  const s = { k1: ['A', 'B'], k2: ['A'] };
+  assert.deepEqual(L.clearChecks(s, 'k1'), { k2: ['A'] });
+  assert.deepEqual(s, { k1: ['A', 'B'], k2: ['A'] });
+  assert.deepEqual(L.clearChecks(s, 'nada'), s);
+});
+
+test('countChecked conta main+flex, ignora ids que nao estao na comp e duplicados', () => {
+  assert.deepEqual(L.countChecked({}, pickComp), { done: 0, total: 5 });
+  assert.deepEqual(L.countChecked({ k1: ['A', 'D', 'ZZ'] }, pickComp), { done: 2, total: 5 });
+  const dup = { id: 'k1', main: [u('A'), u('A')], flex: [u('A')] };
+  assert.deepEqual(L.countChecked({ k1: ['A'] }, dup), { done: 1, total: 1 });
+});
+
+test('sanitizeChecks aceita so { compId: [champId] } valido', () => {
+  assert.deepEqual(L.sanitizeChecks({ k1: ['A', 'B', 'A'], k2: [] }), { k1: ['A', 'B'] });
+  assert.deepEqual(L.sanitizeChecks('lixo'), {});
+  assert.deepEqual(L.sanitizeChecks(null), {});
+  assert.deepEqual(L.sanitizeChecks([1, 2]), {});
+  assert.deepEqual(L.sanitizeChecks({ k1: [1, null, 'x'.repeat(99), 'A'], ['y'.repeat(99)]: ['A'], k3: 'A' }), { k1: ['A'] });
+  const evil = JSON.parse('{"__proto__":["A"],"k1":["A"]}');
+  const out = L.sanitizeChecks(evil);
+  assert.deepEqual(Object.keys(out), ['k1']);
+  assert.equal({}.A, undefined);
+});
+
+test('filterUnits: vazio mostra todos; ignora acento, caixa e pontuacao', () => {
+  const units = [u('A'), u('B'), u('C'), u('D')];
+  assert.deepEqual(L.filterUnits(units, '', catalog).map((x) => x.c), ['A', 'B', 'C', 'D']);
+  assert.deepEqual(L.filterUnits(units, '   ', catalog).map((x) => x.c), ['A', 'B', 'C', 'D']);
+  assert.deepEqual(L.filterUnits(units, 'DIA', catalog).map((x) => x.c), ['A']);
+  assert.deepEqual(L.filterUnits(units, 'ay', catalog).map((x) => x.c), ['C']);
+  assert.deepEqual(L.filterUnits(units, 'zzz', catalog), []);
+  const acc = { champs: [{ id: 'K', n: "Kog'Maw", c: 4, t: [] }, { id: 'N', n: 'Nunu', c: 1, t: [] }], traits: [], items: [] };
+  assert.deepEqual(L.filterUnits([u('K'), u('N')], 'kog maw', acc).map((x) => x.c), ['K']);
+  assert.deepEqual(L.filterUnits([u('K'), u('N')], 'KOGMAW', acc).map((x) => x.c), ['K']);
+});
+
+test('filterUnits ignora campeao fora do catalogo sem quebrar', () => {
+  assert.deepEqual(L.filterUnits([u('XX'), u('A')], 'dia', catalog).map((x) => x.c), ['A']);
+  assert.deepEqual(L.filterUnits(undefined, 'dia', catalog), []);
+});

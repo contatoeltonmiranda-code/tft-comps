@@ -16,6 +16,7 @@
   --gold-ink:#1a1304;
   --focus:#8fc1ff;
   --danger:#f08a7e;
+  --ok:#5ccf8a;
   --cost-1:#8f99ab;
   --cost-2:#4fb06f;
   --cost-3:#4d93e6;
@@ -111,6 +112,24 @@ main{max-width:1180px;margin:0 auto;padding:4px 20px 64px}
 .alts .alt-tag{flex-basis:100%;font-size:9px;line-height:1;text-align:center;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
 .note{margin-top:12px;color:var(--muted);font-size:14px;max-width:75ch}
 .src{margin-top:6px;font-size:12px;color:#6b7a95}
+
+/* busca e checks por comp */
+.ctools{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:14px}
+.cq{flex:0 1 220px;min-width:150px;height:36px;padding:0 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);font-size:16px}
+.cq::placeholder{color:#74829c}
+.cq:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px #d6aa5c33}
+.pcount{font-size:13px;font-weight:600;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.pcount.done{color:var(--ok)}
+.btn.sm{min-height:32px;padding:0 10px;font-size:13px}
+.cnone{margin-top:14px}
+.pick{position:absolute;left:-6px;bottom:-6px;z-index:3;display:grid;place-items:center;width:22px;height:22px;padding:0;border:1.5px solid #5d6b86;border-radius:50%;background:#0a0e16e6;color:#5d6b86;transition:background .15s,color .15s,border-color .15s}
+.pick::after{content:"";position:absolute;inset:-7px}
+.pick .ic{width:13px;height:13px}
+.pick:hover{border-color:var(--ok);color:var(--ok)}
+.pick[aria-pressed="true"]{background:var(--ok);border-color:var(--ok);color:#06210f}
+.unit.picked .portrait{outline:2px solid var(--ok);outline-offset:1px}
+.unit.picked .portrait::after{content:"";position:absolute;inset:0;border-radius:6px;background:#5ccf8a2e;pointer-events:none}
+.unit.picked .uname{color:var(--ok)}
 
 /* tabuleiro hex */
 .board{--hh:calc(var(--hw)*1.1547);margin-top:14px;width:calc(var(--hw)*7.5);max-width:100%;padding-bottom:calc(var(--hh)*.25)}
@@ -225,6 +244,7 @@ input[type=checkbox]{width:18px;height:18px;accent-color:var(--gold)}
   .item{width:21px;height:21px}
   .portrait{width:58px;height:58px}
   .uname{max-width:68px;font-size:13px}
+  .cq{flex:1 1 150px}
   .drawer{width:100vw;border-radius:0}
   .field-row{grid-template-columns:1fr}
   .keys>div{grid-template-columns:1fr;gap:4px}

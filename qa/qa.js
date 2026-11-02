@@ -112,6 +112,63 @@ async function run(label, viewport, mobile) {
   ok(`[${label}] busca sem resultado mostra aviso`, await page.locator('#empty').isVisible());
   await page.fill('#q', '');
 
+  // busca por comp + checks "ja peguei"
+  const PK = 'tft-comps:picks:v1';
+  const c8 = () => page.locator('article.comp').nth(8);
+  await c8().scrollIntoViewIfNeeded();
+  const total8 = await c8().locator('.unit').count();
+  const first0 = await page.locator('article.comp').first().locator('.unit').count();
+  const nome0 = (await c8().locator('.uname').first().textContent()).trim();
+  await c8().locator('.cq').fill(nome0.slice(0, 3).toUpperCase());
+  const shown = await c8().locator('.unit').allInnerTexts();
+  ok(`[${label}] busca na comp filtra so ela`, shown.length >= 1 && shown.length < total8 && (await page.locator('article.comp').first().locator('.unit').count()) === first0 && (await page.inputValue('#q')) === '' && (await page.locator('article.comp').count()) === 16, `${shown.length}/${total8}`);
+  ok(`[${label}] busca na comp so mostra quem bate`, (await c8().locator('.uname').allTextContents()).every((t) => t.toLowerCase().includes(nome0.slice(0, 3).toLowerCase())));
+  await c8().locator('.cq').fill('zzzz');
+  ok(`[${label}] busca na comp sem resultado avisa`, (await c8().locator('.cnone').count()) === 1 && (await c8().locator('.unit').count()) === 0);
+  await c8().locator('.cq').fill('');
+  ok(`[${label}] busca na comp vazia mostra todos`, (await c8().locator('.unit').count()) === total8);
+  await c8().locator('.cq').fill('kayn');
+  await page.fill('#q', 'diana');
+  await page.fill('#q', '');
+  ok(`[${label}] busca da comp sobrevive a busca global`, (await c8().locator('.cq').inputValue()) === 'kayn');
+  await c8().locator('.cq').fill('');
+
+  ok(`[${label}] contador inicial 0/N`, (await c8().locator('.pcount').textContent()) === `0/${total8} pegos`);
+  ok(`[${label}] Limpar checks desabilitado com 0`, await c8().locator('button', { hasText: 'Limpar checks' }).isDisabled());
+  const pickBtn = (i) => c8().locator('.unit').nth(i).locator('button.pick');
+  const box = await pickBtn(0).boundingBox();
+  const probe = await page.evaluate(({ x, y }) => { const e = document.elementFromPoint(x, y); return e && e.closest('button.pick') ? 'pick' : (e && e.tagName); }, { x: box.x + box.width / 2 - 15, y: box.y + box.height / 2 + 15 });
+  ok(`[${label}] area de toque do check >= 32px`, box.width >= 22 && probe === 'pick', `btn=${box.width}x${box.height} probe=${probe}`);
+  await pickBtn(0).click();
+  await pickBtn(1).click();
+  ok(`[${label}] 2 checks -> contador 2/N`, (await c8().locator('.pcount').textContent()) === `2/${total8} pegos`);
+  ok(`[${label}] check usa aria-pressed e destaca`, (await pickBtn(0).getAttribute('aria-pressed')) === 'true' && (await c8().locator('.unit.picked').count()) === 2 && (await pickBtn(2).getAttribute('aria-pressed')) === 'false');
+  ok(`[${label}] check nao abre editor`, !(await page.locator('#editor').evaluate((d) => d.open)));
+  ok(`[${label}] check nao esconde imagem nem itens`, (await c8().locator('.unit.picked img.pic').first().evaluate((i) => i.naturalWidth > 0 && getComputedStyle(i).visibility !== 'hidden' && getComputedStyle(i).opacity === '1')) && (await c8().locator('.unit.picked .items img').count()) >= 1);
+  await pickBtn(1).click();
+  await pickBtn(1).click();
+  ok(`[${label}] clicar de novo alterna`, (await c8().locator('.pcount').textContent()) === `2/${total8} pegos`);
+  const store = await page.evaluate((k) => ({ picks: localStorage.getItem(k), comps: JSON.parse(localStorage.getItem('tft-comps:v1') || 'null') }), PK);
+  ok(`[${label}] checks em chave separada das comps`, !!store.picks && JSON.stringify(store.comps || {}).indexOf('"checks"') === -1);
+  await page.screenshot({ path: path.join(OUT, `${label}-8-checks.png`) });
+  await page.reload();
+  await page.waitForSelector('article.comp');
+  await c8().scrollIntoViewIfNeeded();
+  ok(`[${label}] checks persistem apos recarregar`, (await c8().locator('.pcount').textContent()) === `2/${total8} pegos` && (await c8().locator('.unit.picked').count()) === 2 && (await pickBtn(0).getAttribute('aria-pressed')) === 'true');
+  ok(`[${label}] check e por comp (outras comps zeradas)`, (await page.locator('.unit.picked').count()) === 2);
+  await c8().locator('button', { hasText: 'Limpar checks' }).click();
+  ok(`[${label}] Limpar checks zera sem confirmacao`, (await c8().locator('.pcount').textContent()) === `0/${total8} pegos` && (await c8().locator('.unit.picked').count()) === 0 && !(await page.locator('#ask').evaluate((d) => d.open)));
+  await page.reload();
+  await page.waitForSelector('article.comp');
+  ok(`[${label}] limpar persiste apos recarregar`, (await c8().locator('.pcount').textContent()) === `0/${total8} pegos`);
+  await page.evaluate((k) => localStorage.setItem(k, '{lixo'), PK);
+  await page.reload();
+  await page.waitForSelector('article.comp');
+  ok(`[${label}] checks corrompidos nao quebram`, (await page.locator('article.comp').count()) === 16);
+  await page.evaluate((k) => localStorage.removeItem(k), PK);
+  await page.reload();
+  await page.waitForSelector('article.comp');
+
   // ajuda com "?"
   await page.locator('body').click({ position: { x: 5, y: 5 } });
   await page.keyboard.press('?');

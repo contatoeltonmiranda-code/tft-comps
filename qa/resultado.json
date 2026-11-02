@@ -64,6 +64,84 @@
   "pass": true
  },
  {
+  "name": "[desktop] busca na comp filtra so ela",
+  "pass": true,
+  "extra": "1/8"
+ },
+ {
+  "name": "[desktop] busca na comp so mostra quem bate",
+  "pass": true
+ },
+ {
+  "name": "[desktop] busca na comp sem resultado avisa",
+  "pass": true
+ },
+ {
+  "name": "[desktop] busca na comp vazia mostra todos",
+  "pass": true
+ },
+ {
+  "name": "[desktop] busca da comp sobrevive a busca global",
+  "pass": true
+ },
+ {
+  "name": "[desktop] contador inicial 0/N",
+  "pass": true
+ },
+ {
+  "name": "[desktop] Limpar checks desabilitado com 0",
+  "pass": true
+ },
+ {
+  "name": "[desktop] area de toque do check >= 32px",
+  "pass": true,
+  "extra": "btn=22x22 probe=pick"
+ },
+ {
+  "name": "[desktop] 2 checks -> contador 2/N",
+  "pass": true
+ },
+ {
+  "name": "[desktop] check usa aria-pressed e destaca",
+  "pass": true
+ },
+ {
+  "name": "[desktop] check nao abre editor",
+  "pass": true
+ },
+ {
+  "name": "[desktop] check nao esconde imagem nem itens",
+  "pass": true
+ },
+ {
+  "name": "[desktop] clicar de novo alterna",
+  "pass": true
+ },
+ {
+  "name": "[desktop] checks em chave separada das comps",
+  "pass": true
+ },
+ {
+  "name": "[desktop] checks persistem apos recarregar",
+  "pass": true
+ },
+ {
+  "name": "[desktop] check e por comp (outras comps zeradas)",
+  "pass": true
+ },
+ {
+  "name": "[desktop] Limpar checks zera sem confirmacao",
+  "pass": true
+ },
+ {
+  "name": "[desktop] limpar persiste apos recarregar",
+  "pass": true
+ },
+ {
+  "name": "[desktop] checks corrompidos nao quebram",
+  "pass": true
+ },
+ {
   "name": "[desktop] \"?\" abre ajuda",
   "pass": true
  },
@@ -223,6 +301,84 @@
  },
  {
   "name": "[mobile] busca sem resultado mostra aviso",
+  "pass": true
+ },
+ {
+  "name": "[mobile] busca na comp filtra so ela",
+  "pass": true,
+  "extra": "1/8"
+ },
+ {
+  "name": "[mobile] busca na comp so mostra quem bate",
+  "pass": true
+ },
+ {
+  "name": "[mobile] busca na comp sem resultado avisa",
+  "pass": true
+ },
+ {
+  "name": "[mobile] busca na comp vazia mostra todos",
+  "pass": true
+ },
+ {
+  "name": "[mobile] busca da comp sobrevive a busca global",
+  "pass": true
+ },
+ {
+  "name": "[mobile] contador inicial 0/N",
+  "pass": true
+ },
+ {
+  "name": "[mobile] Limpar checks desabilitado com 0",
+  "pass": true
+ },
+ {
+  "name": "[mobile] area de toque do check >= 32px",
+  "pass": true,
+  "extra": "btn=22x22 probe=pick"
+ },
+ {
+  "name": "[mobile] 2 checks -> contador 2/N",
+  "pass": true
+ },
+ {
+  "name": "[mobile] check usa aria-pressed e destaca",
+  "pass": true
+ },
+ {
+  "name": "[mobile] check nao abre editor",
+  "pass": true
+ },
+ {
+  "name": "[mobile] check nao esconde imagem nem itens",
+  "pass": true
+ },
+ {
+  "name": "[mobile] clicar de novo alterna",
+  "pass": true
+ },
+ {
+  "name": "[mobile] checks em chave separada das comps",
+  "pass": true
+ },
+ {
+  "name": "[mobile] checks persistem apos recarregar",
+  "pass": true
+ },
+ {
+  "name": "[mobile] check e por comp (outras comps zeradas)",
+  "pass": true
+ },
+ {
+  "name": "[mobile] Limpar checks zera sem confirmacao",
+  "pass": true
+ },
+ {
+  "name": "[mobile] limpar persiste apos recarregar",
+  "pass": true
+ },
+ {
+  "name": "[mobile] checks corrompidos nao quebram",
   "pass": true
  },
  {

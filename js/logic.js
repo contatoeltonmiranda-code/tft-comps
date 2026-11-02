@@ -115,6 +115,62 @@
     return results;
   }
 
+  const squash = (s) => norm(s).replace(/[^a-z0-9]/g, '');
+
+  function filterUnits(units, term, catalog) {
+    const list = Array.isArray(units) ? units : [];
+    const tk = squash(term);
+    if (!tk) return list.slice();
+    const idx = indexCatalog(catalog);
+    return list.filter((u) => {
+      const champ = idx.champs.get(u.c);
+      return champ && squash(champ.n).includes(tk);
+    });
+  }
+
+  const MAX_CHECK_COMPS = 500;
+  const MAX_CHECK_UNITS = 30;
+  const okId = (v) => typeof v === 'string' && v.length > 0 && v.length <= 60;
+
+  function sanitizeChecks(raw) {
+    const out = {};
+    if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return out;
+    Object.keys(raw).slice(0, MAX_CHECK_COMPS).forEach((compId) => {
+      if (compId === '__proto__' || !okId(compId) || !Array.isArray(raw[compId])) return;
+      const list = [];
+      raw[compId].forEach((id) => {
+        if (okId(id) && !list.includes(id) && list.length < MAX_CHECK_UNITS) list.push(id);
+      });
+      if (list.length) out[compId] = list;
+    });
+    return out;
+  }
+
+  function isChecked(checks, compId, champId) {
+    const list = checks && Object.prototype.hasOwnProperty.call(checks, compId) ? checks[compId] : null;
+    return !!list && list.includes(champId);
+  }
+
+  function toggleCheck(checks, compId, champId) {
+    const next = Object.assign({}, checks);
+    const list = isChecked(checks, compId, champId) ? checks[compId].filter((id) => id !== champId) : (checks[compId] || []).concat(champId);
+    if (list.length) next[compId] = list; else delete next[compId];
+    return next;
+  }
+
+  function clearChecks(checks, compId) {
+    const next = Object.assign({}, checks);
+    delete next[compId];
+    return next;
+  }
+
+  function countChecked(checks, comp) {
+    const ids = new Set(allUnits(comp).map((u) => u.c));
+    let done = 0;
+    ids.forEach((id) => { if (isChecked(checks, comp.id, id)) done++; });
+    return { done, total: ids.size };
+  }
+
   function newId() {
     const r = Math.random().toString(36).slice(2, 8);
     return 'c-' + Date.now().toString(36) + '-' + r;
@@ -215,7 +271,7 @@
     return { comps: comps.concat(added), seedVersao: Math.max(seen, seedVersion), excluidos, added: added.map((c) => c.id) };
   }
 
-  const api = { ROWS, COLS, MAX_ITEMS, MAX_ALT, norm, indexCatalog, activeTraits, searchComps, duplicateComp, sanitizeImport, mergeSeed, newId, clone };
+  const api = { ROWS, COLS, MAX_ITEMS, MAX_ALT, norm, indexCatalog, activeTraits, searchComps, filterUnits, sanitizeChecks, isChecked, toggleCheck, clearChecks, countChecked, duplicateComp, sanitizeImport, mergeSeed, newId, clone };
   root.TFTLogic = api;
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
 })(typeof window !== 'undefined' ? window : globalThis);

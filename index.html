@@ -31,6 +31,7 @@
   <symbol id="i-up" viewBox="0 0 20 20"><path d="M10 13V4M6.2 7.2L10 3.5l3.8 3.7M4 16h12" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
   <symbol id="i-x" viewBox="0 0 20 20"><path d="M5 5l10 10M15 5L5 15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
   <symbol id="i-hex" viewBox="0 0 20 20"><path d="M10 2.5l6.5 3.75v7.5L10 17.5l-6.5-3.75v-7.5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+  <symbol id="i-check" viewBox="0 0 20 20"><path d="M4.5 10.5l3.7 3.7 7.3-8" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
   <symbol id="i-star" viewBox="0 0 20 20"><path d="M10 1.8l2.4 5.2 5.6.6-4.2 3.8 1.2 5.5L10 14.1l-5 2.8 1.2-5.5L2 7.6l5.6-.6z" fill="currentColor"/></symbol>
 </svg>
 
@@ -146,9 +147,11 @@
       <div><dt><kbd>/</kbd></dt><dd>Foca a busca.</dd></div>
       <div><dt><kbd>N</kbd></dt><dd>Cria uma nova comp.</dd></div>
       <div><dt><kbd>Esc</kbd></dt><dd>Fecha a janela aberta.</dd></div>
+      <div><dt>Busca na comp</dt><dd>O campo dentro de cada comp mostra só os campeões dela que batem com o texto. A busca do topo continua separada.</dd></div>
+      <div><dt>Check no campeão</dt><dd>Marca “já peguei” (principal e flex). O contador mostra quantos faltam e “Limpar checks” zera a comp para a próxima partida.</dd></div>
     </dl>
     <h3>Dados</h3>
-    <p class="small">As comps ficam salvas só neste navegador. Use Exportar para guardar um arquivo JSON e Importar para trazer de volta.</p>
+    <p class="small">As comps e os checks ficam salvos só neste navegador (os checks não vão no arquivo exportado). Use Exportar para guardar um arquivo JSON e Importar para trazer de volta.</p>
     <button type="button" class="btn" id="btn-reset">Restaurar comps originais</button>
   </div>
 </dialog>
