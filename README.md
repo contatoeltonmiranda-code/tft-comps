@@ -7,9 +7,9 @@ Mini sistema pessoal de composições de Teamfight Tactics (set atual). HTML/CSS
 - Servidor local: `python -m http.server 8765` dentro desta pasta e abrir `http://127.0.0.1:8765/index.html`.
 - Também funciona com duplo clique em `index.html` (testado via `file://`).
 
-Recursos: lista de comps com traços ativos (calculados dos campeões e emblemas), campeões com custo e estrelas alvo, itens principais e alternativos (borda tracejada), flex, tabuleiro hex 4x7, busca por campeão/traço/item, editar/duplicar/excluir, exportar/importar JSON, atalhos com `?`. Cada comp tem busca própria de campeão e check "já peguei" por campeão, com contador e "Limpar checks". Dados ficam em `localStorage` (`tft-comps:v1`, com `seedVersao` e `excluidos`); os checks ficam em outra chave (`tft-comps:picks:v1`) e não entram no export.
+Recursos: lista de comps com traços ativos (calculados dos campeões e emblemas), campeões com custo e estrelas alvo, itens principais e alternativos (borda tracejada), flex, tabuleiro hex 4x7, busca por campeão/traço/item, editar/duplicar/excluir, exportar/importar JSON, atalhos com `?`. Cada comp tem busca própria de campeão e check "já peguei" por campeão, com contador e "Limpar checks desta comp" (direto, ativo só se a comp tem check). O botão "Limpar checks" no topo (tecla `L`) desmarca os checks de todas as comps, com confirmação, e fica desativado sem checks; só mexe nos picks, nunca nas comps. Dados ficam em `localStorage` (`tft-comps:v1`, com `seedVersao` e `excluidos`); os checks ficam em outra chave (`tft-comps:picks:v1`) e não entram no export.
 
-Atalhos do app: `?` ajuda, `/` busca, `N` nova comp, `Esc` fecha.
+Atalhos do app: `?` ajuda, `/` busca, `N` nova comp, `L` limpar todos os checks (pede confirmação), `Esc` fecha. `/`, `N` e `L` são ignorados enquanto digita ou com janela aberta.
 
 ## Dados
 

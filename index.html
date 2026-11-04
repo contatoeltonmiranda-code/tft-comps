@@ -32,6 +32,7 @@
   <symbol id="i-x" viewBox="0 0 20 20"><path d="M5 5l10 10M15 5L5 15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
   <symbol id="i-hex" viewBox="0 0 20 20"><path d="M10 2.5l6.5 3.75v7.5L10 17.5l-6.5-3.75v-7.5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
   <symbol id="i-check" viewBox="0 0 20 20"><path d="M4.5 10.5l3.7 3.7 7.3-8" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-uncheck" viewBox="0 0 20 20"><path d="M4.5 10.5l3.7 3.7 7.3-8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" opacity=".55"/><path d="M3.5 3.5l13 13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
   <symbol id="i-star" viewBox="0 0 20 20"><path d="M10 1.8l2.4 5.2 5.6.6-4.2 3.8 1.2 5.5L10 14.1l-5 2.8 1.2-5.5L2 7.6l5.6-.6z" fill="currentColor"/></symbol>
 </svg>
 
@@ -44,6 +45,7 @@
     <button type="button" class="btn primary" id="btn-new"><svg class="ic"><use href="#i-plus"/></svg><span>Nova comp</span></button>
     <button type="button" class="btn" id="btn-import"><svg class="ic"><use href="#i-up"/></svg><span>Importar</span></button>
     <button type="button" class="btn" id="btn-export"><svg class="ic"><use href="#i-down"/></svg><span>Exportar</span></button>
+    <button type="button" class="btn" id="btn-clear-all" aria-label="Limpar todos os checks" title="Limpar todos os checks (L)" disabled><svg class="ic"><use href="#i-uncheck"/></svg><span>Limpar checks</span><kbd>L</kbd></button>
     <button type="button" class="btn" id="btn-help" aria-haspopup="dialog"><svg class="ic"><use href="#i-help"/></svg><span>Atalhos</span><kbd>?</kbd></button>
   </div>
 </header>
@@ -146,9 +148,10 @@
       <div><dt><kbd>?</kbd></dt><dd>Abre e fecha esta ajuda.</dd></div>
       <div><dt><kbd>/</kbd></dt><dd>Foca a busca.</dd></div>
       <div><dt><kbd>N</kbd></dt><dd>Cria uma nova comp.</dd></div>
+      <div><dt><kbd>L</kbd></dt><dd>Limpa os checks “já peguei” de todas as comps (pede confirmação). Desativado quando não há checks.</dd></div>
       <div><dt><kbd>Esc</kbd></dt><dd>Fecha a janela aberta.</dd></div>
       <div><dt>Busca na comp</dt><dd>O campo dentro de cada comp mostra só os campeões dela que batem com o texto. A busca do topo continua separada.</dd></div>
-      <div><dt>Check no campeão</dt><dd>Marca “já peguei” (principal e flex). O contador mostra quantos faltam e “Limpar checks” zera a comp para a próxima partida.</dd></div>
+      <div><dt>Check no campeão</dt><dd>Marca “já peguei” (principal e flex). O contador mostra quantos faltam e “Limpar checks desta comp” zera só ela. “Limpar checks” no topo zera todas as comps para a próxima partida.</dd></div>
     </dl>
     <h3>Dados</h3>
     <p class="small">As comps e os checks ficam salvos só neste navegador (os checks não vão no arquivo exportado). Use Exportar para guardar um arquivo JSON e Importar para trazer de volta.</p>

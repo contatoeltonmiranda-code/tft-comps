@@ -90,6 +90,21 @@
     }
   }
 
+  function updateClearAll() {
+    $('#btn-clear-all').disabled = L.summarizeChecks(state.picks).checks === 0;
+  }
+
+  async function clearAllPicks() {
+    const { checks, comps } = L.summarizeChecks(state.picks);
+    if (!checks) return;
+    const ok = await ask('Limpar checks', 'Desmarcar ' + checks + (checks === 1 ? ' campeão' : ' campeões') + ' em ' + comps + (comps === 1 ? ' comp' : ' comps') + '? As comps não mudam.', [CANCEL, { label: 'Limpar checks', value: true, kind: 'danger' }]);
+    if (!ok) return;
+    state.picks = L.clearAllChecks(state.picks);
+    savePicks();
+    render();
+    toast('Checks limpos.');
+  }
+
   function syncExcluidos() {
     const have = new Set(state.comps.map((c) => c.id));
     state.excluidos = SEED.map((c) => c.id).filter((id) => !have.has(id));
@@ -206,13 +221,14 @@
       el.append(groups);
     } else {
       const count = h('span', { class: 'pcount', 'aria-live': 'polite' });
-      const clear = h('button', { type: 'button', class: 'btn ghost sm', onclick: () => { state.picks = L.clearChecks(state.picks, comp.id); savePicks(); fill(); } }, 'Limpar checks');
+      const clear = h('button', { type: 'button', class: 'btn ghost sm', 'data-act': 'clear-comp', onclick: () => { state.picks = L.clearChecks(state.picks, comp.id); savePicks(); fill(); } }, 'Limpar checks desta comp');
       const input = h('input', { type: 'search', class: 'cq', autocomplete: 'off', spellcheck: 'false', maxlength: '40', placeholder: 'Buscar campeão na comp', 'aria-label': 'Buscar campeão em ' + comp.nome, value: state.compQuery.get(comp.id) || '' });
       const updateCount = () => {
         const { done, total } = L.countChecked(state.picks, comp);
         count.textContent = done + '/' + total + ' pegos';
         count.classList.toggle('done', done === total);
         clear.disabled = done === 0;
+        updateClearAll();
       };
       const unit = (u) => unitEl(u, hits, {
         on: L.isChecked(state.picks, comp.id, u.c),
@@ -258,6 +274,7 @@
     $('#btn-clear').hidden = !q;
     $('#empty').hidden = res.length > 0;
     $('#empty').textContent = state.comps.length ? 'Nenhuma comp encontrada para essa busca.' : 'Nenhuma comp salva. Crie uma em “Nova comp” ou restaure as originais em Atalhos.';
+    updateClearAll();
   }
 
   /* ---------- dialogs genericos ---------- */
@@ -528,6 +545,7 @@
     $('#btn-clear').addEventListener('click', () => { state.query = ''; $('#q').value = ''; render(); $('#q').focus(); });
     $('#btn-new').addEventListener('click', () => openEditor(null));
     $('#btn-help').addEventListener('click', toggleHelp);
+    $('#btn-clear-all').addEventListener('click', clearAllPicks);
     $('#help-close').addEventListener('click', () => $('#help').close());
     $('#btn-export').addEventListener('click', exportJson);
     $('#btn-import').addEventListener('click', () => $('#file').click());
@@ -562,6 +580,7 @@
       if (typing(e.target) || document.querySelector('dialog[open]')) return;
       if (e.key === '/') { e.preventDefault(); $('#q').focus(); }
       else if (e.key === 'n' || e.key === 'N') { e.preventDefault(); openEditor(null); }
+      else if (e.key === 'l' || e.key === 'L') { e.preventDefault(); clearAllPicks(); }
     });
   }
 

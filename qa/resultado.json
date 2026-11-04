@@ -138,6 +138,77 @@
   "pass": true
  },
  {
+  "name": "[desktop] Limpar checks global desabilitado sem checks",
+  "pass": true
+ },
+ {
+  "name": "[desktop] Limpar checks global visivel no topo",
+  "pass": true,
+  "extra": "183.0625px"
+ },
+ {
+  "name": "[desktop] global habilita ao marcar check",
+  "pass": true
+ },
+ {
+  "name": "[desktop] botao por comp so ativo na comp com check",
+  "pass": true
+ },
+ {
+  "name": "[desktop] global pede confirmacao",
+  "pass": true,
+  "extra": "Desmarcar 4 campeões em 3 comps? As comps não mudam."
+ },
+ {
+  "name": "[desktop] cancelar global mantem checks",
+  "pass": true
+ },
+ {
+  "name": "[desktop] limpar por comp zera so ela e atualiza global",
+  "pass": true
+ },
+ {
+  "name": "[desktop] confirmar global zera todas as comps",
+  "pass": true
+ },
+ {
+  "name": "[desktop] limpar global nao altera as comps",
+  "pass": true
+ },
+ {
+  "name": "[desktop] global persiste zerado apos recarregar",
+  "pass": true
+ },
+ {
+  "name": "[desktop] atalho L sem checks nao abre confirmacao",
+  "pass": true
+ },
+ {
+  "name": "[desktop] atalho L ignorado ao digitar",
+  "pass": true
+ },
+ {
+  "name": "[desktop] atalho L abre confirmacao",
+  "pass": true
+ },
+ {
+  "name": "[desktop] Esc cancela e mantem check",
+  "pass": true
+ },
+ {
+  "name": "[desktop] atalho L + confirmar zera",
+  "pass": true
+ },
+ {
+  "name": "[desktop] ajuda documenta atalho L",
+  "pass": true
+ },
+ {
+  "name": "[desktop] topo sem rolagem horizontal com botao novo",
+  "pass": true,
+  "extra": "overflow=0"
+ },
+ {
   "name": "[desktop] checks corrompidos nao quebram",
   "pass": true
  },
@@ -376,6 +447,77 @@
  {
   "name": "[mobile] limpar persiste apos recarregar",
   "pass": true
+ },
+ {
+  "name": "[mobile] Limpar checks global desabilitado sem checks",
+  "pass": true
+ },
+ {
+  "name": "[mobile] Limpar checks global visivel no topo",
+  "pass": true,
+  "extra": "44px"
+ },
+ {
+  "name": "[mobile] global habilita ao marcar check",
+  "pass": true
+ },
+ {
+  "name": "[mobile] botao por comp so ativo na comp com check",
+  "pass": true
+ },
+ {
+  "name": "[mobile] global pede confirmacao",
+  "pass": true,
+  "extra": "Desmarcar 4 campeões em 3 comps? As comps não mudam."
+ },
+ {
+  "name": "[mobile] cancelar global mantem checks",
+  "pass": true
+ },
+ {
+  "name": "[mobile] limpar por comp zera so ela e atualiza global",
+  "pass": true
+ },
+ {
+  "name": "[mobile] confirmar global zera todas as comps",
+  "pass": true
+ },
+ {
+  "name": "[mobile] limpar global nao altera as comps",
+  "pass": true
+ },
+ {
+  "name": "[mobile] global persiste zerado apos recarregar",
+  "pass": true
+ },
+ {
+  "name": "[mobile] atalho L sem checks nao abre confirmacao",
+  "pass": true
+ },
+ {
+  "name": "[mobile] atalho L ignorado ao digitar",
+  "pass": true
+ },
+ {
+  "name": "[mobile] atalho L abre confirmacao",
+  "pass": true
+ },
+ {
+  "name": "[mobile] Esc cancela e mantem check",
+  "pass": true
+ },
+ {
+  "name": "[mobile] atalho L + confirmar zera",
+  "pass": true
+ },
+ {
+  "name": "[mobile] ajuda documenta atalho L",
+  "pass": true
+ },
+ {
+  "name": "[mobile] topo sem rolagem horizontal com botao novo",
+  "pass": true,
+  "extra": "overflow=0"
  },
  {
   "name": "[mobile] checks corrompidos nao quebram",

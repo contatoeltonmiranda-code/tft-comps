@@ -164,6 +164,20 @@
     return next;
   }
 
+  function clearAllChecks() {
+    return {};
+  }
+
+  function summarizeChecks(checks) {
+    let n = 0;
+    let comps = 0;
+    Object.keys(checks || {}).forEach((k) => {
+      const list = Array.isArray(checks[k]) ? checks[k] : [];
+      if (list.length) { n += list.length; comps++; }
+    });
+    return { checks: n, comps };
+  }
+
   function countChecked(checks, comp) {
     const ids = new Set(allUnits(comp).map((u) => u.c));
     let done = 0;
@@ -314,7 +328,7 @@
     return { comps: list.concat(back), seedVersao: Math.max(seen, seedVersion), excluidos, added: added.map((c) => c.id), positioned };
   }
 
-  const api = { ROWS, COLS, MAX_ITEMS, MAX_ALT, norm, indexCatalog, activeTraits, searchComps, filterUnits, sanitizeChecks, isChecked, toggleCheck, clearChecks, countChecked, duplicateComp, sanitizeImport, mergeSeed, newId, clone };
+  const api = { ROWS, COLS, MAX_ITEMS, MAX_ALT, norm, indexCatalog, activeTraits, searchComps, filterUnits, sanitizeChecks, isChecked, toggleCheck, clearChecks, clearAllChecks, summarizeChecks, countChecked, duplicateComp, sanitizeImport, mergeSeed, newId, clone };
   root.TFTLogic = api;
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
 })(typeof window !== 'undefined' ? window : globalThis);

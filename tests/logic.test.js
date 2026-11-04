@@ -285,6 +285,27 @@ test('clearChecks limpa so a comp pedida', () => {
   assert.deepEqual(L.clearChecks(s, 'nada'), s);
 });
 
+test('clearAllChecks zera todas as comps sem mutar o estado anterior', () => {
+  const s = { k1: ['A', 'B'], k2: ['A'] };
+  assert.deepEqual(L.clearAllChecks(s), {});
+  assert.deepEqual(s, { k1: ['A', 'B'], k2: ['A'] });
+  assert.deepEqual(L.clearAllChecks({}), {});
+  assert.deepEqual(L.clearAllChecks(null), {});
+});
+
+test('summarizeChecks conta checks e comps com check (inclui ids fora da comp)', () => {
+  assert.deepEqual(L.summarizeChecks({}), { checks: 0, comps: 0 });
+  assert.deepEqual(L.summarizeChecks(null), { checks: 0, comps: 0 });
+  assert.deepEqual(L.summarizeChecks({ k1: ['A', 'B'], k2: ['A'], k3: [] }), { checks: 3, comps: 2 });
+});
+
+test('limpar tudo nao toca nas comps nem no save das comps', () => {
+  const comps = [pickComp];
+  const before = JSON.stringify(comps);
+  L.clearAllChecks({ k1: ['A'] });
+  assert.equal(JSON.stringify(comps), before);
+});
+
 test('countChecked conta main+flex, ignora ids que nao estao na comp e duplicados', () => {
   assert.deepEqual(L.countChecked({}, pickComp), { done: 0, total: 5 });
   assert.deepEqual(L.countChecked({ k1: ['A', 'D', 'ZZ'] }, pickComp), { done: 2, total: 5 });
