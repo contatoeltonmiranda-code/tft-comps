@@ -60,6 +60,85 @@ window.TFT_SEED = [
   "topo": true
  },
  {
+  "nome": "Lutador Florescer Adaptador",
+  "estilo": "Nível 8",
+  "nota": "Print em combate (sem posições). Unidades deduzidas do painel de traços (Cáustico 1, Lutador 4, Adaptador 3, Florescer 3, Colosso 2, Primitiva 2) com 1 Emblema de Lutador, que aparece equipado na Master Yi. Itens lidos por comparação de pixels; estrelas lidas do ícone da barra de vida.",
+  "fonte": "refs/16.png",
+  "main": [
+   {
+    "c": "DA_18_Yorick",
+    "s": 1,
+    "i": [],
+    "a": []
+   },
+   {
+    "c": "DA_Vi18",
+    "s": 1,
+    "i": [],
+    "a": []
+   },
+   {
+    "c": "DA_18_GnarSmall",
+    "s": 2,
+    "i": [],
+    "a": []
+   },
+   {
+    "c": "DA_18_Sett",
+    "s": 1,
+    "i": [
+     "DA_Component_NeedlesslyLargeRod",
+     "DA_SpiritVisage"
+    ],
+    "a": []
+   },
+   {
+    "c": "DA_Nidalee18_AP",
+    "s": 2,
+    "i": [
+     "DA_StrikersFlail",
+     "DA_JeweledGauntlet",
+     "DA_GuinsoosRageblade"
+    ],
+    "a": []
+   },
+   {
+    "c": "DA_KogMaw18_AD",
+    "s": 3,
+    "i": [
+     "DA_Deathblade",
+     "DA_Quicksilver",
+     "DA_RedBuff"
+    ],
+    "a": []
+   },
+   {
+    "c": "DA_18_MasterYi_AD",
+    "s": 3,
+    "i": [
+     "DA_Artifact_RapidFireCannon",
+     "DA_18_EmblemBrawler"
+    ],
+    "a": []
+   },
+   {
+    "c": "DA_Krug18",
+    "s": 3,
+    "i": [
+     "DA_GargoyleStoneplate",
+     "DA_WarmogsArmor",
+     "DA_DragonsClaw"
+    ],
+    "a": []
+   }
+  ],
+  "flex": [],
+  "id": "seed-18",
+  "desde": 4,
+  "topo": true,
+  "abaixoDe": "seed-17"
+ },
+ {
   "nome": "Vivaz",
   "estilo": "Slowroll Nvl 7",
   "nota": "Tente obter campeões 3 estrelas no Nvl 7 roletando o excesso de ouro e mantendo-se acima de 50g.",
@@ -1307,4 +1386,4 @@ window.TFT_SEED = [
   "desde": 2
  }
 ];
-window.TFT_SEED_VERSION = 3;
+window.TFT_SEED_VERSION = 4;

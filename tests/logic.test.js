@@ -346,3 +346,44 @@ test('mergeSeed topo: sem dados salvos segue a ordem do seed', () => {
   const seedTopoPrimeiro = [topSeed[3]].concat(topSeed.slice(0, 3));
   assert.deepEqual(L.mergeSeed(null, seedTopoPrimeiro, 3, catalog).comps.map((c) => c.id), ['s4', 's1', 's2', 's3']);
 });
+
+/* ---------- comp nova logo abaixo de outra do topo (abaixoDe) ---------- */
+const sA = { id: 'sA', nome: 'A', desde: 3, topo: true, main: [u('A')], flex: [] };
+const sB = { id: 'sB', nome: 'B', desde: 4, topo: true, abaixoDe: 'sA', main: [u('B')], flex: [] };
+const belowSeed = [sA, sB].concat(seedRaw);
+const saved = (ids, v) => ({ versao: 1, seedVersao: v, excluidos: [], comps: ids.map((id) => ({ id, nome: id, main: [], flex: [] })) });
+
+test('mergeSeed abaixoDe: sem dados salvos segue a ordem do seed (A, B)', () => {
+  assert.deepEqual(L.mergeSeed(null, belowSeed, 4, catalog).comps.map((c) => c.id).slice(0, 2), ['sA', 'sB']);
+});
+
+test('mergeSeed abaixoDe: quem tem versao 3 (A no topo) recebe B em 2o, nao em 1o', () => {
+  const r = L.mergeSeed(saved(['sA', 's1', 's2'], 3), belowSeed, 4, catalog);
+  assert.deepEqual(r.comps.map((c) => c.id), ['sA', 'sB', 's1', 's2']);
+  assert.deepEqual(r.added, ['sB']);
+  assert.equal(r.seedVersao, 4);
+});
+
+test('mergeSeed abaixoDe: quem tem versao 2 recebe A em 1o e B em 2o', () => {
+  const r = L.mergeSeed(saved(['s1', 's2'], 2), belowSeed, 4, catalog);
+  assert.deepEqual(r.comps.map((c) => c.id), ['sA', 'sB', 's1', 's2']);
+});
+
+test('mergeSeed abaixoDe: A movida ou excluida pelo usuario nao quebra, B cai para o topo', () => {
+  assert.deepEqual(L.mergeSeed(saved(['s1', 'sA', 's2'], 3), belowSeed, 4, catalog).comps.map((c) => c.id), ['sB', 's1', 'sA', 's2']);
+  const excl = { versao: 1, seedVersao: 3, excluidos: ['sA'], comps: [{ id: 's1', nome: 's1', main: [], flex: [] }] };
+  assert.deepEqual(L.mergeSeed(excl, belowSeed, 4, catalog).comps.map((c) => c.id), ['sB', 's1']);
+  const excl2 = { versao: 1, seedVersao: 2, excluidos: ['sA'], comps: [{ id: 's1', nome: 's1', main: [], flex: [] }] };
+  assert.deepEqual(L.mergeSeed(excl2, belowSeed, 4, catalog).comps.map((c) => c.id), ['sB', 's1']);
+});
+
+test('mergeSeed abaixoDe: preserva edicao, nao volta se B excluida e e idempotente', () => {
+  const ed = { versao: 1, seedVersao: 3, excluidos: [], comps: [{ id: 'sA', nome: 'A editada', main: [u('A', { s: 3 })], flex: [] }, { id: 's1', nome: 's1', main: [], flex: [] }] };
+  const r = L.mergeSeed(ed, belowSeed, 4, catalog);
+  assert.equal(r.comps[0].nome, 'A editada');
+  assert.equal(r.comps[0].main[0].s, 3);
+  const exB = { versao: 1, seedVersao: 3, excluidos: ['sB'], comps: [{ id: 'sA', nome: 'A', main: [], flex: [] }] };
+  assert.deepEqual(L.mergeSeed(exB, belowSeed, 4, catalog).comps.map((c) => c.id), ['sA']);
+  const vista = L.mergeSeed(saved(['sA', 's1'], 3), belowSeed, 4, catalog);
+  assert.deepEqual(L.mergeSeed({ ...vista }, belowSeed, 4, catalog).comps.map((c) => c.id), ['sA', 'sB', 's1']);
+});

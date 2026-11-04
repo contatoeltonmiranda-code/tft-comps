@@ -1,8 +1,8 @@
 [
  {
-  "name": "[desktop] 16 comps renderizadas",
+  "name": "[desktop] 18 comps renderizadas",
   "pass": true,
-  "extra": "n=16"
+  "extra": "n=18"
  },
  {
   "name": "[desktop] botao Limpar oculto sem busca",
@@ -11,7 +11,7 @@
  {
   "name": "[desktop] imagens da lista carregam",
   "pass": true,
-  "extra": "total=434 falhas=0 "
+  "extra": "total=476 falhas=0 "
  },
  {
   "name": "[desktop] imagens do catalogo completo carregam",
@@ -218,7 +218,7 @@
   "pass": true
  },
  {
-  "name": "[desktop] importar restaura 17",
+  "name": "[desktop] importar restaura 19",
   "pass": true
  },
  {
@@ -232,7 +232,7 @@
  {
   "name": "[desktop] imagens apos todos os fluxos",
   "pass": true,
-  "extra": "total=436 falhas=0"
+  "extra": "total=478 falhas=0"
  },
  {
   "name": "[desktop] sem erros de console/rede",
@@ -240,9 +240,9 @@
   "extra": ""
  },
  {
-  "name": "[mobile] 16 comps renderizadas",
+  "name": "[mobile] 18 comps renderizadas",
   "pass": true,
-  "extra": "n=16"
+  "extra": "n=18"
  },
  {
   "name": "[mobile] botao Limpar oculto sem busca",
@@ -251,7 +251,7 @@
  {
   "name": "[mobile] imagens da lista carregam",
   "pass": true,
-  "extra": "total=434 falhas=0 "
+  "extra": "total=476 falhas=0 "
  },
  {
   "name": "[mobile] imagens do catalogo completo carregam",
@@ -458,7 +458,7 @@
   "pass": true
  },
  {
-  "name": "[mobile] importar restaura 17",
+  "name": "[mobile] importar restaura 19",
   "pass": true
  },
  {
@@ -472,7 +472,7 @@
  {
   "name": "[mobile] imagens apos todos os fluxos",
   "pass": true,
-  "extra": "total=436 falhas=0"
+  "extra": "total=478 falhas=0"
  },
  {
   "name": "[mobile] sem erros de console/rede",
@@ -480,7 +480,7 @@
   "extra": ""
  },
  {
-  "name": "[desktop] migracao: legado 15 -> 16 comps",
+  "name": "[desktop] migracao: legado 15 -> 18 comps",
   "pass": true,
   "extra": "legado=15"
  },
@@ -497,6 +497,11 @@
   "pass": true
  },
  {
+  "name": "[desktop] migracao: Enfeitiçador 1o, Lutador Florescer 2o",
+  "pass": true,
+  "extra": "Enfeitiçador 6 | Lutador Florescer Adaptador"
+ },
+ {
   "name": "[desktop] migracao: comp excluida nao volta",
   "pass": true
  },
@@ -506,7 +511,7 @@
   "extra": ""
  },
  {
-  "name": "[mobile] migracao: legado 15 -> 16 comps",
+  "name": "[mobile] migracao: legado 15 -> 18 comps",
   "pass": true,
   "extra": "legado=15"
  },
@@ -523,11 +528,216 @@
   "pass": true
  },
  {
+  "name": "[mobile] migracao: Enfeitiçador 1o, Lutador Florescer 2o",
+  "pass": true,
+  "extra": "Enfeitiçador 6 | Lutador Florescer Adaptador"
+ },
+ {
   "name": "[mobile] migracao: comp excluida nao volta",
   "pass": true
  },
  {
   "name": "[mobile] migracao: sem erros de console",
+  "pass": true,
+  "extra": ""
+ },
+ {
+  "name": "[desktop] ordem primeira vez: topo",
+  "pass": true,
+  "extra": "Enfeitiçador 6 | Lutador Florescer Adaptador | Vivaz total=18"
+ },
+ {
+  "name": "[desktop] ordem primeira vez: estavel apos recarregar",
+  "pass": true
+ },
+ {
+  "name": "[desktop] ordem primeira vez: seedVersao salva = 4",
+  "pass": true
+ },
+ {
+  "name": "[desktop] ordem primeira vez: card da nova mostra os tracos",
+  "pass": true,
+  "extra": ""
+ },
+ {
+  "name": "[desktop] ordem primeira vez: sem erros de console",
+  "pass": true,
+  "extra": ""
+ },
+ {
+  "name": "[desktop] ordem seedVersao 3 (Enfeitiçador no topo): topo",
+  "pass": true,
+  "extra": "Enfeitiçador 6 | Lutador Florescer Adaptador | Vivaz total=18"
+ },
+ {
+  "name": "[desktop] ordem seedVersao 3 (Enfeitiçador no topo): estavel apos recarregar",
+  "pass": true
+ },
+ {
+  "name": "[desktop] ordem seedVersao 3 (Enfeitiçador no topo): seedVersao salva = 4",
+  "pass": true
+ },
+ {
+  "name": "[desktop] ordem seedVersao 3 (Enfeitiçador no topo): card da nova mostra os tracos",
+  "pass": true,
+  "extra": ""
+ },
+ {
+  "name": "[desktop] ordem seedVersao 3 (Enfeitiçador no topo): sem erros de console",
+  "pass": true,
+  "extra": ""
+ },
+ {
+  "name": "[desktop] ordem versao 2 antiga: topo",
+  "pass": true,
+  "extra": "Enfeitiçador 6 | Lutador Florescer Adaptador | Vivaz total=18"
+ },
+ {
+  "name": "[desktop] ordem versao 2 antiga: estavel apos recarregar",
+  "pass": true
+ },
+ {
+  "name": "[desktop] ordem versao 2 antiga: seedVersao salva = 4",
+  "pass": true
+ },
+ {
+  "name": "[desktop] ordem versao 2 antiga: sem erros de console",
+  "pass": true,
+  "extra": ""
+ },
+ {
+  "name": "[desktop] ordem seedVersao 3, Enfeitiçador excluida: topo",
+  "pass": true,
+  "extra": "Lutador Florescer Adaptador | Vivaz | Vanguarda Congregação das Bruxas Morgana total=17"
+ },
+ {
+  "name": "[desktop] ordem seedVersao 3, Enfeitiçador excluida: estavel apos recarregar",
+  "pass": true
+ },
+ {
+  "name": "[desktop] ordem seedVersao 3, Enfeitiçador excluida: seedVersao salva = 4",
+  "pass": true
+ },
+ {
+  "name": "[desktop] ordem seedVersao 3, Enfeitiçador excluida: sem erros de console",
+  "pass": true,
+  "extra": ""
+ },
+ {
+  "name": "[desktop] ordem seedVersao 3, Enfeitiçador movida: topo",
+  "pass": true,
+  "extra": "Lutador Florescer Adaptador | Vivaz | Vanguarda Congregação das Bruxas Morgana total=18"
+ },
+ {
+  "name": "[desktop] ordem seedVersao 3, Enfeitiçador movida: estavel apos recarregar",
+  "pass": true
+ },
+ {
+  "name": "[desktop] ordem seedVersao 3, Enfeitiçador movida: seedVersao salva = 4",
+  "pass": true
+ },
+ {
+  "name": "[desktop] ordem seedVersao 3, Enfeitiçador movida: sem erros de console",
+  "pass": true,
+  "extra": ""
+ },
+ {
+  "name": "[mobile] ordem primeira vez: topo",
+  "pass": true,
+  "extra": "Enfeitiçador 6 | Lutador Florescer Adaptador | Vivaz total=18"
+ },
+ {
+  "name": "[mobile] ordem primeira vez: estavel apos recarregar",
+  "pass": true
+ },
+ {
+  "name": "[mobile] ordem primeira vez: seedVersao salva = 4",
+  "pass": true
+ },
+ {
+  "name": "[mobile] ordem primeira vez: card da nova mostra os tracos",
+  "pass": true,
+  "extra": ""
+ },
+ {
+  "name": "[mobile] ordem primeira vez: sem erros de console",
+  "pass": true,
+  "extra": ""
+ },
+ {
+  "name": "[mobile] ordem seedVersao 3 (Enfeitiçador no topo): topo",
+  "pass": true,
+  "extra": "Enfeitiçador 6 | Lutador Florescer Adaptador | Vivaz total=18"
+ },
+ {
+  "name": "[mobile] ordem seedVersao 3 (Enfeitiçador no topo): estavel apos recarregar",
+  "pass": true
+ },
+ {
+  "name": "[mobile] ordem seedVersao 3 (Enfeitiçador no topo): seedVersao salva = 4",
+  "pass": true
+ },
+ {
+  "name": "[mobile] ordem seedVersao 3 (Enfeitiçador no topo): card da nova mostra os tracos",
+  "pass": true,
+  "extra": ""
+ },
+ {
+  "name": "[mobile] ordem seedVersao 3 (Enfeitiçador no topo): sem erros de console",
+  "pass": true,
+  "extra": ""
+ },
+ {
+  "name": "[mobile] ordem versao 2 antiga: topo",
+  "pass": true,
+  "extra": "Enfeitiçador 6 | Lutador Florescer Adaptador | Vivaz total=18"
+ },
+ {
+  "name": "[mobile] ordem versao 2 antiga: estavel apos recarregar",
+  "pass": true
+ },
+ {
+  "name": "[mobile] ordem versao 2 antiga: seedVersao salva = 4",
+  "pass": true
+ },
+ {
+  "name": "[mobile] ordem versao 2 antiga: sem erros de console",
+  "pass": true,
+  "extra": ""
+ },
+ {
+  "name": "[mobile] ordem seedVersao 3, Enfeitiçador excluida: topo",
+  "pass": true,
+  "extra": "Lutador Florescer Adaptador | Vivaz | Vanguarda Congregação das Bruxas Morgana total=17"
+ },
+ {
+  "name": "[mobile] ordem seedVersao 3, Enfeitiçador excluida: estavel apos recarregar",
+  "pass": true
+ },
+ {
+  "name": "[mobile] ordem seedVersao 3, Enfeitiçador excluida: seedVersao salva = 4",
+  "pass": true
+ },
+ {
+  "name": "[mobile] ordem seedVersao 3, Enfeitiçador excluida: sem erros de console",
+  "pass": true,
+  "extra": ""
+ },
+ {
+  "name": "[mobile] ordem seedVersao 3, Enfeitiçador movida: topo",
+  "pass": true,
+  "extra": "Lutador Florescer Adaptador | Vivaz | Vanguarda Congregação das Bruxas Morgana total=18"
+ },
+ {
+  "name": "[mobile] ordem seedVersao 3, Enfeitiçador movida: estavel apos recarregar",
+  "pass": true
+ },
+ {
+  "name": "[mobile] ordem seedVersao 3, Enfeitiçador movida: seedVersao salva = 4",
+  "pass": true
+ },
+ {
+  "name": "[mobile] ordem seedVersao 3, Enfeitiçador movida: sem erros de console",
   "pass": true,
   "extra": ""
  }

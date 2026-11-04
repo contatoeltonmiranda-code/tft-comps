@@ -15,16 +15,20 @@ test('seed: ids unicos e todos os campeoes/itens existem no catalogo', () => {
   assert.equal(comps.length, SEED.length);
 });
 
-test('seed: 15 comps originais intactas (ids 01..15 sem desde), seed-16 desde 2 e seed-17 desde 3 no topo', () => {
-  assert.equal(SEED.length, 17);
+test('seed: 15 comps originais intactas (ids 01..15 sem desde), seed-16 desde 2, seed-17 desde 3 e seed-18 desde 4 no topo', () => {
+  assert.equal(SEED.length, 18);
   const byId = (id) => SEED.find((c) => c.id === id);
   for (let i = 1; i <= 15; i++) assert.equal(byId('seed-' + String(i).padStart(2, '0')).desde, undefined);
   assert.equal(byId('seed-16').desde, 2);
   assert.equal(SEED[0].id, 'seed-17');
   assert.equal(SEED[0].desde, 3);
   assert.equal(SEED[0].topo, true);
-  assert.equal(SEED.filter((c) => c.topo).length, 1);
-  assert.equal(window.TFT_SEED_VERSION, 3);
+  assert.equal(SEED[1].id, 'seed-18');
+  assert.equal(SEED[1].desde, 4);
+  assert.equal(SEED[1].topo, true);
+  assert.equal(SEED[1].abaixoDe, 'seed-17');
+  assert.equal(SEED.filter((c) => c.topo).length, 2);
+  assert.equal(window.TFT_SEED_VERSION, 4);
 });
 
 test('seed-16 (print 14): tracos batem com o painel do print', () => {
@@ -64,4 +68,24 @@ test('seed-17 (print 15): tracos batem com o painel (Enfeitiçador 5 + 1 emblema
   assert.equal(cnt['Comunhão'], 1);
   assert.equal(cnt['Lunar'], 1);
   assert.equal(cnt['Congregação das Bruxas'], 1);
+});
+
+test('seed-18 (print 16): tracos batem com o painel (1 Emblema de Lutador na Master Yi)', () => {
+  const comp = L.sanitizeImport(SEED, CAT).comps.find((c) => c.id === 'seed-18');
+  assert.equal(comp.nome, 'Lutador Florescer Adaptador');
+  assert.equal(comp.main.length, 8);
+  assert.equal(new Set(comp.main.map((u) => u.c)).size, 8);
+  assert.ok(comp.main.every((u) => !u.p));
+  const t = Object.fromEntries(L.activeTraits(comp, CAT).map((x) => [x.n, x.count]));
+  assert.deepEqual(t, { 'Cáustico': 1, Lutador: 4, Adaptador: 3, Florescer: 3, Colosso: 2, Primordial: 2 });
+  const tn = Object.fromEntries(CAT.traits.map((x) => [x.id, x.n]));
+  const cnt = {};
+  comp.main.forEach((u) => CAT.champs.find((c) => c.id === u.c).t.forEach((id) => { cnt[tn[id]] = (cnt[tn[id]] || 0) + 1; }));
+  assert.equal(cnt['Emanador'], 1);
+  assert.equal(cnt['Invocador'], 1);
+  assert.equal(cnt['Fera do Rift'], 1);
+  assert.equal(cnt['Sabugueiro'], 1);
+  assert.equal(cnt['Vivaz'], 1);
+  const yi = comp.main.find((u) => u.c === 'DA_18_MasterYi_AD');
+  assert.ok(yi.i.includes('DA_18_EmblemBrawler'));
 });

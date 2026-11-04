@@ -295,10 +295,23 @@
     const fresh = (Array.isArray(seed) ? seed : []).filter((s) => s && (Number.isInteger(s.desde) ? s.desde : 1) > seen && !used.has(s.id) && !excluidos.includes(s.id));
     const added = sanitizeImport(fresh, catalog).comps;
     const positioned = applySeedPositions(comps, seed, seen, seedVersion);
-    const topo = new Set(fresh.filter((s) => s.topo === true).map((s) => s.id));
-    const front = added.filter((c) => topo.has(c.id));
-    const back = added.filter((c) => !topo.has(c.id));
-    return { comps: front.concat(comps, back), seedVersao: Math.max(seen, seedVersion), excluidos, added: added.map((c) => c.id), positioned };
+    const seedById = new Map(fresh.map((s) => [s.id, s]));
+    const topo = added.filter((c) => seedById.get(c.id).topo === true);
+    const back = added.filter((c) => seedById.get(c.id).topo !== true);
+    const list = comps.slice();
+    let pinned = 0;
+    topo.forEach((c) => {
+      const alvo = seedById.get(c.id).abaixoDe;
+      const at = typeof alvo === 'string' ? list.findIndex((x) => x.id === alvo) : -1;
+      if (at >= 0 && at <= pinned) {
+        list.splice(at + 1, 0, c);
+        pinned = Math.max(pinned + 1, at + 2);
+      } else {
+        list.splice(pinned, 0, c);
+        pinned++;
+      }
+    });
+    return { comps: list.concat(back), seedVersao: Math.max(seen, seedVersion), excluidos, added: added.map((c) => c.id), positioned };
   }
 
   const api = { ROWS, COLS, MAX_ITEMS, MAX_ALT, norm, indexCatalog, activeTraits, searchComps, filterUnits, sanitizeChecks, isChecked, toggleCheck, clearChecks, countChecked, duplicateComp, sanitizeImport, mergeSeed, newId, clone };
