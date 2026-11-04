@@ -15,15 +15,16 @@ test('seed: ids unicos e todos os campeoes/itens existem no catalogo', () => {
   assert.equal(comps.length, SEED.length);
 });
 
-test('seed: 15 comps originais intactas (ids 01..15 sem campo desde) e 16a nova com desde 2', () => {
-  assert.equal(SEED.length, 16);
-  SEED.slice(0, 15).forEach((c, i) => {
-    assert.equal(c.id, 'seed-' + String(i + 1).padStart(2, '0'));
-    assert.equal(c.desde, undefined);
-  });
-  assert.equal(SEED[15].id, 'seed-16');
-  assert.equal(SEED[15].desde, 2);
-  assert.equal(window.TFT_SEED_VERSION, 2);
+test('seed: 15 comps originais intactas (ids 01..15 sem desde), seed-16 desde 2 e seed-17 desde 3 no topo', () => {
+  assert.equal(SEED.length, 17);
+  const byId = (id) => SEED.find((c) => c.id === id);
+  for (let i = 1; i <= 15; i++) assert.equal(byId('seed-' + String(i).padStart(2, '0')).desde, undefined);
+  assert.equal(byId('seed-16').desde, 2);
+  assert.equal(SEED[0].id, 'seed-17');
+  assert.equal(SEED[0].desde, 3);
+  assert.equal(SEED[0].topo, true);
+  assert.equal(SEED.filter((c) => c.topo).length, 1);
+  assert.equal(window.TFT_SEED_VERSION, 3);
 });
 
 test('seed-16 (print 14): tracos batem com o painel do print', () => {
@@ -42,4 +43,25 @@ test('seed-16 (print 14): tracos batem com o painel do print', () => {
   assert.equal(cnt['Emanador'], 1);
   assert.equal(cnt['Feérico'], 1);
   assert.equal(cnt['Inferno'], 1);
+});
+
+test('seed-17 (print 15): tracos batem com o painel (Enfeitiçador 5 + 1 emblema = 6)', () => {
+  const comp = L.sanitizeImport(SEED, CAT).comps.find((c) => c.id === 'seed-17');
+  assert.equal(comp.nome, 'Enfeitiçador 6');
+  assert.equal(comp.main.length, 8);
+  assert.equal(new Set(comp.main.map((u) => u.c)).size, 8);
+  assert.ok(comp.main.every((u) => !u.p));
+  const t = Object.fromEntries(L.activeTraits(comp, CAT).map((x) => [x.n, x.count]));
+  assert.equal(t['Enfeitiçador'], 5);
+  assert.equal(t['Sabugueiro'], 3);
+  assert.equal(t['Defendente'], 2);
+  assert.equal(t['Espinhos Negros'], 2);
+  assert.equal(t['Lutador'], 2);
+  assert.equal(t['Flora Fatalis'], 1);
+  const tn = Object.fromEntries(CAT.traits.map((x) => [x.id, x.n]));
+  const cnt = {};
+  comp.main.forEach((u) => CAT.champs.find((c) => c.id === u.c).t.forEach((id) => { cnt[tn[id]] = (cnt[tn[id]] || 0) + 1; }));
+  assert.equal(cnt['Comunhão'], 1);
+  assert.equal(cnt['Lunar'], 1);
+  assert.equal(cnt['Congregação das Bruxas'], 1);
 });

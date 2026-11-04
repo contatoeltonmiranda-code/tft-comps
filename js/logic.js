@@ -295,7 +295,10 @@
     const fresh = (Array.isArray(seed) ? seed : []).filter((s) => s && (Number.isInteger(s.desde) ? s.desde : 1) > seen && !used.has(s.id) && !excluidos.includes(s.id));
     const added = sanitizeImport(fresh, catalog).comps;
     const positioned = applySeedPositions(comps, seed, seen, seedVersion);
-    return { comps: comps.concat(added), seedVersao: Math.max(seen, seedVersion), excluidos, added: added.map((c) => c.id), positioned };
+    const topo = new Set(fresh.filter((s) => s.topo === true).map((s) => s.id));
+    const front = added.filter((c) => topo.has(c.id));
+    const back = added.filter((c) => !topo.has(c.id));
+    return { comps: front.concat(comps, back), seedVersao: Math.max(seen, seedVersion), excluidos, added: added.map((c) => c.id), positioned };
   }
 
   const api = { ROWS, COLS, MAX_ITEMS, MAX_ALT, norm, indexCatalog, activeTraits, searchComps, filterUnits, sanitizeChecks, isChecked, toggleCheck, clearChecks, countChecked, duplicateComp, sanitizeImport, mergeSeed, newId, clone };

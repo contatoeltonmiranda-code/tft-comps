@@ -1,5 +1,65 @@
 window.TFT_SEED = [
  {
+  "nome": "Enfeitiçador 6",
+  "estilo": "Nível 8",
+  "nota": "Print em combate (6-2): sem posições. Unidades deduzidas do painel de traços (Enfeitiçador 6/6, Comunhão, Sabugueiro 3, Defendente 2, Espinhos Negros 2, Lutador 2, Flora Fatalis, Lunar, Congregação). Fechar 6 Enfeitiçadores exige 1 Emblema de Enfeitiçador em Ornn, Rek'Sai ou Alistar. Itens e estrelas só onde a identificação é segura.",
+  "fonte": "refs/15.png",
+  "main": [
+   {
+    "c": "DA_18_Alune",
+    "s": 1,
+    "i": [],
+    "a": []
+   },
+   {
+    "c": "DA_18_Ornn",
+    "s": 1,
+    "i": [],
+    "a": []
+   },
+   {
+    "c": "DA_18_RekSai",
+    "s": 3,
+    "i": [],
+    "a": []
+   },
+   {
+    "c": "DA_18_Veigar",
+    "s": 1,
+    "i": [],
+    "a": []
+   },
+   {
+    "c": "DA_18_Cassiopeia",
+    "s": 1,
+    "i": [],
+    "a": []
+   },
+   {
+    "c": "DA_Fiddlesticks18",
+    "s": 1,
+    "i": [],
+    "a": []
+   },
+   {
+    "c": "DA_18_LeBlanc",
+    "s": 1,
+    "i": [],
+    "a": []
+   },
+   {
+    "c": "DA_18_Alistar",
+    "s": 1,
+    "i": [],
+    "a": []
+   }
+  ],
+  "flex": [],
+  "id": "seed-17",
+  "desde": 3,
+  "topo": true
+ },
+ {
   "nome": "Vivaz",
   "estilo": "Slowroll Nvl 7",
   "nota": "Tente obter campeões 3 estrelas no Nvl 7 roletando o excesso de ouro e mantendo-se acima de 50g.",
@@ -1170,7 +1230,8 @@ window.TFT_SEED = [
   ],
   "flex": [],
   "id": "seed-15"
- },
+ }
+,
  {
   "nome": "Defendente Congregação das Bruxas Rengar",
   "estilo": "Nível 8 (5-3)",
@@ -1246,4 +1307,4 @@ window.TFT_SEED = [
   "desde": 2
  }
 ];
-window.TFT_SEED_VERSION = 2;
+window.TFT_SEED_VERSION = 3;

@@ -320,3 +320,29 @@ test('filterUnits ignora campeao fora do catalogo sem quebrar', () => {
   assert.deepEqual(L.filterUnits([u('XX'), u('A')], 'dia', catalog).map((x) => x.c), ['A']);
   assert.deepEqual(L.filterUnits(undefined, 'dia', catalog), []);
 });
+
+/* ---------- comp nova no topo (topo: true) ---------- */
+const topSeed = seedRaw.concat([{ id: 's4', nome: 'Quatro', desde: 3, topo: true, main: [u('A')], flex: [] }, { id: 's5', nome: 'Cinco', desde: 3, main: [u('B')], flex: [] }]);
+
+test('mergeSeed topo: comp nova com topo vai para a frente, preservando ordem e edicoes das demais', () => {
+  const stored = { versao: 1, seedVersao: 2, excluidos: [], comps: [{ id: 's2', nome: 'Dois editado', main: [u('B', { s: 3 })], flex: [] }, { id: 'c-meu', nome: 'Minha', main: [], flex: [] }] };
+  const r = L.mergeSeed(stored, topSeed, 3, catalog);
+  assert.deepEqual(r.comps.map((c) => c.id), ['s4', 's2', 'c-meu', 's5']);
+  assert.equal(r.comps[1].nome, 'Dois editado');
+  assert.equal(r.comps[1].main[0].s, 3);
+  assert.deepEqual(r.added.slice().sort(), ['s4', 's5']);
+});
+
+test('mergeSeed topo: nao volta se excluida, nao duplica e e idempotente', () => {
+  const excl = { versao: 1, seedVersao: 2, excluidos: ['s4'], comps: [{ id: 's2', nome: 'Dois', main: [], flex: [] }] };
+  assert.deepEqual(L.mergeSeed(excl, topSeed, 3, catalog).comps.map((c) => c.id), ['s2', 's5']);
+  const vista = { versao: 1, seedVersao: 3, excluidos: [], comps: [{ id: 's2', nome: 'Dois', main: [], flex: [] }, { id: 's4', nome: 'Quatro', main: [], flex: [] }] };
+  assert.deepEqual(L.mergeSeed(vista, topSeed, 3, catalog).comps.map((c) => c.id), ['s2', 's4']);
+  const jaTem = { versao: 1, seedVersao: 2, excluidos: [], comps: [{ id: 's1', nome: 'Um', main: [], flex: [] }, { id: 's4', nome: 'Quatro movida', main: [], flex: [] }] };
+  assert.deepEqual(L.mergeSeed(jaTem, topSeed, 3, catalog).comps.map((c) => c.id), ['s1', 's4', 's5']);
+});
+
+test('mergeSeed topo: sem dados salvos segue a ordem do seed', () => {
+  const seedTopoPrimeiro = [topSeed[3]].concat(topSeed.slice(0, 3));
+  assert.deepEqual(L.mergeSeed(null, seedTopoPrimeiro, 3, catalog).comps.map((c) => c.id), ['s4', 's1', 's2', 's3']);
+});
