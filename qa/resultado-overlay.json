@@ -1,0 +1,130 @@
+[
+ {
+  "nome": "desktop cenario 0: visivel",
+  "pass": true,
+  "extra": "{\"visivel\":true,\"altura\":226,\"largura\":340,\"linhas\":3,\"imgsQuebradas\":0,\"imgs\":24,\"estoura\":false,\"maiorLinhaPecas\":24,\"texto\":\"Comps sugeridas1-2 · 4 ouro · nível 21Enfeitiçador 621/1002Vivaz Sabugueiro Veigar19/1003Vivaz com Sabugueiro14/100itens\"}"
+ },
+ {
+  "nome": "desktop cenario 0: sem imagem quebrada nem estouro",
+  "pass": true
+ },
+ {
+  "nome": "desktop cenario 1: visivel",
+  "pass": true,
+  "extra": "{\"visivel\":true,\"altura\":226,\"largura\":340,\"linhas\":3,\"imgsQuebradas\":0,\"imgs\":23,\"estoura\":false,\"maiorLinhaPecas\":24,\"texto\":\"Comps sugeridas1-4 · 11 ouro · nível 41Sabugueiro Carrasco Reroll34/100itens 2/122Enfeitiçador 623/1003Vivaz Sabugueiro \"}"
+ },
+ {
+  "nome": "desktop cenario 1: sem imagem quebrada nem estouro",
+  "pass": true
+ },
+ {
+  "nome": "desktop cenario 2: visivel",
+  "pass": true,
+  "extra": "{\"visivel\":true,\"altura\":226,\"largura\":340,\"linhas\":3,\"imgsQuebradas\":0,\"imgs\":22,\"estoura\":false,\"maiorLinhaPecas\":24,\"texto\":\"Comps sugeridas1-3 · 18 ouro · nível 31Eclipse32/1002Solar Fumegante Reroll26/100itens 0/123Solar Lunar Lillia21/100iten\"}"
+ },
+ {
+  "nome": "desktop cenario 2: sem imagem quebrada nem estouro",
+  "pass": true
+ },
+ {
+  "nome": "desktop cenario 3: visivel",
+  "pass": true,
+  "extra": "{\"visivel\":true,\"altura\":64,\"largura\":340,\"linhas\":0,\"imgsQuebradas\":0,\"imgs\":0,\"estoura\":false,\"maiorLinhaPecas\":0,\"texto\":\"Comps sugeridas1-1 · 0 ouro · nível 1Aguardando campeões no banco ou no tabuleiro.\"}"
+ },
+ {
+  "nome": "desktop cenario 3: sem imagem quebrada nem estouro",
+  "pass": true
+ },
+ {
+  "nome": "desktop cenario 4: visivel",
+  "pass": true,
+  "extra": "{\"visivel\":true,\"altura\":226,\"largura\":340,\"linhas\":3,\"imgsQuebradas\":0,\"imgs\":25,\"estoura\":false,\"maiorLinhaPecas\":24,\"texto\":\"Comps sugeridas1-4 · 9 ouro · nível 41Sabugueiro Draven Taric30/1002Sabugueiro Draven25/100itens 0/123Enfeitiçador 622/1\"}"
+ },
+ {
+  "nome": "desktop cenario 4: sem imagem quebrada nem estouro",
+  "pass": true
+ },
+ {
+  "nome": "desktop cenario 5: oculto no 2-1",
+  "pass": true,
+  "extra": "{\"visivel\":false,\"altura\":0,\"largura\":0,\"linhas\":0,\"imgsQuebradas\":0,\"imgs\":0,\"estoura\":false,\"maiorLinhaPecas\":0,\"texto\":\"\"}"
+ },
+ {
+  "nome": "desktop cenario 6: visivel",
+  "pass": true,
+  "extra": "{\"visivel\":true,\"altura\":42,\"largura\":340,\"linhas\":0,\"imgsQuebradas\":0,\"imgs\":0,\"estoura\":false,\"maiorLinhaPecas\":0,\"texto\":\"Compsencerrado após a rodada 2-1\"}"
+ },
+ {
+  "nome": "desktop cenario 6: sem imagem quebrada nem estouro",
+  "pass": true
+ },
+ {
+  "nome": "desktop: sem erros de console/rede",
+  "pass": true,
+  "extra": ""
+ },
+ {
+  "nome": "mobile cenario 0: visivel",
+  "pass": true,
+  "extra": "{\"visivel\":true,\"altura\":226,\"largura\":340,\"linhas\":3,\"imgsQuebradas\":0,\"imgs\":24,\"estoura\":false,\"maiorLinhaPecas\":24,\"texto\":\"Comps sugeridas1-2 · 4 ouro · nível 21Enfeitiçador 621/1002Vivaz Sabugueiro Veigar19/1003Vivaz com Sabugueiro14/100itens\"}"
+ },
+ {
+  "nome": "mobile cenario 0: sem imagem quebrada nem estouro",
+  "pass": true
+ },
+ {
+  "nome": "mobile cenario 1: visivel",
+  "pass": true,
+  "extra": "{\"visivel\":true,\"altura\":226,\"largura\":340,\"linhas\":3,\"imgsQuebradas\":0,\"imgs\":23,\"estoura\":false,\"maiorLinhaPecas\":24,\"texto\":\"Comps sugeridas1-4 · 11 ouro · nível 41Sabugueiro Carrasco Reroll34/100itens 2/122Enfeitiçador 623/1003Vivaz Sabugueiro \"}"
+ },
+ {
+  "nome": "mobile cenario 1: sem imagem quebrada nem estouro",
+  "pass": true
+ },
+ {
+  "nome": "mobile cenario 2: visivel",
+  "pass": true,
+  "extra": "{\"visivel\":true,\"altura\":226,\"largura\":340,\"linhas\":3,\"imgsQuebradas\":0,\"imgs\":22,\"estoura\":false,\"maiorLinhaPecas\":24,\"texto\":\"Comps sugeridas1-3 · 18 ouro · nível 31Eclipse32/1002Solar Fumegante Reroll26/100itens 0/123Solar Lunar Lillia21/100iten\"}"
+ },
+ {
+  "nome": "mobile cenario 2: sem imagem quebrada nem estouro",
+  "pass": true
+ },
+ {
+  "nome": "mobile cenario 3: visivel",
+  "pass": true,
+  "extra": "{\"visivel\":true,\"altura\":64,\"largura\":340,\"linhas\":0,\"imgsQuebradas\":0,\"imgs\":0,\"estoura\":false,\"maiorLinhaPecas\":0,\"texto\":\"Comps sugeridas1-1 · 0 ouro · nível 1Aguardando campeões no banco ou no tabuleiro.\"}"
+ },
+ {
+  "nome": "mobile cenario 3: sem imagem quebrada nem estouro",
+  "pass": true
+ },
+ {
+  "nome": "mobile cenario 4: visivel",
+  "pass": true,
+  "extra": "{\"visivel\":true,\"altura\":226,\"largura\":340,\"linhas\":3,\"imgsQuebradas\":0,\"imgs\":25,\"estoura\":false,\"maiorLinhaPecas\":24,\"texto\":\"Comps sugeridas1-4 · 9 ouro · nível 41Sabugueiro Draven Taric30/1002Sabugueiro Draven25/100itens 0/123Enfeitiçador 622/1\"}"
+ },
+ {
+  "nome": "mobile cenario 4: sem imagem quebrada nem estouro",
+  "pass": true
+ },
+ {
+  "nome": "mobile cenario 5: oculto no 2-1",
+  "pass": true,
+  "extra": "{\"visivel\":false,\"altura\":0,\"largura\":0,\"linhas\":0,\"imgsQuebradas\":0,\"imgs\":0,\"estoura\":false,\"maiorLinhaPecas\":0,\"texto\":\"\"}"
+ },
+ {
+  "nome": "mobile cenario 6: visivel",
+  "pass": true,
+  "extra": "{\"visivel\":true,\"altura\":42,\"largura\":340,\"linhas\":0,\"imgsQuebradas\":0,\"imgs\":0,\"estoura\":false,\"maiorLinhaPecas\":0,\"texto\":\"Compsencerrado após a rodada 2-1\"}"
+ },
+ {
+  "nome": "mobile cenario 6: sem imagem quebrada nem estouro",
+  "pass": true
+ },
+ {
+  "nome": "mobile: sem erros de console/rede",
+  "pass": true,
+  "extra": ""
+ }
+]

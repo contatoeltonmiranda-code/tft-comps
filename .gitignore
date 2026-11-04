@@ -2,3 +2,4 @@ node_modules/
 qa/*-export.json
 qa/ruim.json
 _brain/
+sonda/saida/

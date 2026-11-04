@@ -23,6 +23,100 @@ Atalhos do app: `?` ajuda, `/` busca, `N` nova comp, `Esc` fecha.
 
 - Lógica e seed (traços, busca, importação, merge de seed): `node --test tests/*.test.js`
 - QA de navegador (Playwright, desktop 1440 e mobile 390): subir o servidor e rodar `node qa/qa.js`. Screenshots e `resultado.json` em `qa/`.
+- QA da prévia do overlay (6 cenários, 1000 e 390 de largura): servidor na raiz e `node qa/overlay.js`. Prints em `qa/overlay-*.png`.
+
+## Overlay Overwolf (experimental, fase 1)
+
+Ideia: acompanhar a partida de TFT e sugerir as melhores comps do seed até a rodada 2-1, por via oficial (Overwolf GEP e/ou Riot Live Client Data API). Estado atual: pesquisa, motor de pontuação, scaffold e sondas. **A recomendação ao vivo NÃO está ligada, de propósito** (ver abaixo).
+
+### Política da Riot: o ponto que decide tudo
+
+A política de desenvolvedores da Riot para TFT ([developer.riotgames.com/docs/tft#game-policy](https://developer.riotgames.com/docs/tft#game-policy)) diz:
+
+- Casos de uso **não aprovados**: "Apps that provide dynamic, real-time information" e "Apps that dictate player decisions".
+- "Products may not provide information that was not available prior to the game... An app cannot make suggestions based on the player's current game state as that information is dynamic and not readily available prior to the game start."
+- "Issues arise when the recommendations adjust in real time based on the player's actions in game and give direct prescriptions of what to do."
+- "Having a static recommendation for a player pre-game is acceptable." Análise pré e pós-jogo é incentivada.
+- Overlays em jogo não podem rastrear o tabuleiro do adversário ("Scouting"), nem mostrar win rate de Legends e de aprimoramentos baseados em Legends.
+
+Outras fontes: [Overwolf: Riot Games compliance](https://dev.overwolf.com/ow-native/guides/game-compliance/riot-games) (sem win rate/colocação média de aprimoramento; app precisa de aprovação da Riot para publicar), [Riot: política geral](https://developer.riotgames.com/policies/general) ("Products cannot create an unfair advantage", "should not remove game decisions"), e o aviso do Overwolf sobre o feature `augments` do GEP: "DO NOT include augment data support in your apps ... Displaying this data can result in banning."
+
+Conclusão: "usar a API oficial" é seguro no lado técnico (nada de memória, injeção ou input), mas o **produto** pedido (top 3 de comps recalculado ao vivo a partir do banco, tabuleiro, itens e ouro) cai exatamente no que a Riot lista como não aprovado. Por isso o scaffold só liga duas coisas ao jogo: a gravação filtrada (para análise pós-jogo) e um painel de status. A recomendação roda no navegador (prévia com estado simulado) e na análise pós-jogo (`tools/analisar-gravacao.js`). Ligar ao vivo é decisão do Elton, com o risco dele (ver "Riscos").
+
+### Overwolf: bloqueio de conta
+
+O Overwolf só deixa carregar app não publicado ("Load unpacked extension") em conta liberada como desenvolvedora; a liberação vem do processo de "app proposal" ([Setting up dev environment](https://dev.overwolf.com/ow-native/getting-started/onboarding-resources/setting-up-dev-environment), [Project roadmap, passo 5](https://dev.overwolf.com/ow-native/getting-started/project-roadmap)). A mesma doc diz que o Overwolf não aprova apps privados/de uso pessoal e que, desde 1º/11/2026, só aprova apps com monetização do Overwolf ([Monetization](https://dev.overwolf.com/ow-native/monetization/overview)). Ou seja: um app só para o Elton provavelmente não consegue a liberação. A sonda Live Client (Node) não depende disso.
+
+### Campos do GEP para TFT (fonte: [doc oficial](https://dev.overwolf.com/ow-native/live-game-data-gep/supported-games/teamfight-tactics))
+
+Status consultado em 04/11/2026 na API oficial de status (`https://game-events-status.overwolf.com/21570_prod.json`, também `28164` e `28162`): todos os features abaixo estão **verde** (state 1). O status atrasa até ~10 min.
+
+| Feature | Chaves | Para que serve aqui |
+|---|---|---|
+| `me` | `gold`, `xp` (`{level,current_xp,xp_max}`), `health`, `rank`, `summoner_name` | ouro e nível |
+| `match_info` | `round_type` (`{stage:"2-1",name,type}`), `battle_state`, `match_state`, `game_mode`, `item_select`, eventos `round_start/end`, `battle_start/end`, `match_start/end`, `picked_item` | rodada |
+| `board` | `board_pieces` (`cell_N: {name, level, item_1..3}`), `opponent_board_pieces` | tabuleiro (a do adversário NÃO é usada) |
+| `bench` | `bench_pieces` (mesmo formato), `item_bench` (itens de TODOS os jogadores; só o local é usado) | banco e componentes |
+| `store` | `shop_pieces` (`slot_1..5`), evento `shop_visible` | loja |
+| `live_client_data` | `active_player`, `all_players`, `events`, `game_data` | exemplos da doc são de LoL; conteúdo no TFT a confirmar |
+| `game_flow`, `game_info`, `lobby_info`, `summoner_info`, `lcu_info`, `end_game` | fase, versão, queue, conta, credenciais locais, resumo | listados na doc; sem linha de status na API de status |
+| `roster`, `carousel`, `match_stats` | jogadores, carrossel, tabuleiro de todos | não usados (rastrear outros jogadores é "scouting") |
+| `augments` | `me`, `picked_augment` | **proibido usar**: o app nunca assina esse feature |
+
+IDs de jogo: a doc manda usar `21570` (TFT) e `28162` (PBE) no status. A lista de jogos do Overwolf neste PC tem o TFT como `28164` (processo `TFTClient-Win64-Shipping.exe`) e `21570` aparece lá como outro jogo. Por isso o `manifest.json` lista os três em `game_events`; a sonda grava o motivo se o Overwolf recusar.
+
+### Riot Live Client Data API
+
+Doc: [developer.riotgames.com/docs/lol](https://developer.riotgames.com/docs/lol). Endpoints em `https://127.0.0.1:2999/liveclientdata/`: `allgamedata`, `activeplayer`, `activeplayername`, `activeplayerabilities`, `activeplayerrunes`, `playerlist`, `playerscores`, `playersummonerspells`, `playermainrunes`, `playeritems`, `eventdata`, `gamestats`. Certificado autoassinado. A página é toda escrita para League of Legends e **não diz se o TFT responde**. Confirmar com `sonda/liveclient.js`.
+
+### O que o Elton precisa fazer
+
+1. Decidir sobre a política da Riot (ver acima): manter pré/pós-jogo, ou assumir o risco de ligar ao vivo.
+2. Rodar a sonda Live Client numa partida (`sonda/LEIA-ME.md`, parte 1). Não precisa de conta nem de instalação.
+3. Para o GEP: a conta Overwolf precisa estar liberada como desenvolvedora. Testar em `Opções de desenvolvimento > Load unpacked extension`; se der "not whitelisted", o caminho é submeter um app proposal (e o Overwolf pode recusar app pessoal). Nada disso foi criado ou enviado.
+4. Se algum dia publicar: aprovação da Riot (processo de app de terceiros) e texto de não afiliação no app.
+
+### Estrutura
+
+```
+js/recommend.js        pontuação pura (campeões 60%, itens 25%, ouro/nível 15%); só até 2-1
+js/gep-map.js          GEP -> estado, mapa de ids, filtros do que pode ser gravado
+data/recipes.js        receitas de itens (CommunityDragon); gerar com tools/gen-recipes.js
+overwolf-app/          manifest, background (gravação filtrada), overlay (clickthrough, sem foco), vendor/ (cópias; node overwolf-app/sync.js)
+sonda/liveclient.js    sonda da Live Client API (Node, só leitura)
+tools/analisar-gravacao.js   análise pós-jogo da gravação do GEP
+tools/thumbs.py        miniaturas 40px e ícone do app
+```
+
+Pontuação: `recommend(estado, seed, catalog, recipes)`. Estado: `{stage, gold, level, board:[{c,s,i}], bench:[...], itens:[ids]}`. Campeão com 1 estrela vale 0,75; 2 cópias 0,9; 2 estrelas 1. Item pronto 1, montável com os componentes do banco 0,85, um componente 0,35 (cada componente é usado uma vez). Ouro e nível: campeões que faltam e não aparecem na loja do nível atual pesam contra, ouro cobre o custo restante. Em 2-1 (escolha de aprimoramento) devolve vazio e o overlay some; depois de 2-1 encerra. Nunca lê aprimoramentos. O score é um índice de encaixe, não probabilidade de vitória.
+
+Overlay: `overwolf-app/overlay/overlay.html` aberto no navegador (servidor local) mostra a prévia com seletor de cenários simulados. No Overwolf a janela é `clickthrough`, `ignore_keyboard_events`, `grab_keyboard_focus:false`, `show_in_taskbar:false`, `topmost`. O TFT precisa estar em tela cheia sem bordas (o overlay do Overwolf não aparece em tela cheia exclusiva).
+
+### Mapa de ids GEP -> catálogo (e onde não há certeza)
+
+| Dado | Situação |
+|---|---|
+| Campeões (`DA_18_*`, `DA_Gromp18_AP` etc.) | **Certo**: os 21 ids de exemplo da doc existem no catálogo, idênticos |
+| Componentes (`DA_Component_*`) | **Certo** para os 8 do catálogo mais `Spatula` e `FryingPan` (de `recipes.js`); aparecem assim em board, carrossel e `item_bench` |
+| Itens completos em `item_1..3` | **Incerto**: a doc não traz exemplo. Assumido igual ao catálogo (`DA_Deathblade`); cai em busca sem caixa alta (marcado "aproximado") |
+| `item_select` e `picked_item` | **Incerto**: a doc mostra o prefixo antigo `TFT_Item_*`. Convertido por alias para `DA_Component_*` (marcado "aproximado") |
+| Consumíveis (`DA_Consumable_*`, `DA_Reforger`, `*_Selector`) | Ignorados de propósito |
+| Radiante e artefato | Sem receita em `recipes.js`; não entram na pontuação de itens |
+| Estrelas (`level`: `"1"` a `"3"`) e rodada (`"2-1"`) | Certo (doc) |
+| `cell_N` | Número da casa guardado, mas orientação do hex desconhecida; posição não é usada |
+| Nome do jogador local | `me.summoner_name`; formato com ou sem `#tag` não confirmado (comparação ignora a tag) |
+| Envelopes | A doc mistura `value`, `data` e `info.<categoria>.<chave>` (na categoria `me` do feature `augments`, p.ex.). `acumular` trata os três |
+
+`normalizar` devolve `desconhecidos` e `aproximados` para a sonda mostrar exatamente o que falta confirmar.
+
+### Riscos e limitações
+
+- Política da Riot (acima). Ligar ao vivo é uso fora do que a Riot aprova; pode haver ação sobre a conta. Decisão e risco do Elton.
+- Não testado dentro do Overwolf: não foi instalado nem carregado nada. Os testes usam um `overwolf` falso. Pode haver ajustes na primeira carga (ids de jogo, janela do overlay, caminho de gravação).
+- Overwolf: liberação de desenvolvedor incerta para app pessoal; publicação exige monetização Overwolf e aprovação da Riot.
+- Heurística de pontuação sem validação com partidas reais; as odds de loja por nível (`CUSTO_MAX_POR_NIVEL`) são as padrão e podem mudar por set.
+- Seed tem comps de fim de jogo (nível 8); no começo todas pontuam baixo e parecidas.
+- Doc do GEP mistura exemplos de LoL e TFT; o conteúdo de `live_client_data` no TFT é desconhecido até a sonda rodar.
 
 ## Dúvidas de identificação (conferir)
 
@@ -60,3 +154,5 @@ Quando houver print de board com grade legível (como tactics.tools), usar `posD
 ## Segurança (checklist de 20 itens, app estático local)
 
 Sem backend, sem login, sem banco. n.a. com justificativa: 1-8, 10-12, 14 (server-side), 16, 17, 19, 20 (sem servidor, segredos, auth ou dependências). Aplicados: 13/14 (todo texto vai por `textContent`; importação passa por `sanitizeImport`, que valida ids, limites e tamanho), 15 (erros genéricos ao usuário), 18 (CSP e headers só se publicar com servidor; a meta CSP foi retirada porque o antivírus injeta script e quebra a política).
+
+`overwolf-app/` e `sonda/` (sem backend, sem secrets, sem rede externa): a sonda Live Client só fala com `127.0.0.1` (recusa outros hosts; ignora o certificado autoassinado só em loopback); a gravação do GEP usa allowlist de chaves, remove qualquer chave com "augment" e nunca grava tokens (`lcu_info`), jogadores nem tabuleiro de adversários; HTML sem script inline nem CDN; texto do overlay por `textContent`; permissões mínimas (`GameInfo`, `FileSystem`); `npm audit` n.a. (zero dependências).
