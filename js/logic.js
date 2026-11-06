@@ -313,11 +313,17 @@
     const topo = added.filter((c) => seedById.get(c.id).topo === true);
     const back = added.filter((c) => seedById.get(c.id).topo !== true);
     const list = comps.slice();
+    const topoIds = new Set((Array.isArray(seed) ? seed : []).filter((s) => s && s.topo === true).map((s) => s.id));
+    const leadRun = () => {
+      let n = 0;
+      while (n < list.length && topoIds.has(list[n].id)) n++;
+      return n;
+    };
     let pinned = 0;
     topo.forEach((c) => {
       const alvo = seedById.get(c.id).abaixoDe;
       const at = typeof alvo === 'string' ? list.findIndex((x) => x.id === alvo) : -1;
-      if (at >= 0 && at <= pinned) {
+      if (at >= 0 && at < leadRun()) {
         list.splice(at + 1, 0, c);
         pinned = Math.max(pinned + 1, at + 2);
       } else {

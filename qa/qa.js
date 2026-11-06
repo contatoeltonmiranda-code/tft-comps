@@ -32,7 +32,7 @@ async function migracao(label, viewport, mobile) {
   vm.createContext(sb);
   vm.runInContext(fs.readFileSync(path.join(__dirname, '../data/seed.js'), 'utf8'), sb);
   const seed = JSON.parse(JSON.stringify(sb.window.TFT_SEED));
-  const legado = seed.filter((c) => !['seed-16', 'seed-17', 'seed-18'].includes(c.id)).map((c) => { delete c.desde; return c; });
+  const legado = seed.filter((c) => !['seed-16', 'seed-17', 'seed-18', 'seed-19'].includes(c.id)).map((c) => { delete c.desde; return c; });
   legado[0].nome = 'Vivaz EDITADA';
   const browser = await chromium.launch({ executablePath: exe, headless: true });
   const ctx = await browser.newContext({ viewport, deviceScaleFactor: mobile ? 2 : 1, hasTouch: mobile, isMobile: mobile });
@@ -44,20 +44,20 @@ async function migracao(label, viewport, mobile) {
   await page.evaluate((d) => { localStorage.clear(); localStorage.setItem('tft-comps:v1', JSON.stringify({ versao: 1, comps: d })); }, legado);
   await page.reload();
   await page.waitForSelector('article.comp');
-  ok(`[${label}] migracao: legado 15 -> 18 comps`, (await page.locator('article.comp').count()) === 18, 'legado=' + legado.length);
+  ok(`[${label}] migracao: legado 15 -> 19 comps`, (await page.locator('article.comp').count()) === 19, 'legado=' + legado.length);
   ok(`[${label}] migracao: edicao preservada`, (await page.locator('article.comp h2').allTextContents()).includes('Vivaz EDITADA'));
   const nomes = await page.locator('article.comp h2').allTextContents();
   ok(`[${label}] migracao: comp nova entrou`, nomes.includes('Defendente Congregação das Bruxas Rengar'));
   await page.reload();
   await page.waitForSelector('article.comp');
-  ok(`[${label}] migracao: idempotente apos recarregar`, (await page.locator('article.comp').count()) === 18);
-  ok(`[${label}] migracao: Enfeitiçador 1o, Lutador Florescer 2o`, JSON.stringify(nomes.slice(0, 2)) === JSON.stringify(['Enfeitiçador 6', 'Lutador Florescer Adaptador']), nomes.slice(0, 2).join(' | '));
+  ok(`[${label}] migracao: idempotente apos recarregar`, (await page.locator('article.comp').count()) === 19);
+  ok(`[${label}] migracao: Enfeitiçador 1o, Lutador Florescer 2o, Vanguarda 3o`, JSON.stringify(nomes.slice(0, 3)) === JSON.stringify(['Enfeitiçador 6', 'Lutador Florescer Adaptador', 'Vanguarda Congregação das Bruxas Devastador']), nomes.slice(0, 3).join(' | '));
   const novo = page.locator('article.comp', { has: page.locator('h2', { hasText: 'Defendente Congregação' }) });
   await novo.locator('button[aria-label^="Excluir"]').click();
   await page.locator('#ask-actions button', { hasText: 'Excluir' }).click();
   await page.reload();
   await page.waitForSelector('article.comp');
-  ok(`[${label}] migracao: comp excluida nao volta`, (await page.locator('article.comp').count()) === 17 && (await page.locator('article.comp h2').allTextContents()).includes('Vivaz EDITADA'));
+  ok(`[${label}] migracao: comp excluida nao volta`, (await page.locator('article.comp').count()) === 18 && (await page.locator('article.comp h2').allTextContents()).includes('Vivaz EDITADA'));
   ok(`[${label}] migracao: sem erros de console`, errors.length === 0, errors.slice(0, 3).join(' | '));
   await browser.close();
 }
@@ -75,7 +75,7 @@ async function run(label, viewport, mobile) {
   await page.goto(URL);
   await page.waitForSelector('article.comp');
   const n = await page.locator('article.comp').count();
-  ok(`[${label}] 18 comps renderizadas`, n === 18, 'n=' + n);
+  ok(`[${label}] 19 comps renderizadas`, n === 19, 'n=' + n);
 
   ok(`[${label}] botao Limpar oculto sem busca`, !(await page.locator('#btn-clear').isVisible()));
   const rep = await imgReport(page);
@@ -85,9 +85,9 @@ async function run(label, viewport, mobile) {
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   ok(`[${label}] sem rolagem horizontal`, overflow <= 0, 'overflow=' + overflow);
   await page.screenshot({ path: path.join(OUT, `${label}-1-lista.png`) });
-  await page.locator('article.comp').nth(10).scrollIntoViewIfNeeded();
+  await page.locator('article.comp').nth(11).scrollIntoViewIfNeeded();
   await page.screenshot({ path: path.join(OUT, `${label}-2-board.png`) });
-  const hasHex = await page.locator('article.comp:nth-child(11) .hex.has').count();
+  const hasHex = await page.locator('article.comp:nth-child(12) .hex.has').count();
   ok(`[${label}] tabuleiro hex com unidades`, hasHex === 8, 'hex=' + hasHex);
 
   // comp nova (print 14)
@@ -102,7 +102,7 @@ async function run(label, viewport, mobile) {
   await page.fill('#q', 'diana');
   const dn = await page.locator('article.comp').count();
   const names = await page.locator('article.comp h2').allTextContents();
-  ok(`[${label}] busca "diana" filtra`, dn > 0 && dn < 18, `n=${dn}`);
+  ok(`[${label}] busca "diana" filtra`, dn > 0 && dn < 19, `n=${dn}`);
   ok(`[${label}] busca destaca campeao`, (await page.locator('.unit.hit').count()) >= dn);
   await page.screenshot({ path: path.join(OUT, `${label}-3-busca.png`) });
   await page.fill('#q', 'guinsoo');
@@ -115,14 +115,14 @@ async function run(label, viewport, mobile) {
 
   // busca por comp + checks "ja peguei"
   const PK = 'tft-comps:picks:v1';
-  const c8 = () => page.locator('article.comp').nth(10);
+  const c8 = () => page.locator('article.comp').nth(11);
   await c8().scrollIntoViewIfNeeded();
   const total8 = await c8().locator('.unit').count();
   const first0 = await page.locator('article.comp').first().locator('.unit').count();
   const nome0 = (await c8().locator('.uname').first().textContent()).trim();
   await c8().locator('.cq').fill(nome0.slice(0, 3).toUpperCase());
   const shown = await c8().locator('.unit').allInnerTexts();
-  ok(`[${label}] busca na comp filtra so ela`, shown.length >= 1 && shown.length < total8 && (await page.locator('article.comp').first().locator('.unit').count()) === first0 && (await page.inputValue('#q')) === '' && (await page.locator('article.comp').count()) === 18, `${shown.length}/${total8}`);
+  ok(`[${label}] busca na comp filtra so ela`, shown.length >= 1 && shown.length < total8 && (await page.locator('article.comp').first().locator('.unit').count()) === first0 && (await page.inputValue('#q')) === '' && (await page.locator('article.comp').count()) === 19, `${shown.length}/${total8}`);
   ok(`[${label}] busca na comp so mostra quem bate`, (await c8().locator('.uname').allTextContents()).every((t) => t.toLowerCase().includes(nome0.slice(0, 3).toLowerCase())));
   await c8().locator('.cq').fill('zzzz');
   ok(`[${label}] busca na comp sem resultado avisa`, (await c8().locator('.cnone').count()) === 1 && (await c8().locator('.unit').count()) === 0);
@@ -189,7 +189,7 @@ async function run(label, viewport, mobile) {
   await gbtn.click();
   await page.locator('#ask-actions button', { hasText: 'Limpar checks' }).click();
   ok(`[${label}] confirmar global zera todas as comps`, (await picked()) === 0 && await gbtn.isDisabled() && (await c8().locator('.pcount').textContent()) === `0/${total8} pegos`);
-  ok(`[${label}] limpar global nao altera as comps`, (await compsJson()) === before && (await page.locator('article.comp').count()) === 18);
+  ok(`[${label}] limpar global nao altera as comps`, (await compsJson()) === before && (await page.locator('article.comp').count()) === 19);
   await page.reload();
   await page.waitForSelector('article.comp');
   ok(`[${label}] global persiste zerado apos recarregar`, (await picked()) === 0 && await gbtn.isDisabled() && (await page.evaluate((k) => JSON.parse(localStorage.getItem(k)).checks, PK)) !== null && Object.keys(await page.evaluate((k) => JSON.parse(localStorage.getItem(k)).checks, PK)).length === 0);
@@ -217,7 +217,7 @@ async function run(label, viewport, mobile) {
   await page.evaluate((k) => localStorage.setItem(k, '{lixo'), PK);
   await page.reload();
   await page.waitForSelector('article.comp');
-  ok(`[${label}] checks corrompidos nao quebram`, (await page.locator('article.comp').count()) === 18);
+  ok(`[${label}] checks corrompidos nao quebram`, (await page.locator('article.comp').count()) === 19);
   await page.evaluate((k) => localStorage.removeItem(k), PK);
   await page.reload();
   await page.waitForSelector('article.comp');
@@ -275,28 +275,28 @@ async function run(label, viewport, mobile) {
   await page.fill('#pk-q', 'ahri');
   await page.locator('#pk-grid .pcell').first().click();
   await page.click('#ed-save');
-  ok(`[${label}] nova comp criada no topo`, (await page.locator('article.comp h2').first().textContent()) === 'Teste QA' && (await page.locator('article.comp').count()) === 19);
+  ok(`[${label}] nova comp criada no topo`, (await page.locator('article.comp h2').first().textContent()) === 'Teste QA' && (await page.locator('article.comp').count()) === 20);
   await page.locator('article.comp').first().locator('button[aria-label^="Duplicar"]').click();
-  ok(`[${label}] duplicar`, (await page.locator('article.comp').count()) === 20 && (await page.locator('article.comp h2').nth(1).textContent()) === 'Teste QA (cópia)');
+  ok(`[${label}] duplicar`, (await page.locator('article.comp').count()) === 21 && (await page.locator('article.comp h2').nth(1).textContent()) === 'Teste QA (cópia)');
   await page.locator('article.comp').nth(1).locator('button[aria-label^="Excluir"]').click();
   ok(`[${label}] excluir pede confirmacao`, await page.locator('#ask').evaluate((d) => d.open));
   await page.locator('#ask-actions button', { hasText: 'Cancelar' }).click();
-  ok(`[${label}] cancelar mantem comp`, (await page.locator('article.comp').count()) === 20);
+  ok(`[${label}] cancelar mantem comp`, (await page.locator('article.comp').count()) === 21);
   await page.locator('article.comp').nth(1).locator('button[aria-label^="Excluir"]').click();
   await page.locator('#ask-actions button', { hasText: 'Excluir' }).click();
-  ok(`[${label}] excluir remove`, (await page.locator('article.comp').count()) === 19);
+  ok(`[${label}] excluir remove`, (await page.locator('article.comp').count()) === 20);
 
   // exportar / importar
   const [dl] = await Promise.all([page.waitForEvent('download'), page.click('#btn-export')]);
   const file = path.join(OUT, `${label}-export.json`);
   await dl.saveAs(file);
   const json = JSON.parse(fs.readFileSync(file, 'utf8'));
-  ok(`[${label}] exportar gera JSON valido`, json.versao === 1 && json.comps.length === 19);
+  ok(`[${label}] exportar gera JSON valido`, json.versao === 1 && json.comps.length === 20);
   await page.locator('article.comp').first().locator('button[aria-label^="Excluir"]').click();
   await page.locator('#ask-actions button', { hasText: 'Excluir' }).click();
   await page.setInputFiles('#file', file);
   await page.locator('#ask-actions button', { hasText: 'Substituir tudo' }).click();
-  ok(`[${label}] importar restaura 19`, (await page.locator('article.comp').count()) === 19);
+  ok(`[${label}] importar restaura 20`, (await page.locator('article.comp').count()) === 20);
   fs.writeFileSync(path.join(OUT, 'ruim.json'), '{"comps":[{"nome":"<script>alert(1)</script>","main":[{"c":"NAO_EXISTE"}]}]}');
   await page.setInputFiles('#file', path.join(OUT, 'ruim.json'));
   await page.locator('#ask-actions button', { hasText: 'Adicionar' }).click();
@@ -309,7 +309,7 @@ async function run(label, viewport, mobile) {
   await page.click('#btn-help');
   await page.click('#btn-reset');
   await page.locator('#ask-actions button', { hasText: 'Restaurar' }).click();
-  ok(`[${label}] restaurar originais`, (await page.locator('article.comp').count()) === 18);
+  ok(`[${label}] restaurar originais`, (await page.locator('article.comp').count()) === 19);
 
   const final = await imgReport(page);
   ok(`[${label}] imagens apos todos os fluxos`, final.bad.length === 0, `total=${final.total} falhas=${final.bad.length}`);
@@ -323,14 +323,23 @@ async function ordemTopo(label, viewport, mobile) {
   vm.createContext(sb);
   vm.runInContext(fs.readFileSync(path.join(__dirname, '../data/seed.js'), 'utf8'), sb);
   const seed = JSON.parse(JSON.stringify(sb.window.TFT_SEED));
-  const orig = seed.filter((c) => !['seed-16', 'seed-17', 'seed-18'].includes(c.id)).map((c) => { delete c.desde; return c; });
-  const v3 = seed.filter((c) => c.id !== 'seed-18').map((c) => { delete c.desde; return c; });
+  const sem = (ids) => seed.filter((c) => !ids.includes(c.id)).map((c) => { delete c.desde; delete c.topo; delete c.abaixoDe; return c; });
+  const orig = sem(['seed-16', 'seed-17', 'seed-18', 'seed-19']);
+  const v2 = sem(['seed-17', 'seed-18', 'seed-19']);
+  const v3 = sem(['seed-18', 'seed-19']);
+  const v4 = sem(['seed-19']);
+  const E = 'Enfeitiçador 6';
+  const L = 'Lutador Florescer Adaptador';
+  const V = 'Vanguarda Congregação das Bruxas Devastador';
   const cenarios = [
-    ['primeira vez', null, ['Enfeitiçador 6', 'Lutador Florescer Adaptador'], 18],
-    ['seedVersao 3 (Enfeitiçador no topo)', { versao: 1, seedVersao: 3, excluidos: [], comps: v3 }, ['Enfeitiçador 6', 'Lutador Florescer Adaptador'], 18],
-    ['versao 2 antiga', { versao: 1, seedVersao: 2, excluidos: [], comps: orig.concat(seed.filter((c) => c.id === 'seed-16').map((c) => { delete c.desde; return c; })) }, ['Enfeitiçador 6', 'Lutador Florescer Adaptador'], 18],
-    ['seedVersao 3, Enfeitiçador excluida', { versao: 1, seedVersao: 3, excluidos: ['seed-17'], comps: v3.filter((c) => c.id !== 'seed-17') }, ['Lutador Florescer Adaptador'], 17],
-    ['seedVersao 3, Enfeitiçador movida', { versao: 1, seedVersao: 3, excluidos: [], comps: v3.slice(1, 4).concat(v3.slice(0, 1), v3.slice(4)) }, ['Lutador Florescer Adaptador'], 18],
+    ['primeira vez', null, [E, L, V], 19],
+    ['seedVersao 4 (Enfeitiçador e Lutador no topo)', { versao: 1, seedVersao: 4, excluidos: [], comps: v4 }, [E, L, V], 19],
+    ['seedVersao 3 (Enfeitiçador no topo)', { versao: 1, seedVersao: 3, excluidos: [], comps: v3 }, [E, L, V], 19],
+    ['versao 2 antiga', { versao: 1, seedVersao: 2, excluidos: [], comps: v2 }, [E, L, V], 19],
+    ['seedVersao 4, Lutador movida', { versao: 1, seedVersao: 4, excluidos: [], comps: v4.slice(0, 1).concat(v4.slice(2, 5), v4.slice(1, 2), v4.slice(5)) }, [V, E], 19],
+    ['seedVersao 4, Lutador excluida', { versao: 1, seedVersao: 4, excluidos: ['seed-18'], comps: v4.filter((c) => c.id !== 'seed-18') }, [V, E], 18],
+    ['seedVersao 3, Enfeitiçador excluida', { versao: 1, seedVersao: 3, excluidos: ['seed-17'], comps: v3.filter((c) => c.id !== 'seed-17') }, [L, V], 18],
+    ['seedVersao 3, Enfeitiçador movida', { versao: 1, seedVersao: 3, excluidos: [], comps: v3.slice(1, 4).concat(v3.slice(0, 1), v3.slice(4)) }, [L, V], 19],
   ];
   const browser = await chromium.launch({ executablePath: exe, headless: true });
   for (const [nome, stored, esperado, total] of cenarios) {
@@ -350,12 +359,12 @@ async function ordemTopo(label, viewport, mobile) {
     const again = await page.locator('article.comp h2').allTextContents();
     ok(`[${label}] ordem ${nome}: estavel apos recarregar`, JSON.stringify(again) === JSON.stringify(nomes));
     const salvo = await page.evaluate(() => { const r = localStorage.getItem('tft-comps:v1'); return r ? JSON.parse(r).seedVersao : null; });
-    ok(`[${label}] ordem ${nome}: seedVersao salva = 4`, salvo === 4 || (stored === null && salvo === null));
-    if (nome === 'primeira vez' || nome.startsWith('seedVersao 3 (')) {
-      const card = page.locator('article.comp').nth(1);
+    ok(`[${label}] ordem ${nome}: seedVersao salva = 5`, salvo === 5 || (stored === null && salvo === null));
+    if (nome === 'primeira vez' || nome.startsWith('seedVersao 3 (') || nome.startsWith('seedVersao 4 (')) {
+      const card = page.locator('article.comp').nth(2);
       const traits = await card.innerText();
-      ok(`[${label}] ordem ${nome}: card da nova mostra os tracos`, /Lutador/.test(traits) && /Florescer/.test(traits) && /Adaptador/.test(traits), '');
-      await page.screenshot({ path: path.join(OUT, `${label}-9-ordem-${nome.startsWith('primeira') ? 'primeira' : 'v3'}.png`) });
+      ok(`[${label}] ordem ${nome}: card da nova mostra os tracos`, /Vanguarda/.test(traits) && /Congrega/.test(traits) && /Devastador/.test(traits), '');
+      await page.screenshot({ path: path.join(OUT, `${label}-9-ordem-${nome.startsWith('primeira') ? 'primeira' : nome.startsWith('seedVersao 4') ? 'v4' : 'v3'}.png`) });
     }
     ok(`[${label}] ordem ${nome}: sem erros de console`, errors.length === 0, errors.slice(0, 3).join(' | '));
     await ctx.close();

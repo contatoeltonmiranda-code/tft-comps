@@ -408,3 +408,41 @@ test('mergeSeed abaixoDe: preserva edicao, nao volta se B excluida e e idempoten
   const vista = L.mergeSeed(saved(['sA', 's1'], 3), belowSeed, 4, catalog);
   assert.deepEqual(L.mergeSeed({ ...vista }, belowSeed, 4, catalog).comps.map((c) => c.id), ['sA', 'sB', 's1']);
 });
+
+/* ---------- cadeia de topo: C abaixo de B (B na 2a posicao do bloco do topo) ---------- */
+const sC = { id: 'sC', nome: 'C', desde: 5, topo: true, abaixoDe: 'sB', main: [u('A')], flex: [] };
+const chainSeed = [sA, sB, sC].concat(seedRaw);
+
+test('mergeSeed cadeia: sem dados salvos segue a ordem do seed (A, B, C)', () => {
+  assert.deepEqual(L.mergeSeed(null, chainSeed, 5, catalog).comps.map((c) => c.id).slice(0, 3), ['sA', 'sB', 'sC']);
+});
+
+test('mergeSeed cadeia: quem ja tem versao 4 (A, B no topo) recebe C em 3o', () => {
+  const r = L.mergeSeed(saved(['sA', 'sB', 's1', 's2'], 4), chainSeed, 5, catalog);
+  assert.deepEqual(r.comps.map((c) => c.id), ['sA', 'sB', 'sC', 's1', 's2']);
+  assert.deepEqual(r.added, ['sC']);
+  assert.equal(r.seedVersao, 5);
+});
+
+test('mergeSeed cadeia: versoes 3 e 2 recebem B e C juntos na ordem do seed', () => {
+  assert.deepEqual(L.mergeSeed(saved(['sA', 's1'], 3), chainSeed, 5, catalog).comps.map((c) => c.id), ['sA', 'sB', 'sC', 's1']);
+  assert.deepEqual(L.mergeSeed(saved(['s1', 's2'], 2), chainSeed, 5, catalog).comps.map((c) => c.id), ['sA', 'sB', 'sC', 's1', 's2']);
+});
+
+test('mergeSeed cadeia: B movida, excluida ou fora do bloco do topo faz C cair para o topo sem quebrar', () => {
+  assert.deepEqual(L.mergeSeed(saved(['sA', 's1', 'sB', 's2'], 4), chainSeed, 5, catalog).comps.map((c) => c.id), ['sC', 'sA', 's1', 'sB', 's2']);
+  assert.deepEqual(L.mergeSeed(saved(['s1', 'sA', 'sB'], 4), chainSeed, 5, catalog).comps.map((c) => c.id), ['sC', 's1', 'sA', 'sB']);
+  const excl = { versao: 1, seedVersao: 4, excluidos: ['sB'], comps: [{ id: 'sA', nome: 'A', main: [], flex: [] }, { id: 's1', nome: 's1', main: [], flex: [] }] };
+  assert.deepEqual(L.mergeSeed(excl, chainSeed, 5, catalog).comps.map((c) => c.id), ['sC', 'sA', 's1']);
+});
+
+test('mergeSeed cadeia: preserva edicao, nao volta se C excluida e e idempotente', () => {
+  const ed = { versao: 1, seedVersao: 4, excluidos: [], comps: [{ id: 'sA', nome: 'A', main: [], flex: [] }, { id: 'sB', nome: 'B editada', main: [u('B', { s: 3 })], flex: [] }, { id: 's1', nome: 's1', main: [], flex: [] }] };
+  const r = L.mergeSeed(ed, chainSeed, 5, catalog);
+  assert.equal(r.comps[1].nome, 'B editada');
+  assert.equal(r.comps[1].main[0].s, 3);
+  const exC = { versao: 1, seedVersao: 4, excluidos: ['sC'], comps: [{ id: 'sA', nome: 'A', main: [], flex: [] }, { id: 'sB', nome: 'B', main: [], flex: [] }] };
+  assert.deepEqual(L.mergeSeed(exC, chainSeed, 5, catalog).comps.map((c) => c.id), ['sA', 'sB']);
+  const vista = L.mergeSeed(saved(['sA', 'sB', 's1'], 4), chainSeed, 5, catalog);
+  assert.deepEqual(L.mergeSeed({ ...vista }, chainSeed, 5, catalog).comps.map((c) => c.id), ['sA', 'sB', 'sC', 's1']);
+});

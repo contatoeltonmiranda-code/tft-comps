@@ -15,8 +15,8 @@ test('seed: ids unicos e todos os campeoes/itens existem no catalogo', () => {
   assert.equal(comps.length, SEED.length);
 });
 
-test('seed: 15 comps originais intactas (ids 01..15 sem desde), seed-16 desde 2, seed-17 desde 3 e seed-18 desde 4 no topo', () => {
-  assert.equal(SEED.length, 18);
+test('seed: 15 comps originais intactas (ids 01..15 sem desde), seed-16 desde 2, seed-17 desde 3, seed-18 desde 4 e seed-19 desde 5 no topo', () => {
+  assert.equal(SEED.length, 19);
   const byId = (id) => SEED.find((c) => c.id === id);
   for (let i = 1; i <= 15; i++) assert.equal(byId('seed-' + String(i).padStart(2, '0')).desde, undefined);
   assert.equal(byId('seed-16').desde, 2);
@@ -27,8 +27,12 @@ test('seed: 15 comps originais intactas (ids 01..15 sem desde), seed-16 desde 2,
   assert.equal(SEED[1].desde, 4);
   assert.equal(SEED[1].topo, true);
   assert.equal(SEED[1].abaixoDe, 'seed-17');
-  assert.equal(SEED.filter((c) => c.topo).length, 2);
-  assert.equal(window.TFT_SEED_VERSION, 4);
+  assert.equal(SEED[2].id, 'seed-19');
+  assert.equal(SEED[2].desde, 5);
+  assert.equal(SEED[2].topo, true);
+  assert.equal(SEED[2].abaixoDe, 'seed-18');
+  assert.equal(SEED.filter((c) => c.topo).length, 3);
+  assert.equal(window.TFT_SEED_VERSION, 5);
 });
 
 test('seed-16 (print 14): tracos batem com o painel do print', () => {
@@ -88,4 +92,18 @@ test('seed-18 (print 16): tracos batem com o painel (1 Emblema de Lutador na Mas
   assert.equal(cnt['Vivaz'], 1);
   const yi = comp.main.find((u) => u.c === 'DA_18_MasterYi_AD');
   assert.ok(yi.i.includes('DA_18_EmblemBrawler'));
+});
+
+test('seed-19 (print 17+18): 10 unidades, tracos e itens batem com o placar', () => {
+  const comp = L.sanitizeImport(SEED, CAT).comps.find((c) => c.id === 'seed-19');
+  assert.equal(comp.nome, 'Vanguarda Congregação das Bruxas Devastador');
+  assert.equal(comp.estilo, 'Nível 10');
+  assert.equal(comp.main.length, 10);
+  assert.equal(new Set(comp.main.map((u) => u.c)).size, 10);
+  assert.ok(comp.main.every((u) => !u.p));
+  assert.deepEqual(comp.main.map((u) => u.s), [3, 2, 2, 2, 2, 2, 2, 2, 2, 2]);
+  const t = Object.fromEntries(L.activeTraits(comp, CAT).map((x) => [x.n, x.count]));
+  assert.deepEqual(t, { Vanguarda: 6, 'Congregação das Bruxas': 5, Devastador: 3, Emanador: 2, 'Aspecto Esmeralda': 1 });
+  assert.ok(comp.main.find((u) => u.c === 'DA_18_Elise').i.includes('DA_18_EmblemSlayer'));
+  assert.equal(comp.main.reduce((n, u) => n + u.i.length, 0), 16);
 });

@@ -139,6 +139,102 @@ window.TFT_SEED = [
   "abaixoDe": "seed-17"
  },
  {
+  "nome": "Vanguarda Congregação das Bruxas Devastador",
+  "estilo": "Nível 10",
+  "nota": "Placar de fim de partida (1º lugar, k1ozera): 10 unidades, sem posições (o placar não mostra tabuleiro). Linha rolada: refs/17.png mostra as 8 primeiras e refs/18.png as 2 últimas. Campeões, estrelas e itens lidos por comparação de pixels com o catálogo. Elise aparece cortada pelo botão +2: só o Emblema de Devastador é seguro (2º item parcial e 3º oculto ficaram vazios). Sem esse emblema, Devastador cai de 3 para 2.",
+  "fonte": "refs/17.png + refs/18.png",
+  "main": [
+   {
+    "c": "DA_18_Cassiopeia",
+    "s": 3,
+    "i": [
+     "DA_ThiefsGloves",
+     "DA_VoidStaff",
+     "DA_GuinsoosRageblade"
+    ],
+    "a": []
+   },
+   {
+    "c": "DA_Taric18",
+    "s": 2,
+    "i": [
+     "DA_WarmogsArmor",
+     "DA_DragonsClaw"
+    ],
+    "a": []
+   },
+   {
+    "c": "DA_Sentinel18",
+    "s": 2,
+    "i": [],
+    "a": []
+   },
+   {
+    "c": "DA_18_Morgana",
+    "s": 2,
+    "i": [
+     "DA_InfinityEdge",
+     "DA_HandOfJusticeRadiant",
+     "DA_Quicksilver"
+    ],
+    "a": []
+   },
+   {
+    "c": "DA_18_Diana",
+    "s": 2,
+    "i": [
+     "DA_HandOfJustice",
+     "DA_IonicSpark",
+     "DA_Crownguard"
+    ],
+    "a": []
+   },
+   {
+    "c": "DA_18_Hecarim",
+    "s": 2,
+    "i": [],
+    "a": []
+   },
+   {
+    "c": "DA_18_Caitlyn",
+    "s": 2,
+    "i": [
+     "DA_InfinityEdge",
+     "DA_GuinsoosRageblade",
+     "DA_Deathblade"
+    ],
+    "a": []
+   },
+   {
+    "c": "DA_18_Elise",
+    "s": 2,
+    "i": [
+     "DA_18_EmblemSlayer"
+    ],
+    "a": []
+   },
+   {
+    "c": "DA_18_Camille",
+    "s": 2,
+    "i": [
+     "DA_ProtectorsVow"
+    ],
+    "a": []
+   },
+   {
+    "c": "DA_18_Rakan",
+    "s": 2,
+    "i": [],
+    "a": []
+   }
+  ],
+  "flex": [],
+  "id": "seed-19",
+  "desde": 5,
+  "topo": true,
+  "abaixoDe": "seed-18"
+ },
+ {
   "nome": "Vivaz",
   "estilo": "Slowroll Nvl 7",
   "nota": "Tente obter campeões 3 estrelas no Nvl 7 roletando o excesso de ouro e mantendo-se acima de 50g.",
@@ -1386,4 +1482,4 @@ window.TFT_SEED = [
   "desde": 2
  }
 ];
-window.TFT_SEED_VERSION = 4;
+window.TFT_SEED_VERSION = 5;
