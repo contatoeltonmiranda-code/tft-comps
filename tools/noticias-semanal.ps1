@@ -103,6 +103,7 @@ try {
     Revert
     Finish 11 'ABORTADO: claude passou de 25 min (processo encerrado pelo PID)'
   }
+  $proc.WaitForExit()
   $out = if (Test-Path -LiteralPath $outFile) { (Get-Content -Raw -Encoding UTF8 -LiteralPath $outFile) } else { '' }
   $err = if (Test-Path -LiteralPath $errFile) { (Get-Content -Raw -Encoding UTF8 -LiteralPath $errFile) } else { '' }
   if (-not $out) { $out = '' }
