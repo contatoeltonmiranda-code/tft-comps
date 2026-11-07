@@ -61,7 +61,7 @@ Toda **quinta-feira 10:00** o Agendador de Tarefas do Windows roda, **oculto** (
 
 Log (fora do OneDrive): `%LOCALAPPDATA%\tft-comps-noticias\log\noticias-<data>.log` (últimos 30). Teste sem publicar: `powershell -ExecutionPolicy Bypass -File tools\noticias-semanal.ps1 -DryRun` (roda tudo, mas desfaz a edição e não faz commit nem push).
 
-**Autenticação:** o Claude Code headless precisa de login válido. Rode `claude login` uma vez num terminal, ou gere um token de longa duração com `claude setup-token` e salve em `%LOCALAPPDATA%\tft-comps-noticias\token.txt` (o script o passa só ao processo do claude). Sem login o job registra "FALHA DE AUTENTICACAO" no log e não altera nada.
+**Autenticação:** o `claude -p` usa o login normal do Claude Code do usuário. Testado em 07/11/2026 pelo próprio Agendador (`schtasks /Run`): autenticou, pesquisou as notas oficiais, respondeu `SEM NOVIDADE` e terminou sem commit (exit 0, ~25 s). Observação: dentro do shell de um agente do Claude Code o mesmo comando falha com "OAuth session expired" (credencial herdada do agente), por isso o teste de ponta a ponta foi feito pelo Agendador. Se o login expirar, rode `claude login` num terminal, ou gere um token de longa duração com `claude setup-token` e salve em `%LOCALAPPDATA%\tft-comps-noticias\token.txt` (o script o passa só ao processo do claude). Sem login o job registra "FALHA DE AUTENTICACAO" no log e não altera nada.
 
 Gerenciar a tarefa (nome `TFT-Comps-Noticias-Semanal`):
 
