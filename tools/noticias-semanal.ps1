@@ -24,7 +24,7 @@ function Log([string]$m) {
   Add-Content -LiteralPath $Log -Value ('{0} {1}' -f (Get-Date -Format 'HH:mm:ss'), $m) -Encoding UTF8
 }
 
-function Git {
+function GitRun {
   $old = $ErrorActionPreference
   $ErrorActionPreference = 'Continue'
   $out = & git -C $Repo @args 2>&1 | ForEach-Object { "$_" }
@@ -34,7 +34,7 @@ function Git {
 }
 
 function Revert {
-  $r = Git checkout -- data/noticias.js tests/noticias.test.js
+  $r = GitRun checkout -- data/noticias.js tests/noticias.test.js
   Log ('revert dos 2 arquivos permitidos (code {0})' -f $r.Code)
 }
 
@@ -56,16 +56,16 @@ try {
   Log ('INICIO dryrun={0} repo={1}' -f [bool]$DryRun, $Repo)
   $env:GIT_TERMINAL_PROMPT = '0'
 
-  $branch = (Git rev-parse --abbrev-ref HEAD).Out
+  $branch = (GitRun rev-parse --abbrev-ref HEAD).Out
   if ($branch -ne 'main') { Finish 2 ('ABORTADO: branch "{0}", esperado main' -f $branch) }
-  $st = Git status --porcelain
+  $st = GitRun status --porcelain
   if ($st.Out) { Finish 3 ("ABORTADO: repo com alteracoes locais (uma ferramenta por vez no projeto):`n" + $st.Out) }
-  $pull = Git pull --ff-only
+  $pull = GitRun pull --ff-only
   Log ('git pull --ff-only code={0} {1}' -f $pull.Code, $pull.Out)
   if ($pull.Code -ne 0) { Finish 4 'ABORTADO: git pull --ff-only falhou' }
-  $ahead = Git rev-list --count '@{u}..HEAD'
+  $ahead = GitRun rev-list --count '@{u}..HEAD'
   if ($ahead.Code -eq 0 -and [int]$ahead.Out -gt 0 -and -not $DryRun) {
-    $p0 = Git push
+    $p0 = GitRun push
     Log ('commits locais pendentes de push ({0}); git push code={1} {2}' -f $ahead.Out, $p0.Code, $p0.Out)
   }
 
@@ -120,13 +120,13 @@ try {
   if (-not $res) { $res = '' }
   Log ('linha final: ' + $res.Trim())
 
-  $st = Git status --porcelain
+  $st = GitRun status --porcelain
   $files = @($st.Out -split "`n" | Where-Object { $_.Trim() } | ForEach-Object { $_.Substring(3).Trim().Trim('"') })
   if ($files.Count -eq 0) { Finish 0 'sem alteracoes: nada a commitar' }
 
   $bad = @($files | Where-Object { $Allowed -notcontains $_ })
   if ($bad.Count -gt 0) {
-    $ra = Git checkout -- .
+    $ra = GitRun checkout -- .
     Log ('revert de todos os arquivos rastreados (code {0})' -f $ra.Code)
     Finish 6 ('ABORTADO: alteracoes fora dos arquivos permitidos: ' + ($bad -join ', '))
   }
@@ -151,19 +151,19 @@ try {
     Finish 7 'ABORTADO: node --test falhou; edicao desfeita, sem commit'
   }
 
-  $stat = Git diff --stat
+  $stat = GitRun diff --stat
   Log ("diff:`n" + $stat.Out)
   if ($DryRun) {
     Revert
     Finish 0 'DRY-RUN ok: testes passaram; commit e push ignorados e edicao desfeita'
   }
 
-  $add = Git add -- data/noticias.js tests/noticias.test.js
+  $add = GitRun add -- data/noticias.js tests/noticias.test.js
   $msg = '[cc] Update TFT news (weekly auto job, {0})' -f (Get-Date -Format 'yyyy-MM-dd')
-  $commit = Git commit -m $msg
+  $commit = GitRun commit -m $msg
   Log ('git commit code={0} {1}' -f $commit.Code, $commit.Out)
   if ($commit.Code -ne 0) { Finish 13 'FALHA no commit' }
-  $push = Git push
+  $push = GitRun push
   Log ('git push code={0} {1}' -f $push.Code, $push.Out)
   if ($push.Code -ne 0) { Finish 8 'FALHA no push (commit ficou local; a proxima execucao tenta de novo)' }
   Finish 0 ('commit + push ok: ' + $res.Trim())
