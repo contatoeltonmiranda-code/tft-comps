@@ -126,7 +126,8 @@ try {
 
   $bad = @($files | Where-Object { $Allowed -notcontains $_ })
   if ($bad.Count -gt 0) {
-    Revert
+    $ra = Git checkout -- .
+    Log ('revert de todos os arquivos rastreados (code {0})' -f $ra.Code)
     Finish 6 ('ABORTADO: alteracoes fora dos arquivos permitidos: ' + ($bad -join ', '))
   }
   if ($res -match 'SEM NOVIDADE' -or $res -match 'FALHA' -or -not $res) {
