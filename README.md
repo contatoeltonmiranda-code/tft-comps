@@ -4,11 +4,12 @@ Mini sistema pessoal de composições de Teamfight Tactics (Set 18, "Selvas Enca
 
 ## Páginas
 
-Navegação no topo, igual nas quatro páginas (mesmo `css/style.css`): **Comps** (`index.html`) | **Guia do Jogo** (`guia.html`) | **Estratégia padrão** (`estrategia.html`) | **Notícias** (`noticias.html`). Nas páginas geradas o menu vem de `nav()` em `tools/gen-guia.js`; em `index.html` e `noticias.html` é HTML à mão (o teste compara as quatro).
+Navegação no topo, igual nas cinco páginas (mesmo `css/style.css`): **Comps** (`index.html`) | **Painel** (`painel.html`) | **Guia do Jogo** (`guia.html`) | **Estratégia padrão** (`estrategia.html`) | **Notícias** (`noticias.html`). Nas páginas geradas o menu vem de `nav()` em `tools/gen-guia.js`; em `index.html`, `painel.html` e `noticias.html` é HTML à mão (o teste compara as cinco). No mobile (até 420 px) os 5 links cabem sem rolar (fonte 13,5 px; 13 px até 370 px).
 
 - Lista de comps em 2 colunas a partir de 1100 px de largura (2 comps lado a lado); abaixo disso, 1 coluna. Cada comp mostra Início / Meio / Fim (ver Fases em Dados), as dicas (quando houver) e o tabuleiro.
 - `guia.html`: Guia do Jogo (TFT Set 18, 13 seções: glossário, economia, nível, rolagem, estilos, scout, checklist e notas sobre as fontes). O texto é o oficial da Clara (`3. copywriter/Projetos/tft-guia-do-jogo/GUIA-DO-JOGO.md`), copiado sem alteração para `data/guia-do-jogo.md`. **A página é gerada, não editada à mão**: `node tools/gen-guia.js` lê cada `.md` de `data/` + `tools/pagina-template.html` e escreve `guia.html` e `estrategia.html` (uma entrada em `PAGES` por página: meta tags, rótulos de busca e opções de renderização; página nova de texto = entrada nova + `.md`) (HTML estático, sem CDN nem parser de Markdown no navegador). Para atualizar o guia: copiar o `.md` novo para `data/` e rodar o gerador (o teste falha se `guia.html` ficar fora de sincronia). Recursos: índice lateral fixo no desktop (a partir de 1000 px) com scrollspy e índice recolhível no topo no mobile; tabelas com rolagem horizontal só dentro da tabela; notas de divergência em blocos discretos e marcações "(Google, não confirmado)" e "(Set 18)" destacadas; busca no guia (`js/guia.js`, ignora acento e caixa, destaca com `<mark>`, esconde seções sem resultado, Enter/Shift+Enter navegam, Esc limpa). Página `noindex` como as demais (ferramenta pessoal): sitemap, `llms.txt` e Search Console n.a.
 - `estrategia.html`: Estratégia padrão (TFT Set 18, patch 18.6, 6 seções: qual estratégia jogar, Fast 8, Reroll e slow roll, Fast 9, leitura de jogo padronizada com matriz vida x board, resumo de bolso). Texto oficial da Clara (`3. copywriter/Projetos/tft-guia-do-jogo/ESTRATEGIA-PADRAO.md`) copiado sem alteração para `data/estrategia-padrao.md` e gerado pelo mesmo `tools/gen-guia.js`, com o mesmo layout e a mesma busca do guia (`js/guia.js`). Extras só desta página, todos em estilo (o texto não muda): botões "Checklist rápido" e "Resumo de bolso" no topo (se a busca escondeu o alvo, ela é limpa antes de ir); checklist de 30 segundos e resumo de bolso em caixa dourada com itens numerados; ações UPAR / FICAR / ROLAR / GUARDAR / PARAR como badges coloridos nas tabelas (`.act-*`; cor + palavra, nunca só cor); `*(regra derivada do guia)*` em itálico apagado (`.rd`), `(divergência)` laranja (`.dv`), `(Set 18)` e `(Google, não confirmado)` como no guia; subtítulos repetidos (Gatilhos, Pisos...) com id prefixado pela estratégia; no mobile (até 640 px) as 13 tabelas viram cartões com o rótulo da coluna em cada linha (`.tbl.stack` + `data-label`), sem rolagem lateral. Página `noindex`: sitemap, `llms.txt` e Search Console n.a.
+- `painel.html`: **Painel de decisão manual** para usar durante a partida (ver "Painel de decisão" abaixo). Você digita o estado; o app não lê o jogo.
 - `noticias.html`: resumo do meta no topo, filtros por tipo e por patch, cards curtos com ícone do campeão/traço/item (quando há id no catálogo), link da fonte e data da última atualização. Dados em `data/noticias.js`, lógica de filtro em `TFTLogic` (`newsTypes`, `newsPatches`, `filterNews`, `newsIcon`), página em `js/noticias.js`.
 
 ## Como abrir
@@ -80,6 +81,62 @@ Gerenciar a tarefa (nome `TFT-Comps-Noticias-Semanal`):
 - QA do Guia do Jogo (índice fixo/recolhível, âncoras, scrollspy, tabelas, notas, busca, sem scroll horizontal e sem erro de console; 1440 e 390, um Chromium só): `node qa/qa-guia.js`. Prints `qa/guia-*.png` e `qa/resultado-guia.json`.
 - QA da Estratégia padrão (nav de 4 links, atalhos, caixas, badges, tabelas em cartões no mobile, índice, âncoras, busca, sem scroll horizontal e sem erro de console; 1440, 1100 e 390, um Chromium só): `node qa/qa-estrategia.js`. Prints `qa/estrategia-*.png` e `qa/resultado-estrategia.json`.
 - QA da prévia do overlay (6 cenários, 1000 e 390 de largura): servidor na raiz e `node qa/overlay.js`. Prints em `qa/overlay-*.png`.
+- Testes do Painel (`tests/painel-*.test.js`: base, comps, decisão, regras, página) e QA do Painel (partida simulada do 2-1 ao 4-3, 1440, 1100 e 390, um Chromium só): `node qa/qa-painel.js`. Prints `qa/painel-*.png` e `qa/resultado-painel.json`.
+
+## Painel de decisão (`painel.html`)
+
+Ferramenta para usar **durante a partida**, em segundo monitor ou celular, entre rodadas. **100% manual: você digita o estado e o painel decide.** Não há API, Overwolf, captura de tela nem nada que toque o cliente (decisão consciente do Elton, ver `_brain/DECISOES.md`; `tests/painel-page.test.js` falha se aparecer `fetch`, `overwolf`, `WebSocket`, captura de tela etc. no painel). O estado fica só no `localStorage` (`tft-comps:painel:v1`); "Nova partida" zera (com confirmação).
+
+**Entrada** (coluna da esquerda no desktop; no mobile fica abaixo da saída, com uma barra fixa no topo que resume a ação):
+
+- Rodada (estágio + rodada, e botão "Próxima rodada" que avança e mantém o resto), vida (passos -10/-1/+1, campo e slider), ouro (-5/-1/+1/+5 e campo), nível, streak (+ vitórias / - derrotas), XP opcional ("12 / 36", como o jogo mostra).
+- Campeões que tenho (banco + tabuleiro): grade por custo com busca. Clique soma uma cópia; botão direito, segurar (450 ms no toque), Delete ou o × do chip remove. 2 cópias = **par**, 3 a 8 = **2★**, 9+ = **3★** (automático).
+- Componentes: os 10 de `data/recipes.js` com contador (clique soma; botão -, botão direito ou segurar remove).
+- Contest por comp (quantos outros jogadores você viu) e comp favorita (estrela) para forçar.
+- Extras opcionais (não estavam na lista original, mas as regras do guia dependem deles): **aprimoramento** (Não sei / Economia / Força: o guia usa "aprimoramento de economia" e "de força" nas regras de 2-1, 3-7 e 4-1; é um clique que você digita, nada é lido) e **board** (Auto / Forte / Médio / Fraco; Auto deriva da streak: 2+ vitórias = forte, 2+ derrotas = fraco, senão médio, como no Passo 4 do guia).
+
+**Saída** (coluna da direita; badges `UPAR / FICAR / ROLAR / GUARDAR` iguais aos da Estratégia padrão):
+
+1. **Estratégia recomendada** entre as 3 do `.md` (Fast 8 padrão, Reroll custo 1 ou 2, Economia máxima: Open Fort, Fast 8 antecipado 3A ou Fast 9 3B), com os critérios que bateram (sim / não / sem informação) e "o que faria mudar".
+2. **Ação agora**: título (ex.: "UPAR para 8 e ROLAR até 20–30"), texto, pré-level (com XP: "termine em 46, faltam 16"), juros atuais, próximo degrau (10/20/30/40/50 e quanto falta), ouro que sobra após a ação (faixa quando é "até 20–30"; o custo do XP só é descontado se você informar o XP), piso de ouro, faixa de vida e alerta (Atenção/Crítica), e a regra usada com link para a seção e o trecho do guia.
+3. **Comps**: ranking das 24 comps do seed. Fase pela rodada: estágios 1 e 2 usam `fases.inicio`, 3 e 4 usam `fases.meio`, 5+ o board final (`comp.main`); comp sem `fases` usa o board final. Top 3 em destaque, com miniaturas (você tem / falta), pares, "board final x/y", unidades que faltam (com custo e se a loja do seu nível alcança) e itens (pronto, dá para montar, falta 1 componente, faltam 2, com os nomes dos componentes pela receita). O índice é o de `js/recommend.js` (campeões 60%, itens 25%, ouro e nível 15%; não é chance de vitória).
+4. **Forçar comp**: para a comp favorita (ou a escolhida no seletor): **OK / ARRISCADO / NÃO FORCE**, com os motivos e "o que buscar" (unidades e componentes).
+
+**Arquivos**
+
+```
+js/painel-regras.js   registro de regras: id, seção, linha, origem, trecho do .md (dados)
+js/painel-comps.js    ranking por fase, BIS, forçar comp (puro; usa js/recommend.js)
+js/painel-logic.js    estado, economia, estratégia, ação, vida (puro)
+js/painel.js          interface (textContent, sem innerHTML)
+css/painel.css        todas as classes com prefixo pn-
+```
+
+`js/recommend.js` ganhou `pontuarComp` exportado, `opcoes.unidades` (campeões da fase no lugar do board final) e `faltaItens` (componentes que faltam). O overlay não muda (testes iguais) e `overwolf-app/vendor/recommend.js` foi sincronizado.
+
+**Regras: origem de cada uma.** Cada regra em `painel-regras.js` tem `trecho` copiado do `.md`. `tests/painel-regras.test.js` confere, palavra por palavra, que o trecho existe em `data/estrategia-padrao.md` (ou `data/guia-do-jogo.md`), que as marcadas `derivada` estão marcadas "(regra derivada do guia)" no `.md` e que as do guia não estão. Três origens, sempre visíveis na interface:
+
+| Origem | Marca na tela | O que é |
+|---|---|---|
+| `guia` | só o link da seção | tabela, gatilho ou piso dito no `.md` (ex.: 4-2 "SE ouro ≥ ~40 → UPAR 8 e rolar"; pisos 32, ~40, 20–30, 10, 50) |
+| `derivada` | "derivada do guia" | o próprio `.md` marca como regra derivada (matriz vida x board do Passo 7, faixas de vida, "falta 1 peça", saída do Open Fort, Abandonar do reroll) |
+| `painel` | "critério do painel" | interpretação do painel para entrada manual que o `.md` não define (lista abaixo) |
+
+Interpretações do painel (origem `painel`, para o Elton revisar):
+
+- "Muitos pares" no estágio 2 = 3+ pares (o `.md` dá "3+ pares" só para 3-2 e 3-5; parar em 14 ou 20 vem do `.md`).
+- "Muito rico" no 3-5 = 50+ de ouro (juros no máximo); "segurar a streak" = 2+ vitórias seguidas com board forte (a streak passa a pagar ouro em 2).
+- "Estabilizou" no 5-1 = board não fraco e vida Folga ou Segura. O painel não sabe se você achou carry e tanque: avisa para confirmar.
+- Itens úteis (2-1) = dá para montar, com seus componentes, algum item que alguma comp do seed usa. BIS do reroll = itens da comp do seed em que o campeão aparece no `main`. Campeão sem item no seed = "não dá para confirmar": o painel não recomenda reroll (mais seguro).
+- "Cópias" do reroll = cópias do **mesmo** campeão (4+ de custo 1, 2+ de custo 2). Contest do reroll = o maior contest entre as comps que têm o carry. O reroll de custo 3 não é detectado (o `.md` não dá número de cópias).
+- Reroll só é recomendado até o 4-1 (as linhas 4-2 e estágio 5 do reroll não são usadas; depois vale o Fast 8). As linhas 3-2 e 3-5 da Estratégia 3 coincidem com as do Fast 8 e não têm código próprio.
+- "Falta 1 peça para fechar um traço" = a comp **favorita** precisa de só mais 1 campeão no board final (o traço não é calculado).
+- Custo do XP = 1 de ouro por XP (o `.md` só cita 48 de ouro para o 7→8, Set 13). Sem XP informado, "sobra" mostra "ouro menos o XP". Cada rolagem custa 2 de ouro (glossário do guia).
+- Fast 9 (3B) entra com aprimoramento de economia marcado, vida 80+, nível até 8 e ninguém na comp (4-1 a 5-1). Fast 8 antecipado (3A): aprimoramento de economia no 3-7 ou 4-1.
+- Forçar comp: contest 3+ = NÃO FORCE; 2 = arriscado no fast 8 e NÃO FORCE em reroll e Fast 9 (o estilo da comp define o tipo: "Slowroll" = reroll; "Fast 9/10" e "Nível 9/10" = Fast 9); 1 pesa só em reroll e Fast 9; vida Crítica ou Atenção rebaixa. A cobertura da fase (depois do 3-2: < 25% = não force, < 50% = arriscado; estágio 5+: < 50% e < 70%) é limiar do painel.
+- Estágio 1 não tem tabela no `.md`: o painel só lembra dos juros (do guia). As faixas de vida só valem do estágio 3 em diante (como o `.md` diz).
+
+Limites: o ranking usa só as comps do seed (`data/seed.js`), não as editadas no `localStorage` da lista de comps; não há dado de loja, banco nem posicionamento; scout e força do board dependem do que você digita. A regra do overlay de nunca mostrar dado de aprimoramento continua: aqui só existe o clique "Economia/Força" digitado por você, que não vem do jogo.
 
 ## Overlay Overwolf (experimental, fase 1)
 

@@ -80,6 +80,7 @@
     const receitas = (recipes && recipes.receitas) || {};
     const inv = inventario(estado);
     const out = { prontos: [], montaveis: [], parciais: [], faltando: [] };
+    const falta = {};
     let restantes = alvos.slice();
     restantes = restantes.filter((id) => {
       if (!consome(inv, id)) return true;
@@ -97,12 +98,19 @@
     });
     restantes.forEach((id) => {
       const [a, b] = receitas[id];
-      if (consome(inv, a) || consome(inv, b)) out.parciais.push(id);
-      else out.faltando.push(id);
+      const temA = consome(inv, a);
+      const temB = !temA && consome(inv, b);
+      if (temA || temB) {
+        out.parciais.push(id);
+        falta[id] = [temA ? b : a];
+      } else {
+        out.faltando.push(id);
+        falta[id] = [a, b];
+      }
     });
     const total = alvos.length;
     const soma = out.prontos.length * CREDITO_ITEM.pronto + out.montaveis.length * CREDITO_ITEM.montavel + out.parciais.length * CREDITO_ITEM.parcial;
-    return { out, valor: total ? soma / total : null };
+    return { out, valor: total ? soma / total : null, falta };
   }
 
   function custoMax(level) {
@@ -110,11 +118,15 @@
     return CUSTO_MAX_POR_NIVEL[n] || CUSTO_MAX_NIVEL_ALTO;
   }
 
-  function pontuarComp(comp, estado, catalog, recipes) {
+  // opcoes.unidades: ids de campeoes a usar no eixo "campeoes" no lugar do board final (fases inicio/meio do painel).
+  function pontuarComp(comp, estado, catalog, recipes, opcoes) {
     const idx = indexar(catalog);
     const donos = resumoCampeoes(estado);
     const receitas = (recipes && recipes.receitas) || {};
-    const unidades = lista(comp.main).map((u) => ({ u, peso: 1 })).concat(lista(comp.flex).map((u) => ({ u, peso: FLEX_PESO })));
+    const doFase = opcoes && Array.isArray(opcoes.unidades) ? opcoes.unidades : null;
+    const unidades = doFase
+      ? doFase.map((c) => ({ u: { c }, peso: 1 }))
+      : lista(comp.main).map((u) => ({ u, peso: 1 })).concat(lista(comp.flex).map((u) => ({ u, peso: FLEX_PESO })));
     const validas = unidades.filter(({ u }) => u && idx.champs.has(u.c));
 
     let pesoTotal = 0;
@@ -176,6 +188,7 @@
       tem,
       faltam,
       itens: o,
+      faltaItens: itensAval.falta,
       motivos,
     };
   }
@@ -195,7 +208,7 @@
     return { fase: f, top: ranked, semDados };
   }
 
-  const api = { parseStage, fase, recommend, PESOS, CUSTO_MAX_POR_NIVEL };
+  const api = { parseStage, fase, recommend, pontuarComp, PESOS, CUSTO_MAX_POR_NIVEL };
   root.TFTRecommend = api;
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
 })(typeof window !== 'undefined' ? window : globalThis);

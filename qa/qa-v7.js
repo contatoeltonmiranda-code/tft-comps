@@ -42,7 +42,7 @@ async function run(label, viewport, mobile, cols) {
 
   // navegacao
   const nav = await page.locator('.sitenav a').evaluateAll((as) => as.map((a) => ({ t: a.textContent.trim(), h: a.getAttribute('href'), cur: a.getAttribute('aria-current') })));
-  ok(`[${label}] nav: Comps | Guia do Jogo | Estratégia padrão | Notícias, Comps atual, sem badge`, nav.length === 4 && nav[0].h === 'index.html' && nav[0].cur === 'page' && nav[1].h === 'guia.html' && nav[1].t === 'Guia do Jogo' && nav[2].h === 'estrategia.html' && nav[2].t === 'Estratégia padrão' && nav[3].h === 'noticias.html', JSON.stringify(nav));
+  ok(`[${label}] nav: Comps | Painel | Guia do Jogo | Estratégia padrão | Notícias, Comps atual, sem badge`, nav.length === 5 && nav[0].h === 'index.html' && nav[0].cur === 'page' && nav[1].h === 'painel.html' && nav[1].t === 'Painel' && nav[2].h === 'guia.html' && nav[2].t === 'Guia do Jogo' && nav[3].h === 'estrategia.html' && nav[3].t === 'Estratégia padrão' && nav[4].h === 'noticias.html', JSON.stringify(nav));
 
   // 2 colunas
   const geo = await page.evaluate(() => {

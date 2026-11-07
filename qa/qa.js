@@ -246,6 +246,7 @@ async function run(label, viewport, mobile) {
   await page.fill('#pk-q', 'leona');
   await page.locator('#pk-grid .pcell[data-id="DA_18_Leona"]').click();
   const row = page.locator('li.erow[data-champ="DA_18_Leona"]');
+  await row.first().waitFor({ timeout: 3000 }).catch(() => {});
   ok(`[${label}] campeao adicionado no editor`, (await row.count()) === 1, 'rows=' + (await row.count()) + ' toast=' + (await page.locator('#toast').textContent().catch(() => '')));
   await row.locator('button[data-act="add-alt"]').click();
   await page.fill('#pk-q', 'guinsoo');

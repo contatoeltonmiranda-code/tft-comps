@@ -1,0 +1,850 @@
+{
+  "total": 196,
+  "falhas": 0,
+  "results": [
+    {
+      "name": "[1440] painel.html responde 200",
+      "pass": true
+    },
+    {
+      "name": "[1440] nav: Comps | Painel | Guia do Jogo | Estratégia padrão | Notícias, ativo = Painel",
+      "pass": true,
+      "extra": "[{\"t\":\"Comps\",\"h\":\"index.html\",\"cur\":null},{\"t\":\"Painel\",\"h\":\"painel.html\",\"cur\":\"page\"},{\"t\":\"Guia do Jogo\",\"h\":\"guia.html\",\"cur\":null},{\"t\":\"Estratégia padrão\",\"h\":\"estrategia.html\",\"cur\":null},{\"t\":\"Notícias\",\"h\":\"noticias.html\",\"cur\":null}]"
+    },
+    {
+      "name": "[1440] nav cabe sem rolar (5 links visíveis)",
+      "pass": true,
+      "extra": "sobra=0"
+    },
+    {
+      "name": "[1440] title <= 60, description 140-160, h1 único, og/twitter, noindex",
+      "pass": true,
+      "extra": "{\"t\":42,\"d\":144}"
+    },
+    {
+      "name": "[1440] sem scroll horizontal da página",
+      "pass": true,
+      "extra": "overflow=0"
+    },
+    {
+      "name": "[1440] estado inicial 1-1, vida 100, ouro 0, nível 1",
+      "pass": true
+    },
+    {
+      "name": "[1440] 74 campeões e 10 componentes na grade",
+      "pass": true
+    },
+    {
+      "name": "[1440] contest lista as 24 comps",
+      "pass": true
+    },
+    {
+      "name": "[1440] aviso de política visível e recolhível",
+      "pass": true
+    },
+    {
+      "name": "[1440] desktop: entrada à esquerda, saída à direita, lado a lado",
+      "pass": true,
+      "extra": "{\"e\":[40,430],\"s\":[490,910]}"
+    },
+    {
+      "name": "[1440] trocar estágio mantém a rodada válida",
+      "pass": true
+    },
+    {
+      "name": "[1440] nível sobe pelo botão +1",
+      "pass": true
+    },
+    {
+      "name": "[1440] 2-1 ouro 4: Open Fort, FICAR no 3, juros +0, próximo degrau 10 (faltam 6)",
+      "pass": true,
+      "extra": "Estratégia recomendada |  | Economia máxima · Open Fort até o 3-1 |  | Por que | Critério atendido: | Sem upgrade (nenhum campeão 2★)  | §4 Economia · Quando escolher · 2-1 | C"
+    },
+    {
+      "name": "[1440] barra resumo: rodada, badge FICAR, ouro",
+      "pass": true
+    },
+    {
+      "name": "[1440] estágio 2: faixa de vida não vale e sem alerta",
+      "pass": true
+    },
+    {
+      "name": "[1440] 1 clique = 1 cópia (×1, sem rótulo)",
+      "pass": true
+    },
+    {
+      "name": "[1440] 2 cópias = par",
+      "pass": true
+    },
+    {
+      "name": "[1440] 3 cópias = 2★ automático",
+      "pass": true
+    },
+    {
+      "name": "[1440] chips \"Tenho\" mostram os dois campeões",
+      "pass": true
+    },
+    {
+      "name": "[1440] botão direito remove uma cópia",
+      "pass": true
+    },
+    {
+      "name": "[1440] teclado: Enter soma",
+      "pass": true
+    },
+    {
+      "name": "[1440] teclado: Delete remove",
+      "pass": true
+    },
+    {
+      "name": "[1440] × do chip remove 1 cópia; clique soma de volta",
+      "pass": true
+    },
+    {
+      "name": "[1440] busca de campeão filtra (ignora acento e caixa)",
+      "pass": true
+    },
+    {
+      "name": "[1440] busca sem resultado mostra aviso",
+      "pass": true
+    },
+    {
+      "name": "[1440] busca limpa mostra todos",
+      "pass": true
+    },
+    {
+      "name": "[1440] componente soma (×2) e mostra o botão -",
+      "pass": true
+    },
+    {
+      "name": "[1440] botão - remove um componente",
+      "pass": true
+    },
+    {
+      "name": "[1440] estado salvo em tft-comps:painel:v1",
+      "pass": true,
+      "extra": "{\"s\":\"2-1\",\"c\":{\"DA_18_Veigar\":2,\"DA_18_Ornn\":2},\"k\":{\"DA_Component_BFSword\":2}}"
+    },
+    {
+      "name": "[1440] \"Próxima rodada\" avança 2-1 -> 2-2 e mantém o resto",
+      "pass": true
+    },
+    {
+      "name": "[1440] 2-2 com 2 pares e componentes: Fast 8, GUARDAR",
+      "pass": true,
+      "extra": "Rodada 2-2 | GUARDAR | GUARDAR | Ouro 9 → 9 | Vida 98 · Folga | Fast 8 padrão"
+    },
+    {
+      "name": "[1440] streak +3 mostra \"3 vitórias\"",
+      "pass": true
+    },
+    {
+      "name": "[1440] 2-3 com win streak: board forte, UPAR 5",
+      "pass": true,
+      "extra": "Rodada 2-3 | UPAR | UPAR para 5 | Ouro 9 | Vida 98 · Folga | Fast 8 padrão"
+    },
+    {
+      "name": "[1440] 2-4 é carrossel",
+      "pass": true
+    },
+    {
+      "name": "[1440] zerar streak",
+      "pass": true
+    },
+    {
+      "name": "[1440] 3-2 ouro 32 vida 70: UPAR para 6, juros +3, próximo degrau 40, faixa Segura",
+      "pass": true,
+      "extra": "Rodada 3-2 | UPAR | UPAR para 6 | Ouro 32 | Vida 70 · Segura | Fast 8 padrão"
+    },
+    {
+      "name": "[1440] regra citada: §2 Fast 8 · Rodada a rodada · 3-2 com link e trecho",
+      "pass": true
+    },
+    {
+      "name": "[1440] \"Ver o trecho do guia\" mostra o texto do .md",
+      "pass": true
+    },
+    {
+      "name": "[1440] com XP 20/36: sobra após a ação = 16",
+      "pass": true,
+      "extra": "Sobra após a ação\n16"
+    },
+    {
+      "name": "[1440] ranking: 3 comps em destaque e todas as 24",
+      "pass": true
+    },
+    {
+      "name": "[1440] \"Todas as comps\" abre com as outras 21",
+      "pass": true
+    },
+    {
+      "name": "[1440] top 3 em ordem decrescente de pontuação",
+      "pass": true,
+      "extra": "44,32,32"
+    },
+    {
+      "name": "[1440] cada comp do top 3 mostra o que falta e as miniaturas da fase",
+      "pass": true
+    },
+    {
+      "name": "[1440] fase \"Meio\" no estágio 3",
+      "pass": true
+    },
+    {
+      "name": "[1440] estrela marca a comp favorita (aria-pressed) e vai para o Forçar",
+      "pass": true
+    },
+    {
+      "name": "[1440] Forçar comp mostra veredito com badge",
+      "pass": true,
+      "extra": "ARRISCADO\nEnfeitiçador 6\n· Fast 8 · 33% da fase"
+    },
+    {
+      "name": "[1440] contest 3 na comp = NÃO FORCE e pede pivô",
+      "pass": true,
+      "extra": "NÃO FORCE Enfeitiçador 6 · Fast 8 · 33% da fase"
+    },
+    {
+      "name": "[1440] 4-2 ouro 45 vida 50: UPAR para 8 e ROLAR até 20–30, sobra 20–30",
+      "pass": true,
+      "extra": "Rodada 4-2 | UPAR | ROLAR | UPAR para 8 e ROLAR até 20–30 | Ouro 45 → 20–30 | Vida 50 · Segura | Fast 8 padrão"
+    },
+    {
+      "name": "[1440] piso ~40 do 4-2 aparece",
+      "pass": true
+    },
+    {
+      "name": "[1440] vida < 30 (Crítica): alerta crítico e ROLAR até 10, regra derivada do guia",
+      "pass": true,
+      "extra": "Rodada 4-3 | ROLAR | ROLAR até 10 | Ouro 38 → 10 | Vida 25 · Crítica | Fast 8 padrão"
+    },
+    {
+      "name": "[1440] Estratégia mostra \"Por que\" e \"O que faria mudar\"",
+      "pass": true
+    },
+    {
+      "name": "[1440] extras: aprimoramento Economia e board Forte marcados",
+      "pass": true
+    },
+    {
+      "name": "[1440] alvos de toque principais >= 40px",
+      "pass": true,
+      "extra": "[]"
+    },
+    {
+      "name": "[1440] barra resumo fica fixa no topo ao rolar",
+      "pass": true,
+      "extra": "top=0"
+    },
+    {
+      "name": "[1440] recarregar restaura a partida (4-3, vida 25, ouro 38, Veigar ×2)",
+      "pass": true
+    },
+    {
+      "name": "[1440] favorita sobrevive ao reload",
+      "pass": true
+    },
+    {
+      "name": "[1440] localStorage corrompido cai no estado limpo, sem erro",
+      "pass": true
+    },
+    {
+      "name": "[1440] JSON inválido no localStorage cai no estado limpo",
+      "pass": true
+    },
+    {
+      "name": "[1440] \"Nova partida\" pede confirmação",
+      "pass": true
+    },
+    {
+      "name": "[1440] cancelar mantém o estado",
+      "pass": true
+    },
+    {
+      "name": "[1440] confirmar zera: 1-1, ouro 0, sem campeões, sem favorita",
+      "pass": true
+    },
+    {
+      "name": "[1440] estado zerado também no localStorage",
+      "pass": true
+    },
+    {
+      "name": "[1440] navegação Painel > Estratégia: 5 links e Painel presente",
+      "pass": true
+    },
+    {
+      "name": "[1440] volta ao Painel pelo menu",
+      "pass": true
+    },
+    {
+      "name": "[1440] sem scroll horizontal no fim",
+      "pass": true,
+      "extra": "overflow=0"
+    },
+    {
+      "name": "[1440] sem erros nem avisos no console (0)",
+      "pass": true,
+      "extra": ""
+    },
+    {
+      "name": "[1100] painel.html responde 200",
+      "pass": true
+    },
+    {
+      "name": "[1100] nav: Comps | Painel | Guia do Jogo | Estratégia padrão | Notícias, ativo = Painel",
+      "pass": true,
+      "extra": "[{\"t\":\"Comps\",\"h\":\"index.html\",\"cur\":null},{\"t\":\"Painel\",\"h\":\"painel.html\",\"cur\":\"page\"},{\"t\":\"Guia do Jogo\",\"h\":\"guia.html\",\"cur\":null},{\"t\":\"Estratégia padrão\",\"h\":\"estrategia.html\",\"cur\":null},{\"t\":\"Notícias\",\"h\":\"noticias.html\",\"cur\":null}]"
+    },
+    {
+      "name": "[1100] nav cabe sem rolar (5 links visíveis)",
+      "pass": true,
+      "extra": "sobra=0"
+    },
+    {
+      "name": "[1100] title <= 60, description 140-160, h1 único, og/twitter, noindex",
+      "pass": true,
+      "extra": "{\"t\":42,\"d\":144}"
+    },
+    {
+      "name": "[1100] sem scroll horizontal da página",
+      "pass": true,
+      "extra": "overflow=0"
+    },
+    {
+      "name": "[1100] estado inicial 1-1, vida 100, ouro 0, nível 1",
+      "pass": true
+    },
+    {
+      "name": "[1100] 74 campeões e 10 componentes na grade",
+      "pass": true
+    },
+    {
+      "name": "[1100] contest lista as 24 comps",
+      "pass": true
+    },
+    {
+      "name": "[1100] aviso de política visível e recolhível",
+      "pass": true
+    },
+    {
+      "name": "[1100] desktop: entrada à esquerda, saída à direita, lado a lado",
+      "pass": true,
+      "extra": "{\"e\":[20,430],\"s\":[470,610]}"
+    },
+    {
+      "name": "[1100] trocar estágio mantém a rodada válida",
+      "pass": true
+    },
+    {
+      "name": "[1100] nível sobe pelo botão +1",
+      "pass": true
+    },
+    {
+      "name": "[1100] 2-1 ouro 4: Open Fort, FICAR no 3, juros +0, próximo degrau 10 (faltam 6)",
+      "pass": true,
+      "extra": "Estratégia recomendada |  | Economia máxima · Open Fort até o 3-1 |  | Por que | Critério atendido: | Sem upgrade (nenhum campeão 2★)  | §4 Economia · Quando escolher · 2-1 | C"
+    },
+    {
+      "name": "[1100] barra resumo: rodada, badge FICAR, ouro",
+      "pass": true
+    },
+    {
+      "name": "[1100] estágio 2: faixa de vida não vale e sem alerta",
+      "pass": true
+    },
+    {
+      "name": "[1100] 1 clique = 1 cópia (×1, sem rótulo)",
+      "pass": true
+    },
+    {
+      "name": "[1100] 2 cópias = par",
+      "pass": true
+    },
+    {
+      "name": "[1100] 3 cópias = 2★ automático",
+      "pass": true
+    },
+    {
+      "name": "[1100] chips \"Tenho\" mostram os dois campeões",
+      "pass": true
+    },
+    {
+      "name": "[1100] botão direito remove uma cópia",
+      "pass": true
+    },
+    {
+      "name": "[1100] teclado: Enter soma",
+      "pass": true
+    },
+    {
+      "name": "[1100] teclado: Delete remove",
+      "pass": true
+    },
+    {
+      "name": "[1100] × do chip remove 1 cópia; clique soma de volta",
+      "pass": true
+    },
+    {
+      "name": "[1100] busca de campeão filtra (ignora acento e caixa)",
+      "pass": true
+    },
+    {
+      "name": "[1100] busca sem resultado mostra aviso",
+      "pass": true
+    },
+    {
+      "name": "[1100] busca limpa mostra todos",
+      "pass": true
+    },
+    {
+      "name": "[1100] componente soma (×2) e mostra o botão -",
+      "pass": true
+    },
+    {
+      "name": "[1100] botão - remove um componente",
+      "pass": true
+    },
+    {
+      "name": "[1100] estado salvo em tft-comps:painel:v1",
+      "pass": true,
+      "extra": "{\"s\":\"2-1\",\"c\":{\"DA_18_Veigar\":2,\"DA_18_Ornn\":2},\"k\":{\"DA_Component_BFSword\":2}}"
+    },
+    {
+      "name": "[1100] \"Próxima rodada\" avança 2-1 -> 2-2 e mantém o resto",
+      "pass": true
+    },
+    {
+      "name": "[1100] 2-2 com 2 pares e componentes: Fast 8, GUARDAR",
+      "pass": true,
+      "extra": "Rodada 2-2 | GUARDAR | GUARDAR | Ouro 9 → 9 | Vida 98 · Folga | Fast 8 padrão"
+    },
+    {
+      "name": "[1100] streak +3 mostra \"3 vitórias\"",
+      "pass": true
+    },
+    {
+      "name": "[1100] 2-3 com win streak: board forte, UPAR 5",
+      "pass": true,
+      "extra": "Rodada 2-3 | UPAR | UPAR para 5 | Ouro 9 | Vida 98 · Folga | Fast 8 padrão"
+    },
+    {
+      "name": "[1100] 2-4 é carrossel",
+      "pass": true
+    },
+    {
+      "name": "[1100] zerar streak",
+      "pass": true
+    },
+    {
+      "name": "[1100] 3-2 ouro 32 vida 70: UPAR para 6, juros +3, próximo degrau 40, faixa Segura",
+      "pass": true,
+      "extra": "Rodada 3-2 | UPAR | UPAR para 6 | Ouro 32 | Vida 70 · Segura | Fast 8 padrão"
+    },
+    {
+      "name": "[1100] regra citada: §2 Fast 8 · Rodada a rodada · 3-2 com link e trecho",
+      "pass": true
+    },
+    {
+      "name": "[1100] \"Ver o trecho do guia\" mostra o texto do .md",
+      "pass": true
+    },
+    {
+      "name": "[1100] com XP 20/36: sobra após a ação = 16",
+      "pass": true,
+      "extra": "Sobra após a ação\n16"
+    },
+    {
+      "name": "[1100] ranking: 3 comps em destaque e todas as 24",
+      "pass": true
+    },
+    {
+      "name": "[1100] \"Todas as comps\" abre com as outras 21",
+      "pass": true
+    },
+    {
+      "name": "[1100] top 3 em ordem decrescente de pontuação",
+      "pass": true,
+      "extra": "44,32,32"
+    },
+    {
+      "name": "[1100] cada comp do top 3 mostra o que falta e as miniaturas da fase",
+      "pass": true
+    },
+    {
+      "name": "[1100] fase \"Meio\" no estágio 3",
+      "pass": true
+    },
+    {
+      "name": "[1100] estrela marca a comp favorita (aria-pressed) e vai para o Forçar",
+      "pass": true
+    },
+    {
+      "name": "[1100] Forçar comp mostra veredito com badge",
+      "pass": true,
+      "extra": "ARRISCADO\nEnfeitiçador 6\n· Fast 8 · 33% da fase"
+    },
+    {
+      "name": "[1100] contest 3 na comp = NÃO FORCE e pede pivô",
+      "pass": true,
+      "extra": "NÃO FORCE Enfeitiçador 6 · Fast 8 · 33% da fase"
+    },
+    {
+      "name": "[1100] 4-2 ouro 45 vida 50: UPAR para 8 e ROLAR até 20–30, sobra 20–30",
+      "pass": true,
+      "extra": "Rodada 4-2 | UPAR | ROLAR | UPAR para 8 e ROLAR até 20–30 | Ouro 45 → 20–30 | Vida 50 · Segura | Fast 8 padrão"
+    },
+    {
+      "name": "[1100] piso ~40 do 4-2 aparece",
+      "pass": true
+    },
+    {
+      "name": "[1100] vida < 30 (Crítica): alerta crítico e ROLAR até 10, regra derivada do guia",
+      "pass": true,
+      "extra": "Rodada 4-3 | ROLAR | ROLAR até 10 | Ouro 38 → 10 | Vida 25 · Crítica | Fast 8 padrão"
+    },
+    {
+      "name": "[1100] Estratégia mostra \"Por que\" e \"O que faria mudar\"",
+      "pass": true
+    },
+    {
+      "name": "[1100] extras: aprimoramento Economia e board Forte marcados",
+      "pass": true
+    },
+    {
+      "name": "[1100] alvos de toque principais >= 40px",
+      "pass": true,
+      "extra": "[]"
+    },
+    {
+      "name": "[1100] barra resumo fica fixa no topo ao rolar",
+      "pass": true,
+      "extra": "top=0"
+    },
+    {
+      "name": "[1100] recarregar restaura a partida (4-3, vida 25, ouro 38, Veigar ×2)",
+      "pass": true
+    },
+    {
+      "name": "[1100] favorita sobrevive ao reload",
+      "pass": true
+    },
+    {
+      "name": "[1100] localStorage corrompido cai no estado limpo, sem erro",
+      "pass": true
+    },
+    {
+      "name": "[1100] JSON inválido no localStorage cai no estado limpo",
+      "pass": true
+    },
+    {
+      "name": "[1100] \"Nova partida\" pede confirmação",
+      "pass": true
+    },
+    {
+      "name": "[1100] cancelar mantém o estado",
+      "pass": true
+    },
+    {
+      "name": "[1100] confirmar zera: 1-1, ouro 0, sem campeões, sem favorita",
+      "pass": true
+    },
+    {
+      "name": "[1100] estado zerado também no localStorage",
+      "pass": true
+    },
+    {
+      "name": "[1100] navegação Painel > Estratégia: 5 links e Painel presente",
+      "pass": true
+    },
+    {
+      "name": "[1100] volta ao Painel pelo menu",
+      "pass": true
+    },
+    {
+      "name": "[1100] sem scroll horizontal no fim",
+      "pass": true,
+      "extra": "overflow=0"
+    },
+    {
+      "name": "[1100] sem erros nem avisos no console (0)",
+      "pass": true,
+      "extra": ""
+    },
+    {
+      "name": "[390] painel.html responde 200",
+      "pass": true
+    },
+    {
+      "name": "[390] nav: Comps | Painel | Guia do Jogo | Estratégia padrão | Notícias, ativo = Painel",
+      "pass": true,
+      "extra": "[{\"t\":\"Comps\",\"h\":\"index.html\",\"cur\":null},{\"t\":\"Painel\",\"h\":\"painel.html\",\"cur\":\"page\"},{\"t\":\"Guia do Jogo\",\"h\":\"guia.html\",\"cur\":null},{\"t\":\"Estratégia padrão\",\"h\":\"estrategia.html\",\"cur\":null},{\"t\":\"Notícias\",\"h\":\"noticias.html\",\"cur\":null}]"
+    },
+    {
+      "name": "[390] nav cabe sem rolar (5 links visíveis)",
+      "pass": true,
+      "extra": "sobra=0"
+    },
+    {
+      "name": "[390] title <= 60, description 140-160, h1 único, og/twitter, noindex",
+      "pass": true,
+      "extra": "{\"t\":42,\"d\":144}"
+    },
+    {
+      "name": "[390] sem scroll horizontal da página",
+      "pass": true,
+      "extra": "overflow=0"
+    },
+    {
+      "name": "[390] estado inicial 1-1, vida 100, ouro 0, nível 1",
+      "pass": true
+    },
+    {
+      "name": "[390] 74 campeões e 10 componentes na grade",
+      "pass": true
+    },
+    {
+      "name": "[390] contest lista as 24 comps",
+      "pass": true
+    },
+    {
+      "name": "[390] aviso de política visível e recolhível",
+      "pass": true
+    },
+    {
+      "name": "[390] mobile: saída no topo e entrada abaixo",
+      "pass": true,
+      "extra": "{\"sy\":267.078125,\"ey\":2627.46875}"
+    },
+    {
+      "name": "[390] trocar estágio mantém a rodada válida",
+      "pass": true
+    },
+    {
+      "name": "[390] nível sobe pelo botão +1",
+      "pass": true
+    },
+    {
+      "name": "[390] 2-1 ouro 4: Open Fort, FICAR no 3, juros +0, próximo degrau 10 (faltam 6)",
+      "pass": true,
+      "extra": "Estratégia recomendada |  | Economia máxima · Open Fort até o 3-1 |  | Por que | Critério atendido: | Sem upgrade (nenhum campeão 2★)  | §4 Economia · Quando escolher · 2-1 | C"
+    },
+    {
+      "name": "[390] barra resumo: rodada, badge FICAR, ouro",
+      "pass": true
+    },
+    {
+      "name": "[390] estágio 2: faixa de vida não vale e sem alerta",
+      "pass": true
+    },
+    {
+      "name": "[390] 1 clique = 1 cópia (×1, sem rótulo)",
+      "pass": true
+    },
+    {
+      "name": "[390] 2 cópias = par",
+      "pass": true
+    },
+    {
+      "name": "[390] 3 cópias = 2★ automático",
+      "pass": true
+    },
+    {
+      "name": "[390] chips \"Tenho\" mostram os dois campeões",
+      "pass": true
+    },
+    {
+      "name": "[390] segurar (long-press) remove uma cópia e não soma",
+      "pass": true
+    },
+    {
+      "name": "[390] × do chip remove 1 cópia; clique soma de volta",
+      "pass": true
+    },
+    {
+      "name": "[390] busca de campeão filtra (ignora acento e caixa)",
+      "pass": true
+    },
+    {
+      "name": "[390] busca sem resultado mostra aviso",
+      "pass": true
+    },
+    {
+      "name": "[390] busca limpa mostra todos",
+      "pass": true
+    },
+    {
+      "name": "[390] componente soma (×2) e mostra o botão -",
+      "pass": true
+    },
+    {
+      "name": "[390] botão - remove um componente",
+      "pass": true
+    },
+    {
+      "name": "[390] estado salvo em tft-comps:painel:v1",
+      "pass": true,
+      "extra": "{\"s\":\"2-1\",\"c\":{\"DA_18_Veigar\":2,\"DA_18_Ornn\":2},\"k\":{\"DA_Component_BFSword\":2}}"
+    },
+    {
+      "name": "[390] \"Próxima rodada\" avança 2-1 -> 2-2 e mantém o resto",
+      "pass": true
+    },
+    {
+      "name": "[390] 2-2 com 2 pares e componentes: Fast 8, GUARDAR",
+      "pass": true,
+      "extra": "Rodada 2-2 | GUARDAR | GUARDAR | Ouro 9 → 9 | Vida 98 · Folga | Editar estado"
+    },
+    {
+      "name": "[390] streak +3 mostra \"3 vitórias\"",
+      "pass": true
+    },
+    {
+      "name": "[390] 2-3 com win streak: board forte, UPAR 5",
+      "pass": true,
+      "extra": "Rodada 2-3 | UPAR | UPAR para 5 | Ouro 9 | Vida 98 · Folga | Editar estado"
+    },
+    {
+      "name": "[390] 2-4 é carrossel",
+      "pass": true
+    },
+    {
+      "name": "[390] zerar streak",
+      "pass": true
+    },
+    {
+      "name": "[390] 3-2 ouro 32 vida 70: UPAR para 6, juros +3, próximo degrau 40, faixa Segura",
+      "pass": true,
+      "extra": "Rodada 3-2 | UPAR | UPAR para 6 | Ouro 32 | Vida 70 · Segura | Editar estado"
+    },
+    {
+      "name": "[390] regra citada: §2 Fast 8 · Rodada a rodada · 3-2 com link e trecho",
+      "pass": true
+    },
+    {
+      "name": "[390] \"Ver o trecho do guia\" mostra o texto do .md",
+      "pass": true
+    },
+    {
+      "name": "[390] com XP 20/36: sobra após a ação = 16",
+      "pass": true,
+      "extra": "Sobra após a ação\n16"
+    },
+    {
+      "name": "[390] ranking: 3 comps em destaque e todas as 24",
+      "pass": true
+    },
+    {
+      "name": "[390] \"Todas as comps\" abre com as outras 21",
+      "pass": true
+    },
+    {
+      "name": "[390] top 3 em ordem decrescente de pontuação",
+      "pass": true,
+      "extra": "44,32,32"
+    },
+    {
+      "name": "[390] cada comp do top 3 mostra o que falta e as miniaturas da fase",
+      "pass": true
+    },
+    {
+      "name": "[390] fase \"Meio\" no estágio 3",
+      "pass": true
+    },
+    {
+      "name": "[390] estrela marca a comp favorita (aria-pressed) e vai para o Forçar",
+      "pass": true
+    },
+    {
+      "name": "[390] Forçar comp mostra veredito com badge",
+      "pass": true,
+      "extra": "ARRISCADO\nEnfeitiçador 6\n· Fast 8 · 33% da fase"
+    },
+    {
+      "name": "[390] contest 3 na comp = NÃO FORCE e pede pivô",
+      "pass": true,
+      "extra": "NÃO FORCE Enfeitiçador 6 · Fast 8 · 33% da fase"
+    },
+    {
+      "name": "[390] 4-2 ouro 45 vida 50: UPAR para 8 e ROLAR até 20–30, sobra 20–30",
+      "pass": true,
+      "extra": "Rodada 4-2 | UPAR | ROLAR | UPAR para 8 e ROLAR até 20–30 | Ouro 45 → 20–30 | Vida 50 · Segura | Editar estado"
+    },
+    {
+      "name": "[390] piso ~40 do 4-2 aparece",
+      "pass": true
+    },
+    {
+      "name": "[390] vida < 30 (Crítica): alerta crítico e ROLAR até 10, regra derivada do guia",
+      "pass": true,
+      "extra": "Rodada 4-3 | ROLAR | ROLAR até 10 | Ouro 38 → 10 | Vida 25 · Crítica | Editar estado"
+    },
+    {
+      "name": "[390] Estratégia mostra \"Por que\" e \"O que faria mudar\"",
+      "pass": true
+    },
+    {
+      "name": "[390] extras: aprimoramento Economia e board Forte marcados",
+      "pass": true
+    },
+    {
+      "name": "[390] alvos de toque principais >= 40px",
+      "pass": true,
+      "extra": "[]"
+    },
+    {
+      "name": "[390] barra resumo fica fixa no topo ao rolar",
+      "pass": true,
+      "extra": "top=0"
+    },
+    {
+      "name": "[390] recarregar restaura a partida (4-3, vida 25, ouro 38, Veigar ×2)",
+      "pass": true
+    },
+    {
+      "name": "[390] favorita sobrevive ao reload",
+      "pass": true
+    },
+    {
+      "name": "[390] localStorage corrompido cai no estado limpo, sem erro",
+      "pass": true
+    },
+    {
+      "name": "[390] JSON inválido no localStorage cai no estado limpo",
+      "pass": true
+    },
+    {
+      "name": "[390] \"Nova partida\" pede confirmação",
+      "pass": true
+    },
+    {
+      "name": "[390] cancelar mantém o estado",
+      "pass": true
+    },
+    {
+      "name": "[390] confirmar zera: 1-1, ouro 0, sem campeões, sem favorita",
+      "pass": true
+    },
+    {
+      "name": "[390] estado zerado também no localStorage",
+      "pass": true
+    },
+    {
+      "name": "[390] navegação Painel > Estratégia: 5 links e Painel presente",
+      "pass": true
+    },
+    {
+      "name": "[390] volta ao Painel pelo menu",
+      "pass": true
+    },
+    {
+      "name": "[390] sem scroll horizontal no fim",
+      "pass": true,
+      "extra": "overflow=0"
+    },
+    {
+      "name": "[390] sem erros nem avisos no console (0)",
+      "pass": true,
+      "extra": ""
+    }
+  ]
+}

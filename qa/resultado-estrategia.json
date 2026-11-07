@@ -4,12 +4,12 @@
   "pass": true
  },
  {
-  "name": "[d1440] nav: Comps | Guia do Jogo | Estratégia padrão | Notícias, ativo = Estratégia padrão",
+  "name": "[d1440] nav: Comps | Painel | Guia do Jogo | Estratégia padrão | Notícias, ativo = Estratégia padrão",
   "pass": true,
-  "extra": "[{\"t\":\"Comps\",\"h\":\"index.html\",\"cur\":null},{\"t\":\"Guia do Jogo\",\"h\":\"guia.html\",\"cur\":null},{\"t\":\"Estratégia padrão\",\"h\":\"estrategia.html\",\"cur\":\"page\"},{\"t\":\"Notícias\",\"h\":\"noticias.html\",\"cur\":null}]"
+  "extra": "[{\"t\":\"Comps\",\"h\":\"index.html\",\"cur\":null},{\"t\":\"Painel\",\"h\":\"painel.html\",\"cur\":null},{\"t\":\"Guia do Jogo\",\"h\":\"guia.html\",\"cur\":null},{\"t\":\"Estratégia padrão\",\"h\":\"estrategia.html\",\"cur\":\"page\"},{\"t\":\"Notícias\",\"h\":\"noticias.html\",\"cur\":null}]"
  },
  {
-  "name": "[d1440] nav cabe sem rolar (4 links visíveis)",
+  "name": "[d1440] nav cabe sem rolar (5 links visíveis)",
   "pass": true,
   "extra": "sobra=0"
  },
@@ -209,12 +209,12 @@
   "pass": true
  },
  {
-  "name": "[d1100] nav: Comps | Guia do Jogo | Estratégia padrão | Notícias, ativo = Estratégia padrão",
+  "name": "[d1100] nav: Comps | Painel | Guia do Jogo | Estratégia padrão | Notícias, ativo = Estratégia padrão",
   "pass": true,
-  "extra": "[{\"t\":\"Comps\",\"h\":\"index.html\",\"cur\":null},{\"t\":\"Guia do Jogo\",\"h\":\"guia.html\",\"cur\":null},{\"t\":\"Estratégia padrão\",\"h\":\"estrategia.html\",\"cur\":\"page\"},{\"t\":\"Notícias\",\"h\":\"noticias.html\",\"cur\":null}]"
+  "extra": "[{\"t\":\"Comps\",\"h\":\"index.html\",\"cur\":null},{\"t\":\"Painel\",\"h\":\"painel.html\",\"cur\":null},{\"t\":\"Guia do Jogo\",\"h\":\"guia.html\",\"cur\":null},{\"t\":\"Estratégia padrão\",\"h\":\"estrategia.html\",\"cur\":\"page\"},{\"t\":\"Notícias\",\"h\":\"noticias.html\",\"cur\":null}]"
  },
  {
-  "name": "[d1100] nav cabe sem rolar (4 links visíveis)",
+  "name": "[d1100] nav cabe sem rolar (5 links visíveis)",
   "pass": true,
   "extra": "sobra=0"
  },
@@ -414,12 +414,12 @@
   "pass": true
  },
  {
-  "name": "[m390] nav: Comps | Guia do Jogo | Estratégia padrão | Notícias, ativo = Estratégia padrão",
+  "name": "[m390] nav: Comps | Painel | Guia do Jogo | Estratégia padrão | Notícias, ativo = Estratégia padrão",
   "pass": true,
-  "extra": "[{\"t\":\"Comps\",\"h\":\"index.html\",\"cur\":null},{\"t\":\"Guia do Jogo\",\"h\":\"guia.html\",\"cur\":null},{\"t\":\"Estratégia padrão\",\"h\":\"estrategia.html\",\"cur\":\"page\"},{\"t\":\"Notícias\",\"h\":\"noticias.html\",\"cur\":null}]"
+  "extra": "[{\"t\":\"Comps\",\"h\":\"index.html\",\"cur\":null},{\"t\":\"Painel\",\"h\":\"painel.html\",\"cur\":null},{\"t\":\"Guia do Jogo\",\"h\":\"guia.html\",\"cur\":null},{\"t\":\"Estratégia padrão\",\"h\":\"estrategia.html\",\"cur\":\"page\"},{\"t\":\"Notícias\",\"h\":\"noticias.html\",\"cur\":null}]"
  },
  {
-  "name": "[m390] nav cabe sem rolar (4 links visíveis)",
+  "name": "[m390] nav cabe sem rolar (5 links visíveis)",
   "pass": true,
   "extra": "sobra=0"
  },

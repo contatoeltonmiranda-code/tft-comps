@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Painel de decisão — TFT Set 18 | Comps TFT</title>
+<meta name="description" content="Painel manual de decisão para TFT Set 18: digite rodada, vida, ouro, campeões e itens e veja a estratégia, a ação da rodada e as melhores comps.">
+<meta name="robots" content="noindex">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0b0f17">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Painel de decisão — TFT Set 18">
+<meta property="og:description" content="Você digita o estado da partida; o painel aplica a Estratégia padrão e ranqueia as comps. Não lê o jogo.">
+<meta property="og:locale" content="pt_BR">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Painel de decisão — TFT Set 18">
+<meta name="twitter:description" content="Você digita o estado da partida; o painel aplica a Estratégia padrão e ranqueia as comps. Não lê o jogo.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 2l12 7v14l-12 7L4 23V9z' fill='%23d4a85a'/%3E%3Cpath d='M16 9l6 3.5v7L16 23l-6-3.5v-7z' fill='%230b0f17'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/painel.css">
+</head>
+<body>
+
+<svg class="sprite" aria-hidden="true" focusable="false">
+  <symbol id="i-plus" viewBox="0 0 20 20"><path d="M10 4v12M4 10h12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  <symbol id="i-minus" viewBox="0 0 20 20"><path d="M4 10h12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  <symbol id="i-search" viewBox="0 0 20 20"><circle cx="9" cy="9" r="5.2" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M13 13l3.5 3.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+  <symbol id="i-x" viewBox="0 0 20 20"><path d="M5 5l10 10M15 5L5 15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  <symbol id="i-check" viewBox="0 0 20 20"><path d="M4.5 10.5l3.7 3.7 7.3-8" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-star" viewBox="0 0 20 20"><path d="M10 1.8l2.4 5.2 5.6.6-4.2 3.8 1.2 5.5L10 14.1l-5 2.8 1.2-5.5L2 7.6l5.6-.6z" fill="currentColor"/></symbol>
+  <symbol id="i-star-o" viewBox="0 0 20 20"><path d="M10 1.8l2.4 5.2 5.6.6-4.2 3.8 1.2 5.5L10 14.1l-5 2.8 1.2-5.5L2 7.6l5.6-.6z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
+  <symbol id="i-next" viewBox="0 0 20 20"><path d="M5 4.5l6 5.5-6 5.5M11.5 4.5l5 5.5-5 5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-unknown" viewBox="0 0 20 20"><circle cx="10" cy="10" r="6.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8.2 8.2a1.9 1.9 0 113.4 1.1c-.7.5-1.6.8-1.6 1.9M10 13.4v.1" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+  <symbol id="i-comp" viewBox="0 0 20 20"><rect x="3.5" y="3.5" width="13" height="13" rx="3" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M7 10h6M10 7v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+</svg>
+
+<nav class="sitenav" aria-label="Páginas do site">
+  <div class="sitenav-in">
+    <a class="navlink" href="index.html">Comps</a>
+    <a class="navlink" href="painel.html" aria-current="page">Painel</a>
+    <a class="navlink" href="guia.html">Guia do Jogo</a>
+    <a class="navlink" href="estrategia.html">Estratégia padrão</a>
+    <a class="navlink" href="noticias.html">Notícias</a>
+  </div>
+</nav>
+
+<header class="top pn-cabeca">
+  <div class="brand">
+    <h1>Painel de decisão</h1>
+    <p>Você digita o estado. O painel aplica a Estratégia padrão.</p>
+  </div>
+  <div class="pn-topo-acoes">
+    <button type="button" class="btn danger" id="pn-nova">Nova partida</button>
+  </div>
+</header>
+
+<main>
+  <details class="pn-aviso" id="pn-aviso">
+    <summary>Painel 100% manual: não lê o jogo</summary>
+    <p>Você digita o estado da partida. O app não se conecta ao jogo: sem API, sem Overwolf, sem captura de tela, nada que toque o cliente. O estado fica salvo só neste navegador.</p>
+  </details>
+
+  <div class="pn-barra" id="pn-barra" role="status" aria-live="polite" aria-label="Resumo da ação agora"></div>
+
+  <div class="pn-layout">
+    <form class="pn-entrada" id="pn-entrada" autocomplete="off" aria-label="Estado da partida">
+
+      <section class="pn-card" aria-labelledby="pn-h-partida">
+        <h2 id="pn-h-partida">Partida</h2>
+
+        <div class="pn-linha">
+          <span class="pn-rotulo" id="pn-l-rodada">Rodada</span>
+          <div class="pn-grupo" role="group" aria-labelledby="pn-l-rodada">
+            <label class="sr" for="pn-estagio">Estágio</label>
+            <select id="pn-estagio" class="pn-sel"></select>
+            <span class="pn-trava" aria-hidden="true">-</span>
+            <label class="sr" for="pn-rodada">Rodada do estágio</label>
+            <select id="pn-rodada" class="pn-sel"></select>
+            <button type="button" class="btn primary pn-prox" id="pn-prox"><span>Próxima rodada</span><svg class="ic" aria-hidden="true"><use href="#i-next"/></svg></button>
+          </div>
+        </div>
+
+        <div class="pn-linha">
+          <label class="pn-rotulo" for="pn-vida">Vida</label>
+          <div class="pn-grupo pn-vida">
+            <div class="pn-step" role="group" aria-label="Ajustar vida">
+              <button type="button" class="pn-b" data-step="hp:-10" aria-label="Menos 10 de vida">-10</button>
+              <button type="button" class="pn-b" data-step="hp:-1" aria-label="Menos 1 de vida">-1</button>
+              <input id="pn-vida" class="pn-num" type="number" inputmode="numeric" min="0" max="100" step="1" data-campo="hp">
+              <button type="button" class="pn-b" data-step="hp:1" aria-label="Mais 1 de vida">+1</button>
+            </div>
+            <input id="pn-vida-slider" class="pn-slider" type="range" min="0" max="100" step="1" data-campo="hp" aria-label="Vida (controle deslizante)">
+          </div>
+        </div>
+
+        <div class="pn-linha">
+          <label class="pn-rotulo" for="pn-ouro">Ouro</label>
+          <div class="pn-grupo">
+            <div class="pn-step" role="group" aria-label="Ajustar ouro">
+              <button type="button" class="pn-b" data-step="gold:-5" aria-label="Menos 5 de ouro">-5</button>
+              <button type="button" class="pn-b" data-step="gold:-1" aria-label="Menos 1 de ouro">-1</button>
+              <input id="pn-ouro" class="pn-num" type="number" inputmode="numeric" min="0" max="999" step="1" data-campo="gold">
+              <button type="button" class="pn-b" data-step="gold:1" aria-label="Mais 1 de ouro">+1</button>
+              <button type="button" class="pn-b" data-step="gold:5" aria-label="Mais 5 de ouro">+5</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="pn-linha">
+          <label class="pn-rotulo" for="pn-nivel">Nível</label>
+          <div class="pn-grupo">
+            <div class="pn-step" role="group" aria-label="Ajustar nível">
+              <button type="button" class="pn-b" data-step="level:-1" aria-label="Menos 1 nível">-1</button>
+              <input id="pn-nivel" class="pn-num" type="number" inputmode="numeric" min="1" max="10" step="1" data-campo="level">
+              <button type="button" class="pn-b" data-step="level:1" aria-label="Mais 1 nível">+1</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="pn-linha">
+          <span class="pn-rotulo" id="pn-l-streak">Streak</span>
+          <div class="pn-grupo" role="group" aria-labelledby="pn-l-streak">
+            <div class="pn-step">
+              <button type="button" class="pn-b" data-step="streak:-1" aria-label="Mais uma derrota seguida">-</button>
+              <output class="pn-streak" id="pn-streak" aria-live="polite"></output>
+              <button type="button" class="pn-b" data-step="streak:1" aria-label="Mais uma vitória seguida">+</button>
+            </div>
+            <button type="button" class="btn sm ghost" id="pn-streak-zero">Zerar</button>
+          </div>
+        </div>
+
+        <div class="pn-linha">
+          <span class="pn-rotulo" id="pn-l-xp">XP <span class="pn-opc">opcional</span></span>
+          <div class="pn-grupo" role="group" aria-labelledby="pn-l-xp">
+            <label class="sr" for="pn-xp-atual">XP atual</label>
+            <input id="pn-xp-atual" class="pn-num pn-num-xp" type="number" inputmode="numeric" min="0" step="1" placeholder="12" data-campo="xpAtual">
+            <span class="pn-trava" aria-hidden="true">/</span>
+            <label class="sr" for="pn-xp-max">XP para o próximo nível</label>
+            <input id="pn-xp-max" class="pn-num pn-num-xp" type="number" inputmode="numeric" min="0" step="1" placeholder="36" data-campo="xpMax">
+            <span class="pn-dica">como aparece no jogo</span>
+          </div>
+        </div>
+
+        <details class="pn-extras">
+          <summary>Extras <span class="pn-opc">opcional</span></summary>
+          <div class="pn-linha">
+            <span class="pn-rotulo" id="pn-l-aprim">Aprimoramento</span>
+            <div class="pn-seg" role="group" aria-labelledby="pn-l-aprim" data-seg="aprim">
+              <button type="button" data-valor="" aria-pressed="true">Não sei</button>
+              <button type="button" data-valor="eco" aria-pressed="false">Economia</button>
+              <button type="button" data-valor="forca" aria-pressed="false">Força</button>
+            </div>
+          </div>
+          <div class="pn-linha">
+            <span class="pn-rotulo" id="pn-l-board">Board</span>
+            <div class="pn-seg" role="group" aria-labelledby="pn-l-board" data-seg="board">
+              <button type="button" data-valor="auto" aria-pressed="true">Auto</button>
+              <button type="button" data-valor="forte" aria-pressed="false">Forte</button>
+              <button type="button" data-valor="medio" aria-pressed="false">Médio</button>
+              <button type="button" data-valor="fraco" aria-pressed="false">Fraco</button>
+            </div>
+          </div>
+          <p class="pn-dica">Board automático: 2+ vitórias seguidas = forte, 2+ derrotas seguidas = fraco, senão médio.</p>
+        </details>
+      </section>
+
+      <section class="pn-card" aria-labelledby="pn-h-champs">
+        <h2 id="pn-h-champs">Campeões que tenho</h2>
+        <p class="pn-dica">Banco e tabuleiro juntos. Clique soma uma cópia; botão direito ou segurar remove. 2 cópias = par, 3 = 2★, 9 = 3★.</p>
+        <div class="pn-busca">
+          <svg class="ic" aria-hidden="true"><use href="#i-search"/></svg>
+          <label class="sr" for="pn-q-champs">Buscar campeão</label>
+          <input id="pn-q-champs" type="search" placeholder="Buscar campeão" autocomplete="off" spellcheck="false">
+        </div>
+        <div class="pn-tenho" id="pn-tenho" aria-label="Campeões que você tem"></div>
+        <div id="pn-champs"></div>
+        <p class="pn-vazio" id="pn-champs-vazio" hidden>Nenhum campeão com esse nome.</p>
+      </section>
+
+      <section class="pn-card" aria-labelledby="pn-h-comps">
+        <h2 id="pn-h-comps">Componentes</h2>
+        <p class="pn-dica">Clique soma um; botão direito, segurar ou o botão - remove.</p>
+        <div class="pn-comps" id="pn-comps"></div>
+      </section>
+
+      <section class="pn-card" aria-labelledby="pn-h-contest">
+        <h2 id="pn-h-contest">Contest e comp favorita <span class="pn-opc">opcional</span></h2>
+        <p class="pn-dica">Quantos outros jogadores você viu em cada comp. A estrela marca a comp que você quer forçar.</p>
+        <div class="pn-busca">
+          <svg class="ic" aria-hidden="true"><use href="#i-search"/></svg>
+          <label class="sr" for="pn-q-contest">Buscar comp</label>
+          <input id="pn-q-contest" type="search" placeholder="Buscar comp" autocomplete="off" spellcheck="false">
+        </div>
+        <ul class="pn-lista-contest" id="pn-contest"></ul>
+      </section>
+    </form>
+
+    <div class="pn-saida" id="pn-saida" role="region" aria-label="Recomendações"></div>
+  </div>
+</main>
+
+<dialog id="pn-confirma" class="modal narrow" aria-labelledby="pn-confirma-t">
+  <h2 id="pn-confirma-t">Nova partida?</h2>
+  <p>Zera rodada, vida, ouro, campeões, componentes, contest e a comp favorita.</p>
+  <div class="dfoot">
+    <button type="button" class="btn" id="pn-confirma-nao">Cancelar</button>
+    <button type="button" class="btn primary" id="pn-confirma-sim">Zerar</button>
+  </div>
+</dialog>
+
+<script src="data/catalog.js"></script>
+<script src="data/recipes.js"></script>
+<script src="data/seed.js"></script>
+<script src="js/logic.js"></script>
+<script src="js/recommend.js"></script>
+<script src="js/painel-regras.js"></script>
+<script src="js/painel-comps.js"></script>
+<script src="js/painel-logic.js"></script>
+<script src="js/painel.js"></script>
+</body>
+</html>
