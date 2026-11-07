@@ -145,7 +145,7 @@ try {
   $tcode = $LASTEXITCODE
   $ErrorActionPreference = $old
   Pop-Location
-  $summary = (($t | Where-Object { $_ -match '^(# |.\s)?(tests|pass|fail) ' }) -join ' | ')
+  $summary = (($t | Where-Object { $_ -match '(tests|pass|fail) \d+\s*$' }) -join ' | ')
   Log ('node --test code={0} {1}' -f $tcode, $summary)
   if ($tcode -ne 0) {
     Log (($t | Select-Object -Last 40) -join "`n")
