@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pós-jogo — análise das suas partidas de TFT | Comps TFT</title>
+<meta name="description" content="Análise automática de cada partida de TFT: colocação, comp final, aprimoramentos, comp parecida, estratégia seguida e onde errou pela Estratégia padrão.">
+<meta name="robots" content="noindex">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0b0f17">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Pós-jogo — TFT Set 18">
+<meta property="og:description" content="Suas partidas analisadas depois do jogo, com a API oficial da Riot e a Estratégia padrão.">
+<meta property="og:locale" content="pt_BR">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Pós-jogo — TFT Set 18">
+<meta name="twitter:description" content="Suas partidas analisadas depois do jogo, com a API oficial da Riot e a Estratégia padrão.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 2l12 7v14l-12 7L4 23V9z' fill='%23d4a85a'/%3E%3Cpath d='M16 9l6 3.5v7L16 23l-6-3.5v-7z' fill='%230b0f17'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/posjogo.css">
+</head>
+<body>
+
+<nav class="sitenav" aria-label="Páginas do site">
+  <div class="sitenav-in">
+    <a class="navlink" href="index.html">Comps</a>
+    <a class="navlink" href="plano.html">Plano</a>
+    <a class="navlink" href="painel.html">Painel</a>
+    <a class="navlink" href="posjogo.html" aria-current="page">Pós-jogo</a>
+    <a class="navlink" href="guia.html">Guia do Jogo</a>
+    <a class="navlink" href="estrategia.html">Estratégia padrão</a>
+    <a class="navlink" href="noticias.html">Notícias</a>
+  </div>
+</nav>
+
+<header class="top pj-cabeca">
+  <div class="brand">
+    <h1>Pós-jogo</h1>
+    <p>Suas partidas de TFT analisadas depois que acabam. Nada aqui acompanha a partida em andamento.</p>
+  </div>
+  <div class="pj-acoes">
+    <button type="button" class="btn" id="pj-recarregar">Recarregar</button>
+    <label class="btn" for="pj-arquivo" id="pj-arquivo-rot">Importar partidas.json</label>
+    <input type="file" id="pj-arquivo" class="sr" accept=".json,application/json">
+    <button type="button" class="btn ghost" id="pj-esquecer">Esquecer dados deste navegador</button>
+  </div>
+</header>
+
+<main class="pj-main">
+  <section class="pj-fonte" id="pj-fonte" role="status" aria-live="polite">Carregando…</section>
+
+  <details class="pj-como" id="pj-como">
+    <summary>Como ligar com as suas partidas (uma vez só)</summary>
+    <div class="pj-como-corpo">
+      <p>O pós-jogo usa a API oficial da Riot. Um programa pequeno no seu PC baixa as partidas novas sozinho, sem janela, e guarda tudo só no seu computador. Esta página lê esse arquivo local. A chave da Riot nunca sai do seu PC e nunca vai para o GitHub.</p>
+      <ol class="pj-passos">
+        <li><b>Entre no portal da Riot</b> em <a href="https://developer.riotgames.com" target="_blank" rel="noopener noreferrer">developer.riotgames.com</a> com a sua conta da Riot.</li>
+        <li><b>Chave de teste (dá para usar hoje).</b> Logo depois de entrar, o portal já mostra uma chave que começa com <code>RGAPI-</code>. Ela vale só 24 horas: amanhã é preciso clicar em “Regenerate API Key” e colar a nova. Serve para ver tudo funcionando.</li>
+        <li><b>Chave pessoal (a definitiva).</b> No portal, abra “Register Product”, escolha projeto pessoal e preencha o formulário. A Riot pede uma descrição detalhada do produto; pode colar o texto abaixo. A chave pessoal não expira todo dia, mas só vem depois da aprovação. Limites: 20 chamadas por segundo e 100 a cada 2 minutos, e não pode ser usada em produto público. O helper respeita esses limites.
+          <pre class="pj-texto" id="pj-texto-registro" tabindex="0">Product name: TFT Comps (personal use)
+Description: Personal, non-public tool for one player. It downloads only my own Teamfight Tactics match history through tft-match-v1 and account-v1 (by Riot ID), a few requests every 15 minutes, and stores it only on my own PC. A local page then shows my average placement and a post-game review of each match (final board, comp, augments, level and elimination round). It also shows a static pre-game plan. It has no public users, no overlay, no screen capture, no memory reading, no real-time data from a game in progress, and no augment or Legend win rates.
+Type: personal project (not for public consumption).</pre></li>
+        <li><b>Rode o setup no PC</b> (ele pergunta o seu Riot ID, no formato <code>nome#tag</code>, e a chave; a chave não aparece na tela): <code>node tools/riot-setup.js</code></li>
+        <li><b>Instale as tarefas ocultas</b> (buscam partidas novas a cada 15 minutos e ligam o servidor local quando você entra no Windows; nunca abrem janela): <code>powershell -ExecutionPolicy Bypass -File tools\riot-instalar.ps1 -Iniciar</code></li>
+        <li><b>Abra esta página.</b> Se o navegador perguntar sobre acesso à rede local ou ao “localhost”, escolha Permitir. Se continuar bloqueado (acontece no Brave), use o botão “Importar partidas.json”: o arquivo fica em <code>%LOCALAPPDATA%\tft-comps\partidas.json</code>.</li>
+      </ol>
+      <p class="pj-dica">Para desligar tudo: <code>powershell -ExecutionPolicy Bypass -File tools\riot-remover.ps1</code></p>
+    </div>
+  </details>
+
+  <section class="pj-bloco" id="pj-resumo-bloco" aria-labelledby="pj-h-resumo" hidden>
+    <h2 id="pj-h-resumo">Resumo</h2>
+    <div class="pj-filtros">
+      <label for="pj-fila">Fila</label>
+      <select id="pj-fila" class="pj-sel"></select>
+      <label for="pj-ultimas">Últimas</label>
+      <select id="pj-ultimas" class="pj-sel">
+        <option value="5">5 partidas</option>
+        <option value="10" selected>10 partidas</option>
+        <option value="20">20 partidas</option>
+      </select>
+    </div>
+    <ul class="pj-cards" id="pj-cards"></ul>
+    <div class="pj-tabelas">
+      <div>
+        <h3>Por comp sua</h3>
+        <div class="pj-rolagem"><table class="pj-tabela" id="pj-por-comp"></table></div>
+      </div>
+      <div>
+        <h3>Por estilo de jogo</h3>
+        <div class="pj-rolagem"><table class="pj-tabela" id="pj-por-estilo"></table></div>
+      </div>
+    </div>
+    <p class="pj-dica" id="pj-aviso-amostra"></p>
+  </section>
+
+  <section class="pj-bloco" id="pj-lista-bloco" aria-labelledby="pj-h-lista" hidden>
+    <h2 id="pj-h-lista">Partidas</h2>
+    <ol class="pj-lista" id="pj-lista"></ol>
+    <button type="button" class="btn" id="pj-mais" hidden>Mostrar mais partidas</button>
+  </section>
+
+  <p class="pj-rodape">Análise feita só com o que a API da Riot entrega depois da partida. O que ela não mostra aparece em cada análise, sem chute. Política da Riot para TFT: <a href="https://developer.riotgames.com/docs/tft#game-policy" target="_blank" rel="noopener noreferrer">análise pós-jogo é permitida</a>.</p>
+</main>
+
+<script src="data/catalog.js"></script>
+<script src="data/recipes.js"></script>
+<script src="data/seed.js"></script>
+<script src="data/posjogo-exemplo.js"></script>
+<script src="js/logic.js"></script>
+<script src="js/recommend.js"></script>
+<script src="js/painel-comps.js"></script>
+<script src="js/posjogo-logic.js"></script>
+<script src="js/partidas-fonte.js"></script>
+<script src="js/dom.js"></script>
+<script src="js/posjogo.js"></script>
+</body>
+</html>

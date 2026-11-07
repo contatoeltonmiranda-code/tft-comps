@@ -1,0 +1,83 @@
+/* Pagina Plano. Tokens, .btn, .act, .mini e .sitenav vem de style.css; classes novas levam o prefixo pl-. */
+
+.pl-cabeca{align-items:flex-start}
+.pl-acoes{display:flex;gap:8px;flex-wrap:wrap}
+.pl-acoes .btn[aria-pressed="true"]{background:var(--gold);border-color:var(--gold);color:var(--gold-ink);font-weight:600}
+.pl-main{max-width:var(--wide);margin:0 auto;padding:0 20px 48px}
+.pl-fonte{margin:0 0 18px;padding:9px 14px;border:1px solid var(--line);border-radius:10px;background:var(--panel);color:var(--muted);font-size:13px}
+.pl-fonte a{color:var(--focus)}
+
+.pl-bloco{margin:0 0 30px}
+.pl-bloco h2{margin:0 0 12px;padding-bottom:8px;border-bottom:1px solid #d6aa5c40;font-size:26px}
+
+/* 3 comps */
+.pl-comps{display:grid;grid-template-columns:minmax(0,1fr);gap:14px;margin:0;padding:0;list-style:none}
+.pl-comp{display:grid;gap:10px;align-content:start;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:var(--panel)}
+.pl-comp-topo{display:flex;align-items:center;gap:12px}
+.pl-num{display:grid;place-items:center;flex:none;width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--gold-ink);font:700 18px var(--font-head)}
+.pl-comp-nome{min-width:0}
+.pl-comp-nome h3{font-size:22px;line-height:1.1;overflow-wrap:anywhere}
+.pl-comp-nome p{margin-top:3px;color:var(--muted);font-size:13px}
+.pl-estilo{color:var(--muted)}
+.pl-tipo{display:inline-block;padding:1px 8px;border:1px solid currentColor;border-radius:8px;font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase}
+.pl-tipo-fast8{color:#8fb4f0}
+.pl-tipo-fast9{color:#c79bf0}
+.pl-tipo-reroll{color:#f0a15c}
+.pl-minis{display:flex;flex-wrap:wrap;gap:6px}
+.pl-porque{display:grid;gap:5px;margin:0;padding:0;list-style:none}
+.pl-m{padding-left:10px;border-left:2px solid var(--line);color:#c3cbdb;font-size:14px}
+.pl-m-historico{border-left-color:var(--gold)}
+.pl-m-patch{border-left-color:#6fa0e8}
+.pl-m-lista,.pl-m-estilo{color:var(--muted)}
+.pl-vazio{padding:16px;border:1px dashed var(--line);border-radius:10px;color:var(--muted)}
+
+/* estrategia */
+.pl-estrategia{padding:14px 18px;border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:12px;background:var(--panel)}
+.pl-estr-nome{font-size:24px}
+.pl-estr-t{margin-top:6px;font-size:16px}
+.pl-ref{margin-top:4px;font-size:12px}
+.pl-ref a{color:#8a9bbd}
+.pl-notas{display:grid;gap:6px;margin:10px 0 0;padding:0;list-style:none}
+.pl-notas li{padding-left:10px;border-left:2px solid var(--line);color:#c3cbdb;font-size:14px}
+.pl-nota-historico{border-left-color:var(--gold)!important}
+
+/* linha do tempo */
+.pl-tempo{display:grid;grid-template-columns:minmax(0,1fr);gap:12px;margin:0;padding:0;list-style:none}
+.pl-marco{display:grid;gap:6px;align-content:start;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--panel)}
+.pl-marco h3{color:var(--gold);font-size:30px;line-height:1}
+.pl-acao{font-size:17px;font-weight:600}
+.pl-regra{font-size:14px;color:#d3dae8}
+.pl-troque{padding-top:6px;border-top:1px solid var(--line-soft);font-size:13px;color:var(--muted)}
+.pl-troque b{color:#e2bd6e}
+.pl-derivada{color:#8d9ab2;font-size:.9em;font-style:italic}
+.pl-nota{margin-top:10px;color:var(--muted);font-size:13px}
+.pl-nota a{color:var(--focus)}
+
+.pl-lista{display:grid;gap:6px;margin:0;padding-left:18px;color:#c3cbdb;font-size:14px}
+.pl-lista b{color:var(--text)}
+.pl-aviso{margin:0 0 12px;border:1px solid var(--line);border-radius:10px;background:var(--panel);color:var(--muted);font-size:13px}
+.pl-aviso summary{padding:9px 14px;cursor:pointer}
+.pl-aviso p{padding:0 14px 10px;max-width:75ch}
+.pl-aviso a{color:var(--focus)}
+
+@media (min-width:640px){
+  .pl-tempo{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (min-width:1000px){
+  .pl-comps{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media (min-width:1280px){
+  .pl-tempo{grid-template-columns:repeat(5,minmax(0,1fr))}
+}
+@media (max-width:640px){
+  .pl-main{padding:0 14px 40px}
+  .pl-acoes{width:100%}
+  .pl-acoes .btn{flex:1 1 140px;justify-content:center}
+}
+
+/* modo compacto: so comps + linha do tempo, pensado para segundo monitor ou celular */
+.pl-compacto .pl-porque,.pl-compacto .pl-extra,.pl-compacto .pl-aviso,.pl-compacto .pl-nota,.pl-compacto .pl-estr-t,.pl-compacto .pl-ref,.pl-compacto .pl-notas,.pl-compacto .pl-troque,.pl-compacto .pl-derivada{display:none}
+.pl-compacto .pl-bloco{margin-bottom:18px}
+.pl-compacto .pl-marco h3{font-size:34px}
+.pl-compacto .pl-acao{font-size:20px}
+.pl-compacto .pl-regra{font-size:15px}

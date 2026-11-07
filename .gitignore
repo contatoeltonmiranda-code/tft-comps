@@ -3,3 +3,11 @@ qa/*-export.json
 qa/ruim.json
 _brain/
 sonda/saida/
+
+# dados locais do pos-jogo (nunca versionar)
+riot-key.txt
+partidas.json
+config.json
+status.json
+fetch.log
+fetch.lock

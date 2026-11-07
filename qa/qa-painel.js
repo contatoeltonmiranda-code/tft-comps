@@ -16,6 +16,7 @@ const BF = 'DA_Component_BFSword';
 async function run(browser, label, viewport, mobile) {
   const ctx = await browser.newContext({ viewport, deviceScaleFactor: mobile ? 2 : 1, hasTouch: mobile, isMobile: mobile });
   const page = await ctx.newPage();
+  await page.addInitScript(() => document.addEventListener('DOMContentLoaded', () => { const g = document.querySelector('#pn-det-champs'); if (g) g.open = true; }));
   const errors = [];
   page.on('console', (m) => { if (['error', 'warning'].includes(m.type()) && !/kaspersky/i.test(m.text())) errors.push(m.text()); });
   page.on('pageerror', (e) => errors.push(e.message));
@@ -38,9 +39,9 @@ async function run(browser, label, viewport, mobile) {
 
   /* ---------- estrutura, nav, meta ---------- */
   const nav = await page.locator('.sitenav a').evaluateAll((as) => as.map((a) => ({ t: a.textContent.trim(), h: a.getAttribute('href'), cur: a.getAttribute('aria-current') })));
-  ok(`[${label}] nav: Comps | Painel | Guia do Jogo | Estratégia padrão | Notícias, ativo = Painel`, nav.map((n) => n.t).join('|') === 'Comps|Painel|Guia do Jogo|Estratégia padrão|Notícias' && nav.filter((n) => n.cur === 'page').map((n) => n.t).join() === 'Painel', JSON.stringify(nav));
+  ok(`[${label}] nav: 7 links, ativo = Painel`, nav.map((n) => n.t).join('|') === 'Comps|Plano|Painel|Pós-jogo|Guia do Jogo|Estratégia padrão|Notícias' && nav.filter((n) => n.cur === 'page').map((n) => n.t).join() === 'Painel', JSON.stringify(nav));
   const navFit = await page.evaluate(() => { const n = document.querySelector('.sitenav-in'); return n.scrollWidth - n.clientWidth; });
-  ok(`[${label}] nav cabe sem rolar (5 links visíveis)`, navFit <= 0, 'sobra=' + navFit);
+  ok(`[${label}] nav cabe sem rolar (7 links, quebra em 2 linhas no mobile)`, navFit <= 0, 'sobra=' + navFit);
   const meta = await page.evaluate(() => ({ t: document.title, d: document.querySelector('meta[name=description]').content, r: document.querySelector('meta[name=robots]').content, h1: document.querySelectorAll('h1').length, og: !!document.querySelector('meta[property="og:title"]'), tw: !!document.querySelector('meta[name="twitter:card"]') }));
   ok(`[${label}] title <= 60, description 140-160, h1 único, og/twitter, noindex`, meta.t.length <= 60 && meta.d.length >= 140 && meta.d.length <= 160 && meta.h1 === 1 && meta.og && meta.tw && meta.r === 'noindex', JSON.stringify({ t: meta.t.length, d: meta.d.length }));
   ok(`[${label}] sem scroll horizontal da página`, (await overflowX()) <= 0, 'overflow=' + (await overflowX()));
@@ -316,7 +317,7 @@ async function run(browser, label, viewport, mobile) {
   /* ---------- navegacao ---------- */
   await page.click('.sitenav a[href="estrategia.html"]');
   await page.waitForSelector('.guia h2');
-  ok(`[${label}] navegação Painel > Estratégia: 5 links e Painel presente`, (await page.locator('.sitenav a').count()) === 5 && (await page.locator('.sitenav a[href="painel.html"]').innerText()).trim() === 'Painel');
+  ok(`[${label}] navegação Painel > Estratégia: 7 links e Painel presente`, (await page.locator('.sitenav a').count()) === 7 && (await page.locator('.sitenav a[href="painel.html"]').innerText()).trim() === 'Painel');
   await page.click('.sitenav a[href="painel.html"]');
   await page.waitForSelector('.pn-card');
   ok(`[${label}] volta ao Painel pelo menu`, page.url().endsWith('painel.html'));

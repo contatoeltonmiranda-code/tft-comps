@@ -1,0 +1,602 @@
+{
+  "total": 137,
+  "falhas": 0,
+  "results": [
+    {
+      "name": "servidor local so-leitura sobe em 127.0.0.1:17871",
+      "pass": true
+    },
+    {
+      "name": "[1440] posjogo.html responde 200",
+      "pass": true
+    },
+    {
+      "name": "[1440] nav com 7 links e Pós-jogo ativo",
+      "pass": true
+    },
+    {
+      "name": "[1440] banner EXEMPLO (dados fictícios) e instruções abertas",
+      "pass": true
+    },
+    {
+      "name": "[1440] 10 partidas de exemplo, todas marcadas EXEMPLO",
+      "pass": true
+    },
+    {
+      "name": "[1440] cards de resumo (5) e tabelas por comp e por estilo",
+      "pass": true
+    },
+    {
+      "name": "[1440] partida: colocação, nível, eliminação estimada (≈), ouro, board com estrelas e itens, aprimoramentos",
+      "pass": true
+    },
+    {
+      "name": "[1440] nenhuma imagem de campeão/item/traço quebrada",
+      "pass": true,
+      "extra": "0"
+    },
+    {
+      "name": "[1440] análise da 1ª partida aberta: comp parecida, estilo, onde errou, o que a API não mostra",
+      "pass": true
+    },
+    {
+      "name": "[1440] achados citam o guia e a API não mostra ouro por rodada (sem inventar)",
+      "pass": true
+    },
+    {
+      "name": "[1440] achado \"morreu com ouro\" aparece na partida com 38 de ouro",
+      "pass": true
+    },
+    {
+      "name": "[1440] filtro por fila mantém as partidas",
+      "pass": true
+    },
+    {
+      "name": "[1440] últimas 5 no card",
+      "pass": true
+    },
+    {
+      "name": "[1440] posjogo sem scroll horizontal",
+      "pass": true,
+      "extra": "overflow=0"
+    },
+    {
+      "name": "[1440] importar partidas.json: 3 partidas reais, sem tag EXEMPLO",
+      "pass": true
+    },
+    {
+      "name": "[1440] arquivo inválido mostra erro e não derruba a página",
+      "pass": true
+    },
+    {
+      "name": "[1440] cópia do arquivo sobrevive ao recarregar (servidor off)",
+      "pass": true
+    },
+    {
+      "name": "[1440] \"Esquecer dados deste navegador\" volta ao exemplo",
+      "pass": true
+    },
+    {
+      "name": "[1440] sem erros no console além da conexão recusada esperada",
+      "pass": true,
+      "extra": ""
+    },
+    {
+      "name": "[1440] com o helper local: \"Dados reais\", 10 partidas, sem EXEMPLO e instruções fechadas",
+      "pass": true
+    },
+    {
+      "name": "[1440] CORS: localhost:8765 lê 127.0.0.1:17871 sem erro de console",
+      "pass": true,
+      "extra": ""
+    },
+    {
+      "name": "[1440] a chave e o Riot ID nunca chegam ao navegador",
+      "pass": true
+    },
+    {
+      "name": "[1440] plano com histórico: \"10 partidas lidas do helper local\"",
+      "pass": true,
+      "extra": "Montado com: 24 comps salvas · patches 18.6 e 18.5 · histórico: 10 partidas lidas do helper local."
+    },
+    {
+      "name": "[1440] plano: 3 comps, cada uma com o porquê",
+      "pass": true
+    },
+    {
+      "name": "[1440] plano usa o histórico pessoal (Você jogou N partidas… média, top 4)",
+      "pass": true,
+      "extra": "1\nEmanador Ahri\n\nFAST 9 Fast 9\n\n4\n4\n5\n3\n4\n5\n4\n1\n5\nVocê jogou 1 partida com essa comp: média 2º, top 4 em 100%.\nBuff no patch 18.6: traço Florescer, Azuporã\nNerf no patch 18.5: traço Fera do Rift\nBuff "
+    },
+    {
+      "name": "[1440] plano usa as notícias do patch (Buff/Nerf no patch)",
+      "pass": true
+    },
+    {
+      "name": "[1440] plano.html responde 200, nav 7 links e Plano ativo",
+      "pass": true
+    },
+    {
+      "name": "[1440] plano sem histórico avisa e aponta o Pós-jogo",
+      "pass": true
+    },
+    {
+      "name": "[1440] estratégia Fast 8 padrão com trecho do guia",
+      "pass": true
+    },
+    {
+      "name": "[1440] linha do tempo: 2-1, Fim do 2, 3-2, 4-1, 4-2 com badges",
+      "pass": true,
+      "extra": "2-1|Fim do 2|3-2|4-1|4-2"
+    },
+    {
+      "name": "[1440] plano sem scroll horizontal",
+      "pass": true,
+      "extra": "overflow=0"
+    },
+    {
+      "name": "[1440] plano estático: nada muda sozinho",
+      "pass": true
+    },
+    {
+      "name": "[1440] modo compacto esconde o porquê e continua com comps e linha do tempo",
+      "pass": true
+    },
+    {
+      "name": "[1440] modo compacto persiste",
+      "pass": true
+    },
+    {
+      "name": "[1440] plano sem erros no console além da conexão recusada esperada",
+      "pass": true,
+      "extra": ""
+    },
+    {
+      "name": "[1440] nav -> posjogo.html: 7 links, ativo Pós-jogo, sem scroll horizontal",
+      "pass": true,
+      "extra": "Pós-jogo overflow=0"
+    },
+    {
+      "name": "[1440] nav -> painel.html: 7 links, ativo Painel, sem scroll horizontal",
+      "pass": true,
+      "extra": "Painel overflow=0"
+    },
+    {
+      "name": "[1440] nav -> guia.html: 7 links, ativo Guia do Jogo, sem scroll horizontal",
+      "pass": true,
+      "extra": "Guia do Jogo overflow=0"
+    },
+    {
+      "name": "[1440] nav -> estrategia.html: 7 links, ativo Estratégia padrão, sem scroll horizontal",
+      "pass": true,
+      "extra": "Estratégia padrão overflow=0"
+    },
+    {
+      "name": "[1440] nav -> noticias.html: 7 links, ativo Notícias, sem scroll horizontal",
+      "pass": true,
+      "extra": "Notícias overflow=0"
+    },
+    {
+      "name": "[1440] nav -> index.html: 7 links, ativo Comps, sem scroll horizontal",
+      "pass": true,
+      "extra": "Comps overflow=0"
+    },
+    {
+      "name": "[1440] nav -> plano.html: 7 links, ativo Plano, sem scroll horizontal",
+      "pass": true,
+      "extra": "Plano overflow=0"
+    },
+    {
+      "name": "[1440] nav em 1 linha",
+      "pass": true,
+      "extra": "altura=45"
+    },
+    {
+      "name": "[1440] painel: grade de campeões recolhida por padrão",
+      "pass": true
+    },
+    {
+      "name": "[1440] painel: abrir a grade mostra os 74 campeões",
+      "pass": true
+    },
+    {
+      "name": "[1440] painel: nav com 7 links",
+      "pass": true
+    },
+    {
+      "name": "[1440] painel: botão de voz habilitado e sem aviso quando há SpeechRecognition",
+      "pass": true
+    },
+    {
+      "name": "[1440] voz: \"ouro 32 vida 70 rodada 3-2 nível 6\" preenche os campos",
+      "pass": true,
+      "extra": "{\"ouro\":\"32\",\"vida\":\"70\",\"nivel\":\"6\",\"rodada\":\"3-2\"}"
+    },
+    {
+      "name": "[1440] voz: mostra o que ouviu e o que aplicou",
+      "pass": true
+    },
+    {
+      "name": "[1440] voz: o botão volta para \"Falar\" depois de ouvir",
+      "pass": true
+    },
+    {
+      "name": "[1440] faixas: ouro 32 acende 30–40 e vida 70 acende 41–79",
+      "pass": true
+    },
+    {
+      "name": "[1440] voz: Desfazer volta o estado anterior",
+      "pass": true,
+      "extra": "ouro=0"
+    },
+    {
+      "name": "[1440] texto: \"tenho dois Veigar\" grava 2 cópias; comp, aprimoramento e streak entram",
+      "pass": true,
+      "extra": "{\"c\":{\"DA_18_Veigar\":2},\"f\":\"seed-20\",\"a\":\"eco\",\"s\":3}"
+    },
+    {
+      "name": "[1440] texto: \"mais um Veigar\" soma (3 cópias = 2★)",
+      "pass": true
+    },
+    {
+      "name": "[1440] comp ambígua pergunta qual (3 opções) e aplica a escolhida",
+      "pass": true
+    },
+    {
+      "name": "[1440] escolha da comp ambígua vira favorita",
+      "pass": true
+    },
+    {
+      "name": "[1440] frase sem sentido: \"Nada aplicado\" e \"Não entendi\", sem mexer no estado",
+      "pass": true
+    },
+    {
+      "name": "[1440] faixa de ouro 50+ define 50",
+      "pass": true
+    },
+    {
+      "name": "[1440] faixa de vida Folga define 90",
+      "pass": true
+    },
+    {
+      "name": "[1440] número exato continua valendo e acende a faixa 20–30",
+      "pass": true
+    },
+    {
+      "name": "[1440] painel sem scroll horizontal",
+      "pass": true,
+      "extra": "overflow=0"
+    },
+    {
+      "name": "[1440] painel sem erros no console",
+      "pass": true,
+      "extra": ""
+    },
+    {
+      "name": "[1440] Brave: aviso claro antes de tentar (usar Chrome ou Edge)",
+      "pass": true
+    },
+    {
+      "name": "[1440] Brave: erro \"network\" vira mensagem clara e o painel continua funcionando",
+      "pass": true
+    },
+    {
+      "name": "[1440] Brave: o comando digitado continua funcionando",
+      "pass": true
+    },
+    {
+      "name": "[1440] Brave: sem erro de JavaScript",
+      "pass": true,
+      "extra": ""
+    },
+    {
+      "name": "[1440] sem suporte: botão de voz desabilitado e aviso diz para usar Chrome ou Edge",
+      "pass": true
+    },
+    {
+      "name": "[1440] sem suporte: digitar o comando funciona",
+      "pass": true
+    },
+    {
+      "name": "[1440] sem suporte: sem erro no console",
+      "pass": true,
+      "extra": ""
+    },
+    {
+      "name": "[390] posjogo.html responde 200",
+      "pass": true
+    },
+    {
+      "name": "[390] nav com 7 links e Pós-jogo ativo",
+      "pass": true
+    },
+    {
+      "name": "[390] banner EXEMPLO (dados fictícios) e instruções abertas",
+      "pass": true
+    },
+    {
+      "name": "[390] 10 partidas de exemplo, todas marcadas EXEMPLO",
+      "pass": true
+    },
+    {
+      "name": "[390] cards de resumo (5) e tabelas por comp e por estilo",
+      "pass": true
+    },
+    {
+      "name": "[390] partida: colocação, nível, eliminação estimada (≈), ouro, board com estrelas e itens, aprimoramentos",
+      "pass": true
+    },
+    {
+      "name": "[390] nenhuma imagem de campeão/item/traço quebrada",
+      "pass": true,
+      "extra": "0"
+    },
+    {
+      "name": "[390] análise da 1ª partida aberta: comp parecida, estilo, onde errou, o que a API não mostra",
+      "pass": true
+    },
+    {
+      "name": "[390] achados citam o guia e a API não mostra ouro por rodada (sem inventar)",
+      "pass": true
+    },
+    {
+      "name": "[390] achado \"morreu com ouro\" aparece na partida com 38 de ouro",
+      "pass": true
+    },
+    {
+      "name": "[390] filtro por fila mantém as partidas",
+      "pass": true
+    },
+    {
+      "name": "[390] últimas 5 no card",
+      "pass": true
+    },
+    {
+      "name": "[390] posjogo sem scroll horizontal",
+      "pass": true,
+      "extra": "overflow=0"
+    },
+    {
+      "name": "[390] importar partidas.json: 3 partidas reais, sem tag EXEMPLO",
+      "pass": true
+    },
+    {
+      "name": "[390] arquivo inválido mostra erro e não derruba a página",
+      "pass": true
+    },
+    {
+      "name": "[390] cópia do arquivo sobrevive ao recarregar (servidor off)",
+      "pass": true
+    },
+    {
+      "name": "[390] \"Esquecer dados deste navegador\" volta ao exemplo",
+      "pass": true
+    },
+    {
+      "name": "[390] sem erros no console além da conexão recusada esperada",
+      "pass": true,
+      "extra": ""
+    },
+    {
+      "name": "[390] com o helper local: \"Dados reais\", 10 partidas, sem EXEMPLO e instruções fechadas",
+      "pass": true
+    },
+    {
+      "name": "[390] CORS: localhost:8765 lê 127.0.0.1:17871 sem erro de console",
+      "pass": true,
+      "extra": ""
+    },
+    {
+      "name": "[390] a chave e o Riot ID nunca chegam ao navegador",
+      "pass": true
+    },
+    {
+      "name": "[390] plano com histórico: \"10 partidas lidas do helper local\"",
+      "pass": true,
+      "extra": "Montado com: 24 comps salvas · patches 18.6 e 18.5 · histórico: 10 partidas lidas do helper local."
+    },
+    {
+      "name": "[390] plano: 3 comps, cada uma com o porquê",
+      "pass": true
+    },
+    {
+      "name": "[390] plano usa o histórico pessoal (Você jogou N partidas… média, top 4)",
+      "pass": true,
+      "extra": "1\nEmanador Ahri\n\nFAST 9 Fast 9\n\n4\n4\n5\n3\n4\n5\n4\n1\n5\nVocê jogou 1 partida com essa comp: média 2º, top 4 em 100%.\nBuff no patch 18.6: traço Florescer, Azuporã\nNerf no patch 18.5: traço Fera do Rift\nBuff "
+    },
+    {
+      "name": "[390] plano usa as notícias do patch (Buff/Nerf no patch)",
+      "pass": true
+    },
+    {
+      "name": "[390] plano.html responde 200, nav 7 links e Plano ativo",
+      "pass": true
+    },
+    {
+      "name": "[390] plano sem histórico avisa e aponta o Pós-jogo",
+      "pass": true
+    },
+    {
+      "name": "[390] estratégia Fast 8 padrão com trecho do guia",
+      "pass": true
+    },
+    {
+      "name": "[390] linha do tempo: 2-1, Fim do 2, 3-2, 4-1, 4-2 com badges",
+      "pass": true,
+      "extra": "2-1|Fim do 2|3-2|4-1|4-2"
+    },
+    {
+      "name": "[390] plano sem scroll horizontal",
+      "pass": true,
+      "extra": "overflow=0"
+    },
+    {
+      "name": "[390] plano estático: nada muda sozinho",
+      "pass": true
+    },
+    {
+      "name": "[390] modo compacto esconde o porquê e continua com comps e linha do tempo",
+      "pass": true
+    },
+    {
+      "name": "[390] modo compacto persiste",
+      "pass": true
+    },
+    {
+      "name": "[390] plano sem erros no console além da conexão recusada esperada",
+      "pass": true,
+      "extra": ""
+    },
+    {
+      "name": "[390] nav -> posjogo.html: 7 links, ativo Pós-jogo, sem scroll horizontal",
+      "pass": true,
+      "extra": "Pós-jogo overflow=0"
+    },
+    {
+      "name": "[390] nav -> painel.html: 7 links, ativo Painel, sem scroll horizontal",
+      "pass": true,
+      "extra": "Painel overflow=0"
+    },
+    {
+      "name": "[390] nav -> guia.html: 7 links, ativo Guia do Jogo, sem scroll horizontal",
+      "pass": true,
+      "extra": "Guia do Jogo overflow=0"
+    },
+    {
+      "name": "[390] nav -> estrategia.html: 7 links, ativo Estratégia padrão, sem scroll horizontal",
+      "pass": true,
+      "extra": "Estratégia padrão overflow=0"
+    },
+    {
+      "name": "[390] nav -> noticias.html: 7 links, ativo Notícias, sem scroll horizontal",
+      "pass": true,
+      "extra": "Notícias overflow=0"
+    },
+    {
+      "name": "[390] nav -> index.html: 7 links, ativo Comps, sem scroll horizontal",
+      "pass": true,
+      "extra": "Comps overflow=0"
+    },
+    {
+      "name": "[390] nav -> plano.html: 7 links, ativo Plano, sem scroll horizontal",
+      "pass": true,
+      "extra": "Plano overflow=0"
+    },
+    {
+      "name": "[390] nav quebra em 2 linhas sem esconder links",
+      "pass": true,
+      "extra": "altura=81"
+    },
+    {
+      "name": "[390] painel: grade de campeões recolhida por padrão",
+      "pass": true
+    },
+    {
+      "name": "[390] painel: abrir a grade mostra os 74 campeões",
+      "pass": true
+    },
+    {
+      "name": "[390] painel: nav com 7 links",
+      "pass": true
+    },
+    {
+      "name": "[390] painel: botão de voz habilitado e sem aviso quando há SpeechRecognition",
+      "pass": true
+    },
+    {
+      "name": "[390] voz: \"ouro 32 vida 70 rodada 3-2 nível 6\" preenche os campos",
+      "pass": true,
+      "extra": "{\"ouro\":\"32\",\"vida\":\"70\",\"nivel\":\"6\",\"rodada\":\"3-2\"}"
+    },
+    {
+      "name": "[390] voz: mostra o que ouviu e o que aplicou",
+      "pass": true
+    },
+    {
+      "name": "[390] voz: o botão volta para \"Falar\" depois de ouvir",
+      "pass": true
+    },
+    {
+      "name": "[390] faixas: ouro 32 acende 30–40 e vida 70 acende 41–79",
+      "pass": true
+    },
+    {
+      "name": "[390] voz: Desfazer volta o estado anterior",
+      "pass": true,
+      "extra": "ouro=0"
+    },
+    {
+      "name": "[390] texto: \"tenho dois Veigar\" grava 2 cópias; comp, aprimoramento e streak entram",
+      "pass": true,
+      "extra": "{\"c\":{\"DA_18_Veigar\":2},\"f\":\"seed-20\",\"a\":\"eco\",\"s\":3}"
+    },
+    {
+      "name": "[390] texto: \"mais um Veigar\" soma (3 cópias = 2★)",
+      "pass": true
+    },
+    {
+      "name": "[390] comp ambígua pergunta qual (3 opções) e aplica a escolhida",
+      "pass": true
+    },
+    {
+      "name": "[390] escolha da comp ambígua vira favorita",
+      "pass": true
+    },
+    {
+      "name": "[390] frase sem sentido: \"Nada aplicado\" e \"Não entendi\", sem mexer no estado",
+      "pass": true
+    },
+    {
+      "name": "[390] faixa de ouro 50+ define 50",
+      "pass": true
+    },
+    {
+      "name": "[390] faixa de vida Folga define 90",
+      "pass": true
+    },
+    {
+      "name": "[390] número exato continua valendo e acende a faixa 20–30",
+      "pass": true
+    },
+    {
+      "name": "[390] painel sem scroll horizontal",
+      "pass": true,
+      "extra": "overflow=0"
+    },
+    {
+      "name": "[390] painel sem erros no console",
+      "pass": true,
+      "extra": ""
+    },
+    {
+      "name": "[390] Brave: aviso claro antes de tentar (usar Chrome ou Edge)",
+      "pass": true
+    },
+    {
+      "name": "[390] Brave: erro \"network\" vira mensagem clara e o painel continua funcionando",
+      "pass": true
+    },
+    {
+      "name": "[390] Brave: o comando digitado continua funcionando",
+      "pass": true
+    },
+    {
+      "name": "[390] Brave: sem erro de JavaScript",
+      "pass": true,
+      "extra": ""
+    },
+    {
+      "name": "[390] sem suporte: botão de voz desabilitado e aviso diz para usar Chrome ou Edge",
+      "pass": true
+    },
+    {
+      "name": "[390] sem suporte: digitar o comando funciona",
+      "pass": true
+    },
+    {
+      "name": "[390] sem suporte: sem erro no console",
+      "pass": true,
+      "extra": ""
+    }
+  ]
+}

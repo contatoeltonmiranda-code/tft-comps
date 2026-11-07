@@ -153,7 +153,9 @@ function render(md, opts) {
 
 const NAV = [
   ['index.html', 'Comps'],
+  ['plano.html', 'Plano'],
   ['painel.html', 'Painel'],
+  ['posjogo.html', 'Pós-jogo'],
   ['guia.html', 'Guia do Jogo'],
   ['estrategia.html', 'Estratégia padrão'],
   ['noticias.html', 'Notícias'],

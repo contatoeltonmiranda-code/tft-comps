@@ -7,12 +7,12 @@
       "pass": true
     },
     {
-      "name": "[1440] nav: Comps | Painel | Guia do Jogo | Estratégia padrão | Notícias, ativo = Painel",
+      "name": "[1440] nav: 7 links, ativo = Painel",
       "pass": true,
-      "extra": "[{\"t\":\"Comps\",\"h\":\"index.html\",\"cur\":null},{\"t\":\"Painel\",\"h\":\"painel.html\",\"cur\":\"page\"},{\"t\":\"Guia do Jogo\",\"h\":\"guia.html\",\"cur\":null},{\"t\":\"Estratégia padrão\",\"h\":\"estrategia.html\",\"cur\":null},{\"t\":\"Notícias\",\"h\":\"noticias.html\",\"cur\":null}]"
+      "extra": "[{\"t\":\"Comps\",\"h\":\"index.html\",\"cur\":null},{\"t\":\"Plano\",\"h\":\"plano.html\",\"cur\":null},{\"t\":\"Painel\",\"h\":\"painel.html\",\"cur\":\"page\"},{\"t\":\"Pós-jogo\",\"h\":\"posjogo.html\",\"cur\":null},{\"t\":\"Guia do Jogo\",\"h\":\"guia.html\",\"cur\":null},{\"t\":\"Estratégia padrão\",\"h\":\"estrategia.html\",\"cur\":null},{\"t\":\"Notícias\",\"h\":\"noticias.html\",\"cur\":null}]"
     },
     {
-      "name": "[1440] nav cabe sem rolar (5 links visíveis)",
+      "name": "[1440] nav cabe sem rolar (7 links, quebra em 2 linhas no mobile)",
       "pass": true,
       "extra": "sobra=0"
     },
@@ -317,7 +317,7 @@
       "pass": true
     },
     {
-      "name": "[1440] navegação Painel > Estratégia: 5 links e Painel presente",
+      "name": "[1440] navegação Painel > Estratégia: 7 links e Painel presente",
       "pass": true
     },
     {
@@ -339,12 +339,12 @@
       "pass": true
     },
     {
-      "name": "[1100] nav: Comps | Painel | Guia do Jogo | Estratégia padrão | Notícias, ativo = Painel",
+      "name": "[1100] nav: 7 links, ativo = Painel",
       "pass": true,
-      "extra": "[{\"t\":\"Comps\",\"h\":\"index.html\",\"cur\":null},{\"t\":\"Painel\",\"h\":\"painel.html\",\"cur\":\"page\"},{\"t\":\"Guia do Jogo\",\"h\":\"guia.html\",\"cur\":null},{\"t\":\"Estratégia padrão\",\"h\":\"estrategia.html\",\"cur\":null},{\"t\":\"Notícias\",\"h\":\"noticias.html\",\"cur\":null}]"
+      "extra": "[{\"t\":\"Comps\",\"h\":\"index.html\",\"cur\":null},{\"t\":\"Plano\",\"h\":\"plano.html\",\"cur\":null},{\"t\":\"Painel\",\"h\":\"painel.html\",\"cur\":\"page\"},{\"t\":\"Pós-jogo\",\"h\":\"posjogo.html\",\"cur\":null},{\"t\":\"Guia do Jogo\",\"h\":\"guia.html\",\"cur\":null},{\"t\":\"Estratégia padrão\",\"h\":\"estrategia.html\",\"cur\":null},{\"t\":\"Notícias\",\"h\":\"noticias.html\",\"cur\":null}]"
     },
     {
-      "name": "[1100] nav cabe sem rolar (5 links visíveis)",
+      "name": "[1100] nav cabe sem rolar (7 links, quebra em 2 linhas no mobile)",
       "pass": true,
       "extra": "sobra=0"
     },
@@ -649,7 +649,7 @@
       "pass": true
     },
     {
-      "name": "[1100] navegação Painel > Estratégia: 5 links e Painel presente",
+      "name": "[1100] navegação Painel > Estratégia: 7 links e Painel presente",
       "pass": true
     },
     {
@@ -671,12 +671,12 @@
       "pass": true
     },
     {
-      "name": "[390] nav: Comps | Painel | Guia do Jogo | Estratégia padrão | Notícias, ativo = Painel",
+      "name": "[390] nav: 7 links, ativo = Painel",
       "pass": true,
-      "extra": "[{\"t\":\"Comps\",\"h\":\"index.html\",\"cur\":null},{\"t\":\"Painel\",\"h\":\"painel.html\",\"cur\":\"page\"},{\"t\":\"Guia do Jogo\",\"h\":\"guia.html\",\"cur\":null},{\"t\":\"Estratégia padrão\",\"h\":\"estrategia.html\",\"cur\":null},{\"t\":\"Notícias\",\"h\":\"noticias.html\",\"cur\":null}]"
+      "extra": "[{\"t\":\"Comps\",\"h\":\"index.html\",\"cur\":null},{\"t\":\"Plano\",\"h\":\"plano.html\",\"cur\":null},{\"t\":\"Painel\",\"h\":\"painel.html\",\"cur\":\"page\"},{\"t\":\"Pós-jogo\",\"h\":\"posjogo.html\",\"cur\":null},{\"t\":\"Guia do Jogo\",\"h\":\"guia.html\",\"cur\":null},{\"t\":\"Estratégia padrão\",\"h\":\"estrategia.html\",\"cur\":null},{\"t\":\"Notícias\",\"h\":\"noticias.html\",\"cur\":null}]"
     },
     {
-      "name": "[390] nav cabe sem rolar (5 links visíveis)",
+      "name": "[390] nav cabe sem rolar (7 links, quebra em 2 linhas no mobile)",
       "pass": true,
       "extra": "sobra=0"
     },
@@ -709,7 +709,7 @@
     {
       "name": "[390] mobile: saída no topo e entrada abaixo",
       "pass": true,
-      "extra": "{\"sy\":267.078125,\"ey\":2994.90625}"
+      "extra": "{\"sy\":303.078125,\"ey\":3030.90625}"
     },
     {
       "name": "[390] trocar estágio mantém a rodada válida",
@@ -973,7 +973,7 @@
       "pass": true
     },
     {
-      "name": "[390] navegação Painel > Estratégia: 5 links e Painel presente",
+      "name": "[390] navegação Painel > Estratégia: 7 links e Painel presente",
       "pass": true
     },
     {

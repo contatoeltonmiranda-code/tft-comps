@@ -8,7 +8,7 @@ const read = (f) => fs.readFileSync(path.join(ROOT, f), 'utf8');
 const HTML = read('painel.html');
 const CSS = read('css/painel.css').replace(/\/\*[\s\S]*?\*\//g, '');
 const STYLE = read('css/style.css');
-const JS_FILES = ['js/painel.js', 'js/painel-logic.js', 'js/painel-comps.js', 'js/painel-regras.js'];
+const JS_FILES = ['js/painel.js', 'js/painel-logic.js', 'js/painel-comps.js', 'js/painel-regras.js', 'js/painel-voz.js'];
 
 test('politica: o painel e 100% manual, sem rede, sem Overwolf, sem captura de tela, sem API do jogo', () => {
   const proibidos = [/overwolf/i, /fetch\s*\(/, /XMLHttpRequest/, /WebSocket/, /sendBeacon/, /getDisplayMedia/, /liveclientdata/i, /127\.0\.0\.1:2999/, /gep-map/, /GEP/, /augment/i, /EventSource/];

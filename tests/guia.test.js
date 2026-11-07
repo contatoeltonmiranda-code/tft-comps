@@ -93,15 +93,15 @@ test('guia: cabecalho SEO e sem dependencia externa', () => {
   assert.match(PAGE, /twitter:card/);
 });
 
-test('navegacao: 5 paginas com os mesmos 5 links, ativo correto e sem badge Em breve', () => {
-  const pages = { 'index.html': 'Comps', 'painel.html': 'Painel', 'guia.html': 'Guia do Jogo', 'estrategia.html': 'Estratégia padrão', 'noticias.html': 'Notícias' };
+test('navegacao: 7 paginas com os mesmos 7 links, ativo correto e sem badge Em breve', () => {
+  const pages = { 'index.html': 'Comps', 'plano.html': 'Plano', 'painel.html': 'Painel', 'posjogo.html': 'Pós-jogo', 'guia.html': 'Guia do Jogo', 'estrategia.html': 'Estratégia padrão', 'noticias.html': 'Notícias' };
   Object.entries(pages).forEach(([file, ativo]) => {
     const html = read(file);
     assert.ok(!/class="soon"|Em breve/.test(html), file + ' sem badge');
     const nav = html.match(/<nav class="sitenav"[\s\S]*?<\/nav>/)[0];
     const links = [...nav.matchAll(/<a class="navlink" href="([^"]+)"([^>]*)>([^<]*)<\/a>/g)].map((m) => ({ h: m[1], cur: /aria-current="page"/.test(m[2]), t: m[3].trim() }));
-    assert.deepEqual(links.map((l) => l.h), ['index.html', 'painel.html', 'guia.html', 'estrategia.html', 'noticias.html']);
-    assert.deepEqual(links.map((l) => l.t), ['Comps', 'Painel', 'Guia do Jogo', 'Estratégia padrão', 'Notícias']);
+    assert.deepEqual(links.map((l) => l.h), ['index.html', 'plano.html', 'painel.html', 'posjogo.html', 'guia.html', 'estrategia.html', 'noticias.html']);
+    assert.deepEqual(links.map((l) => l.t), ['Comps', 'Plano', 'Painel', 'Pós-jogo', 'Guia do Jogo', 'Estratégia padrão', 'Notícias']);
     assert.deepEqual(links.filter((l) => l.cur).map((l) => l.t), [ativo]);
     assert.equal(lf(nav), lf(gen.nav(file)), file + ' nav igual ao gerador');
   });

@@ -10,9 +10,9 @@
   "extra": "Enfeitiçador 6 | Lutador Florescer Adaptador | Vanguarda Congregação das Bruxas Devastador | Solar Yunara Karma | Emanador Ahri | Sabugueiro Soraka | Sabugueiro Aphelios | Alune AP Fast 9"
  },
  {
-  "name": "[d1440] nav: Comps | Painel | Guia do Jogo | Estratégia padrão | Notícias, Comps atual, sem badge",
+  "name": "[d1440] nav: 7 links, Comps atual, sem badge",
   "pass": true,
-  "extra": "[{\"t\":\"Comps\",\"h\":\"index.html\",\"cur\":\"page\"},{\"t\":\"Painel\",\"h\":\"painel.html\",\"cur\":null},{\"t\":\"Guia do Jogo\",\"h\":\"guia.html\",\"cur\":null},{\"t\":\"Estratégia padrão\",\"h\":\"estrategia.html\",\"cur\":null},{\"t\":\"Notícias\",\"h\":\"noticias.html\",\"cur\":null}]"
+  "extra": "[{\"t\":\"Comps\",\"h\":\"index.html\",\"cur\":\"page\"},{\"t\":\"Plano\",\"h\":\"plano.html\",\"cur\":null},{\"t\":\"Painel\",\"h\":\"painel.html\",\"cur\":null},{\"t\":\"Pós-jogo\",\"h\":\"posjogo.html\",\"cur\":null},{\"t\":\"Guia do Jogo\",\"h\":\"guia.html\",\"cur\":null},{\"t\":\"Estratégia padrão\",\"h\":\"estrategia.html\",\"cur\":null},{\"t\":\"Notícias\",\"h\":\"noticias.html\",\"cur\":null}]"
  },
  {
   "name": "[d1440] 2 comps lado a lado",
@@ -199,9 +199,9 @@
   "extra": "Enfeitiçador 6 | Lutador Florescer Adaptador | Vanguarda Congregação das Bruxas Devastador | Solar Yunara Karma | Emanador Ahri | Sabugueiro Soraka | Sabugueiro Aphelios | Alune AP Fast 9"
  },
  {
-  "name": "[d1100] nav: Comps | Painel | Guia do Jogo | Estratégia padrão | Notícias, Comps atual, sem badge",
+  "name": "[d1100] nav: 7 links, Comps atual, sem badge",
   "pass": true,
-  "extra": "[{\"t\":\"Comps\",\"h\":\"index.html\",\"cur\":\"page\"},{\"t\":\"Painel\",\"h\":\"painel.html\",\"cur\":null},{\"t\":\"Guia do Jogo\",\"h\":\"guia.html\",\"cur\":null},{\"t\":\"Estratégia padrão\",\"h\":\"estrategia.html\",\"cur\":null},{\"t\":\"Notícias\",\"h\":\"noticias.html\",\"cur\":null}]"
+  "extra": "[{\"t\":\"Comps\",\"h\":\"index.html\",\"cur\":\"page\"},{\"t\":\"Plano\",\"h\":\"plano.html\",\"cur\":null},{\"t\":\"Painel\",\"h\":\"painel.html\",\"cur\":null},{\"t\":\"Pós-jogo\",\"h\":\"posjogo.html\",\"cur\":null},{\"t\":\"Guia do Jogo\",\"h\":\"guia.html\",\"cur\":null},{\"t\":\"Estratégia padrão\",\"h\":\"estrategia.html\",\"cur\":null},{\"t\":\"Notícias\",\"h\":\"noticias.html\",\"cur\":null}]"
  },
  {
   "name": "[d1100] 2 comps lado a lado",
@@ -388,9 +388,9 @@
   "extra": "Enfeitiçador 6 | Lutador Florescer Adaptador | Vanguarda Congregação das Bruxas Devastador | Solar Yunara Karma | Emanador Ahri | Sabugueiro Soraka | Sabugueiro Aphelios | Alune AP Fast 9"
  },
  {
-  "name": "[d1099] nav: Comps | Painel | Guia do Jogo | Estratégia padrão | Notícias, Comps atual, sem badge",
+  "name": "[d1099] nav: 7 links, Comps atual, sem badge",
   "pass": true,
-  "extra": "[{\"t\":\"Comps\",\"h\":\"index.html\",\"cur\":\"page\"},{\"t\":\"Painel\",\"h\":\"painel.html\",\"cur\":null},{\"t\":\"Guia do Jogo\",\"h\":\"guia.html\",\"cur\":null},{\"t\":\"Estratégia padrão\",\"h\":\"estrategia.html\",\"cur\":null},{\"t\":\"Notícias\",\"h\":\"noticias.html\",\"cur\":null}]"
+  "extra": "[{\"t\":\"Comps\",\"h\":\"index.html\",\"cur\":\"page\"},{\"t\":\"Plano\",\"h\":\"plano.html\",\"cur\":null},{\"t\":\"Painel\",\"h\":\"painel.html\",\"cur\":null},{\"t\":\"Pós-jogo\",\"h\":\"posjogo.html\",\"cur\":null},{\"t\":\"Guia do Jogo\",\"h\":\"guia.html\",\"cur\":null},{\"t\":\"Estratégia padrão\",\"h\":\"estrategia.html\",\"cur\":null},{\"t\":\"Notícias\",\"h\":\"noticias.html\",\"cur\":null}]"
  },
  {
   "name": "[d1099] 1 coluna (empilhado)",
@@ -577,14 +577,14 @@
   "extra": "Enfeitiçador 6 | Lutador Florescer Adaptador | Vanguarda Congregação das Bruxas Devastador | Solar Yunara Karma | Emanador Ahri | Sabugueiro Soraka | Sabugueiro Aphelios | Alune AP Fast 9"
  },
  {
-  "name": "[m390] nav: Comps | Painel | Guia do Jogo | Estratégia padrão | Notícias, Comps atual, sem badge",
+  "name": "[m390] nav: 7 links, Comps atual, sem badge",
   "pass": true,
-  "extra": "[{\"t\":\"Comps\",\"h\":\"index.html\",\"cur\":\"page\"},{\"t\":\"Painel\",\"h\":\"painel.html\",\"cur\":null},{\"t\":\"Guia do Jogo\",\"h\":\"guia.html\",\"cur\":null},{\"t\":\"Estratégia padrão\",\"h\":\"estrategia.html\",\"cur\":null},{\"t\":\"Notícias\",\"h\":\"noticias.html\",\"cur\":null}]"
+  "extra": "[{\"t\":\"Comps\",\"h\":\"index.html\",\"cur\":\"page\"},{\"t\":\"Plano\",\"h\":\"plano.html\",\"cur\":null},{\"t\":\"Painel\",\"h\":\"painel.html\",\"cur\":null},{\"t\":\"Pós-jogo\",\"h\":\"posjogo.html\",\"cur\":null},{\"t\":\"Guia do Jogo\",\"h\":\"guia.html\",\"cur\":null},{\"t\":\"Estratégia padrão\",\"h\":\"estrategia.html\",\"cur\":null},{\"t\":\"Notícias\",\"h\":\"noticias.html\",\"cur\":null}]"
  },
  {
   "name": "[m390] 1 coluna (empilhado)",
   "pass": true,
-  "extra": "{\"c\":[{\"l\":14,\"t\":261,\"w\":362,\"r\":376},{\"l\":14,\"t\":1233,\"w\":362,\"r\":376}],\"vw\":390}"
+  "extra": "{\"c\":[{\"l\":14,\"t\":297,\"w\":362,\"r\":376},{\"l\":14,\"t\":1269,\"w\":362,\"r\":376}],\"vw\":390}"
  },
  {
   "name": "[m390] sem scroll horizontal na lista",

@@ -4,6 +4,7 @@
   const P = window.TFTPainel;
   const Logic = window.TFTLogic;
   const CompsApi = window.TFTPainelComps;
+  const Voz = window.TFTPainelVoz;
   // As comps do ranking sao as atuais do Elton (lista salva pelo app de comps: editadas, novas, sem as excluidas). Leitura apenas.
   function lerComps() {
     let raw = null;
@@ -143,6 +144,7 @@
     $$('[data-seg]').forEach((seg) => $$('button', seg).forEach((b) => b.setAttribute('aria-pressed', String(estado[seg.dataset.seg] === b.dataset.valor))));
     atualizarTiles();
     atualizarContestLista();
+    syncFaixas();
   }
 
   // ------------------------------------------------------------------ toque: clique soma, botao direito / segurar remove
@@ -529,6 +531,141 @@
     syncEntrada();
   }
 
+
+  // ------------------------------------------------------------------ faixas rapidas (ouro e vida)
+  const FAIXAS = { gold: Voz.FAIXAS_OURO, hp: Voz.FAIXAS_VIDA };
+  function montarFaixas() {
+    $$('[data-faixas]').forEach((box) => {
+      const campo = box.dataset.faixas;
+      FAIXAS[campo].forEach((f) => box.append(h('button', { type: 'button', 'data-faixa': f.id, 'aria-pressed': 'false', title: `Usa ${f.valor} ${campo === 'gold' ? 'de ouro' : 'de vida'}`, text: f.rotulo })));
+      box.addEventListener('click', (ev) => {
+        const b = ev.target.closest('button');
+        const f = b && FAIXAS[campo].find((x) => x.id === b.dataset.faixa);
+        if (f) mudar((e) => { e[campo] = f.valor; });
+      });
+    });
+  }
+  function syncFaixas() {
+    $$('[data-faixas]').forEach((box) => {
+      const atual = Voz.faixaDe(FAIXAS[box.dataset.faixas], estado[box.dataset.faixas]);
+      $$('button', box).forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.faixa === atual)));
+    });
+  }
+
+  // ------------------------------------------------------------------ voz e comando de texto
+  let desfazerEstado = null;
+  function aplicarAcao(e, a) {
+    const soma = (mapa, id, modo, n) => {
+      const cur = mapa[id] || 0;
+      const novo = modo === 'set' ? n : modo === 'add' ? cur + n : modo === 'remove' ? cur - n : Math.max(cur, n);
+      if (novo > 0) mapa[id] = novo; else delete mapa[id];
+    };
+    switch (a.tipo) {
+      case 'ouro': e.gold = a.valor; break;
+      case 'vida': e.hp = a.valor; break;
+      case 'nivel': e.level = a.valor; break;
+      case 'rodada': e.stage = a.valor; break;
+      case 'streak': e.streak = a.valor; break;
+      case 'xp': e.xp.atual = a.atual; e.xp.max = a.max; break;
+      case 'campeao': soma(e.champs, a.id, a.modo, a.n); break;
+      case 'componente': soma(e.comps, a.id, a.modo, a.n); break;
+      case 'comp-favorita': e.favorita = a.id; break;
+      case 'contest': soma(e.contest, a.id, 'set', a.n); break;
+      case 'aprimoramento': e.aprim = a.valor; break;
+      case 'board': e.board = a.valor; break;
+      case 'proxima': e.stage = P.proximaRodada(e.stage); break;
+      default: break;
+    }
+  }
+  function aplicarVoz(acoes) {
+    if (!acoes.length) return;
+    desfazerEstado = JSON.stringify(estado);
+    mudar((e) => acoes.forEach((a) => aplicarAcao(e, a)));
+  }
+  function desfazerVoz() {
+    if (!desfazerEstado) return;
+    estado = P.sanitizarEstado(JSON.parse(desfazerEstado), dados.catalog, dados.recipes);
+    desfazerEstado = null;
+    salvar();
+    atualizar();
+    mostrarResultadoVoz('', { acoes: [], ambiguos: [], naoEntendi: '' });
+    $('#pn-voz-status').textContent = 'Desfeito.';
+  }
+  function mostrarResultadoVoz(texto, r) {
+    const raiz = $('#pn-voz-res');
+    raiz.textContent = '';
+    if (texto) raiz.append(h('p', { class: 'pn-voz-ouvi' }, 'Ouvi: ', h('q', { text: texto })));
+    if (r.acoes.length) {
+      raiz.append(h('ul', { class: 'pn-voz-chips', 'aria-label': 'O que foi aplicado' }, r.acoes.map((a) => h('li', { text: Voz.descrever(a) }))));
+      raiz.append(h('button', { type: 'button', class: 'btn sm', id: 'pn-voz-desfazer', onclick: desfazerVoz }, 'Desfazer'));
+    }
+    r.ambiguos.forEach((amb) => {
+      raiz.append(h('div', { class: 'pn-voz-amb' },
+        h('span', { text: amb.tipo === 'contest' ? 'Contest de qual comp?' : 'Qual comp?' }),
+        amb.opcoes.map((o) => h('button', { type: 'button', class: 'btn sm', onclick: (ev) => {
+          aplicarVoz([amb.tipo === 'contest' ? { tipo: 'contest', id: o.id, nome: o.nome, n: amb.n } : { tipo: 'comp-favorita', id: o.id, nome: o.nome }]);
+          ev.target.closest('.pn-voz-amb').remove();
+          $('#pn-voz-status').textContent = `Aplicado: ${o.nome}.`;
+        } }, o.nome))));
+    });
+    if (r.naoEntendi) raiz.append(h('p', { class: 'pn-voz-nao', text: `Não entendi: ${r.naoEntendi}` }));
+  }
+  function processarComando(texto) {
+    const t = String(texto || '').trim();
+    if (!t) return;
+    const r = Voz.interpretar(t, {
+      champs: dados.catalog.champs.map((c) => ({ id: c.id, n: c.n, c: c.c })),
+      comps: dados.seed.map((c) => ({ id: c.id, nome: c.nome, estilo: c.estilo })),
+      componentes: componentes.map((c) => ({ id: c.id, n: c.n })),
+    });
+    aplicarVoz(r.acoes);
+    mostrarResultadoVoz(t, r);
+    $('#pn-voz-status').textContent = r.acoes.length ? `${r.acoes.length} ${r.acoes.length === 1 ? 'ajuste aplicado' : 'ajustes aplicados'}.` : r.ambiguos.length ? 'Escolha a comp abaixo.' : 'Nada aplicado.';
+  }
+  function montarVoz() {
+    const cmd = $('#pn-cmd');
+    const enviar = () => { processarComando(cmd.value); cmd.value = ''; };
+    $('#pn-cmd-ok').addEventListener('click', enviar);
+    cmd.addEventListener('keydown', (ev) => { if (ev.key === 'Enter') { ev.preventDefault(); enviar(); } });
+    const mic = $('#pn-mic');
+    const aviso = $('#pn-voz-aviso');
+    const sup = Voz.suporteVoz(window);
+    const mostrarAviso = (t) => { aviso.textContent = t; aviso.hidden = !t; };
+    if (!sup.ok) {
+      mic.disabled = true;
+      mostrarAviso(sup.aviso);
+      return;
+    }
+    if (sup.aviso) mostrarAviso(sup.aviso);
+    const Ctor = window.SpeechRecognition || window.webkitSpeechRecognition;
+    let rec = null;
+    const fim = () => { rec = null; mic.setAttribute('aria-pressed', 'false'); $('#pn-mic-t').textContent = 'Falar'; };
+    mic.addEventListener('click', () => {
+      if (rec) { rec.stop(); return; }
+      try {
+        rec = new Ctor();
+        rec.lang = 'pt-BR';
+        rec.interimResults = false;
+        rec.continuous = false;
+        rec.maxAlternatives = 1;
+        rec.onresult = (ev) => { const t = ev.results && ev.results[0] && ev.results[0][0] ? ev.results[0][0].transcript : ''; processarComando(t); };
+        rec.onerror = (ev) => {
+          const m = Voz.mensagemErroVoz(ev && ev.error);
+          if (m) $('#pn-voz-status').textContent = m;
+          if (ev && (ev.error === 'network' || ev.error === 'service-not-allowed')) mostrarAviso(Voz.mensagemErroVoz('network'));
+        };
+        rec.onend = fim;
+        rec.start();
+        mic.setAttribute('aria-pressed', 'true');
+        $('#pn-mic-t').textContent = 'Ouvindo… (clique para parar)';
+        $('#pn-voz-status').textContent = 'Ouvindo. Fale a frase inteira, por exemplo: ouro 32 vida 70 rodada 3-2.';
+      } catch (e) {
+        fim();
+        $('#pn-voz-status').textContent = Voz.mensagemErroVoz('network');
+      }
+    });
+  }
+
   // ------------------------------------------------------------------ nova partida
   function montarNova() {
     const dlg = $('#pn-confirma');
@@ -546,6 +683,8 @@
 
   montarRodada();
   montarNumeros();
+  montarFaixas();
+  montarVoz();
   montarChamps();
   montarComps();
   montarContest();

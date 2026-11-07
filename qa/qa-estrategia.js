@@ -31,9 +31,9 @@ async function run(browser, label, viewport, mobile) {
 
   /* ---------- nav ---------- */
   const nav = await page.locator('.sitenav a').evaluateAll((as) => as.map((a) => ({ t: a.textContent.trim(), h: a.getAttribute('href'), cur: a.getAttribute('aria-current') })));
-  ok(`[${label}] nav: Comps | Painel | Guia do Jogo | Estratégia padrão | Notícias, ativo = Estratégia padrão`, nav.length === 5 && nav.map((n) => n.t).join('|') === 'Comps|Painel|Guia do Jogo|Estratégia padrão|Notícias' && nav.filter((n) => n.cur === 'page').map((n) => n.t).join() === 'Estratégia padrão', JSON.stringify(nav));
+  ok(`[${label}] nav: 7 links, ativo = Estratégia padrão`, nav.length === 7 && nav.map((n) => n.t).join('|') === 'Comps|Plano|Painel|Pós-jogo|Guia do Jogo|Estratégia padrão|Notícias' && nav.filter((n) => n.cur === 'page').map((n) => n.t).join() === 'Estratégia padrão', JSON.stringify(nav));
   const navFit = await page.evaluate(() => { const n = document.querySelector('.sitenav-in'); return n.scrollWidth - n.clientWidth; });
-  ok(`[${label}] nav cabe sem rolar (5 links visíveis)`, navFit <= 0, 'sobra=' + navFit);
+  ok(`[${label}] nav cabe sem rolar (7 links)`, navFit <= 0, 'sobra=' + navFit);
   ok(`[${label}] sem badge "Em breve"`, (await page.locator('.soon').count()) === 0 && !/Em breve/.test(await page.locator('body').innerText()));
   ok(`[${label}] title e h1`, /Estratégia padrão de TFT/.test(await page.title()) && (await page.locator('h1').innerText()) === 'Estratégia padrão — TFT Set 18');
   ok(`[${label}] 6 seções e ${N_TABLES} tabelas`, (await page.locator('.guia h2').count()) === 6 && (await page.locator('.guia table').count()) === N_TABLES, `tabelas md=${N_TABLES}`);
@@ -210,7 +210,7 @@ async function run(browser, label, viewport, mobile) {
     await page.click(`.sitenav a[href="${href}"]`);
     await page.waitForSelector(sel);
   }
-  ok(`[${label}] navegação por clique Estratégia > Notícias > Guia > Estratégia > Comps`, page.url().endsWith('index.html') && (await page.locator('.sitenav a').count()) === 5 && (await page.locator('.sitenav a[aria-current="page"]').innerText()).trim() === 'Comps');
+  ok(`[${label}] navegação por clique Estratégia > Notícias > Guia > Estratégia > Comps`, page.url().endsWith('index.html') && (await page.locator('.sitenav a').count()) === 7 && (await page.locator('.sitenav a[aria-current="page"]').innerText()).trim() === 'Comps');
 
   ok(`[${label}] sem erros de console / requests falhos`, errors.length === 0, errors.slice(0, 3).join(' | '));
   await ctx.close();

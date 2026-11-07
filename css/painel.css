@@ -208,3 +208,31 @@
   .pn-champ:hover,.pn-compo-b:hover,.pn-b:hover{border-color:var(--line-soft);background:revert}
   .pn-b:hover{background:var(--panel-2)}
 }
+
+/* voz e comando de texto */
+.pn-voz-linha{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.pn-voz .btn[aria-pressed="true"]{background:#c0392b;border-color:#c0392b;color:#fff}
+.pn-cmd{flex:1 1 200px;min-width:0;height:40px;padding:0 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);font-size:16px}
+.pn-cmd:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px #d6aa5c33}
+.pn-voz-aviso{margin:8px 0 0;padding:8px 10px;border:1px solid #6a5326;border-radius:8px;background:#1b1608;color:#e2bd6e;font-size:13px}
+.pn-voz-status{min-height:1.2em;margin:8px 0 0;color:var(--muted);font-size:13px}
+.pn-voz-res{display:grid;gap:8px;justify-items:start}
+.pn-voz-res:empty{display:none}
+.pn-voz-ouvi{margin:0;color:#c3cbdb;font-size:14px}
+.pn-voz-chips{display:flex;flex-wrap:wrap;gap:6px;margin:0;padding:0;list-style:none}
+.pn-voz-chips li{padding:3px 10px;border:1px solid var(--gold);border-radius:999px;color:var(--gold);font-size:13px}
+.pn-voz-amb{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:13px;color:var(--muted)}
+.pn-voz-nao{margin:0;color:var(--danger);font-size:13px}
+.pn-voz-ex{margin-top:8px;font-size:13px;color:var(--muted)}
+.pn-voz-ex summary{cursor:pointer}
+.pn-voz-ex ul{margin:6px 0 0;padding-left:18px}
+
+/* faixas rapidas de ouro e vida */
+.pn-faixas{flex-basis:100%}
+.pn-faixas button{min-width:0;height:36px;padding:0 10px;font-size:13px}
+
+/* grade de campeoes recolhida por padrao */
+.pn-det-champs{margin-top:10px;border:1px solid var(--line-soft);border-radius:10px;background:#0d1320}
+.pn-det-champs>summary{padding:10px 12px;cursor:pointer;font-weight:600}
+.pn-det-champs[open]>summary{border-bottom:1px solid var(--line-soft)}
+.pn-det-champs>.pn-busca,.pn-det-champs>#pn-champs,.pn-det-champs>.pn-vazio{margin-left:12px;margin-right:12px}

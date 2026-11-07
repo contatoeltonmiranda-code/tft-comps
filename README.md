@@ -4,12 +4,13 @@ Mini sistema pessoal de composições de Teamfight Tactics (Set 18, "Selvas Enca
 
 ## Páginas
 
-Navegação no topo, igual nas cinco páginas (mesmo `css/style.css`): **Comps** (`index.html`) | **Painel** (`painel.html`) | **Guia do Jogo** (`guia.html`) | **Estratégia padrão** (`estrategia.html`) | **Notícias** (`noticias.html`). Nas páginas geradas o menu vem de `nav()` em `tools/gen-guia.js`; em `index.html`, `painel.html` e `noticias.html` é HTML à mão (o teste compara as cinco). No mobile (até 420 px) os 5 links cabem sem rolar (fonte 13,5 px; 13 px até 370 px).
+Navegação no topo, igual nas sete páginas (mesmo `css/style.css`; no mobile os links quebram em 2 linhas, nenhum fica escondido): **Comps** (`index.html`) | **Plano** (`plano.html`) | **Painel** (`painel.html`) | **Pós-jogo** (`posjogo.html`) | **Guia do Jogo** (`guia.html`) | **Estratégia padrão** (`estrategia.html`) | **Notícias** (`noticias.html`). Nas páginas geradas o menu vem de `nav()` em `tools/gen-guia.js`; em `index.html`, `plano.html`, `painel.html`, `posjogo.html` e `noticias.html` é HTML à mão (o teste compara as sete). No mobile (até 420 px) os 5 links cabem sem rolar (fonte 13,5 px; 13 px até 370 px).
 
 - Lista de comps em 2 colunas a partir de 1100 px de largura (2 comps lado a lado); abaixo disso, 1 coluna. Cada comp mostra Início / Meio / Fim (ver Fases em Dados), as dicas (quando houver) e o tabuleiro.
 - `guia.html`: Guia do Jogo (TFT Set 18, 13 seções: glossário, economia, nível, rolagem, estilos, scout, checklist e notas sobre as fontes). O texto é o oficial da Clara (`3. copywriter/Projetos/tft-guia-do-jogo/GUIA-DO-JOGO.md`), copiado sem alteração para `data/guia-do-jogo.md`. **A página é gerada, não editada à mão**: `node tools/gen-guia.js` lê cada `.md` de `data/` + `tools/pagina-template.html` e escreve `guia.html` e `estrategia.html` (uma entrada em `PAGES` por página: meta tags, rótulos de busca e opções de renderização; página nova de texto = entrada nova + `.md`) (HTML estático, sem CDN nem parser de Markdown no navegador). Para atualizar o guia: copiar o `.md` novo para `data/` e rodar o gerador (o teste falha se `guia.html` ficar fora de sincronia). Recursos: índice lateral fixo no desktop (a partir de 1000 px) com scrollspy e índice recolhível no topo no mobile; tabelas com rolagem horizontal só dentro da tabela; notas de divergência em blocos discretos e marcações "(Google, não confirmado)" e "(Set 18)" destacadas; busca no guia (`js/guia.js`, ignora acento e caixa, destaca com `<mark>`, esconde seções sem resultado, Enter/Shift+Enter navegam, Esc limpa). Página `noindex` como as demais (ferramenta pessoal): sitemap, `llms.txt` e Search Console n.a.
 - `estrategia.html`: Estratégia padrão (TFT Set 18, patch 18.6, 6 seções: qual estratégia jogar, Fast 8, Reroll e slow roll, Fast 9, leitura de jogo padronizada com matriz vida x board, resumo de bolso). Texto oficial da Clara (`3. copywriter/Projetos/tft-guia-do-jogo/ESTRATEGIA-PADRAO.md`) copiado sem alteração para `data/estrategia-padrao.md` e gerado pelo mesmo `tools/gen-guia.js`, com o mesmo layout e a mesma busca do guia (`js/guia.js`). Extras só desta página, todos em estilo (o texto não muda): botões "Checklist rápido" e "Resumo de bolso" no topo (se a busca escondeu o alvo, ela é limpa antes de ir); checklist de 30 segundos e resumo de bolso em caixa dourada com itens numerados; ações UPAR / FICAR / ROLAR / GUARDAR / PARAR como badges coloridos nas tabelas (`.act-*`; cor + palavra, nunca só cor); `*(regra derivada do guia)*` em itálico apagado (`.rd`), `(divergência)` laranja (`.dv`), `(Set 18)` e `(Google, não confirmado)` como no guia; subtítulos repetidos (Gatilhos, Pisos...) com id prefixado pela estratégia; no mobile (até 640 px) as 13 tabelas viram cartões com o rótulo da coluna em cada linha (`.tbl.stack` + `data-label`), sem rolagem lateral. Página `noindex`: sitemap, `llms.txt` e Search Console n.a.
 - `painel.html`: **Painel de decisão manual** para usar durante a partida (ver "Painel de decisão" abaixo). Você digita o estado; o app não lê o jogo.
+- `plano.html` e `posjogo.html`: plano pré-jogo estático e análise pós-jogo automática (ver "Antes e depois da partida" abaixo).
 - `noticias.html`: resumo do meta no topo, filtros por tipo e por patch, cards curtos com ícone do campeão/traço/item (quando há id no catálogo), link da fonte e data da última atualização. Dados em `data/noticias.js`, lógica de filtro em `TFTLogic` (`newsTypes`, `newsPatches`, `filterNews`, `newsIcon`), página em `js/noticias.js`.
 
 ## Como abrir
@@ -81,11 +82,14 @@ Gerenciar a tarefa (nome `TFT-Comps-Noticias-Semanal`):
 - QA do Guia do Jogo (índice fixo/recolhível, âncoras, scrollspy, tabelas, notas, busca, sem scroll horizontal e sem erro de console; 1440 e 390, um Chromium só): `node qa/qa-guia.js`. Prints `qa/guia-*.png` e `qa/resultado-guia.json`.
 - QA da Estratégia padrão (nav de 4 links, atalhos, caixas, badges, tabelas em cartões no mobile, índice, âncoras, busca, sem scroll horizontal e sem erro de console; 1440, 1100 e 390, um Chromium só): `node qa/qa-estrategia.js`. Prints `qa/estrategia-*.png` e `qa/resultado-estrategia.json`.
 - QA da prévia do overlay (6 cenários, 1000 e 390 de largura): servidor na raiz e `node qa/overlay.js`. Prints em `qa/overlay-*.png`.
+- Pós-jogo, Plano, voz e helper local (`tests/posjogo-logic`, `partidas-fonte`, `plano-logic`, `painel-voz`, `riot-lib`, `riot-server`, `riot-fetch-setup`, `novas-paginas`): `node --test tests/*.test.js`. QA de navegador (servidor do helper numa pasta temporária com partidas fictícias na porta 17871, encerrado pelo PID; reconhecedor de voz simulado, Brave simulado, navegador sem voz; 1440 e 390): `node qa/qa-pos-plano-voz.js`. Prints `qa/pos-*.png`, `qa/resultado-pos-plano-voz.json`. As páginas que chamam o helper registram `ERR_CONNECTION_REFUSED` no console do navegador quando ele está desligado (é o aviso do próprio Chrome para um `fetch` recusado, esperado; o QA só tolera esse).
 - Testes do Painel (`tests/painel-*.test.js`: base, comps, decisão, regras, página) e QA do Painel (partida simulada do 2-1 ao 4-3, critérios do "Melhor momento", reroll de custo 3 e comps salvas editadas, novas e excluídas, 1440, 1100 e 390, um Chromium só): `node qa/qa-painel.js`. Prints `qa/painel-*.png` e `qa/resultado-painel.json`.
 
 ## Painel de decisão (`painel.html`)
 
 Ferramenta para usar **durante a partida**, em segundo monitor ou celular, entre rodadas. **100% manual: você digita o estado e o painel decide.** Não há API, Overwolf, captura de tela nem nada que toque o cliente (decisão consciente do Elton, ver `_brain/DECISOES.md`; `tests/painel-page.test.js` falha se aparecer `fetch`, `overwolf`, `WebSocket`, captura de tela etc. no painel). O estado fica só no `localStorage` (`tft-comps:painel:v1`); "Nova partida" zera (com confirmação).
+
+> Desde 07/11/2026 o Painel ganhou voz, faixas rápidas e grade recolhida (ver "Voz e entrada rápida no Painel"). Decisão do Elton: durante a partida o uso é o Blitz; o Painel fica para quem quiser.
 
 **Entrada** (coluna da esquerda no desktop; no mobile fica abaixo da saída, com uma barra fixa no topo que resume a ação):
 
@@ -143,6 +147,84 @@ Interpretações do painel (origem `painel`, para o Elton revisar):
 - Estágio 1 não tem tabela no `.md`: o painel só lembra dos juros (do guia). As faixas de vida só valem do estágio 3 em diante (como o `.md` diz).
 
 Limites: o ranking depende da lista salva no mesmo navegador (outro navegador ou aba anônima começa no seed); não há dado de loja, banco nem posicionamento; scout e força do board dependem do que você digita. A regra do overlay de nunca mostrar dado de aprimoramento continua: aqui só existe o clique "Economia/Força" digitado por você, que não vem do jogo.
+
+## Antes e depois da partida (Plano, Pós-jogo e voz)
+
+Decisão do Elton (07/11/2026): o Painel manual atrapalha o jogo (digitar dados no meio da partida). **Durante a partida ele usa o Blitz** (app aprovado pela Riot). Este projeto cobre **antes** (Plano) e **depois** (Pós-jogo), automático, dentro da política da Riot para TFT: recomendação estática pré-jogo e análise pós-jogo são permitidas; nada aqui lê o jogo em tempo real (sem Overwolf, captura de tela, memória nem Live Client). O Painel continua existindo, agora com entrada por voz e por faixas.
+
+### Arquitetura escolhida
+
+```
+Riot API (account-v1, tft-match-v1)         PC do Elton                                     Navegador
+  americas.api.riotgames.com  <--HTTPS--  tools/riot-fetch.js  --grava-->  %LOCALAPPDATA%\tft-comps\       (Pages ou localhost)
+  chave so no cabecalho X-Riot-Token       (tarefa oculta, 15 min)          riot-key.txt  config.json         posjogo.html / plano.html
+                                                                            partidas.json status.json  <--GET--  http://127.0.0.1:17870
+                                           tools/riot-server.js  --le-->    (fora do repo e do OneDrive)        (so leitura, CORS restrito)
+                                           (tarefa oculta, no logon)
+```
+
+- **Helper local em Node, sem dependências** (`tools/`): `riot-fetch.js` baixa só as partidas novas; `riot-server.js` entrega o histórico por HTTP local; `riot-setup.js` pergunta o Riot ID; `riot-instalar.ps1` / `riot-remover.ps1` registram e removem as tarefas; `riot-oculto.vbs` roda tudo sem janela (`WshShell.Run ..., 0`, o Elton joga LoL e janela rouba foco); `riot-lib.js` é a biblioteca (cliente com limite de chamadas, retry, trava, escrita atômica).
+- **Pasta de dados** `%LOCALAPPDATA%\tft-comps\` (ou `TFT_COMPS_DIR`): `riot-key.txt`, `config.json` (Riot ID, puuid, região), `partidas.json`, `status.json`, `fetch.log`. `dirDados()` **recusa** pasta dentro do OneDrive ou do repositório. O `.gitignore` também cobre esses nomes. Nada disso vai para o repo público.
+- **Chave**: lida de `riot-key.txt` ou da variável `RIOT_API_KEY` (a variável vence). Só vai no cabeçalho `X-Riot-Token`, só para `https://americas.api.riotgames.com`; nunca na URL, no log, na tela, no navegador nem no servidor local (o servidor só sabe se o arquivo existe).
+- **Como a página estática lê o histórico: servidor local só-leitura** (escolhido). Alternativas descartadas: (a) gerar um `.js` com os dados dentro do repo: o repo é público e teria dado pessoal; (b) só importar arquivo à mão: não é automático. Mantido como **plano B**: o botão "Importar partidas.json" da página Pós-jogo (cobre navegador que bloqueia `localhost`, como o Brave pode fazer). A página também guarda uma cópia no `localStorage` (só neste navegador) para abrir com o servidor desligado; "Esquecer dados deste navegador" apaga.
+- **Servidor**: `bind` só em `127.0.0.1` (porta 17870; `TFT_COMPS_PORTA` ou `porta` no `config.json`; a página aceita `?porta=`); só `GET` e `OPTIONS` (outros métodos = 405); rotas fixas `/api/partidas`, `/api/status`, `/api/ping` (o caminho da URL nunca vira caminho de arquivo); checagem do cabeçalho `Host` (anti DNS rebinding: só `127.0.0.1:PORTA` ou `localhost:PORTA`); CORS só para `https://contatoeltonmiranda-code.github.io` e `http://localhost|127.0.0.1[:porta]` (qualquer outra origem = 403 sem dados; `file://` e `null` também); responde ao preflight com `Access-Control-Allow-Private-Network: true`; `Cache-Control: no-store`, `nosniff`, `Cross-Origin-Resource-Policy: same-site`; timeouts de 5 s; o JSON é revalidado por `sanitizarPartidas` antes de sair; se a porta já estiver ocupada (outra cópia) sai em silêncio.
+- **Limites da Riot respeitados**: chave pessoal = 20 chamadas/s e 100/2 min ([doc do portal](https://developer.riotgames.com/docs/portal)). O cliente segura em 18/s e 95/2 min (janela deslizante), honra `Retry-After` do 429 (teto de 2 min, até 3 tentativas), repete 5xx e erro de rede com espera crescente e **para** em 401/403 (chave expirada) sem insistir. Em regime normal a execução gasta **1 chamada** (lista de ids); só baixa as partidas que ainda não conhece (até 30 por execução; primeira vez olha as 30 últimas). O `puuid` é resolvido uma vez e guardado.
+- **Gatilho automático** (nada registrado ainda; scripts prontos): `TFT-Comps-Riot-Fetch` (logon +1 min e a cada 15 min, 10 min de limite, uma instância só) e `TFT-Comps-Riot-Servidor` (logon, sem limite, reinicia se cair). Ambas via `wscript.exe //B //Nologo riot-oculto.vbs "<node.exe>" "<script>"`, usuário atual, sem privilégio elevado, **nunca abrem janela**.
+
+Rotas e regiões (conferido no mirror da doc oficial): Brasil = plataforma `br1`, roteamento regional **`americas`** (AMERICAS atende NA, BR, LAN, LAS). `GET /riot/account/v1/accounts/by-riot-id/{gameName}/{tagLine}` (puuid), `GET /tft/match/v1/matches/by-puuid/{puuid}/ids?start&count`, `GET /tft/match/v1/matches/{matchId}`. A página `developer.riotgames.com/apis` carrega por JavaScript e não deu para ler pelo fetch; os campos vieram do mirror (`chirpon9/riot-docs-mcp`) e do que a Riot descreve; `augments` não estava nesse mirror, então o código trata tudo como opcional.
+
+### Passo a passo para o Elton (chave e setup)
+
+1. Entrar em [developer.riotgames.com](https://developer.riotgames.com) com a conta da Riot.
+2. **Chave de teste (Development API Key)**: o portal já mostra uma chave `RGAPI-...` ao entrar. Vale **24 horas**; amanhã é preciso "Regenerate API Key" e colar de novo. Serve para testar hoje; não pode ser usada em produto público.
+3. **Chave pessoal (Personal API Key)**: registrar o produto no portal escolhendo projeto pessoal e preencher o formulário. A Riot exige **descrição detalhada**; o texto pronto em inglês está na página Pós-jogo (bloco "Chave pessoal"): ferramenta pessoal, não pública, baixa só o histórico do próprio jogador por `tft-match-v1`/`account-v1` algumas vezes por hora, grava só no PC, sem overlay, sem captura de tela, sem memória, sem dados em tempo real, sem win rate de aprimoramento. Tipo: projeto pessoal. Limites: 20/s e 100/2 min; **não pode** rodar para uso público; não dá aumento de limite. A aprovação pode demorar, por isso começar pela chave de teste.
+4. No PC, dentro da pasta do projeto: `node tools/riot-setup.js`. Pergunta o Riot ID (`nome#tag`), pede a chave (digitação invisível, ou só Enter e colar depois em `%LOCALAPPDATA%\tft-comps\riot-key.txt`, uma linha `RGAPI-...`), confirma o Riot ID na Riot e grava `config.json` (com `puuid`).
+5. Instalar as tarefas ocultas: `powershell -ExecutionPolicy Bypass -File tools\riot-instalar.ps1 -Iniciar` (antes, `-DryRun` mostra o que seria feito sem registrar nada).
+6. Abrir **Pós-jogo**. Se o navegador perguntar sobre acesso à rede local/"localhost", Permitir. Se bloquear, usar "Importar partidas.json" (arquivo em `%LOCALAPPDATA%\tft-comps\partidas.json`).
+7. Chave de teste expirou? Gerar outra e colar em `riot-key.txt` (ou `node tools/riot-setup.js` de novo). O Pós-jogo avisa "A Riot recusou a chave".
+8. Desinstalar: `powershell -ExecutionPolicy Bypass -File tools\riot-remover.ps1` (`-ApagarDados` também apaga a pasta local).
+
+### Pós-jogo (`posjogo.html`)
+
+Lista as partidas (mais nova primeiro): colocação, data, fila, patch, duração, **nível, rodada de eliminação estimada (≈), ouro restante**, board final com estrelas e itens (ícones do catálogo), traços ativos, **aprimoramentos** (nome legível, só no pós-jogo, sem win rate) e uma análise por partida:
+
+- **Comp salva mais parecida**: `TFTRecommend.pontuarComp` sobre o board final (campeões 60% + itens 25%, renormalizado sem o eixo de ouro). "Reconhecida" = tem pelo menos 60% dos campeões da comp (mínimo 2).
+- **Estratégia que parece ter sido seguida** (`estiloDe`): Reroll (2+ unidades 3★ de custo até 3, ou 1 com nível ≤ 7), Fast 9 (nível 9+), Fast 8 (nível 8), Nível baixo no fim, Caiu cedo (antes do 4-1). É leitura do board final, não do que foi decidido.
+- **Onde pode ter errado**: só o que os dados provam, cada achado com o trecho do `data/estrategia-padrao.md` (teste confere palavra por palavra): morreu com 20+ de ouro fora do top 4; eliminado antes do 4-1; nível ≤ 7 depois do 4-5 fora do top 4; sem comp reconhecida; poucos itens equipados no nível 8+ (observação, o banco não aparece).
+- **O que a API não mostra** (sempre listado, nunca inventado): ouro e rolagens por rodada, quando subiu de nível e XP, vida por rodada, scout/contest, itens no banco e loja, posicionamento.
+- **Estatísticas**: média de colocação, top 4%, vitórias, últimas 5/10/20, por comp sua e por estilo; filtro por fila. Aviso de amostra pequena.
+- **Sem helper**: mostra 10 partidas **fictícias** marcadas "EXEMPLO" (`data/posjogo-exemplo.js`, gerado por `tools/gen-exemplo.js`) e as instruções passo a passo.
+
+Pontos a confirmar na primeira partida real (não havia chave para testar a API de verdade): (1) os nomes dos campeões/itens/traços da API para o Set 18 contra o catálogo (o mapeamento normaliza prefixos `TFT18_`/`DA_`/`TFT_Item_` e aceita prefixo único; o que não casar aparece pelo nome da API e o aviso conta quantos); (2) a contagem de `last_round` (a página assume 4 rodadas no estágio 1 e 7 nos demais e marca "≈"); (3) `level` (a doc da Riot o descreve como nível da Little Legend; o código só o aceita entre 1 e 10 e trata como nível do jogador, ou `null`); (4) campos `augments` (opcionais).
+
+### Plano pré-jogo (`plano.html`)
+
+Página própria (dá para deixar aberta no segundo monitor ou no celular; `Modo compacto` esconde os porquês). **Estático**: montado ao abrir ou em "Remontar plano", sem timers e sem ler a partida (`tests/novas-paginas.test.js` e `plano-logic.test.js` garantem). Entradas: comps salvas (`localStorage`, mesma lista da página Comps), buff/nerf do `data/noticias.js` e histórico do Pós-jogo (só dados reais, nunca o exemplo).
+
+- **3 comps**, ordenadas por `patch + histórico + lista`: patch = buff +1 / nerf −1 por campeão do board final ou traço com 3+ campeões da comp, peso 1 no patch mais novo e 0,5 no anterior (outros ignorados), limitado a ±3; histórico = (4,5 − média encolhida) × 1,5 com 3 partidas de prior em 4,5 (uma partida pesa pouco); lista = 1,5 menos 0,1 por posição (a ordem que o Elton deu). Cada comp mostra o porquê: histórico ("Você jogou N partidas… média, top 4"), o que o patch mudou, posição na lista e a linha do estilo.
+- **Estratégia**: sempre **Fast 8 padrão** (o guia: "Não sabe o que jogar? Fast 8"), com notas quando a comp 1 é reroll ou Fast 9 e, com 3+ partidas de cada linha, quando o histórico mostra uma linha com 20+ pontos a mais de top 4.
+- **Linha do tempo** 2-1, fim do 2, 3-2, 4-1, 4-2: ação, regra e "Atenção" com texto copiado do guia (teste confere); "derivada do guia" onde o próprio `.md` marca. Mais os pisos de ouro e as outras linhas (Open Fort, Reroll, Fast 9).
+- No celular o histórico pessoal não existe (o helper é do PC): o plano sai só com comps salvas e patch.
+
+### Voz e entrada rápida no Painel
+
+- Cartão "Falar ou digitar": botão **Falar** (Web Speech API, `pt-BR`) e campo de texto com o mesmo parser (`js/painel-voz.js`, puro, testado): "ouro 32 vida 70 rodada 3-2 nível 6", "tenho dois Veigar", "peguei três Ornn", "vendi Sett", "mais um cinto do gigante", "comp Enfeitiçador" (pergunta quando há mais de uma), "contest Solar 2", "aprimoramento de economia", "board forte", "3 vitórias seguidas", "xp 12 de 36", "próxima rodada". Números por extenso (até 999) e dígitos; nomes com tolerância (apelido de 1ª palavra única, junção "vei gar", erro de 1–2 letras; nome curto só exato). "tenho Veigar" sem número só garante pelo menos 1. Mostra o que ouviu, o que aplicou e **Desfazer**.
+- **Brave**: o Brave costuma não ter o serviço de reconhecimento de voz. A página detecta (sem suporte: botão desabilitado + aviso; Brave detectado ou erro `network`: aviso para usar Chrome ou Edge) e **nada quebra**; o comando digitado continua. Privacidade: o navegador envia o áudio ao serviço de voz dele (no Chrome, ao Google) só enquanto o microfone está ligado; o aviso do Painel diz isso.
+- **Faixas rápidas**: ouro `< 20 / 20–30 / 30–40 / 40–50 / 50+` (valor usado 15 / 20 / 32 / 40 / 50, a borda de baixo, porque as regras são "ouro ≥ X"; incluí 40–50 que faltava na lista) e vida `Crítica < 30 / Atenção 30–40 / Segura 41–79 / Folga 80+` (20 / 35 / 60 / 90, alinhadas ao `faixaVida`). O número exato continua valendo e acende a faixa.
+- **Grade de campeões recolhida** por padrão ("Escolher campeões na grade"); os chips "tenho" ficam visíveis.
+
+### Arquivos novos
+
+```
+js/posjogo-logic.js    normalizar partida da API, mapear ids, comp parecida, estilo, achados, estatisticas (puro)
+js/partidas-fonte.js   servidor local / copia do navegador / arquivo / exemplo (so fala com 127.0.0.1)
+js/plano-logic.js      plano pre-jogo (puro, estatico)
+js/painel-voz.js       parser de voz/texto, faixas, suporte do navegador (puro)
+js/dom.js              helpers de DOM (textContent) das paginas novas
+posjogo.html plano.html css/posjogo.css css/plano.css js/posjogo.js js/plano.js
+data/posjogo-exemplo.js  10 partidas ficticias (gerado por tools/gen-exemplo.js)
+tools/riot-lib.js riot-fetch.js riot-server.js riot-setup.js riot-instalar.ps1 riot-remover.ps1 riot-oculto.vbs
+```
 
 ## Overlay Overwolf (experimental, fase 1)
 
@@ -277,3 +359,33 @@ Quando houver print de board com grade legível (como tactics.tools), usar `posD
 Sem backend, sem login, sem banco. n.a. com justificativa: 1-8, 10-12, 14 (server-side), 16, 17, 19, 20 (sem servidor, segredos, auth ou dependências). Aplicados: 13/14 (todo texto vai por `textContent`; importação passa por `sanitizeImport`, que valida ids, limites e tamanho), 15 (erros genéricos ao usuário), 18 (CSP e headers só se publicar com servidor; a meta CSP foi retirada porque o antivírus injeta script e quebra a política).
 
 `overwolf-app/` e `sonda/` (sem backend, sem secrets, sem rede externa): a sonda Live Client só fala com `127.0.0.1` (recusa outros hosts; ignora o certificado autoassinado só em loopback); a gravação do GEP usa allowlist de chaves, remove qualquer chave com "augment" e nunca grava tokens (`lcu_info`), jogadores nem tabuleiro de adversários; HTML sem script inline nem CDN; texto do overlay por `textContent`; permissões mínimas (`GameInfo`, `FileSystem`); `npm audit` n.a. (zero dependências).
+
+
+### Checklist de segurança dos 20 itens: helper local e páginas novas (Pós-jogo, Plano, voz)
+
+Escopo: `tools/riot-*.js` (cliente da Riot + servidor local só-leitura), páginas estáticas novas. Sem banco, sem login, sem usuários.
+
+| # | Item | Status | Como |
+|---|---|---|---|
+| 1 | API keys fora do código | ok | `riot-key.txt` em `%LOCALAPPDATA%\tft-comps\` ou `RIOT_API_KEY`; formato validado (`RGAPI-...`); `dirDados()` recusa OneDrive e repositório; teste varre o repo atrás de `RGAPI-` |
+| 2 | Git limpo de secrets | ok | `.gitignore` com `riot-key.txt`, `partidas.json`, `config.json`, `status.json`, `fetch.log`; `git grep` de chave e Riot ID vazio antes do commit |
+| 3 | Chave de DB nunca exposta | n.a. | sem banco; a chave da Riot nunca chega ao navegador nem ao servidor local (só sabe se o arquivo existe) |
+| 4 | RLS ativo | n.a. | sem banco |
+| 5 | Criptografia | ok | tráfego com a Riot só em HTTPS (`redirect: 'error'`); dados em disco ficam na pasta do usuário do Windows; arquivo da chave com permissão restrita (`icacls`/`chmod 600`); localhost em HTTP é loopback |
+| 6 | Auth server-side | n.a. | sem login; o servidor local só aceita Host `127.0.0.1`/`localhost` e origens permitidas |
+| 7 | Restringir acessos | ok | bind `127.0.0.1`; tarefas com o usuário atual, sem elevação; Origin fora da lista = 403 |
+| 8 | Mass assignment | n.a. | servidor só lê (GET); nenhum campo de entrada é gravado |
+| 9 | Cookies protegidos | n.a. | nenhum cookie |
+| 10 | Hash de senhas | n.a. | sem senhas |
+| 11 | Rate limit | ok | limite de saída para a Riot (18/s, 95/2 min, `Retry-After`); entrada: servidor local só em loopback, `requestTimeout` 5 s |
+| 12 | Bot protection | n.a. | sem formulário público |
+| 13 | Queries parametrizadas | n.a. | sem SQL; URLs da Riot montadas com `encodeURIComponent` e ids validados por regex |
+| 14 | Validar inputs | ok | Riot ID (`parseRiotId`), chave, ids de partida; tudo que vem de fora (servidor, arquivo, `localStorage`) passa por `sanitizarPartidas` (tipos, faixas, tamanhos, dedupe, limite de 300); parser de voz limita o texto a 400 caracteres e valida faixas |
+| 15 | Não vazar conteúdo | ok | erros da Riot viram mensagens genéricas (`ErroRiot`), sem chave nem corpo; log sem Riot ID/puuid; servidor devolve `{erro: ...}` curto |
+| 16 | Restringir uploads | ok | "Importar partidas.json": só leitura local no navegador, máximo 8 MB, `JSON.parse` + sanitização, nunca executa nada |
+| 17 | Trim de respostas | ok | a partida é reduzida ao jogador antes de gravar (sem Riot ID, puuid nem os outros 7 jogadores); `/api/status` devolve só estado resumido |
+| 18 | Security headers | ok | no servidor local: `Cache-Control: no-store`, `X-Content-Type-Options: nosniff`, `Cross-Origin-Resource-Policy: same-site`; páginas estáticas sem CSP (a meta CSP foi retirada por causa do antivírus, ver acima); sem script inline, sem CDN |
+| 19 | Forçar HTTPS | ok/n.a. | chamadas à Riot só HTTPS; o Pages já serve HTTPS; o servidor local é loopback HTTP (não há como ter certificado confiável em 127.0.0.1) |
+| 20 | Auditar dependências | ok | **zero dependências** (só módulos do Node); `npm audit` n.a. |
+
+Riscos aceitos, documentados: (a) qualquer página em `http://localhost:*` pode ler o histórico local (é o seu PC, e o histórico não tem dado de terceiros); (b) a chave de teste e a pessoal ficam em texto puro em `riot-key.txt`, protegido só pela permissão do arquivo (sem cofre); (c) o áudio da voz vai para o serviço do navegador (Chrome: Google) enquanto o microfone está ligado.

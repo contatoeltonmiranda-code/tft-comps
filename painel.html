@@ -31,13 +31,16 @@
   <symbol id="i-star-o" viewBox="0 0 20 20"><path d="M10 1.8l2.4 5.2 5.6.6-4.2 3.8 1.2 5.5L10 14.1l-5 2.8 1.2-5.5L2 7.6l5.6-.6z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
   <symbol id="i-next" viewBox="0 0 20 20"><path d="M5 4.5l6 5.5-6 5.5M11.5 4.5l5 5.5-5 5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
   <symbol id="i-unknown" viewBox="0 0 20 20"><circle cx="10" cy="10" r="6.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8.2 8.2a1.9 1.9 0 113.4 1.1c-.7.5-1.6.8-1.6 1.9M10 13.4v.1" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+  <symbol id="i-mic" viewBox="0 0 20 20"><rect x="7" y="2.5" width="6" height="9.5" rx="3" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M4.5 9.5a5.5 5.5 0 0011 0M10 15v2.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
   <symbol id="i-comp" viewBox="0 0 20 20"><rect x="3.5" y="3.5" width="13" height="13" rx="3" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M7 10h6M10 7v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
 </svg>
 
 <nav class="sitenav" aria-label="Páginas do site">
   <div class="sitenav-in">
     <a class="navlink" href="index.html">Comps</a>
+    <a class="navlink" href="plano.html">Plano</a>
     <a class="navlink" href="painel.html" aria-current="page">Painel</a>
+    <a class="navlink" href="posjogo.html">Pós-jogo</a>
     <a class="navlink" href="guia.html">Guia do Jogo</a>
     <a class="navlink" href="estrategia.html">Estratégia padrão</a>
     <a class="navlink" href="noticias.html">Notícias</a>
@@ -57,13 +60,36 @@
 <main>
   <details class="pn-aviso" id="pn-aviso">
     <summary>Painel 100% manual: não lê o jogo</summary>
-    <p>Você digita o estado da partida. O app não se conecta ao jogo: sem API, sem Overwolf, sem captura de tela, nada que toque o cliente. O estado fica salvo só neste navegador.</p>
+    <p>Você digita (ou fala) o estado da partida. O app não se conecta ao jogo: sem API, sem Overwolf, sem captura de tela, nada que toque o cliente. O estado fica salvo só neste navegador. O microfone só liga quando você clica em Falar; o navegador envia o áudio ao serviço de voz dele (no Chrome, ao Google).</p>
   </details>
 
   <div class="pn-barra" id="pn-barra" role="status" aria-live="polite" aria-label="Resumo da ação agora"></div>
 
   <div class="pn-layout">
     <form class="pn-entrada" id="pn-entrada" autocomplete="off" aria-label="Estado da partida">
+
+      <section class="pn-card pn-voz" aria-labelledby="pn-h-voz">
+        <h2 id="pn-h-voz">Falar ou digitar</h2>
+        <div class="pn-voz-linha">
+          <button type="button" class="btn primary" id="pn-mic" aria-pressed="false"><svg class="ic" aria-hidden="true"><use href="#i-mic"/></svg><span id="pn-mic-t">Falar</span></button>
+          <label class="sr" for="pn-cmd">Comando de texto</label>
+          <input id="pn-cmd" class="pn-cmd" type="text" maxlength="400" placeholder="ouro 32 vida 70 rodada 3-2 nivel 6" autocomplete="off" spellcheck="false">
+          <button type="button" class="btn" id="pn-cmd-ok">Aplicar</button>
+        </div>
+        <p class="pn-voz-aviso" id="pn-voz-aviso" role="note" hidden></p>
+        <p class="pn-voz-status" id="pn-voz-status" role="status" aria-live="polite"></p>
+        <div class="pn-voz-res" id="pn-voz-res"></div>
+        <details class="pn-voz-ex">
+          <summary>O que dá para dizer</summary>
+          <ul class="pn-dica">
+            <li>“ouro 32 vida 70 rodada 3-2 nível 6” (números por extenso também valem)</li>
+            <li>“tenho dois Veigar”, “peguei três Ornn”, “vendi Sett” (nomes aproximados são aceitos)</li>
+            <li>“tenho duas espátulas”, “mais um cinto do gigante”</li>
+            <li>“comp Enfeitiçador” (comp favorita), “contest Solar 2”</li>
+            <li>“aprimoramento de economia”, “board forte”, “3 vitórias seguidas”, “xp 12 de 36”, “próxima rodada”</li>
+          </ul>
+        </details>
+      </section>
 
       <section class="pn-card" aria-labelledby="pn-h-partida">
         <h2 id="pn-h-partida">Partida</h2>
@@ -90,6 +116,7 @@
               <button type="button" class="pn-b" data-step="hp:1" aria-label="Mais 1 de vida">+1</button>
             </div>
             <input id="pn-vida-slider" class="pn-slider" type="range" min="0" max="100" step="1" data-campo="hp" aria-label="Vida (controle deslizante)">
+            <div class="pn-seg pn-faixas" role="group" aria-label="Faixa de vida" data-faixas="hp"></div>
           </div>
         </div>
 
@@ -103,6 +130,7 @@
               <button type="button" class="pn-b" data-step="gold:1" aria-label="Mais 1 de ouro">+1</button>
               <button type="button" class="pn-b" data-step="gold:5" aria-label="Mais 5 de ouro">+5</button>
             </div>
+            <div class="pn-seg pn-faixas" role="group" aria-label="Faixa de ouro" data-faixas="gold"></div>
           </div>
         </div>
 
@@ -167,14 +195,17 @@
       <section class="pn-card" aria-labelledby="pn-h-champs">
         <h2 id="pn-h-champs">Campeões que tenho</h2>
         <p class="pn-dica">Banco e tabuleiro juntos. Clique soma uma cópia; botão direito ou segurar remove. 2 cópias = par, 3 = 2★, 9 = 3★.</p>
-        <div class="pn-busca">
-          <svg class="ic" aria-hidden="true"><use href="#i-search"/></svg>
-          <label class="sr" for="pn-q-champs">Buscar campeão</label>
-          <input id="pn-q-champs" type="search" placeholder="Buscar campeão" autocomplete="off" spellcheck="false">
-        </div>
         <div class="pn-tenho" id="pn-tenho" aria-label="Campeões que você tem"></div>
-        <div id="pn-champs"></div>
-        <p class="pn-vazio" id="pn-champs-vazio" hidden>Nenhum campeão com esse nome.</p>
+        <details class="pn-det-champs" id="pn-det-champs">
+          <summary>Escolher campeões na grade</summary>
+          <div class="pn-busca">
+            <svg class="ic" aria-hidden="true"><use href="#i-search"/></svg>
+            <label class="sr" for="pn-q-champs">Buscar campeão</label>
+            <input id="pn-q-champs" type="search" placeholder="Buscar campeão" autocomplete="off" spellcheck="false">
+          </div>
+          <div id="pn-champs"></div>
+          <p class="pn-vazio" id="pn-champs-vazio" hidden>Nenhum campeão com esse nome.</p>
+        </details>
       </section>
 
       <section class="pn-card" aria-labelledby="pn-h-comps">
@@ -216,6 +247,7 @@
 <script src="js/painel-regras.js"></script>
 <script src="js/painel-comps.js"></script>
 <script src="js/painel-logic.js"></script>
+<script src="js/painel-voz.js"></script>
 <script src="js/painel.js"></script>
 </body>
 </html>
