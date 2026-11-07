@@ -100,7 +100,8 @@ test('guia: slug sem acento, sem numero e sem repeticao', () => {
 });
 
 test('guia: guia.html gerado esta em dia com o .md (rode node tools/gen-guia.js)', () => {
-  assert.equal(PAGE, gen.build(MD, read('tools/guia-template.html')));
+  const lf = (s) => s.split(String.fromCharCode(13)).join('');
+  assert.equal(lf(PAGE), lf(gen.build(MD, read('tools/guia-template.html'))));
 });
 
 test('guia: cabecalho SEO e sem dependencia externa', () => {
