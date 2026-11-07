@@ -42,7 +42,7 @@ async function run(label, viewport, mobile, cols) {
 
   // navegacao
   const nav = await page.locator('.sitenav a').evaluateAll((as) => as.map((a) => ({ t: a.textContent.trim(), h: a.getAttribute('href'), cur: a.getAttribute('aria-current') })));
-  ok(`[${label}] nav: Comps | Guia do Jogo (Em breve) | Notícias, Comps atual`, nav.length === 3 && nav[0].h === 'index.html' && nav[0].cur === 'page' && nav[1].h === 'guia.html' && /Em breve/i.test(nav[1].t) && nav[2].h === 'noticias.html', JSON.stringify(nav));
+  ok(`[${label}] nav: Comps | Guia do Jogo | Notícias, Comps atual, sem badge`, nav.length === 3 && nav[0].h === 'index.html' && nav[0].cur === 'page' && nav[1].h === 'guia.html' && nav[1].t === 'Guia do Jogo' && nav[2].h === 'noticias.html', JSON.stringify(nav));
 
   // 2 colunas
   const geo = await page.evaluate(() => {
@@ -161,9 +161,10 @@ async function run(label, viewport, mobile, cols) {
   ok(`[${label}] noticias: sem imagem quebrada`, irN.bad.length === 0, `${irN.total} imgs; ${irN.bad.slice(0, 3).join(',')}`);
   ok(`[${label}] noticias: sem scroll horizontal`, (await overflowX(page)) <= 0, 'overflow=' + (await overflowX(page)));
 
-  /* ---------- guia (placeholder) ---------- */
+  /* ---------- guia (cobertura completa em qa/qa-guia.js) ---------- */
   const resp = await page.goto(BASE + 'guia.html');
-  ok(`[${label}] guia.html responde 200 com "Em breve"`, resp.status() === 200 && /Em breve/.test(await page.locator('.stub').innerText()) && (await page.locator('.sitenav a[aria-current="page"]').innerText()).includes('Guia do Jogo'));
+  await page.waitForSelector('.guia h2');
+  ok(`[${label}] guia.html responde 200 com as 13 seções e Guia do Jogo ativo`, resp.status() === 200 && (await page.locator('.guia h2').count()) === 13 && (await page.locator('.sitenav a[aria-current="page"]').innerText()).includes('Guia do Jogo'));
   await shot('6-guia');
   ok(`[${label}] guia: sem scroll horizontal`, (await overflowX(page)) <= 0);
   // navegacao por clique

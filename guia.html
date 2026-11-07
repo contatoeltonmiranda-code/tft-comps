@@ -3,44 +3,398 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Guia do Jogo — Comps TFT</title>
-<meta name="description" content="Guia do Jogo de Teamfight Tactics: em breve nesta página.">
+<title>Guia do Jogo de TFT: economia, nível e rolagem</title>
+<meta name="description" content="Guia do Jogo de Teamfight Tactics (Set 18): economia e juros, quando subir de nível, quando rolar e estilos de jogo, em consulta rápida na partida.">
 <meta name="robots" content="noindex">
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#0b0f17">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Guia do Jogo — Comps TFT">
-<meta property="og:description" content="Guia do Jogo de Teamfight Tactics: em breve.">
+<meta property="og:title" content="Guia do Jogo de TFT: economia, nível e rolagem">
+<meta property="og:description" content="Economia, juros, nível, rolagem e estilos de jogo do Teamfight Tactics (Set 18), em consulta rápida.">
 <meta property="og:locale" content="pt_BR">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Guia do Jogo — Comps TFT">
-<meta name="twitter:description" content="Guia do Jogo de Teamfight Tactics: em breve.">
+<meta name="twitter:title" content="Guia do Jogo de TFT: economia, nível e rolagem">
+<meta name="twitter:description" content="Economia, juros, nível, rolagem e estilos de jogo do Teamfight Tactics (Set 18), em consulta rápida.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 2l12 7v14l-12 7L4 23V9z' fill='%23d4a85a'/%3E%3Cpath d='M16 9l6 3.5v7L16 23l-6-3.5v-7z' fill='%230b0f17'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+<!-- Gerado por tools/gen-guia.js a partir de data/guia-do-jogo.md. Nao editar a mao. -->
 
 <nav class="sitenav" aria-label="Páginas do site">
   <div class="sitenav-in">
     <a class="navlink" href="index.html">Comps</a>
-    <a class="navlink" href="guia.html" aria-current="page">Guia do Jogo <span class="soon">Em breve</span></a>
+    <a class="navlink" href="guia.html" aria-current="page">Guia do Jogo</a>
     <a class="navlink" href="noticias.html">Notícias</a>
   </div>
 </nav>
 
 <header class="top">
   <div class="brand">
-    <h1>Guia do Jogo</h1>
+    <h1>Guia do Jogo — TFT Set 18</h1>
     <p>Set 18 · Selvas Encantadas</p>
   </div>
 </header>
 
 <main>
-  <div class="stub">
-    <h2>Em breve</h2>
-    <p>Esta página vai reunir o guia do jogo. Enquanto isso, veja as <a href="index.html">comps</a> e as <a href="noticias.html">notícias do patch</a>.</p>
+  <div class="searchbar gsearch" role="search">
+    <svg class="ic" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M13.2 13.2L17 17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    <label class="sr" for="gq">Buscar no guia</label>
+    <input id="gq" type="search" placeholder="Buscar no guia (ex.: juros, fast 8, 3-2)" autocomplete="off" enterkeyhint="search">
+    <span class="fcount" id="gcount" aria-live="polite"></span>
+    <button class="btn sm ghost" id="gclear" type="button" hidden>Limpar</button>
+  </div>
+
+  <div class="glayout">
+    <nav class="toc" id="toc" aria-label="Índice do guia">
+      <details id="toc-d" open>
+        <summary>Índice</summary>
+        <ul>
+<li><a href="#glossario-rapido">1. Glossário rápido</a></li>
+<li><a href="#como-a-partida-e-dividida">2. Como a partida é dividida</a></li>
+<li><a href="#economia">3. Economia</a></li>
+<li><a href="#quando-subir-de-nivel">4. Quando subir de nível</a></li>
+<li><a href="#quando-rolar-e-quanto">5. Quando rolar e quanto</a></li>
+<li><a href="#estilos-de-jogo">6. Estilos de jogo</a></li>
+<li><a href="#custo-do-campeao-x-nivel-x-estagio">7. Custo do campeão x nível x estágio</a></li>
+<li><a href="#comeco-meio-e-fim-de-jogo">8. Começo, meio e fim de jogo</a></li>
+<li><a href="#itens-e-vida-como-recurso">9. Itens e vida como recurso</a></li>
+<li><a href="#scout-e-contest">10. Scout e contest</a></li>
+<li><a href="#armadilhas-comuns">11. Armadilhas comuns</a></li>
+<li><a href="#checklist-de-bolso-por-estagio">12. Checklist de bolso por estágio</a></li>
+<li><a href="#notas-sobre-as-fontes">Notas sobre as fontes</a></li>
+</ul>
+      </details>
+    </nav>
+    <article class="guia" id="guia">
+<section class="gsec gintro">
+<p>Consulta rápida antes e durante a partida: economia, nível, rolagem e estilo de jogo. Set 18 &quot;Selvas Encantadas&quot;, patch 18.6.</p>
+<blockquote class="nota"><p><strong>Fontes:</strong> vídeos de guia do GattaiTFT (gravados nos Sets 12 e 13 — princípios gerais, valem para qualquer set), vídeo de comps do Vladimin (Set 18, patch 18.5C, marcado <strong><span class="s18">(Set 18)</span></strong>) e um resumo do Google. Em conflito, valem os vídeos. O que só o Google afirma está marcado <strong><span class="nc">(Google, não confirmado)</span></strong>.</p><p>Os números de rodada e de ouro são a base que vale na maioria das partidas. Não é receita fixa: ajuste ao que o jogo te deu.</p></blockquote>
+</section>
+<section class="gsec" aria-labelledby="glossario-rapido">
+<h2 id="glossario-rapido">1. Glossário rápido</h2>
+<div class="tbl" role="region" tabindex="0" aria-label="Tabela: 1. Glossário rápido">
+<table>
+<thead><tr><th scope="col">Termo</th><th scope="col">O que é</th></tr></thead>
+<tbody>
+<tr><th scope="row">Estágio</th><td>Bloco da partida. O estágio 1 tem 4 rodadas; os demais, 7.</td></tr>
+<tr><th scope="row">Rodada</th><td>Cada combate ou evento do estágio. &quot;3-2&quot; = estágio 3, rodada 2.</td></tr>
+<tr><th scope="row">PvP</th><td>Combate contra outro jogador.</td></tr>
+<tr><th scope="row">PvE</th><td>Combate contra monstros (minions no estágio 1; rodada X-7 nos demais).</td></tr>
+<tr><th scope="row">Carrossel</th><td>Rodada X-4: cada jogador pega um campeão com item. Quem tem menos vida escolhe primeiro.</td></tr>
+<tr><th scope="row">Juros</th><td>+1 de ouro para cada 10 guardados no fim da rodada, até +5 (com 50).</td></tr>
+<tr><th scope="row">Streak</th><td>Sequência de vitórias (win streak) ou de derrotas (loss streak). Dá ouro extra a partir de 2.</td></tr>
+<tr><th scope="row">Spike (power spike)</th><td>Salto de força do board: subir de nível, 3 estrelas, item-chave, novo nível de traço.</td></tr>
+<tr><th scope="row">Par</th><td>Duas cópias do mesmo campeão. Falta uma para 2 estrelas.</td></tr>
+<tr><th scope="row">Rolar (roll)</th><td>Pagar 2 de ouro para trocar a loja.</td></tr>
+<tr><th scope="row">Roll down</th><td>Rolar muito de uma vez, num nível alto, atrás da comp final.</td></tr>
+<tr><th scope="row">Slow roll</th><td>Manter 50+ de ouro e rolar só com o que passa disso, rodada a rodada.</td></tr>
+<tr><th scope="row">Hyper roll</th><td>Rolar pesado no 3-1 (nível 4) por custo 1 em 3 estrelas, descendo bastante o ouro.</td></tr>
+<tr><th scope="row">Reroll</th><td>Comp que depende de campeões baratos (custo 1, 2 ou 3) em 3 estrelas.</td></tr>
+<tr><th scope="row">Fast 8</th><td>Subir rápido ao nível 8 para achar custo 4. O jeito padrão de jogar.</td></tr>
+<tr><th scope="row">Fast 9</th><td>Subir ao nível 9 sem rolar, atrás de custo 5 de 2 estrelas. O estilo mais difícil.</td></tr>
+<tr><th scope="row">Pré-level</th><td>Terminar a rodada 2 XP abaixo do próximo nível. Os 2 XP grátis da rodada seguinte sobem você, e a loja já vem com as chances do nível de cima.</td></tr>
+<tr><th scope="row">Level torto</th><td>Rodada em que subir de nível desperdiça XP comprada (ex.: 3-3, 3-6). No torto, faça pré-level.</td></tr>
+<tr><th scope="row">Slam</th><td>Montar o item na hora, sem esperar o ideal.</td></tr>
+<tr><th scope="row">BIS</th><td>&quot;Best in slot&quot;: o item ideal daquele campeão.</td></tr>
+<tr><th scope="row">Open Fort</th><td>Não montar board (vender, não comprar, às vezes nem slamar) para fazer loss streak e economia.</td></tr>
+<tr><th scope="row">Scout</th><td>Olhar o board dos outros jogadores.</td></tr>
+<tr><th scope="row">Contest</th><td>Outros jogadores atrás das mesmas unidades. O pool de cada campeão é compartilhado e limitado.</td></tr>
+<tr><th scope="row">Pivô (pivot)</th><td>Trocar de comp no meio da partida.</td></tr>
+<tr><th scope="row">Capar</th><td>Chegar ao board máximo da comp.</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+<section class="gsec" aria-labelledby="como-a-partida-e-dividida">
+<h2 id="como-a-partida-e-dividida">2. Como a partida é dividida</h2>
+<p>Padrão de cada estágio, do 2 em diante:</p>
+<div class="tbl" role="region" tabindex="0" aria-label="Tabela: 2. Como a partida é dividida">
+<table class="tc3">
+<thead><tr><th scope="col">Rodada</th><th scope="col">Tipo</th><th scope="col">O que acontece</th></tr></thead>
+<tbody>
+<tr><th scope="row">X-1, X-2, X-3</th><td>PvP</td><td>Combates.</td></tr>
+<tr><th scope="row">X-4</th><td>Carrossel</td><td>Quem tem menos vida escolhe primeiro. Fonte de itens e de recuperação.</td></tr>
+<tr><th scope="row">X-5, X-6</th><td>PvP</td><td>Combates.</td></tr>
+<tr><th scope="row">X-7</th><td>PvE</td><td>Monstros. Fecha o estágio.</td></tr>
+</tbody>
+</table>
+</div>
+<ul><li><strong>Estágio 1:</strong> 4 rodadas de abertura, com PvE contra minions. Já dá para fazer juros (10 de ouro = +1).</li><li>O carrossel não divide o estágio. Quem marca a virada é o PvE X-7.</li><li><strong>Por quê:</strong> saber o que vem a seguir é planejar ouro e nível. Use PvE e carrossel como pausa para pensar: &quot;qual curva estou seguindo?&quot;</li></ul>
+<h3 id="rodadas-marco">Rodadas-marco</h3>
+<div class="tbl" role="region" tabindex="0" aria-label="Tabela: Rodadas-marco">
+<table>
+<thead><tr><th scope="col">Rodada</th><th scope="col">Marco</th></tr></thead>
+<tbody>
+<tr><th scope="row">2-1</th><td>1º aprimoramento. Primeira grande decisão: board forte ou economia.</td></tr>
+<tr><th scope="row">2-4</th><td>Carrossel.</td></tr>
+<tr><th scope="row">3-2</th><td>2º aprimoramento. Nível 6 padrão.</td></tr>
+<tr><th scope="row">3-7</th><td>PvE. Janela do nível 8 antecipado.</td></tr>
+<tr><th scope="row">4-2</th><td>3º aprimoramento. Nível 8 padrão e roll down.</td></tr>
+<tr><th scope="row">5-1</th><td>Nível 9 (se estabilizou) ou novo roll down no 8.</td></tr>
+</tbody>
+</table>
+</div>
+<blockquote class="nota"><p><strong>Nota:</strong> aprimoramentos em 2-1, 3-2 e 4-2 vêm de slide do Set 12 (GattaiTFT). O Google cita 3-2 e &quot;4-1/4-2&quot;. Confira na partida.</p></blockquote>
+</section>
+<section class="gsec" aria-labelledby="economia">
+<h2 id="economia">3. Economia</h2>
+<h3 id="de-onde-vem-o-ouro">De onde vem o ouro</h3>
+<div class="tbl" role="region" tabindex="0" aria-label="Tabela: De onde vem o ouro">
+<table>
+<thead><tr><th scope="col">Fonte</th><th scope="col">Quanto</th></tr></thead>
+<tbody>
+<tr><th scope="row">Renda passiva</th><td>1-1: 0 · 1-2: 2 · 1-3: 2 · 1-4: 3 · 2-1: 4 · do 2-2 em diante: 5 por rodada</td></tr>
+<tr><th scope="row">Juros</th><td>+1 a cada 10 guardados, máximo +5 (com 50). Arredonda para baixo: 33 dá +3.</td></tr>
+<tr><th scope="row">Vitória PvP</th><td>+1</td></tr>
+<tr><th scope="row">Streak (vitória ou derrota)</th><td>2 a 4: +1 · 5: +2 · 6 ou mais: +3</td></tr>
+</tbody>
+</table>
+</div>
+<ul><li><strong>Teto por rodada:</strong> 5 (passiva) + 5 (juros) + 3 (streak) + 1 (vitória) = <strong>14 de ouro</strong>.</li><li><strong>Por quê:</strong> juros param em 50. Acima disso, o ouro parado não rende nada. Ouro guardado cedo rende por mais rodadas.</li></ul>
+<h3 id="degraus-de-ouro">Degraus de ouro</h3>
+<p>Ao gastar, pare no degrau certo — não em 10.</p>
+<div class="tbl" role="region" tabindex="0" aria-label="Tabela: Degraus de ouro">
+<table class="tc3">
+<thead><tr><th scope="col">Você tem</th><th scope="col">Vira</th><th scope="col">Por quê</th></tr></thead>
+<tbody>
+<tr><th scope="row">10</th><td>16 na rodada seguinte</td><td>16 ainda dá só +1. Armadilha.</td></tr>
+<tr><th scope="row">14</th><td>20 na rodada seguinte</td><td>Ganha um degrau de juros.</td></tr>
+<tr><th scope="row">13–14</th><td>32 em 3 rodadas</td><td>Rota lenta para 32.</td></tr>
+<tr><th scope="row">19–20</th><td>32 em 2 rodadas</td><td>Rota rápida para 32.</td></tr>
+<tr><th scope="row">32</th><td>40, depois ~50</td><td>Número favorito do GattaiTFT.</td></tr>
+</tbody>
+</table>
+</div>
+<blockquote class="nota"><p><strong>Nota:</strong> só com passiva + juros, 40 vira 49. Os 50 &quot;garantidos&quot; do vídeo contam com +1 de vitória ou de streak.</p></blockquote>
+<ul><li>Comprar peça depois de rolar pode quebrar o degrau: 16 − 2 (roll) − 3 (peça) = 11, e a rodada seguinte não chega a 20.</li></ul>
+<h3 id="regras-de-bolso">Regras de bolso</h3>
+<ul><li><strong>Nunca abaixo de 10 de ouro.</strong> Exceção: fim de jogo, morrendo.</li><li><strong>Precisa rolar no meio do jogo? Pare em 32.</strong> O ouro volta perto de 50 em 2 rodadas.</li><li><strong>Troque vida por ouro no começo.</strong> Derrota cedo tira pouca vida; no late tira muito e rende menos juros.</li><li><strong>Gaste no late.</strong> Nível alto = mais chance de custo 4 e 5.</li><li><strong>Venda peças para recuperar ouro</strong> se o board já garante a streak.</li><li><strong>Banco lotado &quot;por segurança&quot; custa juros.</strong> Venda os pares que não entram.</li><li><strong>Vida x ouro:</strong> perder 20 de vida (60 → 40) ainda te deixa no jogo. Perder 40 de ouro sem upgrade pode ser o fim.</li></ul>
+<h3 id="os-tres-pilares-juros-streak-e-spike">Os três pilares: juros, streak e spike</h3>
+<p>O ideal é ter os três. O normal é sacrificar um:</p>
+<ul><li><strong>Gasta juros</strong> → ganha spike → ganha streak → o ouro volta e você poupa vida.</li><li><strong>Abre mão do spike</strong> (board fraco) → faz loss streak e guarda juros.</li></ul>
+<h3 id="win-streak-x-loss-streak">Win streak x loss streak</h3>
+<div class="tbl" role="region" tabindex="0" aria-label="Tabela: Win streak x loss streak">
+<table class="tc3">
+<thead><tr><th scope="col"></th><th scope="col">Win streak</th><th scope="col">Loss streak</th></tr></thead>
+<tbody>
+<tr><th scope="row">Ouro</th><td>+1 por vitória + bônus da streak</td><td>Bônus da streak (mesmo valor)</td></tr>
+<tr><th scope="row">Vida</th><td>Não perde</td><td>Perde a cada derrota</td></tr>
+<tr><th scope="row">Carrossel</th><td>Com mais vida, escolhe depois</td><td>Com menos vida, escolhe primeiro</td></tr>
+<tr><th scope="row">Quando</th><td>Board forte cedo: upgrades, itens, aprimoramento de combate</td><td>Board fraco: sem pares, sem itens úteis, aprimoramento de economia</td></tr>
+<tr><th scope="row">Risco</th><td>Gastou muito e a streak quebrou: a partida pode ir junto</td><td>Chegar ao meio do jogo com pouca vida (ex.: 30–40 no 4-1 em reroll de custo 2)</td></tr>
+</tbody>
+</table>
+</div>
+<ul><li><strong>Loss streak clássico (Open Fort):</strong> perder o estágio 2 e chegar ao 3-1 com a maior economia possível. Depois, gastar tudo no spike da comp.</li><li><strong>Por quê:</strong> a streak mais barata é a de derrota no estágio 2, quando cada derrota tira pouca vida.</li></ul>
+<blockquote class="nota"><p><strong>Nota:</strong> o Google fala em perder os estágios 2 e 3 e sair no 4-1. Os vídeos põem o foco no estágio 2: no 3 e no 4 cada derrota já tira mais vida. O momento de sair depende da comp (3-1 no custo 1; 3-2 a 4-1 no custo 2).</p></blockquote>
+</section>
+<section class="gsec" aria-labelledby="quando-subir-de-nivel">
+<h2 id="quando-subir-de-nivel">4. Quando subir de nível</h2>
+<h3 id="curva-padrao">Curva padrão</h3>
+<div class="tbl" role="region" tabindex="0" aria-label="Tabela: Curva padrão">
+<table class="tc4">
+<thead><tr><th scope="col">Nível</th><th scope="col">Rodada</th><th scope="col">Ouro mínimo</th><th scope="col">Para quê</th></tr></thead>
+<tbody>
+<tr><th scope="row">4</th><td>2-1</td><td>—</td><td>Board mínimo e controle da streak. Sem upgrades nem pares: fique no 3.</td></tr>
+<tr><th scope="row">5</th><td>2-5</td><td>10 (ideal 20)</td><td>Manter a win streak, ou quebrar a de derrota se achou board forte.</td></tr>
+<tr><th scope="row">6</th><td>3-2</td><td>30–32</td><td>Começar a transição e estabilizar.</td></tr>
+<tr><th scope="row">7</th><td>3-5 a 4-1</td><td>No 3-5, só se estiver rico</td><td>Sem rodada certa: depende da economia ou da streak.</td></tr>
+<tr><th scope="row">8</th><td>4-2 (ou 4-5)</td><td>~40</td><td>O spike real: custo 4, peças de custo 5, sinergias que faltam.</td></tr>
+<tr><th scope="row">9</th><td>5-1 (ou 5-5 / 6-1)</td><td>—</td><td>Quando estabilizar. Capar o board.</td></tr>
+</tbody>
+</table>
+</div>
+<ul><li><strong>Por quê:</strong> é a curva da maioria dos jogadores de alto nível. Use como base e molde à partida.</li></ul>
+<h3 id="curva-agressiva-win-streak-com-board-forte">Curva agressiva (win streak com board forte)</h3>
+<div class="tbl" role="region" tabindex="0" aria-label="Tabela: Curva agressiva (win streak com board forte)">
+<table>
+<thead><tr><th scope="col">Nível</th><th scope="col">Rodada</th></tr></thead>
+<tbody>
+<tr><th scope="row">5</th><td>2-3</td></tr>
+<tr><th scope="row">6</th><td>3-1</td></tr>
+<tr><th scope="row">7</th><td>3-5</td></tr>
+<tr><th scope="row">8</th><td>4-1</td></tr>
+</tbody>
+</table>
+</div>
+<ul><li>Sobe antes dos outros, slama itens cedo e paga com o ouro da streak (+3 por rodada).</li></ul>
+<h3 id="pre-level-e-level-torto">Pré-level e level torto</h3>
+<ul><li>Cada rodada dá 2 XP grátis.</li><li>Na rodada antes do nível indicado, termine 2 XP abaixo do próximo nível — se isso não custar economia.</li><li>Rodadas &quot;certas&quot; para subir: 3-2 e 3-5. Rodadas &quot;tortas&quot; (sobra XP): 3-3 e 3-6.</li></ul>
+<h3 id="antes-de-apertar-o-botao-de-xp">Antes de apertar o botão de XP</h3>
+<ol><li>Vou poupar vida?</li><li>Vou manter uma streak importante?</li><li>Quero chances de custo mais alto na loja?</li></ol>
+<p>Sim para pelo menos uma, com ouro sobrando (ou vida em risco): suba. <strong>Nunca suba sem objetivo nem por impulso.</strong></p>
+<ul><li><strong>Erro comum:</strong> ir ao nível 6 no 3-1 por impulso, quebrando juros e streak, e entrar nos estágios 3 e 4 com board fraco.</li></ul>
+</section>
+<section class="gsec" aria-labelledby="quando-rolar-e-quanto">
+<h2 id="quando-rolar-e-quanto">5. Quando rolar e quanto</h2>
+<div class="tbl" role="region" tabindex="0" aria-label="Tabela: 5. Quando rolar e quanto">
+<table class="tc3">
+<thead><tr><th scope="col">Situação</th><th scope="col">Rodada / nível</th><th scope="col">Quanto</th></tr></thead>
+<tbody>
+<tr><th scope="row">Estágio 2</th><td>—</td><td>Quase nunca. É a fase de montar economia. Exceção: muitos pares.</td></tr>
+<tr><th scope="row">3 pares ou mais e quer ganhar</th><td>3-2 / 3-5</td><td>2–3 rolagens por rodada.</td></tr>
+<tr><th scope="row">Falta 1 campeão para fechar um traço</th><td>Qualquer</td><td>O suficiente para achar a peça e ter o spike.</td></tr>
+<tr><th scope="row">Roll down de custo 4</th><td>4-2, nível 8</td><td>Entra com ~40 e rola até ~20–30, atrás de 1 cópia do carry e do tanque.</td></tr>
+<tr><th scope="row">Roll down antecipado (economia alta ou comp disputada)</th><td>3-7 ou 4-1, nível 8</td><td>Rola antes de todo mundo.</td></tr>
+<tr><th scope="row">Sem ouro no 4-2</th><td>4-5, nível 8</td><td>Mais ouro, mas o lobby já tirou peças do pool no 4-2.</td></tr>
+<tr><th scope="row">Roll down falhou</th><td>5-1, nível 8</td><td>Joga com custo 4 de 1 estrela, refaz economia e rola de novo. O 9 fica para o estágio 6.</td></tr>
+<tr><th scope="row">Roll down deu certo</th><td>5-1, 5-2 ou 5-5</td><td>Refaz economia e vai ao 9 o quanto antes.</td></tr>
+<tr><th scope="row">Rolar por necessidade no meio do jogo</th><td>—</td><td>Até 32, no máximo.</td></tr>
+</tbody>
+</table>
+</div>
+<ul><li><strong>Por quê:</strong> ouro rende mais gasto de uma vez, no nível certo, do que em pingos.</li><li><strong>Não role por pânico.</strong> Vida caindo não é motivo. Aceitar 2–3 rodadas ruins custa menos que queimar a economia.</li><li><strong>Spike maior perto?</strong> Se em 2–3 rodadas você sobe de nível e rola por custo 4, não gaste agora em upgrade pequeno.</li></ul>
+<blockquote class="nota"><p><strong>Nota:</strong> a regra dos &quot;3 pares&quot; vem do Set 12, em que uma mecânica do set premiava quem rolava toda rodada. O princípio (pares no banco = rolar um pouco vale) se mantém; a intensidade, avalie.</p></blockquote>
+</section>
+<section class="gsec" aria-labelledby="estilos-de-jogo">
+<h2 id="estilos-de-jogo">6. Estilos de jogo</h2>
+<div class="tbl" role="region" tabindex="0" aria-label="Tabela: 6. Estilos de jogo">
+<table class="tc5">
+<thead><tr><th scope="col">Estilo</th><th scope="col">Quando escolher</th><th scope="col">Nível</th><th scope="col">Ouro</th><th scope="col">Risco</th></tr></thead>
+<tbody>
+<tr><th scope="row">Reroll custo 1</th><td>4+ cópias cedo (5 ideal), itens BIS, lobby lento</td><td>4 no 3-1, depois 5</td><td>Rola até 32 no 3-1; slow roll 50+ no 5</td><td>Comp de tempo: se o lobby escalar mais rápido, você cai.</td></tr>
+<tr><th scope="row">Hyper roll</th><td>Comp de custo 1 que precisa de 1–2 peças 3★</td><td>4 no 3-1</td><td>Desce bastante no 3-1</td><td>Muito forte no estágio 3; depois precisa rolar de novo nos 7, 8 e 9.</td></tr>
+<tr><th scope="row">Reroll custo 2</th><td>2+ cópias cedo, itens BIS ou slamáveis que poupem vida</td><td>6 no 3-2 (ou 3-5)</td><td>Slow roll no 6; no 4-1 rola até 20</td><td>Open Fort tira muita vida. Se falhar, joga o board e vai ao 8.</td></tr>
+<tr><th scope="row">Reroll custo 3</th><td>Cópias cedo, boa economia, win streak até o 4-2</td><td>7 no 4-1</td><td>Muito ouro; slow roll ou rola até board forte</td><td>Subir do 7 ao 8 custa 48 de ouro (Set 13) — muitas vezes não vale.</td></tr>
+<tr><th scope="row">Fast 8 (padrão)</th><td>Não sabe o que jogar; comp de custo 4</td><td>8 no 4-2</td><td>~40 ao subir</td><td>Contestado: suba e role antes (3-7 ou 4-1).</td></tr>
+<tr><th scope="row">Fast 9</th><td>Muita vida, muita economia, aprimoramento de economia</td><td>9 no 5-1</td><td>Sobe sem rolar</td><td>Board fraco no caminho. Set 18: 80+ de vida no 4-1.</td></tr>
+<tr><th scope="row">Vertical (sinergia)</th><td>Peças do traço cedo, emblemas, itens flexíveis</td><td>8, com o maior breakpoint</td><td>—</td><td>Chegar tarde ao 8 e ao cap da comp.</td></tr>
+<tr><th scope="row">Win streak (agressivo)</th><td>Board forte cedo</td><td>Curva agressiva</td><td>Gasta juros pelo spike</td><td>Streak quebrada depois de gastar muito.</td></tr>
+<tr><th scope="row">Loss streak (Open Fort)</th><td>Board fraco, sem pares nem itens, aprimoramento de economia</td><td>Fica baixo</td><td>Máximo de economia até o 3-1</td><td>Pouca vida no meio do jogo.</td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="reroll-de-custo-1">Reroll de custo 1</h3>
+<ul><li>Precisa hitar a comp até o 3-5. Limite: rolar até o 4-1 e ter tudo pronto antes do 4-2 para começar a subir.</li><li>Slow roll no 5 enquanto precisar. Lobby forte? Desça o ouro.</li></ul>
+<h3 id="hyper-roll">Hyper roll</h3>
+<ul><li>Mesma lógica do custo 1, mas rola mais forte no 3-1.</li><li>Fica muito forte no estágio 3 e vai subindo de nível.</li></ul>
+<blockquote class="nota"><p><strong>Nota:</strong> o Google diz que o hyper roll gasta &quot;até ~0&quot;. O vídeo diz &quot;desce bastante&quot;. A regra geral dos vídeos é não ficar abaixo de 10.</p></blockquote>
+<h3 id="reroll-de-custo-2">Reroll de custo 2</h3>
+<ul><li>Spike: carry e tanque 2★ + campeões da comp. No 4-1, rola até 20 por upgrades e 3★. Depois sai subindo de nível.</li><li>Rolando com pouco ouro, segure com board forte. Carry com 2–3 itens e 2★: tente não perder.</li><li>Não segure campeões caros que não entram.</li></ul>
+<h3 id="reroll-de-custo-3">Reroll de custo 3</h3>
+<ul><li>Custo 3 2★ é o teto de força no meio do jogo, até aparecer custo 4 2★.</li><li>Monte boards fortes para poupar vida. Spike no fim do estágio 4 / começo do 5. No 5, volta com mais ouro e rola de novo.</li></ul>
+<h3 id="slow-roll">Slow roll</h3>
+<ul><li>Fique acima de 50 e role só o excedente. Se precisar, desça um pouco.</li><li>Nível conforme o custo do carry: custo 1 → 5, custo 2 → 6, custo 3 → 7 (ou 8).</li><li>Bateu os 3★? Pare de rolar e suba de nível.</li><li><strong>Não faça</strong> com comp contestada ou vida baixa.</li></ul>
+<h3 id="fast-8">Fast 8</h3>
+<ul><li>Economia para chegar ao 8 com bastante ouro. Os upgrades de custo 4 são caros.</li><li>Aguenta mais contest: cada jogador só precisa de 3 cópias do campeão.</li><li>Achou a comp no roll down? Estabilize e vá ao 9 para capar.</li></ul>
+<h3 id="fast-9">Fast 9</h3>
+<ul><li>O estilo mais difícil: você sobe sem rolar e pode morrer no caminho.</li><li>Alvo: 1 ou 2 custo 5 de 2★ — linha de frente, linha de trás e carry.</li><li><strong><span class="s18">(Set 18)</span></strong> Nível 9 no 5-1, mais de 80 de vida no 4-1 e aprimoramento de economia. O estágio 4 costuma custar vida.</li></ul>
+<h3 id="vertical">Vertical</h3>
+<ul><li>Não precisa dos campeões 2★: precisa fechar o traço.</li><li>Bata os breakpoints o mais rápido possível. Emblemas ajudam muito.</li></ul>
+</section>
+<section class="gsec" aria-labelledby="custo-do-campeao-x-nivel-x-estagio">
+<h2 id="custo-do-campeao-x-nivel-x-estagio">7. Custo do campeão x nível x estágio</h2>
+<div class="tbl" role="region" tabindex="0" aria-label="Tabela: 7. Custo do campeão x nível x estágio">
+<table class="tc4">
+<thead><tr><th scope="col">Custo procurado</th><th scope="col">Melhor nível</th><th scope="col">Quando</th><th scope="col">Estilo</th></tr></thead>
+<tbody>
+<tr><th scope="row">1</th><td>4 (depois 5)</td><td>3-1</td><td>Reroll custo 1, hyper roll</td></tr>
+<tr><th scope="row">2</th><td>6</td><td>3-2 a 4-1</td><td>Reroll custo 2</td></tr>
+<tr><th scope="row">3</th><td>7 (8 também é bom)</td><td>4-1</td><td>Reroll custo 3</td></tr>
+<tr><th scope="row">4</th><td>8</td><td>4-2</td><td>Fast 8</td></tr>
+<tr><th scope="row">5 (2★)</th><td>9</td><td>5-1 em diante</td><td>Fast 9</td></tr>
+</tbody>
+</table>
+</div>
+<ul><li>Subir de nível aumenta a chance de campeões caros e reduz a dos baratos. Para custo 1, o nível 4 é melhor que o 5 ou o 6.</li><li><strong>Por quê:</strong> comprar cedo um custo 3 ou 4 que não entra (sem itens, sem traço) afunda a economia e não muda o board.</li></ul>
+<blockquote class="nota"><p><strong>Nota:</strong> os vídeos não trazem tabela numérica de chances da loja. Confira as chances do patch 18.6 no próprio jogo.</p></blockquote>
+</section>
+<section class="gsec" aria-labelledby="comeco-meio-e-fim-de-jogo">
+<h2 id="comeco-meio-e-fim-de-jogo">8. Começo, meio e fim de jogo</h2>
+<h3 id="comeco-estagios-1-e-2">Começo (estágios 1 e 2)</h3>
+<ul><li><strong>Objetivo:</strong> economia e streak.</li><li><strong>2-1, a primeira decisão: fazer 10 de ouro ou montar board?</strong><ul><li>Tem upgrade, aprimoramento de força e itens úteis → board forte, sobe de nível.</li><li>Só pares, sem itens, aprimoramento de economia → loss streak no nível 3.</li></ul></li><li>Segure os pares. Sem par, não suba de nível: você perde de qualquer jeito.</li><li>Não compre custo 3 ou 4 sem itens nem traço.</li><li>Quase não role.</li><li>Estava fraco e achou board estável depois? Pode subir de nível a qualquer momento.</li><li><strong>Fim do estágio 2:</strong> componentes na mão e lobby se comprometendo. Hora do scout.</li></ul>
+<h3 id="meio-estagios-3-e-4">Meio (estágios 3 e 4)</h3>
+<ul><li><strong>Estágio 3 é o mais delicado:</strong> XP ou ouro?</li><li>3-2: nível 6 com 30–32 de ouro.</li><li><strong>Comp definida até o 3-2.</strong> Indeciso ali = atrasado. Faça a maior economia possível e jogue o padrão (custo 4, fast 8).</li><li><strong>Estágio 4 é a transição:</strong> estabilizar e brigar pelo top 4. Sem spike, você perde muita vida.</li><li>4-2: roll down.</li></ul>
+<h3 id="fim-estagio-5-em-diante">Fim (estágio 5 em diante)</h3>
+<ul><li>Jogadores começam a cair. O ouro parece escasso: você gasta mais para segurar a vida.</li><li>Hora de executar, não de preparar. Otimize cada decisão com o board capado.</li><li>Nível 9 quando estabilizar.</li><li>Abaixo de 10 de ouro só se estiver morrendo.</li></ul>
+</section>
+<section class="gsec" aria-labelledby="itens-e-vida-como-recurso">
+<h2 id="itens-e-vida-como-recurso">9. Itens e vida como recurso</h2>
+<h3 id="itens">Itens</h3>
+<ul><li><strong>Jogue em torno dos itens, não dos campeões.</strong> Campeão se acha rolando; item não se escolhe.</li><li>Saiba quais campeões dividem os mesmos itens. Facilita o plano B.</li><li>AD ou AP: decida pela leitura do meta.</li><li><strong>Slam cedo</strong> é parte do jogo agressivo: poupa vida e segura a streak.</li><li><strong>No Open Fort,</strong> às vezes nem slame, para perder de propósito.</li><li>Carrossel com prioridade (pouca vida) = pegue o item que a comp precisa.</li><li>Reroll exige itens BIS. O de custo 2 aceita itens slamáveis que poupem vida.</li></ul>
+<h3 id="vida">Vida</h3>
+<ul><li><strong>Vida alta = tempo:</strong> dá para guardar ouro, atrasar o spike e adiar XP.</li><li><strong>Vida baixa = agir já:</strong> a margem some e o jogo cobra resposta.</li><li>A vida define o ritmo da sua economia. Saiba quando pode perder rodadas e quando precisa reagir.</li></ul>
+</section>
+<section class="gsec" aria-labelledby="scout-e-contest">
+<h2 id="scout-e-contest">10. Scout e contest</h2>
+<h3 id="scout">Scout</h3>
+<ul><li><strong>Como:</strong> clique no retrato do jogador.</li><li><strong>O que olhar:</strong> quem está forte ou fraco, quem joga a sua comp (itens, aprimoramentos), itens montados e posicionamento.</li><li><strong>Quando:</strong> sempre, e mais no começo, quando os boards mudam pouco. Fim do estágio 2. Antes de rolar forte. Antes de montar itens. No late, para posicionar.</li><li><strong>Meta:</strong> pelo menos 2 boards por rodada <span class="nc">(Google, não confirmado)</span>.</li><li><strong>Por quê:</strong> quanto menos contestado você jogar, melhor, em qualquer tipo de comp.</li></ul>
+<h3 id="contest">Contest</h3>
+<div class="tbl" role="region" tabindex="0" aria-label="Tabela: Contest">
+<table>
+<thead><tr><th scope="col">Outros na sua comp</th><th scope="col">O que fazer</th></tr></thead>
+<tbody>
+<tr><th scope="row">0</th><td>Ideal. Comprometa cedo e foque todos os recursos.</td></tr>
+<tr><th scope="row">1</th><td>Segue, se for fast 8. Em reroll e fast 9, já pesa.</td></tr>
+<tr><th scope="row">2</th><td>Aperta. Role antes dos outros ou prepare o plano B.</td></tr>
+<tr><th scope="row">3 ou mais</th><td>Pivote.</td></tr>
+</tbody>
+</table>
+</div>
+<ul><li><strong>Contestado no fast 8:</strong> suba ao 8 antes dos outros e role por pelo menos 1 cópia do carry e do tanque.</li></ul>
+<blockquote class="nota"><p><strong>Nota:</strong> a escala 1/2/3+ é do Google. Os vídeos são mais rígidos com reroll (custo 1, 2 e 3) e fast 9: qualquer contest &quot;vai ser um problema&quot;. O fast 8 aguenta mais.</p></blockquote>
+<h3 id="pivo">Pivô</h3>
+<ul><li><strong>O erro não é mudar de ideia. É mudar tarde</strong>, depois de investir.</li><li>Leia 3 coisas: sua vida, sua economia e o lobby.</li><li>Momentos de leitura: 2-1 (aprimoramento), fim do estágio 2 (componentes), 3-2 (aprimoramento).</li><li>Mude de comp mantendo o estilo (um fast 8 para outro fast 8).</li><li>Gastou muito rolando por reroll de custo 2? Não vire fast 8: falta ouro. Se o custo 2 falhou sem gastar tanto, dá para jogar o board e ir ao 8.</li><li>Decida e execute com convicção. A dúvida é que pune.</li></ul>
+<h3 id="posicionamento">Posicionamento</h3>
+<ul><li><strong><span class="s18">(Set 18)</span></strong> O lado do carry inimigo decide onde ficam o tanque e o controle. Peças dos cantos costumam morrer primeiro.</li><li>Fora isso, as fontes não cobrem posicionamento.</li></ul>
+</section>
+<section class="gsec" aria-labelledby="armadilhas-comuns">
+<h2 id="armadilhas-comuns">11. Armadilhas comuns</h2>
+<ol><li><strong>Comprar custo alto que não entra.</strong> Afunda juros e atrasa o spike.</li><li><strong>Acompanhar o nível do lobby sem avaliar.</strong> Às vezes vale atrasar um nível e aceitar 1–2 derrotas por um spike maior.</li><li><strong>Rolar por upgrade pequeno perto de um spike maior.</strong></li><li><strong>Banco lotado.</strong> Custa juros, principalmente quando você tenta fazer 10, 20 ou 30.</li><li><strong>Subir ou rolar por desespero.</strong> Respire. 2–3 rodadas ruins custam menos que a economia inteira.</li><li><strong>Parar de gastar em 10.</strong> Vira 16. Pare em 14 ou 20.</li></ol>
+</section>
+<section class="gsec" aria-labelledby="checklist-de-bolso-por-estagio">
+<h2 id="checklist-de-bolso-por-estagio">12. Checklist de bolso por estágio</h2>
+<div class="tbl" role="region" tabindex="0" aria-label="Tabela: 12. Checklist de bolso por estágio">
+<table>
+<thead><tr><th scope="col">Rodada</th><th scope="col">Checar</th></tr></thead>
+<tbody>
+<tr><th scope="row">1-2 a 1-4</th><td>Já faça juros: 10 de ouro = +1.</td></tr>
+<tr><th scope="row">2-1</th><td>Aprimoramento. Board forte → nível 4 e win streak. Fraco → nível 3 e Open Fort.</td></tr>
+<tr><th scope="row">2-4</th><td>Carrossel: item que a comp precisa.</td></tr>
+<tr><th scope="row">2-5</th><td>Nível 5 só se estiver forte (10+, ideal 20).</td></tr>
+<tr><th scope="row">Fim do 2</th><td>Componentes na mão. Scout. Comece a se comprometer.</td></tr>
+<tr><th scope="row">3-1</th><td>Reroll custo 1: nível 4, rola até 32. Demais: não suba ao 6 por impulso.</td></tr>
+<tr><th scope="row">3-2</th><td>Aprimoramento. Nível 6 com 30–32. Comp definida?</td></tr>
+<tr><th scope="row">3-5</th><td>Nível 7 só se rico ou para segurar a streak. Reroll custo 1 já deve ter batido.</td></tr>
+<tr><th scope="row">3-7</th><td>PvE: revise a curva. Economia alta ou fast 8 contestado: nível 8 aqui.</td></tr>
+<tr><th scope="row">4-1</th><td>Custo 3: nível 7 e slow roll. Custo 2: rola até 20. Fast 9: tem 80+ de vida?</td></tr>
+<tr><th scope="row">4-2</th><td>Aprimoramento. Nível 8 com ~40. Roll down atrás do carry e do tanque.</td></tr>
+<tr><th scope="row">4-5</th><td>Nível 8, se não deu no 4-2.</td></tr>
+<tr><th scope="row">5-1</th><td>Roll down deu certo → nível 9. Falhou → rola de novo no 8. Fast 9 → nível 9 e rola pelos custo 5.</td></tr>
+<tr><th scope="row">5-5 / 6-1</th><td>Nível 9, se ainda não foi. Capar o board. Abaixo de 10 de ouro só morrendo.</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+<section class="gsec fontes" aria-labelledby="notas-sobre-as-fontes">
+<h2 id="notas-sobre-as-fontes">Notas sobre as fontes</h2>
+<h3 id="divergencias">Divergências</h3>
+<div class="tbl" role="region" tabindex="0" aria-label="Tabela: Divergências">
+<table class="tc4">
+<thead><tr><th scope="col">Tema</th><th scope="col">Google</th><th scope="col">Vídeos</th><th scope="col">No guia</th></tr></thead>
+<tbody>
+<tr><th scope="row">Ouro no 3-1</th><td>&quot;Aumento de ouro&quot; no 3-1: base 3 → 8, ou 14 com bônus</td><td>Passiva de 5 desde o 2-2. 14 é o teto: 5 + 5 de juros + 3 de streak + 1 de vitória</td><td>Vídeos</td></tr>
+<tr><th scope="row">Spikes de nível</th><td>Nível 7 no 4-1/4-2; nível 8 no 5-1</td><td>Nível 7 entre 3-5 e 4-1; nível 8 no 4-2/4-5; nível 9 no 5-1. No 8 no 5-1 só se o roll down do 4-2 falhou</td><td>Vídeos</td></tr>
+<tr><th scope="row">Loss streak</th><td>Perder os estágios 2 e 3, sair no 4-1</td><td>Foco no estágio 2 até o 3-1; saída conforme a comp</td><td>Vídeos</td></tr>
+<tr><th scope="row">Hyper roll</th><td>Gasta até ~0</td><td>&quot;Desce bastante&quot;; regra geral: não abaixo de 10</td><td>Vídeos</td></tr>
+<tr><th scope="row">Contest com 1 jogador</th><td>Normal, segue</td><td>Em reroll e fast 9, qualquer contest pesa</td><td>Os dois, por estilo</td></tr>
+<tr><th scope="row">Aprimoramentos</th><td>3-2 e 4-1/4-2</td><td>2-1, 3-2 e 4-2 (slide do Set 12)</td><td>Vídeos, confirmar na partida</td></tr>
+<tr><th scope="row">Ouro para o nível 6</th><td>—</td><td>30 (GattaiTFT, Set 12) ou 32 (Set 13)</td><td>30–32</td></tr>
+<tr><th scope="row">Slow roll</th><td>50+</td><td>50+ na maioria; num vídeo, faixa flexível (mecânica do Set 12)</td><td>50+</td></tr>
+<tr><th scope="row">32 → 50 em 2 rodadas</th><td>—</td><td>O vídeo diz &quot;sempre&quot;; a conta só com passiva + juros dá 49</td><td>Nota no texto</td></tr>
+<tr><th scope="row">Pivô do custo 2 para o 8</th><td>—</td><td>Um vídeo diz que dá; outro diz que não, se gastou muito rolando</td><td>Depende do ouro gasto</td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="afirmacoes-do-google-sem-base-nas-fontes-fora-do-guia">Afirmações do Google sem base nas fontes (fora do guia)</h3>
+<ul><li>Set 17 trocou o carrossel pelo &quot;Reino das Divindades&quot; e o Set 18 voltou ao carrossel padrão.</li><li>3-6: itens radiantes na loja.</li><li>Arsenal de itens nos estágios 4 a 6; arsenal de itens completos no 8-2 e 9-2.</li><li>Atalhos de scout (Tab, 1, 3).</li></ul>
+</section>
+      <p class="empty" id="gempty" hidden>Nada no guia para essa busca.</p>
+    </article>
   </div>
 </main>
 
+<script src="js/guia.js"></script>
 </body>
 </html>

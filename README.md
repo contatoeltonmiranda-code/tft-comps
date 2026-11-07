@@ -4,9 +4,10 @@ Mini sistema pessoal de composições de Teamfight Tactics (Set 18, "Selvas Enca
 
 ## Páginas
 
-Navegação no topo, igual nas três páginas (mesmo `css/style.css`): **Comps** (`index.html`) | **Guia do Jogo** (`guia.html`, só um placeholder "Em breve": o texto vem de outro agente e será preenchido depois) | **Notícias** (`noticias.html`).
+Navegação no topo, igual nas três páginas (mesmo `css/style.css`): **Comps** (`index.html`) | **Guia do Jogo** (`guia.html`) | **Notícias** (`noticias.html`).
 
 - Lista de comps em 2 colunas a partir de 1100 px de largura (2 comps lado a lado); abaixo disso, 1 coluna. Cada comp mostra Início / Meio / Fim (ver Fases em Dados), as dicas (quando houver) e o tabuleiro.
+- `guia.html`: Guia do Jogo (TFT Set 18, 13 seções: glossário, economia, nível, rolagem, estilos, scout, checklist e notas sobre as fontes). O texto é o oficial da Clara (`3. copywriter/Projetos/tft-guia-do-jogo/GUIA-DO-JOGO.md`), copiado sem alteração para `data/guia-do-jogo.md`. **A página é gerada, não editada à mão**: `node tools/gen-guia.js` lê o `.md` + `tools/guia-template.html` e escreve `guia.html` (HTML estático, sem CDN nem parser de Markdown no navegador). Para atualizar o guia: copiar o `.md` novo para `data/` e rodar o gerador (o teste falha se `guia.html` ficar fora de sincronia). Recursos: índice lateral fixo no desktop (a partir de 1000 px) com scrollspy e índice recolhível no topo no mobile; tabelas com rolagem horizontal só dentro da tabela; notas de divergência em blocos discretos e marcações "(Google, não confirmado)" e "(Set 18)" destacadas; busca no guia (`js/guia.js`, ignora acento e caixa, destaca com `<mark>`, esconde seções sem resultado, Enter/Shift+Enter navegam, Esc limpa). Página `noindex` como as demais (ferramenta pessoal): sitemap, `llms.txt` e Search Console n.a.
 - `noticias.html`: resumo do meta no topo, filtros por tipo e por patch, cards curtos com ícone do campeão/traço/item (quando há id no catálogo), link da fonte e data da última atualização. Dados em `data/noticias.js`, lógica de filtro em `TFTLogic` (`newsTypes`, `newsPatches`, `filterNews`, `newsIcon`), página em `js/noticias.js`.
 
 ## Como abrir
@@ -72,9 +73,10 @@ Gerenciar a tarefa (nome `TFT-Comps-Noticias-Semanal`):
 
 ## Testes
 
-- Lógica e seed (traços, busca, importação, merge de seed, fases, dicas, filtros de notícias): `node --test tests/*.test.js`
+- Lógica e seed (traços, busca, importação, merge de seed, fases, dicas, filtros de notícias, fidelidade do guia ao `.md`): `node --test tests/*.test.js`
 - QA de navegador (Playwright, desktop 1440 e mobile 390): subir o servidor e rodar `node qa/qa.js`. Screenshots e `resultado.json` em `qa/`.
 - QA v7 (2 colunas, fases, navegação, notícias, filtros, comps do vídeo; 1440, 1100, 1099 e 390): `node qa/qa-v7.js`. Prints `qa/v7-*.png` e `qa/resultado-v7.json`.
+- QA do Guia do Jogo (índice fixo/recolhível, âncoras, scrollspy, tabelas, notas, busca, sem scroll horizontal e sem erro de console; 1440 e 390, um Chromium só): `node qa/qa-guia.js`. Prints `qa/guia-*.png` e `qa/resultado-guia.json`.
 - QA da prévia do overlay (6 cenários, 1000 e 390 de largura): servidor na raiz e `node qa/overlay.js`. Prints em `qa/overlay-*.png`.
 
 ## Overlay Overwolf (experimental, fase 1)

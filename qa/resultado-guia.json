@@ -1,0 +1,324 @@
+[
+ {
+  "name": "[d1440] guia.html responde 200",
+  "pass": true
+ },
+ {
+  "name": "[d1440] nav: Guia do Jogo ativo e sem badge \"Em breve\"",
+  "pass": true
+ },
+ {
+  "name": "[d1440] h1 do guia",
+  "pass": true
+ },
+ {
+  "name": "[d1440] 13 seções e 14 tabelas",
+  "pass": true,
+  "extra": "tabelas md=14"
+ },
+ {
+  "name": "[d1440] sem scroll horizontal da página",
+  "pass": true,
+  "extra": "overflow=0"
+ },
+ {
+  "name": "[d1440] acentos preservados no texto",
+  "pass": true
+ },
+ {
+  "name": "[d1440] índice lateral aberto com 13 links, sem cabeçalho recolhível",
+  "pass": true,
+  "extra": "visiveis=13"
+ },
+ {
+  "name": "[d1440] índice ao lado do texto (2 colunas)",
+  "pass": true,
+  "extra": "{\"tr\":300,\"al\":340}"
+ },
+ {
+  "name": "[d1440] índice fixo (sticky) ao rolar",
+  "pass": true,
+  "extra": "y=78 h=478"
+ },
+ {
+  "name": "[d1440] scrollspy marca 1 seção",
+  "pass": true,
+  "extra": "3. Economia"
+ },
+ {
+  "name": "[d1440] âncora #quando-rolar-e-quanto: URL e título logo abaixo da busca fixa",
+  "pass": true,
+  "extra": "h2.top=84 barra.bottom=66"
+ },
+ {
+  "name": "[d1440] âncora: índice marca a seção",
+  "pass": true
+ },
+ {
+  "name": "[d1440] sem scroll horizontal após âncora",
+  "pass": true
+ },
+ {
+  "name": "[d1440] 13 âncoras do índice têm alvo",
+  "pass": true
+ },
+ {
+  "name": "[d1440] última âncora (Notas sobre as fontes) visível",
+  "pass": true
+ },
+ {
+  "name": "[d1440] tabelas cabem no desktop sem rolar",
+  "pass": true,
+  "extra": "rolantes=0"
+ },
+ {
+  "name": "[d1440] tabela Estilos de jogo: scroll interno n/a (cabe)",
+  "pass": true,
+  "extra": "scrollLeft=0"
+ },
+ {
+  "name": "[d1440] tabela focável por teclado com nome",
+  "pass": true
+ },
+ {
+  "name": "[d1440] cabeçalho de tabela estilizado",
+  "pass": true
+ },
+ {
+  "name": "[d1440] notas de divergência com estilo discreto (borda + fundo)",
+  "pass": true,
+  "extra": "{\"b\":\"3px\",\"bg\":\"rgb(13, 19, 32)\"}"
+ },
+ {
+  "name": "[d1440] marcadores \"(Google, não confirmado)\" destacados",
+  "pass": true
+ },
+ {
+  "name": "[d1440] busca \"juros\": destaca 19 trechos e esconde seções sem resultado",
+  "pass": true,
+  "extra": "marks=19 secoes=8"
+ },
+ {
+  "name": "[d1440] busca: índice mostra só seções com resultado",
+  "pass": true,
+  "extra": "toc=8"
+ },
+ {
+  "name": "[d1440] busca: contador informa ocorrências e seções",
+  "pass": true,
+  "extra": "19 ocorrências em 8 seções"
+ },
+ {
+  "name": "[d1440] Enter vai ao 1º resultado, dentro da tela",
+  "pass": true
+ },
+ {
+  "name": "[d1440] Enter de novo avança para o próximo",
+  "pass": true
+ },
+ {
+  "name": "[d1440] busca ignora acento e caixa (\"nivel\" = \"nível\")",
+  "pass": true,
+  "extra": "68"
+ },
+ {
+  "name": "[d1440] busca \"FAST 8\" (frase, caixa alta)",
+  "pass": true
+ },
+ {
+  "name": "[d1440] busca sem resultado: mensagem e nada visível",
+  "pass": true
+ },
+ {
+  "name": "[d1440] busca com HTML não injeta nada",
+  "pass": true
+ },
+ {
+  "name": "[d1440] Limpar restaura o texto idêntico, sem marcas e com tudo visível",
+  "pass": true
+ },
+ {
+  "name": "[d1440] Esc limpa a busca",
+  "pass": true
+ },
+ {
+  "name": "[d1440] sem scroll horizontal ao final",
+  "pass": true
+ },
+ {
+  "name": "[d1440] Notícias sem badge e Guia navegável",
+  "pass": true
+ },
+ {
+  "name": "[d1440] navegação Notícias > Guia > Comps; Comps sem badge",
+  "pass": true
+ },
+ {
+  "name": "[d1440] sem erros de console / requests falhos",
+  "pass": true,
+  "extra": ""
+ },
+ {
+  "name": "[m390] guia.html responde 200",
+  "pass": true
+ },
+ {
+  "name": "[m390] nav: Guia do Jogo ativo e sem badge \"Em breve\"",
+  "pass": true
+ },
+ {
+  "name": "[m390] h1 do guia",
+  "pass": true
+ },
+ {
+  "name": "[m390] 13 seções e 14 tabelas",
+  "pass": true,
+  "extra": "tabelas md=14"
+ },
+ {
+  "name": "[m390] sem scroll horizontal da página",
+  "pass": true,
+  "extra": "overflow=0"
+ },
+ {
+  "name": "[m390] acentos preservados no texto",
+  "pass": true
+ },
+ {
+  "name": "[m390] índice recolhido no topo (cabeçalho visível, links ocultos)",
+  "pass": true,
+  "extra": "links=0"
+ },
+ {
+  "name": "[m390] alvo do índice >= 44px",
+  "pass": true,
+  "extra": "h=44"
+ },
+ {
+  "name": "[m390] toque no Índice abre os 13 links",
+  "pass": true
+ },
+ {
+  "name": "[m390] links do índice >= 44px de altura",
+  "pass": true,
+  "extra": "h=44"
+ },
+ {
+  "name": "[m390] âncora #quando-rolar-e-quanto: URL e título logo abaixo da busca fixa",
+  "pass": true,
+  "extra": "h2.top=84 barra.bottom=66"
+ },
+ {
+  "name": "[m390] âncora: índice fecha",
+  "pass": true
+ },
+ {
+  "name": "[m390] sem scroll horizontal após âncora",
+  "pass": true
+ },
+ {
+  "name": "[m390] 13 âncoras do índice têm alvo",
+  "pass": true
+ },
+ {
+  "name": "[m390] última âncora (Notas sobre as fontes) visível",
+  "pass": true
+ },
+ {
+  "name": "[m390] tabelas largas rolam dentro do contêiner (8), página não",
+  "pass": true,
+  "extra": "rolantes=8/14"
+ },
+ {
+  "name": "[m390] nada fora da tela (exceto dentro das tabelas)",
+  "pass": true,
+  "extra": ""
+ },
+ {
+  "name": "[m390] tabela Estilos de jogo: scroll interno > 0",
+  "pass": true,
+  "extra": "scrollLeft=200"
+ },
+ {
+  "name": "[m390] tabela focável por teclado com nome",
+  "pass": true
+ },
+ {
+  "name": "[m390] cabeçalho de tabela estilizado",
+  "pass": true
+ },
+ {
+  "name": "[m390] notas de divergência com estilo discreto (borda + fundo)",
+  "pass": true,
+  "extra": "{\"b\":\"3px\",\"bg\":\"rgb(13, 19, 32)\"}"
+ },
+ {
+  "name": "[m390] marcadores \"(Google, não confirmado)\" destacados",
+  "pass": true
+ },
+ {
+  "name": "[m390] busca \"juros\": destaca 19 trechos e esconde seções sem resultado",
+  "pass": true,
+  "extra": "marks=19 secoes=8"
+ },
+ {
+  "name": "[m390] busca: índice mostra só seções com resultado",
+  "pass": true,
+  "extra": "toc=8"
+ },
+ {
+  "name": "[m390] busca: contador informa ocorrências e seções",
+  "pass": true,
+  "extra": "19 ocorrências em 8 seções"
+ },
+ {
+  "name": "[m390] Enter vai ao 1º resultado, dentro da tela",
+  "pass": true
+ },
+ {
+  "name": "[m390] Enter de novo avança para o próximo",
+  "pass": true
+ },
+ {
+  "name": "[m390] busca ignora acento e caixa (\"nivel\" = \"nível\")",
+  "pass": true,
+  "extra": "68"
+ },
+ {
+  "name": "[m390] busca \"FAST 8\" (frase, caixa alta)",
+  "pass": true
+ },
+ {
+  "name": "[m390] busca sem resultado: mensagem e nada visível",
+  "pass": true
+ },
+ {
+  "name": "[m390] busca com HTML não injeta nada",
+  "pass": true
+ },
+ {
+  "name": "[m390] Limpar restaura o texto idêntico, sem marcas e com tudo visível",
+  "pass": true
+ },
+ {
+  "name": "[m390] Esc limpa a busca",
+  "pass": true
+ },
+ {
+  "name": "[m390] sem scroll horizontal ao final",
+  "pass": true
+ },
+ {
+  "name": "[m390] Notícias sem badge e Guia navegável",
+  "pass": true
+ },
+ {
+  "name": "[m390] navegação Notícias > Guia > Comps; Comps sem badge",
+  "pass": true
+ },
+ {
+  "name": "[m390] sem erros de console / requests falhos",
+  "pass": true,
+  "extra": ""
+ }
+]
