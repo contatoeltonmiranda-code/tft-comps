@@ -10,7 +10,7 @@
   const SVG = 'http://www.w3.org/2000/svg';
 
   const $ = (sel, root) => (root || document).querySelector(sel);
-  const state = { comps: [], query: '', boardOpen: new Map(), draft: null, isNew: false, initial: '', sel: null, excluidos: [], seedVersao: SEED_VERSION, picks: {}, compQuery: new Map() };
+  const state = { comps: [], query: '', boardOpen: new Map(), draft: null, isNew: false, initial: '', sel: null, excluidos: [], seedVersao: SEED_VERSION, picks: {}, compQuery: new Map(), dicasOpen: new Set() };
 
   function h(tag, attrs, ...kids) {
     const el = document.createElement(tag);
@@ -60,7 +60,7 @@
     const r = L.mergeSeed(stored, SEED, SEED_VERSION, CAT);
     state.excluidos = r.excluidos;
     state.seedVersao = r.seedVersao;
-    if (stored && (r.added.length || r.positioned.length || r.fasesAplicadas.length)) { state.comps = r.comps; save(); }
+    if (stored && (r.added.length || r.positioned.length || r.fasesAplicadas.length || r.dicasAplicadas.length)) { state.comps = r.comps; save(); }
     if (stored && r.added.length) setTimeout(() => toast(r.added.length === 1 ? '1 comp nova adicionada.' : r.added.length + ' comps novas adicionadas.'), 300);
     return r.comps;
   }
@@ -194,11 +194,42 @@
       img(t.img, '', '', 20), t.n, t.bp.length ? ' ' + t.count : '');
   }
 
+  function miniEl(u, hits) {
+    const cls = 'mini c' + u.cost + (hits && hits.champs.has(u.c) ? ' hit' : '');
+    return h('span', { class: cls, 'data-c': u.c, title: u.n }, img(u.img, u.n, 'pic', 34), h('span', { class: 'cost' }, u.cost));
+  }
+
+  function phasesEl(pb, hits) {
+    const box = h('div', { class: 'phases' });
+    pb.fases.filter((f) => f.key !== 'fim' && f.units.length).forEach((f) => {
+      box.append(h('div', { class: 'phase ' + f.key },
+        h('div', { class: 'plabel' }, h('b', {}, f.label), h('small', {}, f.hint)),
+        h('div', { class: 'minis' }, f.units.map((u) => miniEl(u, hits)))));
+    });
+    const ref = pb.ref ? (pb.url ? h('a', { href: pb.url, target: '_blank', rel: 'noopener noreferrer' }, pb.ref) : pb.ref) : null;
+    box.append(h('p', { class: 'porigem', title: 'De onde vêm o início e o meio' }, 'Início e meio: ', h('span', { class: 'otag ' + pb.origem }, pb.origem), ref ? ' ' : null, ref));
+    return box;
+  }
+
+  function dicasEl(comp) {
+    const d = comp.dicas;
+    if (!d) return null;
+    const ref = d.ref ? (d.url ? h('a', { href: d.url, target: '_blank', rel: 'noopener noreferrer' }, d.ref) : d.ref) : null;
+    const det = h('details', { class: 'dicas' },
+      h('summary', {}, 'Dicas ', h('span', { class: 'dn' }, String(d.linhas.length))),
+      h('ul', {}, d.linhas.map((l) => h('li', {}, l))),
+      ref ? h('p', { class: 'src' }, 'Fonte das dicas: ', ref) : null);
+    det.open = state.dicasOpen.has(comp.id);
+    det.addEventListener('toggle', () => { if (det.open) state.dicasOpen.add(comp.id); else state.dicasOpen.delete(comp.id); });
+    return det;
+  }
+
   /* ---------- lista ---------- */
   function compEl(comp, hits) {
     const hasBoard = comp.main.some((u) => u.p);
     const open = state.boardOpen.has(comp.id) ? state.boardOpen.get(comp.id) : comp.board;
     const traits = L.activeTraits(comp, CAT);
+    const pb = L.phaseBoards(comp, CAT);
     const actions = h('div', { class: 'cact' });
     if (hasBoard) {
       actions.append(h('button', { type: 'button', class: 'icon-btn', 'aria-pressed': String(open), 'aria-label': 'Mostrar tabuleiro', title: 'Tabuleiro', onclick: () => { state.boardOpen.set(comp.id, !open); render(); } }, icon('hex')));
@@ -228,6 +259,7 @@
         count.textContent = done + '/' + total + ' pegos';
         count.classList.toggle('done', done === total);
         clear.disabled = done === 0;
+        el.querySelectorAll('.mini').forEach((m) => m.classList.toggle('picked', L.isChecked(state.picks, comp.id, m.dataset.c)));
         updateClearAll();
       };
       const unit = (u) => unitEl(u, hits, {
@@ -256,11 +288,16 @@
         if (input.value.trim()) state.compQuery.set(comp.id, input.value); else state.compQuery.delete(comp.id);
         fill();
       });
+      const tools = h('div', { class: 'ctools' }, input, count, clear);
+      if (pb) el.append(phasesEl(pb, hits));
       fill();
-      el.append(h('div', { class: 'ctools' }, input, count, clear), groups);
+      if (pb) el.append(h('div', { class: 'fimhead' }, h('div', { class: 'plabel' }, h('b', {}, 'Fim'), h('small', {}, 'Board final')), tools), groups);
+      else el.append(tools, groups);
     }
     if (hasBoard && open) el.append(boardEl(comp.main, { hits }));
     if (comp.nota) el.append(h('p', { class: 'note' }, comp.nota));
+    const dk = dicasEl(comp);
+    if (dk) el.append(dk);
     if (comp.fonte) el.append(h('p', { class: 'src' }, 'Fonte: ' + comp.fonte));
     return el;
   }

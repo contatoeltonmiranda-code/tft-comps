@@ -1,6 +1,6 @@
 # Fases das comps: fontes (início e meio)
 
-Consulta feita em 06/11/2026, patch 18.6 (Set 18 oficial "Selvas Encantadas / Enchanted Wilds"; o app o chama de "Set 17", ver README).
+Consulta feita em 06/11/2026, patch 18.6 (Set 18 oficial "Selvas Encantadas / Enchanted Wilds"; o app e o catálogo dizem Set 18 desde a v7). Comps do vídeo (seed v7) consultadas em 07/11/2026.
 
 ## Modelo de dados
 
@@ -87,3 +87,19 @@ Tradução livre dos textos de cada guia. Todos dizem "nível 4 em 2-1" e "níve
 | The Final Forest | Sabugueiro, Caçador ou Florescer com itens de DdA. Pode subir para o nível 5 antes ou depois do carrossel para manter a sequência | Jogar o board mais forte e acrescentar Inferno. Com pares no banco, rolar um pouco. Se perder muita vida, rolar no nível 8 para estabilizar |
 | Riftbeast Ascension | Fera do Rift, de preferência Lobo Trevoguari para usar itens de DdA. Dar a Marca de Alfa ao Lobo | Ativar Fera do Rift 5 e depois 7. Guardar cópias de Krugue (o 3 estrelas mais importante). Com o Rubrivira, itemizar e dar a Marca de Alfa a ele |
 | Defenders of the DoT | Abertura forte de PdH com Defendente. Itemizar Ornn (está no final; dá para mirar cashout de artefato). Com abertura de Congregação, pode jogar | Ter frente de 4 Defendentes já no estágio 3. No nível 7, rolar por Cassiopeia, Rammus e Fiddlesticks 3 estrelas. Defendente 6 o quanto antes |
+
+## Comps do vídeo do Vladimin (seed v7, consulta em 07/11/2026)
+
+Mesma regra de casamento (Jaccard do board e mesma família; abaixo de 0,70 vira "variante"; sem guia equivalente vira `derivado`). Lista de guias lida da página `mobalytics.gg/tft/team-comps` (42 comps, patch 18.6) com Chromium headless (curl e WebFetch levam 403).
+
+| Seed | Comp do app | Origem | Comp da fonte | Jaccard | Início | Meio |
+|---|---|---|---|---|---|---|
+| seed-20 | Solar Yunara Karma | fonte | [Solar Yunara](https://mobalytics.gg/tft/comps-guide/solar-yunara-3JKiktTzy9h1I1MpQ5rqtmtdv9l) | 1.00 | Yunara, Yorick, Karma, Rakan | Sejuani, Yunara, Azir, LeBlanc, Karma, Yorick |
+| seed-21 | Emanador Ahri | derivado | - (Weave Got This, Wispful Thinking e Mana Go Brrr são outras comps) | - | Cascalho, Karma, Krugue | Cascalho, Karma, Krugue, Azuporã, Morgana, Sett |
+| seed-22 | Sabugueiro Soraka | derivado | - (Wrath of the Woods tem Jaccard 0,50) | - | Ornn, Alistar, LeBlanc, Xayah | Ornn, Alistar, LeBlanc, Xayah, Hecarim, Fiddlesticks |
+| seed-23 | Sabugueiro Aphelios | fonte | [Wrath of the Woods](https://mobalytics.gg/tft/comps-guide/elderwood-3GPSrl1mdvWbwjkesuBNjDFFKvx) | 1.00 | Xayah, Alistar, LeBlanc, Ornn | Xayah, Hecarim, Alistar, LeBlanc, Ornn, Rakan |
+| seed-24 | Alune AP Fast 9 | fonte | [AP Exodia](https://mobalytics.gg/tft/comps-guide/fast-9-3GPZwhL0OfLE8Wv4bDvZMi1lUUR) (variante) | 0.58 | LeBlanc, Fiddlesticks, Alistar, Ornn | LeBlanc, Cassiopeia, Diana, Fiddlesticks, Hecarim, Ornn |
+
+Derivadas: seed-21 usa os custos baixos do board que compartilham traços (Karma de Florescer/Enfeitiçador, Cascalho de Fera do Rift/Emanador, Krugue de Fera do Rift/Lutador); o meio acrescenta Azuporã e Morgana (Emanador 3, Fera do Rift 3) e Sett (Florescer 2, Lutador 2), os 4 custos do traço principal. seed-22 usa os Sabugueiros de custo até 2 mais Xayah; o meio acrescenta Hecarim (Sabugueiro 5) e Fiddlesticks (Defendente 2 com Ornn).
+
+Dicas do vídeo (traduzidas e resumidas) ficam em `comp.dicas` no seed, com link do vídeo no minuto (`https://youtu.be/shtFyRruAHM?t=<s>`).

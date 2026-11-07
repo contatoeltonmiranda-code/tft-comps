@@ -1,8 +1,8 @@
 [
  {
-  "name": "[desktop] 19 comps renderizadas",
+  "name": "[desktop] 24 comps renderizadas",
   "pass": true,
-  "extra": "n=19"
+  "extra": "n=24"
  },
  {
   "name": "[desktop] botao Limpar oculto sem busca",
@@ -11,7 +11,7 @@
  {
   "name": "[desktop] imagens da lista carregam",
   "pass": true,
-  "extra": "total=507 falhas=0 "
+  "extra": "total=945 falhas=0 "
  },
  {
   "name": "[desktop] imagens do catalogo completo carregam",
@@ -44,7 +44,7 @@
  {
   "name": "[desktop] busca \"diana\" filtra",
   "pass": true,
-  "extra": "n=8"
+  "extra": "n=10"
  },
  {
   "name": "[desktop] busca destaca campeao",
@@ -57,7 +57,7 @@
  {
   "name": "[desktop] busca por traco",
   "pass": true,
-  "extra": "8"
+  "extra": "10"
  },
  {
   "name": "[desktop] busca sem resultado mostra aviso",
@@ -230,7 +230,8 @@
  },
  {
   "name": "[desktop] campeao adicionado no editor",
-  "pass": true
+  "pass": true,
+  "extra": "rows=1 toast="
  },
  {
   "name": "[desktop] item alternativo adicionado",
@@ -289,7 +290,7 @@
   "pass": true
  },
  {
-  "name": "[desktop] importar restaura 20",
+  "name": "[desktop] importar restaura N+1",
   "pass": true
  },
  {
@@ -303,7 +304,7 @@
  {
   "name": "[desktop] imagens apos todos os fluxos",
   "pass": true,
-  "extra": "total=509 falhas=0"
+  "extra": "total=947 falhas=0"
  },
  {
   "name": "[desktop] sem erros de console/rede",
@@ -311,9 +312,9 @@
   "extra": ""
  },
  {
-  "name": "[mobile] 19 comps renderizadas",
+  "name": "[mobile] 24 comps renderizadas",
   "pass": true,
-  "extra": "n=19"
+  "extra": "n=24"
  },
  {
   "name": "[mobile] botao Limpar oculto sem busca",
@@ -322,7 +323,7 @@
  {
   "name": "[mobile] imagens da lista carregam",
   "pass": true,
-  "extra": "total=507 falhas=0 "
+  "extra": "total=945 falhas=0 "
  },
  {
   "name": "[mobile] imagens do catalogo completo carregam",
@@ -355,7 +356,7 @@
  {
   "name": "[mobile] busca \"diana\" filtra",
   "pass": true,
-  "extra": "n=8"
+  "extra": "n=10"
  },
  {
   "name": "[mobile] busca destaca campeao",
@@ -368,7 +369,7 @@
  {
   "name": "[mobile] busca por traco",
   "pass": true,
-  "extra": "8"
+  "extra": "10"
  },
  {
   "name": "[mobile] busca sem resultado mostra aviso",
@@ -541,7 +542,8 @@
  },
  {
   "name": "[mobile] campeao adicionado no editor",
-  "pass": true
+  "pass": true,
+  "extra": "rows=1 toast="
  },
  {
   "name": "[mobile] item alternativo adicionado",
@@ -600,7 +602,7 @@
   "pass": true
  },
  {
-  "name": "[mobile] importar restaura 20",
+  "name": "[mobile] importar restaura N+1",
   "pass": true
  },
  {
@@ -614,7 +616,7 @@
  {
   "name": "[mobile] imagens apos todos os fluxos",
   "pass": true,
-  "extra": "total=509 falhas=0"
+  "extra": "total=947 falhas=0"
  },
  {
   "name": "[mobile] sem erros de console/rede",
@@ -622,7 +624,7 @@
   "extra": ""
  },
  {
-  "name": "[desktop] migracao: legado 15 -> 19 comps",
+  "name": "[desktop] migracao: legado 15 -> 24 comps",
   "pass": true,
   "extra": "legado=15"
  },
@@ -653,7 +655,7 @@
   "extra": ""
  },
  {
-  "name": "[mobile] migracao: legado 15 -> 19 comps",
+  "name": "[mobile] migracao: legado 15 -> 24 comps",
   "pass": true,
   "extra": "legado=15"
  },
@@ -686,14 +688,14 @@
  {
   "name": "[desktop] ordem primeira vez: topo",
   "pass": true,
-  "extra": "Enfeitiçador 6 | Lutador Florescer Adaptador | Vanguarda Congregação das Bruxas Devastador total=19"
+  "extra": "Enfeitiçador 6 | Lutador Florescer Adaptador | Vanguarda Congregação das Bruxas Devastador total=24"
  },
  {
   "name": "[desktop] ordem primeira vez: estavel apos recarregar",
   "pass": true
  },
  {
-  "name": "[desktop] ordem primeira vez: seedVersao salva = 5",
+  "name": "[desktop] ordem primeira vez: seedVersao salva = 7",
   "pass": true
  },
  {
@@ -707,16 +709,34 @@
   "extra": ""
  },
  {
+  "name": "[desktop] ordem seedVersao 6 (so as 5 do video faltam): topo",
+  "pass": true,
+  "extra": "Enfeitiçador 6 | Lutador Florescer Adaptador | Vanguarda Congregação das Bruxas Devastador total=24"
+ },
+ {
+  "name": "[desktop] ordem seedVersao 6 (so as 5 do video faltam): estavel apos recarregar",
+  "pass": true
+ },
+ {
+  "name": "[desktop] ordem seedVersao 6 (so as 5 do video faltam): seedVersao salva = 7",
+  "pass": true
+ },
+ {
+  "name": "[desktop] ordem seedVersao 6 (so as 5 do video faltam): sem erros de console",
+  "pass": true,
+  "extra": ""
+ },
+ {
   "name": "[desktop] ordem seedVersao 4 (Enfeitiçador e Lutador no topo): topo",
   "pass": true,
-  "extra": "Enfeitiçador 6 | Lutador Florescer Adaptador | Vanguarda Congregação das Bruxas Devastador total=19"
+  "extra": "Enfeitiçador 6 | Lutador Florescer Adaptador | Vanguarda Congregação das Bruxas Devastador total=24"
  },
  {
   "name": "[desktop] ordem seedVersao 4 (Enfeitiçador e Lutador no topo): estavel apos recarregar",
   "pass": true
  },
  {
-  "name": "[desktop] ordem seedVersao 4 (Enfeitiçador e Lutador no topo): seedVersao salva = 5",
+  "name": "[desktop] ordem seedVersao 4 (Enfeitiçador e Lutador no topo): seedVersao salva = 7",
   "pass": true
  },
  {
@@ -732,14 +752,14 @@
  {
   "name": "[desktop] ordem seedVersao 3 (Enfeitiçador no topo): topo",
   "pass": true,
-  "extra": "Enfeitiçador 6 | Lutador Florescer Adaptador | Vanguarda Congregação das Bruxas Devastador total=19"
+  "extra": "Enfeitiçador 6 | Lutador Florescer Adaptador | Vanguarda Congregação das Bruxas Devastador total=24"
  },
  {
   "name": "[desktop] ordem seedVersao 3 (Enfeitiçador no topo): estavel apos recarregar",
   "pass": true
  },
  {
-  "name": "[desktop] ordem seedVersao 3 (Enfeitiçador no topo): seedVersao salva = 5",
+  "name": "[desktop] ordem seedVersao 3 (Enfeitiçador no topo): seedVersao salva = 7",
   "pass": true
  },
  {
@@ -755,14 +775,14 @@
  {
   "name": "[desktop] ordem versao 2 antiga: topo",
   "pass": true,
-  "extra": "Enfeitiçador 6 | Lutador Florescer Adaptador | Vanguarda Congregação das Bruxas Devastador total=19"
+  "extra": "Enfeitiçador 6 | Lutador Florescer Adaptador | Vanguarda Congregação das Bruxas Devastador total=24"
  },
  {
   "name": "[desktop] ordem versao 2 antiga: estavel apos recarregar",
   "pass": true
  },
  {
-  "name": "[desktop] ordem versao 2 antiga: seedVersao salva = 5",
+  "name": "[desktop] ordem versao 2 antiga: seedVersao salva = 7",
   "pass": true
  },
  {
@@ -773,14 +793,14 @@
  {
   "name": "[desktop] ordem seedVersao 4, Lutador movida: topo",
   "pass": true,
-  "extra": "Vanguarda Congregação das Bruxas Devastador | Enfeitiçador 6 | Vivaz total=19"
+  "extra": "Vanguarda Congregação das Bruxas Devastador | Solar Yunara Karma | Emanador Ahri total=24"
  },
  {
   "name": "[desktop] ordem seedVersao 4, Lutador movida: estavel apos recarregar",
   "pass": true
  },
  {
-  "name": "[desktop] ordem seedVersao 4, Lutador movida: seedVersao salva = 5",
+  "name": "[desktop] ordem seedVersao 4, Lutador movida: seedVersao salva = 7",
   "pass": true
  },
  {
@@ -791,14 +811,14 @@
  {
   "name": "[desktop] ordem seedVersao 4, Lutador excluida: topo",
   "pass": true,
-  "extra": "Vanguarda Congregação das Bruxas Devastador | Enfeitiçador 6 | Vivaz total=18"
+  "extra": "Vanguarda Congregação das Bruxas Devastador | Solar Yunara Karma | Emanador Ahri total=23"
  },
  {
   "name": "[desktop] ordem seedVersao 4, Lutador excluida: estavel apos recarregar",
   "pass": true
  },
  {
-  "name": "[desktop] ordem seedVersao 4, Lutador excluida: seedVersao salva = 5",
+  "name": "[desktop] ordem seedVersao 4, Lutador excluida: seedVersao salva = 7",
   "pass": true
  },
  {
@@ -809,14 +829,14 @@
  {
   "name": "[desktop] ordem seedVersao 3, Enfeitiçador excluida: topo",
   "pass": true,
-  "extra": "Lutador Florescer Adaptador | Vanguarda Congregação das Bruxas Devastador | Vivaz total=18"
+  "extra": "Lutador Florescer Adaptador | Vanguarda Congregação das Bruxas Devastador | Solar Yunara Karma total=23"
  },
  {
   "name": "[desktop] ordem seedVersao 3, Enfeitiçador excluida: estavel apos recarregar",
   "pass": true
  },
  {
-  "name": "[desktop] ordem seedVersao 3, Enfeitiçador excluida: seedVersao salva = 5",
+  "name": "[desktop] ordem seedVersao 3, Enfeitiçador excluida: seedVersao salva = 7",
   "pass": true
  },
  {
@@ -827,14 +847,14 @@
  {
   "name": "[desktop] ordem seedVersao 3, Enfeitiçador movida: topo",
   "pass": true,
-  "extra": "Lutador Florescer Adaptador | Vanguarda Congregação das Bruxas Devastador | Vivaz total=19"
+  "extra": "Lutador Florescer Adaptador | Vanguarda Congregação das Bruxas Devastador | Solar Yunara Karma total=24"
  },
  {
   "name": "[desktop] ordem seedVersao 3, Enfeitiçador movida: estavel apos recarregar",
   "pass": true
  },
  {
-  "name": "[desktop] ordem seedVersao 3, Enfeitiçador movida: seedVersao salva = 5",
+  "name": "[desktop] ordem seedVersao 3, Enfeitiçador movida: seedVersao salva = 7",
   "pass": true
  },
  {
@@ -845,14 +865,14 @@
  {
   "name": "[mobile] ordem primeira vez: topo",
   "pass": true,
-  "extra": "Enfeitiçador 6 | Lutador Florescer Adaptador | Vanguarda Congregação das Bruxas Devastador total=19"
+  "extra": "Enfeitiçador 6 | Lutador Florescer Adaptador | Vanguarda Congregação das Bruxas Devastador total=24"
  },
  {
   "name": "[mobile] ordem primeira vez: estavel apos recarregar",
   "pass": true
  },
  {
-  "name": "[mobile] ordem primeira vez: seedVersao salva = 5",
+  "name": "[mobile] ordem primeira vez: seedVersao salva = 7",
   "pass": true
  },
  {
@@ -866,16 +886,34 @@
   "extra": ""
  },
  {
+  "name": "[mobile] ordem seedVersao 6 (so as 5 do video faltam): topo",
+  "pass": true,
+  "extra": "Enfeitiçador 6 | Lutador Florescer Adaptador | Vanguarda Congregação das Bruxas Devastador total=24"
+ },
+ {
+  "name": "[mobile] ordem seedVersao 6 (so as 5 do video faltam): estavel apos recarregar",
+  "pass": true
+ },
+ {
+  "name": "[mobile] ordem seedVersao 6 (so as 5 do video faltam): seedVersao salva = 7",
+  "pass": true
+ },
+ {
+  "name": "[mobile] ordem seedVersao 6 (so as 5 do video faltam): sem erros de console",
+  "pass": true,
+  "extra": ""
+ },
+ {
   "name": "[mobile] ordem seedVersao 4 (Enfeitiçador e Lutador no topo): topo",
   "pass": true,
-  "extra": "Enfeitiçador 6 | Lutador Florescer Adaptador | Vanguarda Congregação das Bruxas Devastador total=19"
+  "extra": "Enfeitiçador 6 | Lutador Florescer Adaptador | Vanguarda Congregação das Bruxas Devastador total=24"
  },
  {
   "name": "[mobile] ordem seedVersao 4 (Enfeitiçador e Lutador no topo): estavel apos recarregar",
   "pass": true
  },
  {
-  "name": "[mobile] ordem seedVersao 4 (Enfeitiçador e Lutador no topo): seedVersao salva = 5",
+  "name": "[mobile] ordem seedVersao 4 (Enfeitiçador e Lutador no topo): seedVersao salva = 7",
   "pass": true
  },
  {
@@ -891,14 +929,14 @@
  {
   "name": "[mobile] ordem seedVersao 3 (Enfeitiçador no topo): topo",
   "pass": true,
-  "extra": "Enfeitiçador 6 | Lutador Florescer Adaptador | Vanguarda Congregação das Bruxas Devastador total=19"
+  "extra": "Enfeitiçador 6 | Lutador Florescer Adaptador | Vanguarda Congregação das Bruxas Devastador total=24"
  },
  {
   "name": "[mobile] ordem seedVersao 3 (Enfeitiçador no topo): estavel apos recarregar",
   "pass": true
  },
  {
-  "name": "[mobile] ordem seedVersao 3 (Enfeitiçador no topo): seedVersao salva = 5",
+  "name": "[mobile] ordem seedVersao 3 (Enfeitiçador no topo): seedVersao salva = 7",
   "pass": true
  },
  {
@@ -914,14 +952,14 @@
  {
   "name": "[mobile] ordem versao 2 antiga: topo",
   "pass": true,
-  "extra": "Enfeitiçador 6 | Lutador Florescer Adaptador | Vanguarda Congregação das Bruxas Devastador total=19"
+  "extra": "Enfeitiçador 6 | Lutador Florescer Adaptador | Vanguarda Congregação das Bruxas Devastador total=24"
  },
  {
   "name": "[mobile] ordem versao 2 antiga: estavel apos recarregar",
   "pass": true
  },
  {
-  "name": "[mobile] ordem versao 2 antiga: seedVersao salva = 5",
+  "name": "[mobile] ordem versao 2 antiga: seedVersao salva = 7",
   "pass": true
  },
  {
@@ -932,14 +970,14 @@
  {
   "name": "[mobile] ordem seedVersao 4, Lutador movida: topo",
   "pass": true,
-  "extra": "Vanguarda Congregação das Bruxas Devastador | Enfeitiçador 6 | Vivaz total=19"
+  "extra": "Vanguarda Congregação das Bruxas Devastador | Solar Yunara Karma | Emanador Ahri total=24"
  },
  {
   "name": "[mobile] ordem seedVersao 4, Lutador movida: estavel apos recarregar",
   "pass": true
  },
  {
-  "name": "[mobile] ordem seedVersao 4, Lutador movida: seedVersao salva = 5",
+  "name": "[mobile] ordem seedVersao 4, Lutador movida: seedVersao salva = 7",
   "pass": true
  },
  {
@@ -950,14 +988,14 @@
  {
   "name": "[mobile] ordem seedVersao 4, Lutador excluida: topo",
   "pass": true,
-  "extra": "Vanguarda Congregação das Bruxas Devastador | Enfeitiçador 6 | Vivaz total=18"
+  "extra": "Vanguarda Congregação das Bruxas Devastador | Solar Yunara Karma | Emanador Ahri total=23"
  },
  {
   "name": "[mobile] ordem seedVersao 4, Lutador excluida: estavel apos recarregar",
   "pass": true
  },
  {
-  "name": "[mobile] ordem seedVersao 4, Lutador excluida: seedVersao salva = 5",
+  "name": "[mobile] ordem seedVersao 4, Lutador excluida: seedVersao salva = 7",
   "pass": true
  },
  {
@@ -968,14 +1006,14 @@
  {
   "name": "[mobile] ordem seedVersao 3, Enfeitiçador excluida: topo",
   "pass": true,
-  "extra": "Lutador Florescer Adaptador | Vanguarda Congregação das Bruxas Devastador | Vivaz total=18"
+  "extra": "Lutador Florescer Adaptador | Vanguarda Congregação das Bruxas Devastador | Solar Yunara Karma total=23"
  },
  {
   "name": "[mobile] ordem seedVersao 3, Enfeitiçador excluida: estavel apos recarregar",
   "pass": true
  },
  {
-  "name": "[mobile] ordem seedVersao 3, Enfeitiçador excluida: seedVersao salva = 5",
+  "name": "[mobile] ordem seedVersao 3, Enfeitiçador excluida: seedVersao salva = 7",
   "pass": true
  },
  {
@@ -986,14 +1024,14 @@
  {
   "name": "[mobile] ordem seedVersao 3, Enfeitiçador movida: topo",
   "pass": true,
-  "extra": "Lutador Florescer Adaptador | Vanguarda Congregação das Bruxas Devastador | Vivaz total=19"
+  "extra": "Lutador Florescer Adaptador | Vanguarda Congregação das Bruxas Devastador | Solar Yunara Karma total=24"
  },
  {
   "name": "[mobile] ordem seedVersao 3, Enfeitiçador movida: estavel apos recarregar",
   "pass": true
  },
  {
-  "name": "[mobile] ordem seedVersao 3, Enfeitiçador movida: seedVersao salva = 5",
+  "name": "[mobile] ordem seedVersao 3, Enfeitiçador movida: seedVersao salva = 7",
   "pass": true
  },
  {

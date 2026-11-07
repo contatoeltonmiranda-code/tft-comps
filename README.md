@@ -1,6 +1,13 @@
 # Comps TFT
 
-Mini sistema pessoal de composições de Teamfight Tactics (set atual). HTML/CSS/JS puro, sem build e sem dependências.
+Mini sistema pessoal de composições de Teamfight Tactics (Set 18, "Selvas Encantadas"). HTML/CSS/JS puro, sem build e sem dependências.
+
+## Páginas
+
+Navegação no topo, igual nas três páginas (mesmo `css/style.css`): **Comps** (`index.html`) | **Guia do Jogo** (`guia.html`, só um placeholder "Em breve": o texto vem de outro agente e será preenchido depois) | **Notícias** (`noticias.html`).
+
+- Lista de comps em 2 colunas a partir de 1100 px de largura (2 comps lado a lado); abaixo disso, 1 coluna. Cada comp mostra Início / Meio / Fim (ver Fases em Dados), as dicas (quando houver) e o tabuleiro.
+- `noticias.html`: resumo do meta no topo, filtros por tipo e por patch, cards curtos com ícone do campeão/traço/item (quando há id no catálogo), link da fonte e data da última atualização. Dados em `data/noticias.js`, lógica de filtro em `TFTLogic` (`newsTypes`, `newsPatches`, `filterNews`, `newsIcon`), página em `js/noticias.js`.
 
 ## Como abrir
 
@@ -14,17 +21,60 @@ Atalhos do app: `?` ajuda, `/` busca, `N` nova comp, `L` limpar todos os checks 
 ## Dados
 
 - Fonte: CommunityDragon `cdragon/tft/pt_br.json` (campeões, traços, itens e ícones). Ícones baixados para `assets/` (funciona offline).
-- O set que o Elton chama de "Set 17" está em `sets["18"]` / mutator `TFTSet18` no CommunityDragon (itens `DA_*`). O "Set17" do CommunityDragon é outro set.
+- O set é o **Set 18 "Selvas Encantadas"** (nome oficial da Riot), que está em `sets["18"]` / mutator `TFTSet18` no CommunityDragon (itens `DA_*`). O Elton às vezes o chamava de "Set 17" (o tactics.tools mostra "SET 18" e "SET17" lado a lado); o app e o catálogo agora dizem Set 18. O "Set17" do CommunityDragon é outro set.
 - As comps de exemplo vêm dos prints em `refs/` e ficam em `data/seed.js` (campo `fonte` indica o print). O botão "Restaurar comps originais" (em Atalhos) volta a esse estado.
 - Comps novas do seed chegam para quem já tem dados salvos: `data/seed.js` define `TFT_SEED_VERSION` e a comp nova leva `desde: <versão>`. No carregamento, `mergeSeed` (`js/logic.js`) acrescenta só comps com `desde` maior que a `seedVersao` salva, cujo id não exista e não esteja em `excluidos` (ids de comps do seed que o usuário excluiu). Edições nunca são sobrescritas. Para publicar comp nova: adicionar ao seed com `desde: N` e subir `TFT_SEED_VERSION` para N. Para a comp nova aparecer como primeira da lista (inclusive para quem já tem dados salvos), acrescentar `topo: true`: `mergeSeed` coloca as comps novas com `topo` na frente das já salvas (as demais continuam no fim). Também deixar a entrada no começo do array do seed, para quem abre pela primeira vez e para "Restaurar comps originais". Para a comp nova entrar logo abaixo de outra comp do topo (ex.: `seed-18` abaixo de `seed-17`), acrescentar `abaixoDe: '<id>'`: se a comp alvo estiver dentro do bloco do topo da lista salva (as primeiras posições ocupadas só por comps do seed com `topo`, ou entrar junto, na mesma atualização), a nova vai logo depois dela; se o usuário excluiu a alvo ou a moveu para fora desse bloco, a nova cai para o topo. Exemplo: `seed-19` abaixo de `seed-18`, que está em 2º. No array do seed, colocar a entrada logo depois da alvo.
 - Posições novas do seed para comps que o usuário já tem: a comp do seed leva `posDesde: N` (e `p: [linha, coluna]` nos campeões de `main`). `mergeSeed` aplica só se `N` for maior que a `seedVersao` salva, a comp existir com o mesmo id, o campeão estiver no `main` dela e a comp não tiver nenhuma posição (se o usuário posicionou qualquer unidade, a comp inteira fica intacta). Comp excluída não volta. Para publicar: `posDesde: N` na comp e `TFT_SEED_VERSION` = N. Testes em `tests/logic.test.js` (`mergeSeed posicao`).
-- Fases da comp (início e meio): cada comp pode ter `fases: { inicio: [ids], meio: [ids], origem: 'fonte'|'derivado'|'manual', ref, url? }`; o `main` continua sendo o board final. Início = estágio 2, nível 3-5 (3-5 campeões); meio = estágio 3-4, nível 6-7 (6-7 campeões). `origem: 'fonte'` veio de guia publicado (Mobalytics, patch 18.6); `derivado` foi calculado do catálogo. Fontes e critérios por comp em `data/fases-fontes.md`. Para publicar: `fases` + `fasesDesde: N` na comp do seed e `TFT_SEED_VERSION` = N. `mergeSeed` copia as fases só para comp salva sem `fases` (id existente, `fasesDesde` maior que a `seedVersao` salva) e devolve `fasesAplicadas`; edição nunca é sobrescrita. `sanitizeImport` mantém `fases` (ids do catálogo, sem repetidos, URL só https), então export/import e duplicar preservam. `TFTLogic.phaseBoards(comp, catalog)` devolve início, meio e fim prontos para renderizar (a UI ainda não usa). Testes em `tests/fases.test.js`.
-- Notícias: `data/noticias.js` define `window.TFT_NOTICIAS_RESUMO` (resumo do impacto no meta, 2-3 linhas) e `window.TFT_NOTICIAS` (lista do mais novo ao mais antigo: `id, data, patch, titulo, tipo, alvos[{tipo,id,nome}], texto, fonte{nome,url}`). Só o que está nas notas oficiais da Riot (PT-BR): patches 18.6 (04/11/2026) e 18.5 (21/10/2026, com as intermediárias de 22/10 e 27/10). Para atualizar: acrescentar entradas no topo com a fonte do patch novo (e liberar o novo padrão de URL em `tests/noticias.test.js`). A página ainda não existe. Testes em `tests/noticias.test.js`.
+- Fases da comp (início e meio): cada comp pode ter `fases: { inicio: [ids], meio: [ids], origem: 'fonte'|'derivado'|'manual', ref, url? }`; o `main` continua sendo o board final. Início = estágio 2, nível 3-5 (3-5 campeões); meio = estágio 3-4, nível 6-7 (6-7 campeões). `origem: 'fonte'` veio de guia publicado (Mobalytics, patch 18.6); `derivado` foi calculado do catálogo. Fontes e critérios por comp em `data/fases-fontes.md`. Para publicar: `fases` + `fasesDesde: N` na comp do seed e `TFT_SEED_VERSION` = N. `mergeSeed` copia as fases só para comp salva sem `fases` (id existente, `fasesDesde` maior que a `seedVersao` salva) e devolve `fasesAplicadas`; edição nunca é sobrescrita. `sanitizeImport` mantém `fases` (ids do catálogo, sem repetidos, URL só https), então export/import e duplicar preservam. `TFTLogic.phaseBoards(comp, catalog)` devolve início, meio e fim prontos para renderizar: a lista mostra 3 linhas com rótulo (Início e Meio como miniaturas de 36 px com custo; Fim = o board final detalhado, com busca e checks "já peguei") e uma linha discreta com a origem (`fonte` com link, `derivado` ou `manual`). Marcar um campeão no Fim acende o mesmo campeão nas miniaturas das fases. Testes em `tests/fases.test.js`.
+- Dicas da comp: `comp.dicas = { linhas: [até 8 textos de até 240 caracteres], ref?, url? }` (`url` só https). A lista mostra "Dicas" num bloco recolhível (o estado aberto sobrevive a buscas) com link da fonte. No seed: `dicas` + `dicasDesde: N` e `TFT_SEED_VERSION` = N; `mergeSeed` copia só para comp salva sem `dicas` (devolve `dicasAplicadas`); edição nunca é sobrescrita. `sanitizeImport` mantém `dicas`, então export/import e duplicar preservam. Testes em `tests/v7.test.js`.
+- Notícias: `data/noticias.js` define `window.TFT_NOTICIAS_RESUMO` (resumo do impacto no meta, 2-3 linhas) e `window.TFT_NOTICIAS` (lista do mais novo ao mais antigo: `id, data, patch, titulo, tipo, alvos[{tipo,id,nome}], texto, fonte{nome,url}`). Só o que está nas notas oficiais da Riot (PT-BR): patches 18.6 (04/11/2026) e 18.5 (21/10/2026, com as intermediárias de 22/10 e 27/10). `window.TFT_NOTICIAS_ATUALIZADO` guarda a data da última conferência (aparece no topo da página). Para atualizar: acrescentar entradas no topo com a fonte do patch novo (e liberar o novo padrão de URL em `tests/noticias.test.js`); isso agora roda sozinho toda quinta (ver "Atualização semanal automática das notícias"). Testes em `tests/noticias.test.js`.
+
+## Comps do vídeo do Vladimin (patch 18.5C)
+
+Fonte: vídeo "TFT - MELHORES COMPS DO PATCH 18.5C!" (https://youtu.be/shtFyRruAHM, 21:09, 28/10/2026), análise em `9. editor-de-video/Projetos/analise-tft-guia-videos-2026-11/COMPS-VIDEO.md` e frames do tactics.tools em `frames-comps/` (1440x900). `TFT_SEED_VERSION` = 7. As 10 comps do vídeo foram comparadas com as 19 que já existiam (Jaccard do board):
+
+| # no vídeo | Comp | Resultado |
+|---|---|---|
+| 1 (0:39) | Karma + Yunara, Solar reroll | **Nova** `seed-20` "Solar Yunara Karma" (Slowroll Nvl 6). Fases: Mobalytics "Solar Yunara" (board idêntico) |
+| 2 (4:10) | Azir + Rammus/Teemo, slow roll 7 | Já existia: `seed-01` Vivaz. Só `dicas` |
+| 3 (5:28) | Master Yi + Rengar/Kog'Maw | Já existia: `seed-18` Lutador Florescer Adaptador. `dicas` + 7 posições (Gnar não aparece no frame; Rengar não é do board dela) |
+| 4 (9:06) | Rubrivira, Fera do Rift fast 8 | Já existia: `seed-14`. `dicas` + 6 posições |
+| 5 (11:35) | Ahri, Emanador | **Nova** `seed-21` "Emanador Ahri" (Fast 9). Fases derivadas (sem guia equivalente: "Weave Got This" e "Mana Go Brrr" têm Jaccard < 0,4) |
+| 6 (13:28) | Soraka, Sabugueiro (exige emblema) | **Nova** `seed-22` "Sabugueiro Soraka". Fases derivadas (a "Wrath of the Woods" tem Jaccard 0,5) |
+| 7 (15:09) | Aphelios, Sabugueiro (exige emblema) | **Nova** `seed-23` "Sabugueiro Aphelios". Fases: Mobalytics "Wrath of the Woods" (board idêntico) |
+| 8 (17:05) | Draven + Dragão Ancião, fast 9 | Já existia: `seed-10`. Só `dicas` (já tinha posições de outro print) |
+| 9 (18:26) | Draven + Ezreal, fast 9 | Já existiam: `seed-13` e `seed-15`. `dicas` + posições (8 e 9) |
+| 10 (19:15) | Alune, fast 9 AP | **Nova** `seed-24` "Alune AP Fast 9". Fases: Mobalytics "AP Exodia" (variante, Jaccard 0,58) |
+
+As 5 novas ficam logo depois das 3 fixadas (`topo` + `abaixoDe` encadeado: 20 abaixo de 19, 21 abaixo de 20 etc.), com `desde: 7`. Quem já tinha dados as recebe no próximo carregamento, sem perder edição, exclusão nem checks. `posDesde: 7` nas 4 comps existentes que não tinham posição; `dicasDesde: 7` nas 6 que ganharam dicas. Fonte de cada comp = vídeo + minuto (`fonte` e link `youtu.be/shtFyRruAHM?t=<segundos>` nas dicas). Posições (fileira 1 = frente, como no tactics.tools) lidas dos frames; a geometria foi conferida contra a `seed-01`, que já tinha posições do print 1 (bate casa a casa). Itens vêm do áudio; nomes que o reconhecimento automático não confirmou (Manopla Adornada na Karma/Alune, Mangual na Ahri) estão marcados "ouvido" nas dicas.
+
+Limites conhecidos: as plantas do Sabugueiro (Árvores de Casca Petrificada, Protetor da Mata Profunda, Flor-da-Vida) não existem no catálogo, então ficam de fora do tabuleiro (a nota da comp diz onde estão) e o app calcula Sabugueiro 8 onde o painel mostra 9. Em `seed-24` o painel mostra Lunar 4 e o app calcula Lunar 3 (a 4ª fonte de Lunar não aparece no frame). Os vídeos são do 18.5C; o 18.6 já reduziu o pico de Sabugueiro (9), avisado nas dicas das comps 22 e 23.
+
+## Atualização semanal automática das notícias
+
+Toda **quinta-feira 10:00** o Agendador de Tarefas do Windows roda, **oculto** (sem janela), `wscript.exe //B //Nologo tools\noticias-semanal.vbs` (o VBS chama `WshShell.Run ..., 0`), que lança `tools/noticias-semanal.ps1`:
+
+1. confere que o repo está na `main` e limpo (uma ferramenta por vez no projeto) e faz `git pull --ff-only`;
+2. roda `claude -p` (Claude Code headless) com o roteiro versionado `tools/noticias-semanal.md`, com permissões mínimas: `--permission-mode dontAsk`, `--tools Read,Grep,Glob,Edit,WebFetch,WebSearch,Bash`, `--allowedTools` só `Read`, `Grep`, `Glob`, `WebFetch`, `WebSearch`, `Edit(data/noticias.js)`, `Edit(tests/noticias.test.js)` e `Bash(node --test:*)`; sem skills, sem slash commands, só configurações de projeto, teto de 40 turnos e US$ 3, 25 min de limite (o PID é encerrado se estourar);
+3. o roteiro manda pesquisar só as notas oficiais da Riot (PT-BR), sem inventar, com link; atualiza `data/noticias.js` no mesmo formato (entradas, resumo, `TFT_NOTICIAS_ATUALIZADO`) e responde com `RESULTADO: ALTEROU | SEM NOVIDADE | FALHA`;
+4. o script **não confia** no `claude`: só aceita mudança nos 2 arquivos permitidos, exige a linha `ALTEROU` e roda `node --test` por conta própria; só se tudo passar faz `git commit` (`[cc] Update TFT news (weekly auto job, AAAA-MM-DD)`) e `git push` (o Pages publica). Qualquer falha desfaz a edição. Sem novidade, não commita.
+
+Log (fora do OneDrive): `%LOCALAPPDATA%\tft-comps-noticias\log\noticias-<data>.log` (últimos 30). Teste sem publicar: `powershell -ExecutionPolicy Bypass -File tools\noticias-semanal.ps1 -DryRun` (roda tudo, mas desfaz a edição e não faz commit nem push).
+
+**Autenticação:** o Claude Code headless precisa de login válido. Rode `claude login` uma vez num terminal, ou gere um token de longa duração com `claude setup-token` e salve em `%LOCALAPPDATA%\tft-comps-noticias\token.txt` (o script o passa só ao processo do claude). Sem login o job registra "FALHA DE AUTENTICACAO" no log e não altera nada.
+
+Gerenciar a tarefa (nome `TFT-Comps-Noticias-Semanal`):
+
+- Registrar/atualizar: `powershell -ExecutionPolicy Bypass -File tools\noticias-agendar.ps1`
+- Listar: `schtasks /Query /TN "TFT-Comps-Noticias-Semanal" /V /FO LIST` (ou `Get-ScheduledTask -TaskName TFT-Comps-Noticias-Semanal | Get-ScheduledTaskInfo`)
+- Rodar agora (oculto): `schtasks /Run /TN "TFT-Comps-Noticias-Semanal"`
+- Remover: `powershell -ExecutionPolicy Bypass -File tools\noticias-agendar.ps1 -Remove` (ou `schtasks /Delete /TN "TFT-Comps-Noticias-Semanal" /F`)
 
 ## Testes
 
-- Lógica e seed (traços, busca, importação, merge de seed): `node --test tests/*.test.js`
+- Lógica e seed (traços, busca, importação, merge de seed, fases, dicas, filtros de notícias): `node --test tests/*.test.js`
 - QA de navegador (Playwright, desktop 1440 e mobile 390): subir o servidor e rodar `node qa/qa.js`. Screenshots e `resultado.json` em `qa/`.
+- QA v7 (2 colunas, fases, navegação, notícias, filtros, comps do vídeo; 1440, 1100, 1099 e 390): `node qa/qa-v7.js`. Prints `qa/v7-*.png` e `qa/resultado-v7.json`.
 - QA da prévia do overlay (6 cenários, 1000 e 390 de largura): servidor na raiz e `node qa/overlay.js`. Prints em `qa/overlay-*.png`.
 
 ## Overlay Overwolf (experimental, fase 1)

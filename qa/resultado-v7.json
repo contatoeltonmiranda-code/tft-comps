@@ -1,0 +1,758 @@
+[
+ {
+  "name": "[d1440] 24 comps e meta \"Set 18 · Selvas Encantadas\"",
+  "pass": true,
+  "extra": "Set 18 · Selvas Encantadas · 24 comps"
+ },
+ {
+  "name": "[d1440] 5 comps novas do video depois das 3 fixadas",
+  "pass": true,
+  "extra": "Enfeitiçador 6 | Lutador Florescer Adaptador | Vanguarda Congregação das Bruxas Devastador | Solar Yunara Karma | Emanador Ahri | Sabugueiro Soraka | Sabugueiro Aphelios | Alune AP Fast 9"
+ },
+ {
+  "name": "[d1440] nav: Comps | Guia do Jogo (Em breve) | Notícias, Comps atual",
+  "pass": true,
+  "extra": "[{\"t\":\"Comps\",\"h\":\"index.html\",\"cur\":\"page\"},{\"t\":\"Guia do Jogo Em breve\",\"h\":\"guia.html\",\"cur\":null},{\"t\":\"Notícias\",\"h\":\"noticias.html\",\"cur\":null}]"
+ },
+ {
+  "name": "[d1440] 2 comps lado a lado",
+  "pass": true,
+  "extra": "{\"c\":[{\"l\":40,\"t\":221,\"w\":672,\"r\":712},{\"l\":728,\"t\":221,\"w\":672,\"r\":1400}],\"vw\":1440}"
+ },
+ {
+  "name": "[d1440] sem scroll horizontal na lista",
+  "pass": true,
+  "extra": "overflow=0"
+ },
+ {
+  "name": "[d1440] fases: Início/Meio/Fim com rótulo e unidades",
+  "pass": true,
+  "extra": "inicio=4 meio=6"
+ },
+ {
+  "name": "[d1440] fases: origem \"fonte\" com link https",
+  "pass": true,
+  "extra": "fonte"
+ },
+ {
+  "name": "[d1440] fases: origem \"derivado\" sem link",
+  "pass": true
+ },
+ {
+  "name": "[d1440] check no Fim: contador 1/8",
+  "pass": true,
+  "extra": "1/8 pegos"
+ },
+ {
+  "name": "[d1440] check habilita Limpar checks (topo)",
+  "pass": true
+ },
+ {
+  "name": "[d1440] limpar checks da comp zera contador e fases",
+  "pass": true
+ },
+ {
+  "name": "[d1440] busca dentro da comp filtra o Fim",
+  "pass": true
+ },
+ {
+  "name": "[d1440] busca global \"yunara\"",
+  "pass": true,
+  "extra": "n=2"
+ },
+ {
+  "name": "[d1440] busca destaca campeão nas fases",
+  "pass": true
+ },
+ {
+  "name": "[d1440] busca limpa volta a 24",
+  "pass": true
+ },
+ {
+  "name": "[d1440] Solar Yunara: tabuleiro aberto com 8 unidades",
+  "pass": true
+ },
+ {
+  "name": "[d1440] Solar Yunara: estilo, nota e fonte com minuto",
+  "pass": true
+ },
+ {
+  "name": "[d1440] Solar Yunara: 5 unidades 3★ e itens",
+  "pass": true
+ },
+ {
+  "name": "[d1440] tabuleiro cabe no card",
+  "pass": true,
+  "extra": "board.r=1227 card.r=1400"
+ },
+ {
+  "name": "[d1440] dicas abrem (6 linhas) e link do vídeo no minuto",
+  "pass": true,
+  "extra": "https://youtu.be/shtFyRruAHM?t=39"
+ },
+ {
+  "name": "[d1440] dicas continuam abertas depois de re-render",
+  "pass": true
+ },
+ {
+  "name": "[d1440] comp existente (Rubrivira) recebeu dicas e posições, sem duplicar",
+  "pass": true
+ },
+ {
+  "name": "[d1440] editor abre",
+  "pass": true
+ },
+ {
+  "name": "[d1440] atalho \"/\" foca a busca",
+  "pass": true
+ },
+ {
+  "name": "[d1440] atalho \"?\" abre ajuda",
+  "pass": true
+ },
+ {
+  "name": "[d1440] atalho \"N\" abre nova comp",
+  "pass": true
+ },
+ {
+  "name": "[d1440] comps: sem imagem quebrada",
+  "pass": true,
+  "extra": "945 imgs; quebradas: "
+ },
+ {
+  "name": "[d1440] noticias: nav marca Notícias",
+  "pass": true
+ },
+ {
+  "name": "[d1440] noticias: resumo do meta no topo (18.6, 3 linhas, fonte)",
+  "pass": true
+ },
+ {
+  "name": "[d1440] noticias: data da última atualização",
+  "pass": true,
+  "extra": "07/11/2026"
+ },
+ {
+  "name": "[d1440] noticias: 57 cards, todos com fonte e ícone/glifo",
+  "pass": true
+ },
+ {
+  "name": "[d1440] noticias: ícone de campeão/item/traço quando há id",
+  "pass": true
+ },
+ {
+  "name": "[d1440] noticias: filtros por tipo",
+  "pass": true,
+  "extra": "Todos (57) | Buff (18) | Nerf (12) | Ajuste (6) | Item (2) | Aprimoramento (8) | Meta (2) | Sistema (9)"
+ },
+ {
+  "name": "[d1440] noticias: filtro Nerf mostra só nerfs (12)",
+  "pass": true
+ },
+ {
+  "name": "[d1440] noticias: Nerf + patch 18.5 combinados (10)",
+  "pass": true
+ },
+ {
+  "name": "[d1440] noticias: patch 18.6 sozinho",
+  "pass": true
+ },
+ {
+  "name": "[d1440] noticias: voltar a Todos",
+  "pass": true
+ },
+ {
+  "name": "[d1440] noticias: sem imagem quebrada",
+  "pass": true,
+  "extra": "41 imgs; "
+ },
+ {
+  "name": "[d1440] noticias: sem scroll horizontal",
+  "pass": true,
+  "extra": "overflow=0"
+ },
+ {
+  "name": "[d1440] guia.html responde 200 com \"Em breve\"",
+  "pass": true
+ },
+ {
+  "name": "[d1440] guia: sem scroll horizontal",
+  "pass": true
+ },
+ {
+  "name": "[d1440] navegação por clique Guia > Notícias > Comps",
+  "pass": true
+ },
+ {
+  "name": "[d1440] sem erros de console em nenhuma página",
+  "pass": true,
+  "extra": ""
+ },
+ {
+  "name": "[d1100] 24 comps e meta \"Set 18 · Selvas Encantadas\"",
+  "pass": true,
+  "extra": "Set 18 · Selvas Encantadas · 24 comps"
+ },
+ {
+  "name": "[d1100] 5 comps novas do video depois das 3 fixadas",
+  "pass": true,
+  "extra": "Enfeitiçador 6 | Lutador Florescer Adaptador | Vanguarda Congregação das Bruxas Devastador | Solar Yunara Karma | Emanador Ahri | Sabugueiro Soraka | Sabugueiro Aphelios | Alune AP Fast 9"
+ },
+ {
+  "name": "[d1100] nav: Comps | Guia do Jogo (Em breve) | Notícias, Comps atual",
+  "pass": true,
+  "extra": "[{\"t\":\"Comps\",\"h\":\"index.html\",\"cur\":\"page\"},{\"t\":\"Guia do Jogo Em breve\",\"h\":\"guia.html\",\"cur\":null},{\"t\":\"Notícias\",\"h\":\"noticias.html\",\"cur\":null}]"
+ },
+ {
+  "name": "[d1100] 2 comps lado a lado",
+  "pass": true,
+  "extra": "{\"c\":[{\"l\":20,\"t\":221,\"w\":522,\"r\":542},{\"l\":558,\"t\":221,\"w\":522,\"r\":1080}],\"vw\":1100}"
+ },
+ {
+  "name": "[d1100] sem scroll horizontal na lista",
+  "pass": true,
+  "extra": "overflow=0"
+ },
+ {
+  "name": "[d1100] fases: Início/Meio/Fim com rótulo e unidades",
+  "pass": true,
+  "extra": "inicio=4 meio=6"
+ },
+ {
+  "name": "[d1100] fases: origem \"fonte\" com link https",
+  "pass": true,
+  "extra": "fonte"
+ },
+ {
+  "name": "[d1100] fases: origem \"derivado\" sem link",
+  "pass": true
+ },
+ {
+  "name": "[d1100] check no Fim: contador 1/8",
+  "pass": true,
+  "extra": "1/8 pegos"
+ },
+ {
+  "name": "[d1100] check habilita Limpar checks (topo)",
+  "pass": true
+ },
+ {
+  "name": "[d1100] limpar checks da comp zera contador e fases",
+  "pass": true
+ },
+ {
+  "name": "[d1100] busca dentro da comp filtra o Fim",
+  "pass": true
+ },
+ {
+  "name": "[d1100] busca global \"yunara\"",
+  "pass": true,
+  "extra": "n=2"
+ },
+ {
+  "name": "[d1100] busca destaca campeão nas fases",
+  "pass": true
+ },
+ {
+  "name": "[d1100] busca limpa volta a 24",
+  "pass": true
+ },
+ {
+  "name": "[d1100] Solar Yunara: tabuleiro aberto com 8 unidades",
+  "pass": true
+ },
+ {
+  "name": "[d1100] Solar Yunara: estilo, nota e fonte com minuto",
+  "pass": true
+ },
+ {
+  "name": "[d1100] Solar Yunara: 5 unidades 3★ e itens",
+  "pass": true
+ },
+ {
+  "name": "[d1100] tabuleiro cabe no card",
+  "pass": true,
+  "extra": "board.r=1057 card.r=1080"
+ },
+ {
+  "name": "[d1100] dicas abrem (6 linhas) e link do vídeo no minuto",
+  "pass": true,
+  "extra": "https://youtu.be/shtFyRruAHM?t=39"
+ },
+ {
+  "name": "[d1100] dicas continuam abertas depois de re-render",
+  "pass": true
+ },
+ {
+  "name": "[d1100] comp existente (Rubrivira) recebeu dicas e posições, sem duplicar",
+  "pass": true
+ },
+ {
+  "name": "[d1100] editor abre",
+  "pass": true
+ },
+ {
+  "name": "[d1100] atalho \"/\" foca a busca",
+  "pass": true
+ },
+ {
+  "name": "[d1100] atalho \"?\" abre ajuda",
+  "pass": true
+ },
+ {
+  "name": "[d1100] atalho \"N\" abre nova comp",
+  "pass": true
+ },
+ {
+  "name": "[d1100] comps: sem imagem quebrada",
+  "pass": true,
+  "extra": "945 imgs; quebradas: "
+ },
+ {
+  "name": "[d1100] noticias: nav marca Notícias",
+  "pass": true
+ },
+ {
+  "name": "[d1100] noticias: resumo do meta no topo (18.6, 3 linhas, fonte)",
+  "pass": true
+ },
+ {
+  "name": "[d1100] noticias: data da última atualização",
+  "pass": true,
+  "extra": "07/11/2026"
+ },
+ {
+  "name": "[d1100] noticias: 57 cards, todos com fonte e ícone/glifo",
+  "pass": true
+ },
+ {
+  "name": "[d1100] noticias: ícone de campeão/item/traço quando há id",
+  "pass": true
+ },
+ {
+  "name": "[d1100] noticias: filtros por tipo",
+  "pass": true,
+  "extra": "Todos (57) | Buff (18) | Nerf (12) | Ajuste (6) | Item (2) | Aprimoramento (8) | Meta (2) | Sistema (9)"
+ },
+ {
+  "name": "[d1100] noticias: filtro Nerf mostra só nerfs (12)",
+  "pass": true
+ },
+ {
+  "name": "[d1100] noticias: Nerf + patch 18.5 combinados (10)",
+  "pass": true
+ },
+ {
+  "name": "[d1100] noticias: patch 18.6 sozinho",
+  "pass": true
+ },
+ {
+  "name": "[d1100] noticias: voltar a Todos",
+  "pass": true
+ },
+ {
+  "name": "[d1100] noticias: sem imagem quebrada",
+  "pass": true,
+  "extra": "41 imgs; "
+ },
+ {
+  "name": "[d1100] noticias: sem scroll horizontal",
+  "pass": true,
+  "extra": "overflow=0"
+ },
+ {
+  "name": "[d1100] guia.html responde 200 com \"Em breve\"",
+  "pass": true
+ },
+ {
+  "name": "[d1100] guia: sem scroll horizontal",
+  "pass": true
+ },
+ {
+  "name": "[d1100] navegação por clique Guia > Notícias > Comps",
+  "pass": true
+ },
+ {
+  "name": "[d1100] sem erros de console em nenhuma página",
+  "pass": true,
+  "extra": ""
+ },
+ {
+  "name": "[d1099] 24 comps e meta \"Set 18 · Selvas Encantadas\"",
+  "pass": true,
+  "extra": "Set 18 · Selvas Encantadas · 24 comps"
+ },
+ {
+  "name": "[d1099] 5 comps novas do video depois das 3 fixadas",
+  "pass": true,
+  "extra": "Enfeitiçador 6 | Lutador Florescer Adaptador | Vanguarda Congregação das Bruxas Devastador | Solar Yunara Karma | Emanador Ahri | Sabugueiro Soraka | Sabugueiro Aphelios | Alune AP Fast 9"
+ },
+ {
+  "name": "[d1099] nav: Comps | Guia do Jogo (Em breve) | Notícias, Comps atual",
+  "pass": true,
+  "extra": "[{\"t\":\"Comps\",\"h\":\"index.html\",\"cur\":\"page\"},{\"t\":\"Guia do Jogo Em breve\",\"h\":\"guia.html\",\"cur\":null},{\"t\":\"Notícias\",\"h\":\"noticias.html\",\"cur\":null}]"
+ },
+ {
+  "name": "[d1099] 1 coluna (empilhado)",
+  "pass": true,
+  "extra": "{\"c\":[{\"l\":20,\"t\":221,\"w\":1059,\"r\":1079},{\"l\":20,\"t\":811,\"w\":1059,\"r\":1079}],\"vw\":1099}"
+ },
+ {
+  "name": "[d1099] sem scroll horizontal na lista",
+  "pass": true,
+  "extra": "overflow=0"
+ },
+ {
+  "name": "[d1099] fases: Início/Meio/Fim com rótulo e unidades",
+  "pass": true,
+  "extra": "inicio=4 meio=6"
+ },
+ {
+  "name": "[d1099] fases: origem \"fonte\" com link https",
+  "pass": true,
+  "extra": "fonte"
+ },
+ {
+  "name": "[d1099] fases: origem \"derivado\" sem link",
+  "pass": true
+ },
+ {
+  "name": "[d1099] check no Fim: contador 1/8",
+  "pass": true,
+  "extra": "1/8 pegos"
+ },
+ {
+  "name": "[d1099] check habilita Limpar checks (topo)",
+  "pass": true
+ },
+ {
+  "name": "[d1099] limpar checks da comp zera contador e fases",
+  "pass": true
+ },
+ {
+  "name": "[d1099] busca dentro da comp filtra o Fim",
+  "pass": true
+ },
+ {
+  "name": "[d1099] busca global \"yunara\"",
+  "pass": true,
+  "extra": "n=2"
+ },
+ {
+  "name": "[d1099] busca destaca campeão nas fases",
+  "pass": true
+ },
+ {
+  "name": "[d1099] busca limpa volta a 24",
+  "pass": true
+ },
+ {
+  "name": "[d1099] Solar Yunara: tabuleiro aberto com 8 unidades",
+  "pass": true
+ },
+ {
+  "name": "[d1099] Solar Yunara: estilo, nota e fonte com minuto",
+  "pass": true
+ },
+ {
+  "name": "[d1099] Solar Yunara: 5 unidades 3★ e itens",
+  "pass": true
+ },
+ {
+  "name": "[d1099] tabuleiro cabe no card",
+  "pass": true,
+  "extra": "board.r=519 card.r=1079"
+ },
+ {
+  "name": "[d1099] dicas abrem (6 linhas) e link do vídeo no minuto",
+  "pass": true,
+  "extra": "https://youtu.be/shtFyRruAHM?t=39"
+ },
+ {
+  "name": "[d1099] dicas continuam abertas depois de re-render",
+  "pass": true
+ },
+ {
+  "name": "[d1099] comp existente (Rubrivira) recebeu dicas e posições, sem duplicar",
+  "pass": true
+ },
+ {
+  "name": "[d1099] editor abre",
+  "pass": true
+ },
+ {
+  "name": "[d1099] atalho \"/\" foca a busca",
+  "pass": true
+ },
+ {
+  "name": "[d1099] atalho \"?\" abre ajuda",
+  "pass": true
+ },
+ {
+  "name": "[d1099] atalho \"N\" abre nova comp",
+  "pass": true
+ },
+ {
+  "name": "[d1099] comps: sem imagem quebrada",
+  "pass": true,
+  "extra": "945 imgs; quebradas: "
+ },
+ {
+  "name": "[d1099] noticias: nav marca Notícias",
+  "pass": true
+ },
+ {
+  "name": "[d1099] noticias: resumo do meta no topo (18.6, 3 linhas, fonte)",
+  "pass": true
+ },
+ {
+  "name": "[d1099] noticias: data da última atualização",
+  "pass": true,
+  "extra": "07/11/2026"
+ },
+ {
+  "name": "[d1099] noticias: 57 cards, todos com fonte e ícone/glifo",
+  "pass": true
+ },
+ {
+  "name": "[d1099] noticias: ícone de campeão/item/traço quando há id",
+  "pass": true
+ },
+ {
+  "name": "[d1099] noticias: filtros por tipo",
+  "pass": true,
+  "extra": "Todos (57) | Buff (18) | Nerf (12) | Ajuste (6) | Item (2) | Aprimoramento (8) | Meta (2) | Sistema (9)"
+ },
+ {
+  "name": "[d1099] noticias: filtro Nerf mostra só nerfs (12)",
+  "pass": true
+ },
+ {
+  "name": "[d1099] noticias: Nerf + patch 18.5 combinados (10)",
+  "pass": true
+ },
+ {
+  "name": "[d1099] noticias: patch 18.6 sozinho",
+  "pass": true
+ },
+ {
+  "name": "[d1099] noticias: voltar a Todos",
+  "pass": true
+ },
+ {
+  "name": "[d1099] noticias: sem imagem quebrada",
+  "pass": true,
+  "extra": "41 imgs; "
+ },
+ {
+  "name": "[d1099] noticias: sem scroll horizontal",
+  "pass": true,
+  "extra": "overflow=0"
+ },
+ {
+  "name": "[d1099] guia.html responde 200 com \"Em breve\"",
+  "pass": true
+ },
+ {
+  "name": "[d1099] guia: sem scroll horizontal",
+  "pass": true
+ },
+ {
+  "name": "[d1099] navegação por clique Guia > Notícias > Comps",
+  "pass": true
+ },
+ {
+  "name": "[d1099] sem erros de console em nenhuma página",
+  "pass": true,
+  "extra": ""
+ },
+ {
+  "name": "[m390] 24 comps e meta \"Set 18 · Selvas Encantadas\"",
+  "pass": true,
+  "extra": "Set 18 · Selvas Encantadas · 24 comps"
+ },
+ {
+  "name": "[m390] 5 comps novas do video depois das 3 fixadas",
+  "pass": true,
+  "extra": "Enfeitiçador 6 | Lutador Florescer Adaptador | Vanguarda Congregação das Bruxas Devastador | Solar Yunara Karma | Emanador Ahri | Sabugueiro Soraka | Sabugueiro Aphelios | Alune AP Fast 9"
+ },
+ {
+  "name": "[m390] nav: Comps | Guia do Jogo (Em breve) | Notícias, Comps atual",
+  "pass": true,
+  "extra": "[{\"t\":\"Comps\",\"h\":\"index.html\",\"cur\":\"page\"},{\"t\":\"Guia do Jogo Em breve\",\"h\":\"guia.html\",\"cur\":null},{\"t\":\"Notícias\",\"h\":\"noticias.html\",\"cur\":null}]"
+ },
+ {
+  "name": "[m390] 1 coluna (empilhado)",
+  "pass": true,
+  "extra": "{\"c\":[{\"l\":14,\"t\":261,\"w\":362,\"r\":376},{\"l\":14,\"t\":1233,\"w\":362,\"r\":376}],\"vw\":390}"
+ },
+ {
+  "name": "[m390] sem scroll horizontal na lista",
+  "pass": true,
+  "extra": "overflow=0"
+ },
+ {
+  "name": "[m390] fases: Início/Meio/Fim com rótulo e unidades",
+  "pass": true,
+  "extra": "inicio=4 meio=6"
+ },
+ {
+  "name": "[m390] fases: origem \"fonte\" com link https",
+  "pass": true,
+  "extra": "fonte"
+ },
+ {
+  "name": "[m390] fases: origem \"derivado\" sem link",
+  "pass": true
+ },
+ {
+  "name": "[m390] check no Fim: contador 1/8",
+  "pass": true,
+  "extra": "1/8 pegos"
+ },
+ {
+  "name": "[m390] check habilita Limpar checks (topo)",
+  "pass": true
+ },
+ {
+  "name": "[m390] limpar checks da comp zera contador e fases",
+  "pass": true
+ },
+ {
+  "name": "[m390] busca dentro da comp filtra o Fim",
+  "pass": true
+ },
+ {
+  "name": "[m390] busca global \"yunara\"",
+  "pass": true,
+  "extra": "n=2"
+ },
+ {
+  "name": "[m390] busca destaca campeão nas fases",
+  "pass": true
+ },
+ {
+  "name": "[m390] busca limpa volta a 24",
+  "pass": true
+ },
+ {
+  "name": "[m390] Solar Yunara: tabuleiro aberto com 8 unidades",
+  "pass": true
+ },
+ {
+  "name": "[m390] Solar Yunara: estilo, nota e fonte com minuto",
+  "pass": true
+ },
+ {
+  "name": "[m390] Solar Yunara: 5 unidades 3★ e itens",
+  "pass": true
+ },
+ {
+  "name": "[m390] tabuleiro cabe no card",
+  "pass": true,
+  "extra": "board.r=359 card.r=376"
+ },
+ {
+  "name": "[m390] dicas abrem (6 linhas) e link do vídeo no minuto",
+  "pass": true,
+  "extra": "https://youtu.be/shtFyRruAHM?t=39"
+ },
+ {
+  "name": "[m390] dicas continuam abertas depois de re-render",
+  "pass": true
+ },
+ {
+  "name": "[m390] comp existente (Rubrivira) recebeu dicas e posições, sem duplicar",
+  "pass": true
+ },
+ {
+  "name": "[m390] editor abre",
+  "pass": true
+ },
+ {
+  "name": "[m390] atalho \"/\" foca a busca",
+  "pass": true
+ },
+ {
+  "name": "[m390] atalho \"?\" abre ajuda",
+  "pass": true
+ },
+ {
+  "name": "[m390] atalho \"N\" abre nova comp",
+  "pass": true
+ },
+ {
+  "name": "[m390] comps: sem imagem quebrada",
+  "pass": true,
+  "extra": "945 imgs; quebradas: "
+ },
+ {
+  "name": "[m390] noticias: nav marca Notícias",
+  "pass": true
+ },
+ {
+  "name": "[m390] noticias: resumo do meta no topo (18.6, 3 linhas, fonte)",
+  "pass": true
+ },
+ {
+  "name": "[m390] noticias: data da última atualização",
+  "pass": true,
+  "extra": "07/11/2026"
+ },
+ {
+  "name": "[m390] noticias: 57 cards, todos com fonte e ícone/glifo",
+  "pass": true
+ },
+ {
+  "name": "[m390] noticias: ícone de campeão/item/traço quando há id",
+  "pass": true
+ },
+ {
+  "name": "[m390] noticias: filtros por tipo",
+  "pass": true,
+  "extra": "Todos (57) | Buff (18) | Nerf (12) | Ajuste (6) | Item (2) | Aprimoramento (8) | Meta (2) | Sistema (9)"
+ },
+ {
+  "name": "[m390] noticias: filtro Nerf mostra só nerfs (12)",
+  "pass": true
+ },
+ {
+  "name": "[m390] noticias: Nerf + patch 18.5 combinados (10)",
+  "pass": true
+ },
+ {
+  "name": "[m390] noticias: patch 18.6 sozinho",
+  "pass": true
+ },
+ {
+  "name": "[m390] noticias: voltar a Todos",
+  "pass": true
+ },
+ {
+  "name": "[m390] noticias: sem imagem quebrada",
+  "pass": true,
+  "extra": "41 imgs; "
+ },
+ {
+  "name": "[m390] noticias: sem scroll horizontal",
+  "pass": true,
+  "extra": "overflow=0"
+ },
+ {
+  "name": "[m390] guia.html responde 200 com \"Em breve\"",
+  "pass": true
+ },
+ {
+  "name": "[m390] guia: sem scroll horizontal",
+  "pass": true
+ },
+ {
+  "name": "[m390] navegação por clique Guia > Notícias > Comps",
+  "pass": true
+ },
+ {
+  "name": "[m390] sem erros de console em nenhuma página",
+  "pass": true,
+  "extra": ""
+ }
+]

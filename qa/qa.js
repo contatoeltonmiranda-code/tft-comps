@@ -6,6 +6,13 @@ const exe = process.env.LOCALAPPDATA.replace(/\\/g, '/') + '/ms-playwright/chrom
 const URL = process.env.QA_URL || 'http://127.0.0.1:8765/index.html';
 const OUT = __dirname;
 const results = [];
+const SEEDSB = { window: {} };
+require('vm').runInNewContext(fs.readFileSync(path.join(__dirname, '../data/seed.js'), 'utf8'), SEEDSB);
+const SEEDALL = SEEDSB.window.TFT_SEED;
+const N = SEEDALL.length;
+const LILLIA = (page) => page.locator('article.comp', { has: page.locator('h2', { hasText: 'Solar Lunar Lillia' }) });
+const NOVAS = SEEDALL.filter((c) => c.desde === 7).map((c) => c.id);
+const NOVAS_NOMES = SEEDALL.filter((c) => c.desde === 7).map((c) => c.nome);
 const ok = (name, cond, extra) => { results.push({ name, pass: !!cond, extra }); console.log((cond ? 'OK   ' : 'FALHA') + ' ' + name + (extra ? ' -> ' + extra : '')); };
 
 async function imgReport(page) {
@@ -32,7 +39,7 @@ async function migracao(label, viewport, mobile) {
   vm.createContext(sb);
   vm.runInContext(fs.readFileSync(path.join(__dirname, '../data/seed.js'), 'utf8'), sb);
   const seed = JSON.parse(JSON.stringify(sb.window.TFT_SEED));
-  const legado = seed.filter((c) => !['seed-16', 'seed-17', 'seed-18', 'seed-19'].includes(c.id)).map((c) => { delete c.desde; return c; });
+  const legado = seed.filter((c) => !['seed-16', 'seed-17', 'seed-18', 'seed-19'].concat(NOVAS).includes(c.id)).map((c) => { delete c.desde; return c; });
   legado[0].nome = 'Vivaz EDITADA';
   const browser = await chromium.launch({ executablePath: exe, headless: true });
   const ctx = await browser.newContext({ viewport, deviceScaleFactor: mobile ? 2 : 1, hasTouch: mobile, isMobile: mobile });
@@ -44,20 +51,20 @@ async function migracao(label, viewport, mobile) {
   await page.evaluate((d) => { localStorage.clear(); localStorage.setItem('tft-comps:v1', JSON.stringify({ versao: 1, comps: d })); }, legado);
   await page.reload();
   await page.waitForSelector('article.comp');
-  ok(`[${label}] migracao: legado 15 -> 19 comps`, (await page.locator('article.comp').count()) === 19, 'legado=' + legado.length);
+  ok(`[${label}] migracao: legado 15 -> ${N} comps`, (await page.locator('article.comp').count()) === N, 'legado=' + legado.length);
   ok(`[${label}] migracao: edicao preservada`, (await page.locator('article.comp h2').allTextContents()).includes('Vivaz EDITADA'));
   const nomes = await page.locator('article.comp h2').allTextContents();
   ok(`[${label}] migracao: comp nova entrou`, nomes.includes('Defendente Congregação das Bruxas Rengar'));
   await page.reload();
   await page.waitForSelector('article.comp');
-  ok(`[${label}] migracao: idempotente apos recarregar`, (await page.locator('article.comp').count()) === 19);
+  ok(`[${label}] migracao: idempotente apos recarregar`, (await page.locator('article.comp').count()) === N);
   ok(`[${label}] migracao: Enfeitiçador 1o, Lutador Florescer 2o, Vanguarda 3o`, JSON.stringify(nomes.slice(0, 3)) === JSON.stringify(['Enfeitiçador 6', 'Lutador Florescer Adaptador', 'Vanguarda Congregação das Bruxas Devastador']), nomes.slice(0, 3).join(' | '));
   const novo = page.locator('article.comp', { has: page.locator('h2', { hasText: 'Defendente Congregação' }) });
   await novo.locator('button[aria-label^="Excluir"]').click();
   await page.locator('#ask-actions button', { hasText: 'Excluir' }).click();
   await page.reload();
   await page.waitForSelector('article.comp');
-  ok(`[${label}] migracao: comp excluida nao volta`, (await page.locator('article.comp').count()) === 18 && (await page.locator('article.comp h2').allTextContents()).includes('Vivaz EDITADA'));
+  ok(`[${label}] migracao: comp excluida nao volta`, (await page.locator('article.comp').count()) === N - 1 && (await page.locator('article.comp h2').allTextContents()).includes('Vivaz EDITADA'));
   ok(`[${label}] migracao: sem erros de console`, errors.length === 0, errors.slice(0, 3).join(' | '));
   await browser.close();
 }
@@ -75,7 +82,7 @@ async function run(label, viewport, mobile) {
   await page.goto(URL);
   await page.waitForSelector('article.comp');
   const n = await page.locator('article.comp').count();
-  ok(`[${label}] 19 comps renderizadas`, n === 19, 'n=' + n);
+  ok(`[${label}] ${N} comps renderizadas`, n === N, 'n=' + n);
 
   ok(`[${label}] botao Limpar oculto sem busca`, !(await page.locator('#btn-clear').isVisible()));
   const rep = await imgReport(page);
@@ -85,9 +92,9 @@ async function run(label, viewport, mobile) {
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   ok(`[${label}] sem rolagem horizontal`, overflow <= 0, 'overflow=' + overflow);
   await page.screenshot({ path: path.join(OUT, `${label}-1-lista.png`) });
-  await page.locator('article.comp').nth(11).scrollIntoViewIfNeeded();
+  await LILLIA(page).scrollIntoViewIfNeeded();
   await page.screenshot({ path: path.join(OUT, `${label}-2-board.png`) });
-  const hasHex = await page.locator('article.comp:nth-child(12) .hex.has').count();
+  const hasHex = await LILLIA(page).locator('.hex.has').count();
   ok(`[${label}] tabuleiro hex com unidades`, hasHex === 8, 'hex=' + hasHex);
 
   // comp nova (print 14)
@@ -102,7 +109,7 @@ async function run(label, viewport, mobile) {
   await page.fill('#q', 'diana');
   const dn = await page.locator('article.comp').count();
   const names = await page.locator('article.comp h2').allTextContents();
-  ok(`[${label}] busca "diana" filtra`, dn > 0 && dn < 19, `n=${dn}`);
+  ok(`[${label}] busca "diana" filtra`, dn > 0 && dn < N, `n=${dn}`);
   ok(`[${label}] busca destaca campeao`, (await page.locator('.unit.hit').count()) >= dn);
   await page.screenshot({ path: path.join(OUT, `${label}-3-busca.png`) });
   await page.fill('#q', 'guinsoo');
@@ -115,14 +122,14 @@ async function run(label, viewport, mobile) {
 
   // busca por comp + checks "ja peguei"
   const PK = 'tft-comps:picks:v1';
-  const c8 = () => page.locator('article.comp').nth(11);
+  const c8 = () => LILLIA(page);
   await c8().scrollIntoViewIfNeeded();
   const total8 = await c8().locator('.unit').count();
   const first0 = await page.locator('article.comp').first().locator('.unit').count();
   const nome0 = (await c8().locator('.uname').first().textContent()).trim();
   await c8().locator('.cq').fill(nome0.slice(0, 3).toUpperCase());
   const shown = await c8().locator('.unit').allInnerTexts();
-  ok(`[${label}] busca na comp filtra so ela`, shown.length >= 1 && shown.length < total8 && (await page.locator('article.comp').first().locator('.unit').count()) === first0 && (await page.inputValue('#q')) === '' && (await page.locator('article.comp').count()) === 19, `${shown.length}/${total8}`);
+  ok(`[${label}] busca na comp filtra so ela`, shown.length >= 1 && shown.length < total8 && (await page.locator('article.comp').first().locator('.unit').count()) === first0 && (await page.inputValue('#q')) === '' && (await page.locator('article.comp').count()) === N, `${shown.length}/${total8}`);
   ok(`[${label}] busca na comp so mostra quem bate`, (await c8().locator('.uname').allTextContents()).every((t) => t.toLowerCase().includes(nome0.slice(0, 3).toLowerCase())));
   await c8().locator('.cq').fill('zzzz');
   ok(`[${label}] busca na comp sem resultado avisa`, (await c8().locator('.cnone').count()) === 1 && (await c8().locator('.unit').count()) === 0);
@@ -137,6 +144,7 @@ async function run(label, viewport, mobile) {
   ok(`[${label}] contador inicial 0/N`, (await c8().locator('.pcount').textContent()) === `0/${total8} pegos`);
   ok(`[${label}] Limpar checks desabilitado com 0`, await c8().locator('button', { hasText: 'Limpar checks' }).isDisabled());
   const pickBtn = (i) => c8().locator('.unit').nth(i).locator('button.pick');
+  await pickBtn(0).evaluate((e) => e.scrollIntoView({ block: 'center' }));
   const box = await pickBtn(0).boundingBox();
   const probe = await page.evaluate(({ x, y }) => { const e = document.elementFromPoint(x, y); return e && e.closest('button.pick') ? 'pick' : (e && e.tagName); }, { x: box.x + box.width / 2 - 15, y: box.y + box.height / 2 + 15 });
   ok(`[${label}] area de toque do check >= 32px`, box.width >= 22 && probe === 'pick', `btn=${box.width}x${box.height} probe=${probe}`);
@@ -189,7 +197,7 @@ async function run(label, viewport, mobile) {
   await gbtn.click();
   await page.locator('#ask-actions button', { hasText: 'Limpar checks' }).click();
   ok(`[${label}] confirmar global zera todas as comps`, (await picked()) === 0 && await gbtn.isDisabled() && (await c8().locator('.pcount').textContent()) === `0/${total8} pegos`);
-  ok(`[${label}] limpar global nao altera as comps`, (await compsJson()) === before && (await page.locator('article.comp').count()) === 19);
+  ok(`[${label}] limpar global nao altera as comps`, (await compsJson()) === before && (await page.locator('article.comp').count()) === N);
   await page.reload();
   await page.waitForSelector('article.comp');
   ok(`[${label}] global persiste zerado apos recarregar`, (await picked()) === 0 && await gbtn.isDisabled() && (await page.evaluate((k) => JSON.parse(localStorage.getItem(k)).checks, PK)) !== null && Object.keys(await page.evaluate((k) => JSON.parse(localStorage.getItem(k)).checks, PK)).length === 0);
@@ -217,7 +225,7 @@ async function run(label, viewport, mobile) {
   await page.evaluate((k) => localStorage.setItem(k, '{lixo'), PK);
   await page.reload();
   await page.waitForSelector('article.comp');
-  ok(`[${label}] checks corrompidos nao quebram`, (await page.locator('article.comp').count()) === 19);
+  ok(`[${label}] checks corrompidos nao quebram`, (await page.locator('article.comp').count()) === N);
   await page.evaluate((k) => localStorage.removeItem(k), PK);
   await page.reload();
   await page.waitForSelector('article.comp');
@@ -238,14 +246,16 @@ async function run(label, viewport, mobile) {
   await page.fill('#pk-q', 'leona');
   await page.locator('#pk-grid .pcell[data-id="DA_18_Leona"]').click();
   const row = page.locator('li.erow[data-champ="DA_18_Leona"]');
-  ok(`[${label}] campeao adicionado no editor`, (await row.count()) === 1);
+  ok(`[${label}] campeao adicionado no editor`, (await row.count()) === 1, 'rows=' + (await row.count()) + ' toast=' + (await page.locator('#toast').textContent().catch(() => '')));
   await row.locator('button[data-act="add-alt"]').click();
   await page.fill('#pk-q', 'guinsoo');
   await page.locator('#pk-grid .pcell[data-id="DA_GuinsoosRageblade"]').click();
+  await page.waitForTimeout(250);
   ok(`[${label}] item alternativo adicionado`, (await row.locator('.chip.alt').count()) === 1);
   await row.locator('button[data-act="add-item"]').click();
   await page.fill('#pk-q', 'rabadon');
   await page.locator('#pk-grid .pcell[data-id="DA_RabadonsDeathcap"]').click();
+  await page.waitForTimeout(250);
   ok(`[${label}] item principal adicionado`, (await row.locator('.chip:not(.alt)').count()) === 1);
   // posicionar
   await row.locator('button.btn[aria-pressed]').click();
@@ -275,28 +285,28 @@ async function run(label, viewport, mobile) {
   await page.fill('#pk-q', 'ahri');
   await page.locator('#pk-grid .pcell').first().click();
   await page.click('#ed-save');
-  ok(`[${label}] nova comp criada no topo`, (await page.locator('article.comp h2').first().textContent()) === 'Teste QA' && (await page.locator('article.comp').count()) === 20);
+  ok(`[${label}] nova comp criada no topo`, (await page.locator('article.comp h2').first().textContent()) === 'Teste QA' && (await page.locator('article.comp').count()) === N + 1);
   await page.locator('article.comp').first().locator('button[aria-label^="Duplicar"]').click();
-  ok(`[${label}] duplicar`, (await page.locator('article.comp').count()) === 21 && (await page.locator('article.comp h2').nth(1).textContent()) === 'Teste QA (cópia)');
+  ok(`[${label}] duplicar`, (await page.locator('article.comp').count()) === N + 2 && (await page.locator('article.comp h2').nth(1).textContent()) === 'Teste QA (cópia)');
   await page.locator('article.comp').nth(1).locator('button[aria-label^="Excluir"]').click();
   ok(`[${label}] excluir pede confirmacao`, await page.locator('#ask').evaluate((d) => d.open));
   await page.locator('#ask-actions button', { hasText: 'Cancelar' }).click();
-  ok(`[${label}] cancelar mantem comp`, (await page.locator('article.comp').count()) === 21);
+  ok(`[${label}] cancelar mantem comp`, (await page.locator('article.comp').count()) === N + 2);
   await page.locator('article.comp').nth(1).locator('button[aria-label^="Excluir"]').click();
   await page.locator('#ask-actions button', { hasText: 'Excluir' }).click();
-  ok(`[${label}] excluir remove`, (await page.locator('article.comp').count()) === 20);
+  ok(`[${label}] excluir remove`, (await page.locator('article.comp').count()) === N + 1);
 
   // exportar / importar
   const [dl] = await Promise.all([page.waitForEvent('download'), page.click('#btn-export')]);
   const file = path.join(OUT, `${label}-export.json`);
   await dl.saveAs(file);
   const json = JSON.parse(fs.readFileSync(file, 'utf8'));
-  ok(`[${label}] exportar gera JSON valido`, json.versao === 1 && json.comps.length === 20);
+  ok(`[${label}] exportar gera JSON valido`, json.versao === 1 && json.comps.length === N + 1);
   await page.locator('article.comp').first().locator('button[aria-label^="Excluir"]').click();
   await page.locator('#ask-actions button', { hasText: 'Excluir' }).click();
   await page.setInputFiles('#file', file);
   await page.locator('#ask-actions button', { hasText: 'Substituir tudo' }).click();
-  ok(`[${label}] importar restaura 20`, (await page.locator('article.comp').count()) === 20);
+  ok(`[${label}] importar restaura N+1`, (await page.locator('article.comp').count()) === N + 1);
   fs.writeFileSync(path.join(OUT, 'ruim.json'), '{"comps":[{"nome":"<script>alert(1)</script>","main":[{"c":"NAO_EXISTE"}]}]}');
   await page.setInputFiles('#file', path.join(OUT, 'ruim.json'));
   await page.locator('#ask-actions button', { hasText: 'Adicionar' }).click();
@@ -309,7 +319,7 @@ async function run(label, viewport, mobile) {
   await page.click('#btn-help');
   await page.click('#btn-reset');
   await page.locator('#ask-actions button', { hasText: 'Restaurar' }).click();
-  ok(`[${label}] restaurar originais`, (await page.locator('article.comp').count()) === 19);
+  ok(`[${label}] restaurar originais`, (await page.locator('article.comp').count()) === N);
 
   const final = await imgReport(page);
   ok(`[${label}] imagens apos todos os fluxos`, final.bad.length === 0, `total=${final.total} falhas=${final.bad.length}`);
@@ -323,23 +333,25 @@ async function ordemTopo(label, viewport, mobile) {
   vm.createContext(sb);
   vm.runInContext(fs.readFileSync(path.join(__dirname, '../data/seed.js'), 'utf8'), sb);
   const seed = JSON.parse(JSON.stringify(sb.window.TFT_SEED));
-  const sem = (ids) => seed.filter((c) => !ids.includes(c.id)).map((c) => { delete c.desde; delete c.topo; delete c.abaixoDe; return c; });
-  const orig = sem(['seed-16', 'seed-17', 'seed-18', 'seed-19']);
+  const sem = (ids) => seed.filter((c) => !ids.concat(NOVAS).includes(c.id)).map((c) => { delete c.desde; delete c.topo; delete c.abaixoDe; return c; });
   const v2 = sem(['seed-17', 'seed-18', 'seed-19']);
   const v3 = sem(['seed-18', 'seed-19']);
   const v4 = sem(['seed-19']);
+  const v6 = sem([]);
   const E = 'Enfeitiçador 6';
   const L = 'Lutador Florescer Adaptador';
   const V = 'Vanguarda Congregação das Bruxas Devastador';
+  const T = NOVAS_NOMES;
   const cenarios = [
-    ['primeira vez', null, [E, L, V], 19],
-    ['seedVersao 4 (Enfeitiçador e Lutador no topo)', { versao: 1, seedVersao: 4, excluidos: [], comps: v4 }, [E, L, V], 19],
-    ['seedVersao 3 (Enfeitiçador no topo)', { versao: 1, seedVersao: 3, excluidos: [], comps: v3 }, [E, L, V], 19],
-    ['versao 2 antiga', { versao: 1, seedVersao: 2, excluidos: [], comps: v2 }, [E, L, V], 19],
-    ['seedVersao 4, Lutador movida', { versao: 1, seedVersao: 4, excluidos: [], comps: v4.slice(0, 1).concat(v4.slice(2, 5), v4.slice(1, 2), v4.slice(5)) }, [V, E], 19],
-    ['seedVersao 4, Lutador excluida', { versao: 1, seedVersao: 4, excluidos: ['seed-18'], comps: v4.filter((c) => c.id !== 'seed-18') }, [V, E], 18],
-    ['seedVersao 3, Enfeitiçador excluida', { versao: 1, seedVersao: 3, excluidos: ['seed-17'], comps: v3.filter((c) => c.id !== 'seed-17') }, [L, V], 18],
-    ['seedVersao 3, Enfeitiçador movida', { versao: 1, seedVersao: 3, excluidos: [], comps: v3.slice(1, 4).concat(v3.slice(0, 1), v3.slice(4)) }, [L, V], 19],
+    ['primeira vez', null, [E, L, V].concat(T), N],
+    ['seedVersao 6 (so as 5 do video faltam)', { versao: 1, seedVersao: 6, excluidos: [], comps: v6 }, [E, L, V].concat(T), N],
+    ['seedVersao 4 (Enfeitiçador e Lutador no topo)', { versao: 1, seedVersao: 4, excluidos: [], comps: v4 }, [E, L, V].concat(T), N],
+    ['seedVersao 3 (Enfeitiçador no topo)', { versao: 1, seedVersao: 3, excluidos: [], comps: v3 }, [E, L, V].concat(T), N],
+    ['versao 2 antiga', { versao: 1, seedVersao: 2, excluidos: [], comps: v2 }, [E, L, V].concat(T), N],
+    ['seedVersao 4, Lutador movida', { versao: 1, seedVersao: 4, excluidos: [], comps: v4.slice(0, 1).concat(v4.slice(2, 5), v4.slice(1, 2), v4.slice(5)) }, [V].concat(T, [E]), N],
+    ['seedVersao 4, Lutador excluida', { versao: 1, seedVersao: 4, excluidos: ['seed-18'], comps: v4.filter((c) => c.id !== 'seed-18') }, [V].concat(T, [E]), N - 1],
+    ['seedVersao 3, Enfeitiçador excluida', { versao: 1, seedVersao: 3, excluidos: ['seed-17'], comps: v3.filter((c) => c.id !== 'seed-17') }, [L, V].concat(T), N - 1],
+    ['seedVersao 3, Enfeitiçador movida', { versao: 1, seedVersao: 3, excluidos: [], comps: v3.slice(1, 4).concat(v3.slice(0, 1), v3.slice(4)) }, [L, V].concat(T), N],
   ];
   const browser = await chromium.launch({ executablePath: exe, headless: true });
   for (const [nome, stored, esperado, total] of cenarios) {
@@ -359,7 +371,7 @@ async function ordemTopo(label, viewport, mobile) {
     const again = await page.locator('article.comp h2').allTextContents();
     ok(`[${label}] ordem ${nome}: estavel apos recarregar`, JSON.stringify(again) === JSON.stringify(nomes));
     const salvo = await page.evaluate(() => { const r = localStorage.getItem('tft-comps:v1'); return r ? JSON.parse(r).seedVersao : null; });
-    ok(`[${label}] ordem ${nome}: seedVersao salva = 5`, salvo === 5 || (stored === null && salvo === null));
+    ok(`[${label}] ordem ${nome}: seedVersao salva = 7`, salvo === 7 || (stored === null && salvo === null));
     if (nome === 'primeira vez' || nome.startsWith('seedVersao 3 (') || nome.startsWith('seedVersao 4 (')) {
       const card = page.locator('article.comp').nth(2);
       const traits = await card.innerText();

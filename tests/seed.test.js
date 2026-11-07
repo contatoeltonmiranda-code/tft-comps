@@ -15,8 +15,8 @@ test('seed: ids unicos e todos os campeoes/itens existem no catalogo', () => {
   assert.equal(comps.length, SEED.length);
 });
 
-test('seed: 15 comps originais intactas (ids 01..15 sem desde), seed-16 desde 2, seed-17 desde 3, seed-18 desde 4 e seed-19 desde 5 no topo', () => {
-  assert.equal(SEED.length, 19);
+test('seed: 15 comps originais intactas (ids 01..15 sem desde), seed-16 desde 2, seed-17 desde 3, seed-18 desde 4, seed-19 desde 5 e seed-20..24 desde 7 no topo', () => {
+  assert.equal(SEED.length, 24);
   const byId = (id) => SEED.find((c) => c.id === id);
   for (let i = 1; i <= 15; i++) assert.equal(byId('seed-' + String(i).padStart(2, '0')).desde, undefined);
   assert.equal(byId('seed-16').desde, 2);
@@ -31,8 +31,8 @@ test('seed: 15 comps originais intactas (ids 01..15 sem desde), seed-16 desde 2,
   assert.equal(SEED[2].desde, 5);
   assert.equal(SEED[2].topo, true);
   assert.equal(SEED[2].abaixoDe, 'seed-18');
-  assert.equal(SEED.filter((c) => c.topo).length, 3);
-  assert.equal(window.TFT_SEED_VERSION, 6);
+  assert.equal(SEED.filter((c) => c.topo).length, 8);
+  assert.equal(window.TFT_SEED_VERSION, 7);
 });
 
 test('seed-16 (print 14): tracos batem com o painel do print', () => {
@@ -79,7 +79,8 @@ test('seed-18 (print 16): tracos batem com o painel (1 Emblema de Lutador na Mas
   assert.equal(comp.nome, 'Lutador Florescer Adaptador');
   assert.equal(comp.main.length, 8);
   assert.equal(new Set(comp.main.map((u) => u.c)).size, 8);
-  assert.ok(comp.main.every((u) => !u.p));
+  assert.equal(comp.main.filter((u) => u.p).length, 7, 'posicoes do frame do video 18.5C (Gnar nao aparece no frame)');
+  assert.equal(comp.main.find((u) => u.c === 'DA_18_GnarSmall').p, undefined);
   const t = Object.fromEntries(L.activeTraits(comp, CAT).map((x) => [x.n, x.count]));
   assert.deepEqual(t, { 'Cáustico': 1, Lutador: 4, Adaptador: 3, Florescer: 3, Colosso: 2, Primordial: 2 });
   const tn = Object.fromEntries(CAT.traits.map((x) => [x.id, x.n]));

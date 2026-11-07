@@ -9,6 +9,8 @@
   const ECLIPSE = 'DA_18_Eclipse';
   const MAX_FASE = { inicio: 6, meio: 8 };
   const FASE_ORIGENS = ['fonte', 'derivado', 'manual'];
+  const MAX_DICAS = 8;
+  const MAX_DICA_LINHA = 240;
 
   function norm(s) {
     return String(s == null ? '' : s)
@@ -234,6 +236,21 @@
     return fases;
   }
 
+  function sanitizeDicas(raw) {
+    if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return null;
+    const linhas = [];
+    (Array.isArray(raw.linhas) ? raw.linhas : []).forEach((l) => {
+      const t = str(l, MAX_DICA_LINHA);
+      if (t && linhas.length < MAX_DICAS) linhas.push(t);
+    });
+    if (!linhas.length) return null;
+    const dicas = { linhas };
+    const ref = str(raw.ref, 100);
+    if (ref) dicas.ref = ref;
+    if (typeof raw.url === 'string' && raw.url.length <= 200 && /^https:\/\/\S+$/.test(raw.url)) dicas.url = raw.url;
+    return dicas;
+  }
+
   function sanitizeImport(data, catalog) {
     const idx = indexCatalog(catalog);
     let raw = [];
@@ -287,6 +304,8 @@
       };
       const fases = sanitizeFases(rc.fases, idx);
       if (fases) comp.fases = fases;
+      const dicas = sanitizeDicas(rc.dicas);
+      if (dicas) comp.dicas = dicas;
       comps.push(comp);
     });
     return { comps, dropped };
@@ -333,10 +352,24 @@
     return applied;
   }
 
+  function applySeedDicas(comps, seed, seen, seedVersion) {
+    const applied = [];
+    (Array.isArray(seed) ? seed : []).forEach((s) => {
+      if (!s || !Number.isInteger(s.dicasDesde) || s.dicasDesde <= seen || s.dicasDesde > seedVersion) return;
+      const comp = comps.find((c) => c.id === s.id);
+      if (!comp || comp.dicas) return;
+      const dicas = sanitizeDicas(s.dicas);
+      if (!dicas) return;
+      comp.dicas = dicas;
+      applied.push(comp.id);
+    });
+    return applied;
+  }
+
   function mergeSeed(stored, seed, seedVersion, catalog) {
     const valid = stored && typeof stored === 'object' && !Array.isArray(stored) && Array.isArray(stored.comps);
     if (!valid) {
-      return { comps: sanitizeImport(seed, catalog).comps, seedVersao: seedVersion, excluidos: [], added: [], positioned: [], fasesAplicadas: [] };
+      return { comps: sanitizeImport(seed, catalog).comps, seedVersao: seedVersion, excluidos: [], added: [], positioned: [], fasesAplicadas: [], dicasAplicadas: [] };
     }
     const comps = sanitizeImport(stored, catalog).comps;
     const excluidos = [];
@@ -349,6 +382,7 @@
     const added = sanitizeImport(fresh, catalog).comps;
     const positioned = applySeedPositions(comps, seed, seen, seedVersion);
     const fasesAplicadas = applySeedFases(comps, seed, seen, seedVersion, catalog);
+    const dicasAplicadas = applySeedDicas(comps, seed, seen, seedVersion);
     const seedById = new Map(fresh.map((s) => [s.id, s]));
     const topo = added.filter((c) => seedById.get(c.id).topo === true);
     const back = added.filter((c) => seedById.get(c.id).topo !== true);
@@ -371,7 +405,7 @@
         pinned++;
       }
     });
-    return { comps: list.concat(back), seedVersao: Math.max(seen, seedVersion), excluidos, added: added.map((c) => c.id), positioned, fasesAplicadas };
+    return { comps: list.concat(back), seedVersao: Math.max(seen, seedVersion), excluidos, added: added.map((c) => c.id), positioned, fasesAplicadas, dicasAplicadas };
   }
 
   const FASES_ROTULOS = [
@@ -395,7 +429,44 @@
     return out;
   }
 
-  const api = { ROWS, COLS, MAX_ITEMS, MAX_ALT, MAX_FASE, phaseBoards, norm, indexCatalog, activeTraits, searchComps, filterUnits, sanitizeChecks, isChecked, toggleCheck, clearChecks, clearAllChecks, summarizeChecks, countChecked, duplicateComp, sanitizeImport, mergeSeed, newId, clone };
+  const NEWS_TIPOS = ['buff', 'nerf', 'ajuste', 'item', 'aprimoramento', 'comp-meta', 'sistema'];
+
+  function newsTypes(list) {
+    const count = new Map();
+    (Array.isArray(list) ? list : []).forEach((n) => { if (n && n.tipo) count.set(n.tipo, (count.get(n.tipo) || 0) + 1); });
+    const ordem = NEWS_TIPOS.concat([...count.keys()].filter((t) => !NEWS_TIPOS.includes(t)));
+    return ordem.filter((t) => count.has(t)).map((t) => ({ tipo: t, n: count.get(t) }));
+  }
+
+  function patchKey(p) {
+    const m = /^(\d+)\.(\d+)$/.exec(String(p));
+    return m ? Number(m[1]) * 1000 + Number(m[2]) : -1;
+  }
+
+  function newsPatches(list) {
+    const set = new Set();
+    (Array.isArray(list) ? list : []).forEach((n) => { if (n && n.patch) set.add(n.patch); });
+    return [...set].sort((a, b) => patchKey(b) - patchKey(a));
+  }
+
+  function filterNews(list, f) {
+    const tipo = f && f.tipo;
+    const patch = f && f.patch;
+    return (Array.isArray(list) ? list : []).filter((n) => n && (!tipo || n.tipo === tipo) && (!patch || n.patch === patch));
+  }
+
+  function newsIcon(n, catalog) {
+    const idx = indexCatalog(catalog);
+    const maps = { campeao: idx.champs, traco: idx.traits, item: idx.items };
+    const alvos = n && Array.isArray(n.alvos) ? n.alvos : [];
+    for (const a of alvos) {
+      const hit = a && maps[a.tipo] && a.id ? maps[a.tipo].get(a.id) : null;
+      if (hit) return { img: hit.img, alt: hit.n };
+    }
+    return null;
+  }
+
+  const api = { newsTypes, newsPatches, filterNews, newsIcon, ROWS, COLS, MAX_ITEMS, MAX_ALT, MAX_FASE, phaseBoards, norm, indexCatalog, activeTraits, searchComps, filterUnits, sanitizeChecks, isChecked, toggleCheck, clearChecks, clearAllChecks, summarizeChecks, countChecked, duplicateComp, sanitizeImport, mergeSeed, newId, clone };
   root.TFTLogic = api;
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
 })(typeof window !== 'undefined' ? window : globalThis);

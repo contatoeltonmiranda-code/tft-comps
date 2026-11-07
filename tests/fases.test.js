@@ -158,12 +158,13 @@ test('phaseBoards sem fases devolve null; ids sumidos do catalogo sao ignorados'
 });
 
 /* ---------- seed real ---------- */
-test('seed: as 19 comps tem fases, versao 6 e fasesDesde 6', () => {
-  assert.equal(window.TFT_SEED_VERSION, 6);
-  assert.equal(SEED.length, 19);
+test('seed: as 24 comps tem fases; as 19 anteriores com fasesDesde 6, as 5 novas (desde 7) ja nascem com fases', () => {
+  assert.equal(window.TFT_SEED_VERSION, 7);
+  assert.equal(SEED.length, 24);
   SEED.forEach((s) => {
-    assert.equal(s.fasesDesde, 6, s.id);
     assert.ok(s.fases, s.id);
+    if (s.desde === 7) assert.equal(s.fasesDesde, undefined, s.id);
+    else assert.equal(s.fasesDesde, 6, s.id);
   });
 });
 
@@ -201,15 +202,16 @@ test('seed: fases sobrevivem ao sanitizeImport sem perdas', () => {
 });
 
 test('seed: quem ja tinha tudo ate a versao 5 recebe as fases das 19 comps sem perder edicao', () => {
-  const salvo = L.sanitizeImport(SEED, CAT).comps.map((c) => {
+  const originais = SEED.filter((s) => s.desde !== 7);
+  const salvo = L.sanitizeImport(originais, CAT).comps.map((c) => {
     const x = L.clone(c);
     delete x.fases;
     return x;
   });
   salvo[0].nome = 'Renomeada pelo Elton';
-  const r = L.mergeSeed({ versao: 1, seedVersao: 5, excluidos: [], comps: salvo }, SEED, 6, CAT);
+  const r = L.mergeSeed({ versao: 1, seedVersao: 5, excluidos: [], comps: salvo }, originais, 6, CAT);
   assert.equal(r.seedVersao, 6);
   assert.equal(r.fasesAplicadas.length, 19);
   assert.equal(r.comps[0].nome, 'Renomeada pelo Elton');
-  r.comps.forEach((c) => assert.deepEqual(c.fases, SEED.find((s) => s.id === c.id).fases, c.id));
+  r.comps.forEach((c) => assert.deepEqual(c.fases, originais.find((s) => s.id === c.id).fases, c.id));
 });

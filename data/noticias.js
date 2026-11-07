@@ -1,5 +1,5 @@
 /*
- * Notícias do TFT (Set 18, "Selvas Encantadas") para a futura página "Notícias".
+ * Notícias do TFT (Set 18, "Selvas Encantadas") para a página noticias.html.
  * Fonte única: notas oficiais da Riot em PT-BR (teamfighttactics.leagueoflegends.com), consultadas em 06/11/2026.
  * Cobertura: 18.6 (no ar em 04/11/2026) e 18.5 (no ar em 21/10/2026, com atualizações intermediárias de 22/10 e 27/10).
  * Datas de entrada no ar: calendário oficial de patches da Riot (support.riotgames.com).
@@ -7,6 +7,7 @@
  *
  * Campos de cada notícia:
  *   id, data (AAAA-MM-DD), patch, titulo, tipo, alvos[{tipo, id, nome}], texto, fonte{nome, url}
+ *   TFT_NOTICIAS_ATUALIZADO: data (AAAA-MM-DD) da última conferência com as notas oficiais; a tarefa semanal (tools/noticias-semanal.md) atualiza.
  *   tipo: buff | nerf | ajuste | sistema | item | aprimoramento | comp-meta
  *   alvos[].tipo: campeao | traco | item | aprimoramento | fogo-fatuo | sistema
  *   alvos[].id: id do catálogo (data/catalog.js) ou null quando o catálogo não tem (aprimoramentos, fogos-fátuos)
@@ -30,6 +31,8 @@
   const a = (nome) => ({ tipo: 'aprimoramento', id: null, nome });
   const w = (nome) => ({ tipo: 'fogo-fatuo', id: null, nome });
   const s = (nome) => ({ tipo: 'sistema', id: null, nome });
+
+  window.TFT_NOTICIAS_ATUALIZADO = '2026-11-07';
 
   window.TFT_NOTICIAS_RESUMO = [
     {
