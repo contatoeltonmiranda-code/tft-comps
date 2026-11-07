@@ -186,7 +186,7 @@ Rotas e regiões (conferido no mirror da doc oficial): Brasil = plataforma `br1`
 
 ### Pós-jogo (`posjogo.html`)
 
-Lista as partidas (mais nova primeiro): colocação, data, fila, patch, duração, **nível, rodada de eliminação estimada (≈), ouro restante**, board final com estrelas e itens (ícones do catálogo), traços ativos, **aprimoramentos** (nome legível, só no pós-jogo, sem win rate) e uma análise por partida:
+Lista as partidas (mais nova primeiro): colocação, data, fila, patch, duração, **nível, rodada de eliminação estimada (≈), ouro restante**, board final com estrelas e itens (ícones do catálogo), traços ativos, e uma análise por partida:
 
 - **Comp salva mais parecida**: `TFTRecommend.pontuarComp` sobre o board final (campeões 60% + itens 25%, renormalizado sem o eixo de ouro). "Reconhecida" = tem pelo menos 60% dos campeões da comp (mínimo 2).
 - **Estratégia que parece ter sido seguida** (`estiloDe`): Reroll (2+ unidades 3★ de custo até 3, ou 1 com nível ≤ 7), Fast 9 (nível 9+), Fast 8 (nível 8), Nível baixo no fim, Caiu cedo (antes do 4-1). É leitura do board final, não do que foi decidido.

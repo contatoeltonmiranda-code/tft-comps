@@ -166,7 +166,7 @@
           h('li', {}, h('small', { text: 'Eliminou' }), h('b', { text: eu.eliminados == null ? '–' : String(eu.eliminados) })))),
       h('ul', { class: 'pj-board', 'aria-label': 'Board final' }, eu.unidades.map(miniUnidade)),
       eu.tracosAtivos.length ? h('ul', { class: 'pj-tracos', 'aria-label': 'Traços ativos' }, eu.tracosAtivos.map(pill)) : null,
-      eu.aprimoramentos.length ? h('p', { class: 'pj-aprim' }, h('b', { text: 'Aprimoramentos: ' }), eu.aprimoramentos.join(' · ')) : null,
+      eu.aprimoramentos.length ? h('p', { class: 'pj-aprim' }, h('b', { text: 'Aprimoramentos: ' }), eu.aprimoramentos.join(' · ')) : h('p', { class: 'pj-aprim' }, h('b', { text: 'Aprimoramentos: ' }), 'a API da Riot não informa.'),
       det);
   }
 

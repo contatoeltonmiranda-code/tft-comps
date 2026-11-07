@@ -48,6 +48,34 @@ test('mapearId: exato, prefixo unico e sem chute quando ha ambiguidade', () => {
   assert.equal(PJ.mapearId('', idx.champs), null);
 });
 
+test('normId: DA_Item_Artifact_* e DA_Component_* batem com o id do catalogo', () => {
+  assert.equal(PJ.normId('DA_Item_Artifact_TalismanOfAscension'), 'artifacttalismanofascension');
+  assert.equal(PJ.normId('DA_Item_Artifact_Fishbones'), PJ.normId('DA_Artifact_Fishbones'));
+  assert.equal(PJ.normId('DA_Component_Spatula'), 'componentspatula');
+});
+
+test('catalogo real: ids de item que a Riot manda (artefato, espatula) resolvem', () => {
+  const cat = { items: [] };
+  global.window = {};
+  delete require.cache[require.resolve('../data/catalog.js')];
+  require('../data/catalog.js');
+  Object.assign(cat, global.window.TFT_CATALOG);
+  delete global.window;
+  const idx = PJ.indexar(cat);
+  assert.equal(PJ.mapearId('DA_Item_Artifact_TalismanOfAscension', idx.items), 'DA_Item_Artifact_TalismanOfAscension');
+  assert.equal(idx.itemById.get('DA_Item_Artifact_TalismanOfAscension').k, 'artefato');
+  assert.equal(PJ.mapearId('DA_Component_Spatula', idx.items), 'DA_Component_Spatula');
+  assert.equal(idx.itemById.get('DA_Component_Spatula').k, 'componente');
+  // padrao geral: todo artefato/componente do catalogo resolve para si mesmo quando a Riot manda DA_Item_Artifact_* / DA_Component_*
+  cat.items.filter((i) => /^DA_Artifact_/.test(i.id)).forEach((i) => {
+    assert.equal(PJ.mapearId(i.id.replace('DA_Artifact_', 'DA_Item_Artifact_'), idx.items), i.id, i.id);
+  });
+  cat.items.filter((i) => /^DA_Component_/.test(i.id)).forEach((i) => assert.equal(PJ.mapearId(i.id, idx.items), i.id, i.id));
+  cat.items.filter((i) => i.k === 'componente' || i.k === 'artefato').forEach((i) => {
+    assert.ok(fs.existsSync(path.join(__dirname, '..', i.img)), 'imagem ausente: ' + i.img);
+  });
+});
+
 function rawMatch(over = {}) {
   return {
     metadata: { match_id: 'BR1_100', participants: ['pA', 'pB'] },
@@ -283,6 +311,15 @@ test('analisar: sempre lista o que a API nao permite saber e nunca inventa ouro 
   assert.match(txt, /rolagens/i);
   assert.match(txt, /scout|contest/i);
   assert.match(txt, /vida/i);
+});
+
+test('aprimoramentos: a tft-match-v1 nao manda o campo; a pagina diz isso e nao promete nem inventa', () => {
+  const a = PJ.analisar(PJ.normalizarPartida(rawMatch(), 'pA'), { catalog, recipes, comps });
+  assert.match(a.naoSabe.join(' | '), /aprimoramentos.*(n[aã]o (envia|devolve|informa)|n[aã]o vem)/i);
+  const html = fs.readFileSync(path.join(__dirname, '..', 'posjogo.html'), 'utf8');
+  assert.doesNotMatch(html, /augments?,|, augments?|aprimoramentos, comp/i, 'posjogo.html nao pode prometer aprimoramentos');
+  const ui = fs.readFileSync(path.join(__dirname, '..', 'js', 'posjogo.js'), 'utf8');
+  assert.match(ui, /a API da Riot não informa/, 'cartao da partida avisa quando nao ha aprimoramentos');
 });
 
 test('analisar: aviso quando a rodada e o nivel sao estimados', () => {

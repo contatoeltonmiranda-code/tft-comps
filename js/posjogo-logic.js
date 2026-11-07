@@ -26,6 +26,7 @@
     'Quantas rolagens, quando subiu de nível e quanto XP comprou.',
     'Vida a cada rodada: só a colocação final.',
     'Scout e contest: quem mais jogava a sua comp.',
+    'Aprimoramentos escolhidos: a API da Riot (tft-match-v1) não envia esse campo, nem nas partidas ranqueadas do Set 18.',
     'Itens no banco, itens que você montou e desmontou, e o que a loja ofereceu.',
     'Posicionamento no tabuleiro e como cada combate foi.',
   ];
@@ -45,6 +46,7 @@
       .replace(/^tft\d*_item_/, '')
       .replace(/^tft\d*_/, '')
       .replace(/^da_/, '')
+      .replace(/^item_(?=artifact)/, '')
       .replace(/[^a-z]/g, '');
   }
 

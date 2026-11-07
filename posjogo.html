@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Pós-jogo — análise das suas partidas de TFT | Comps TFT</title>
-<meta name="description" content="Análise automática de cada partida de TFT: colocação, comp final, aprimoramentos, comp parecida, estratégia seguida e onde errou pela Estratégia padrão.">
+<meta name="description" content="Análise automática de cada partida de TFT: colocação, comp final e itens, comp parecida das suas salvas, estratégia seguida e onde errou pela Estratégia padrão.">
 <meta name="robots" content="noindex">
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#0b0f17">
@@ -58,7 +58,7 @@
         <li><b>Chave de teste (dá para usar hoje).</b> Logo depois de entrar, o portal já mostra uma chave que começa com <code>RGAPI-</code>. Ela vale só 24 horas: amanhã é preciso clicar em “Regenerate API Key” e colar a nova. Serve para ver tudo funcionando.</li>
         <li><b>Chave pessoal (a definitiva).</b> No portal, abra “Register Product”, escolha projeto pessoal e preencha o formulário. A Riot pede uma descrição detalhada do produto; pode colar o texto abaixo. A chave pessoal não expira todo dia, mas só vem depois da aprovação. Limites: 20 chamadas por segundo e 100 a cada 2 minutos, e não pode ser usada em produto público. O helper respeita esses limites.
           <pre class="pj-texto" id="pj-texto-registro" tabindex="0">Product name: TFT Comps (personal use)
-Description: Personal, non-public tool for one player. It downloads only my own Teamfight Tactics match history through tft-match-v1 and account-v1 (by Riot ID), a few requests every 15 minutes, and stores it only on my own PC. A local page then shows my average placement and a post-game review of each match (final board, comp, augments, level and elimination round). It also shows a static pre-game plan. It has no public users, no overlay, no screen capture, no memory reading, no real-time data from a game in progress, and no augment or Legend win rates.
+Description: Personal, non-public tool for one player. It downloads only my own Teamfight Tactics match history through tft-match-v1 and account-v1 (by Riot ID), a few requests every 15 minutes, and stores it only on my own PC. A local page then shows my average placement and a post-game review of each match (final board, comp, level and elimination round). It also shows a static pre-game plan. It has no public users, no overlay, no screen capture, no memory reading, no real-time data from a game in progress, and no augment or Legend win rates.
 Type: personal project (not for public consumption).</pre></li>
         <li><b>Rode o setup no PC</b> (ele pergunta o seu Riot ID, no formato <code>nome#tag</code>, e a chave; a chave não aparece na tela): <code>node tools/riot-setup.js</code></li>
         <li><b>Instale as tarefas ocultas</b> (buscam partidas novas a cada 15 minutos e ligam o servidor local quando você entra no Windows; nunca abrem janela): <code>powershell -ExecutionPolicy Bypass -File tools\riot-instalar.ps1 -Iniciar</code></li>
