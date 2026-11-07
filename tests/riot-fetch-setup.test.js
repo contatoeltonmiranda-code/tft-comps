@@ -144,3 +144,14 @@ test('scripts de agendamento: ASCII, sem chave e sem janela (wscript //B + Run 0
   const rm = fs.readFileSync(path.join(dir, 'riot-remover.ps1'), 'utf8');
   assert.match(rm, /Unregister-ScheduledTask/);
 });
+
+test('fetch CLI: sai pelo exitCode (sem process.exit) e com o codigo certo', () => {
+  const { spawnSync } = require('node:child_process');
+  const src = fs.readFileSync(path.join(__dirname, '..', 'tools', 'riot-fetch.js'), 'utf8');
+  assert.ok(!/process\.exit\(/.test(src), 'process.exit derruba o Node 24 no Windows (0xC0000409)');
+  const d = tmp();
+  const r = spawnSync(process.execPath, [path.join(__dirname, '..', 'tools', 'riot-fetch.js')], { env: { ...process.env, TFT_COMPS_DIR: d }, encoding: 'utf8' });
+  assert.equal(r.status, 2);
+  assert.equal(r.stderr.includes('Assertion'), false);
+  assert.equal(lerSt(d).resultado, 'sem-config');
+});

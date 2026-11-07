@@ -88,8 +88,8 @@ function criarIO() {
 if (require.main === module) {
   const io = criarIO();
   executarSetup({ dir: L.dirDados(), ...io }).then(
-    (r) => { io.fechar(); process.exit(r.ok ? 0 : 1); },
-    (e) => { io.fechar(); console.error('Erro:', e.message); process.exit(1); },
+    (r) => { io.fechar(); process.exitCode = r.ok ? 0 : 1; },
+    (e) => { io.fechar(); console.error('Erro:', e.message); process.exitCode = 1; },
   );
 }
 

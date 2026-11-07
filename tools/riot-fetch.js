@@ -57,7 +57,8 @@ async function executar({ dir, env = process.env, criar = L.criarCliente }) {
 }
 
 if (require.main === module) {
-  executar({ dir: L.dirDados() }).then((r) => process.exit(r.codigo), () => process.exit(1));
+  // process.exit com handles do fetch fechando derruba o Node 24 no Windows (0xC0000409): deixar o processo terminar sozinho
+  executar({ dir: L.dirDados() }).then((r) => { process.exitCode = r.codigo; }, () => { process.exitCode = 1; });
 }
 
 module.exports = { executar };
