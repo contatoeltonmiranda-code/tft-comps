@@ -98,6 +98,7 @@ try {
   Log ('claude args: ' + $cliArgs)
   $proc = Start-Process -FilePath $ClaudeExe -ArgumentList $cliArgs -WorkingDirectory $Repo -WindowStyle Hidden -PassThru `
     -RedirectStandardInput $promptFile -RedirectStandardOutput $outFile -RedirectStandardError $errFile
+  $null = $proc.Handle
   if (-not $proc.WaitForExit(1500000)) {
     Stop-Process -Id $proc.Id -Force -ErrorAction SilentlyContinue
     Revert
@@ -122,7 +123,7 @@ try {
   Log ('linha final: ' + $res.Trim())
 
   $st = GitRun status --porcelain
-  $files = @($st.Out -split "`n" | Where-Object { $_.Trim() } | ForEach-Object { $_.Substring(3).Trim().Trim('"') })
+  $files = @($st.Out -split "`n" | Where-Object { $_.Trim() } | ForEach-Object { ($_ -replace '^\s*\S+\s+', '').Trim().Trim('"') })
   if ($files.Count -eq 0) { Finish 0 'sem alteracoes: nada a commitar' }
 
   $bad = @($files | Where-Object { $Allowed -notcontains $_ })
