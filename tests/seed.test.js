@@ -32,7 +32,7 @@ test('seed: 15 comps originais intactas (ids 01..15 sem desde), seed-16 desde 2,
   assert.equal(SEED[2].topo, true);
   assert.equal(SEED[2].abaixoDe, 'seed-18');
   assert.equal(SEED.filter((c) => c.topo).length, 3);
-  assert.equal(window.TFT_SEED_VERSION, 5);
+  assert.equal(window.TFT_SEED_VERSION, 6);
 });
 
 test('seed-16 (print 14): tracos batem com o painel do print', () => {

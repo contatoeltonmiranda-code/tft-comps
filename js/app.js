@@ -60,7 +60,7 @@
     const r = L.mergeSeed(stored, SEED, SEED_VERSION, CAT);
     state.excluidos = r.excluidos;
     state.seedVersao = r.seedVersao;
-    if (stored && (r.added.length || r.positioned.length)) { state.comps = r.comps; save(); }
+    if (stored && (r.added.length || r.positioned.length || r.fasesAplicadas.length)) { state.comps = r.comps; save(); }
     if (stored && r.added.length) setTimeout(() => toast(r.added.length === 1 ? '1 comp nova adicionada.' : r.added.length + ' comps novas adicionadas.'), 300);
     return r.comps;
   }

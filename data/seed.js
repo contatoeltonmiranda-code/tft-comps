@@ -57,7 +57,27 @@ window.TFT_SEED = [
   "flex": [],
   "id": "seed-17",
   "desde": 3,
-  "topo": true
+  "topo": true,
+  "fases": {
+   "inicio": [
+    "DA_18_Alistar",
+    "DA_18_LeBlanc",
+    "DA_18_Veigar",
+    "DA_18_Ornn"
+   ],
+   "meio": [
+    "DA_18_Ornn",
+    "DA_Fiddlesticks18",
+    "DA_18_Alistar",
+    "DA_18_Cassiopeia",
+    "DA_18_LeBlanc",
+    "DA_18_Veigar"
+   ],
+   "origem": "fonte",
+   "ref": "Mobalytics · Kill, Stack, Repeat · patch 18.6",
+   "url": "https://mobalytics.gg/tft/comps-guide/veigar-reroll-3GRav9EJC9f18s1Fsh4A1709SmK"
+  },
+  "fasesDesde": 6
  },
  {
   "nome": "Lutador Florescer Adaptador",
@@ -136,7 +156,27 @@ window.TFT_SEED = [
   "id": "seed-18",
   "desde": 4,
   "topo": true,
-  "abaixoDe": "seed-17"
+  "abaixoDe": "seed-17",
+  "fases": {
+   "inicio": [
+    "DA_18_Rakan",
+    "DA_18_Yorick",
+    "DA_18_MasterYi_AD",
+    "DA_Karma18"
+   ],
+   "meio": [
+    "DA_Krug18",
+    "DA_18_Rengar",
+    "DA_18_MasterYi_AD",
+    "DA_Karma18",
+    "DA_18_Yorick",
+    "DA_Vi18"
+   ],
+   "origem": "fonte",
+   "ref": "Mobalytics · Adapt or Die · patch 18.6",
+   "url": "https://mobalytics.gg/tft/comps-guide/adaptor-reroll-3HRVQSudB7SJTckVeLxU4ICvPDg"
+  },
+  "fasesDesde": 6
  },
  {
   "nome": "Vanguarda Congregação das Bruxas Devastador",
@@ -232,7 +272,27 @@ window.TFT_SEED = [
   "id": "seed-19",
   "desde": 5,
   "topo": true,
-  "abaixoDe": "seed-18"
+  "abaixoDe": "seed-18",
+  "fases": {
+   "inicio": [
+    "DA_18_Elise",
+    "DA_18_Rakan",
+    "DA_18_Camille",
+    "DA_18_Caitlyn"
+   ],
+   "meio": [
+    "DA_18_Hecarim",
+    "DA_18_Diana",
+    "DA_18_Camille",
+    "DA_18_Caitlyn",
+    "DA_18_Cassiopeia",
+    "DA_18_Elise"
+   ],
+   "origem": "fonte",
+   "ref": "Mobalytics · Dark Ritual · patch 18.6 (variante)",
+   "url": "https://mobalytics.gg/tft/comps-guide/dark-ritual-3KZ1gNvZRg3iV7qqfua7YzBR5IM"
+  },
+  "fasesDesde": 6
  },
  {
   "nome": "Vivaz",
@@ -329,7 +389,27 @@ window.TFT_SEED = [
    }
   ],
   "flex": [],
-  "id": "seed-01"
+  "id": "seed-01",
+  "fases": {
+   "inicio": [
+    "DA_18_Rakan",
+    "DA_18_Yunara",
+    "DA_Karma18",
+    "DA_18_Yorick"
+   ],
+   "meio": [
+    "DA_Fiddlesticks18",
+    "DA_18_Teemo",
+    "DA_18_Azir",
+    "DA_18_Yunara",
+    "DA_18_Veigar",
+    "DA_18_Rammus"
+   ],
+   "origem": "fonte",
+   "ref": "Mobalytics · Spikes and Soldiers · patch 18.6",
+   "url": "https://mobalytics.gg/tft/comps-guide/spikes-and-soldiers-3Jpro0TlxLOqmqzej8jZ7IEBApI"
+  },
+  "fasesDesde": 6
  },
  {
   "nome": "Vanguarda Congregação das Bruxas Morgana",
@@ -408,7 +488,27 @@ window.TFT_SEED = [
     "a": []
    }
   ],
-  "id": "seed-02"
+  "id": "seed-02",
+  "fases": {
+   "inicio": [
+    "DA_18_Elise",
+    "DA_18_Rakan",
+    "DA_18_Camille",
+    "DA_18_Caitlyn"
+   ],
+   "meio": [
+    "DA_18_Hecarim",
+    "DA_18_Diana",
+    "DA_18_Camille",
+    "DA_18_Caitlyn",
+    "DA_18_Cassiopeia",
+    "DA_18_Elise"
+   ],
+   "origem": "fonte",
+   "ref": "Mobalytics · Dark Ritual · patch 18.6",
+   "url": "https://mobalytics.gg/tft/comps-guide/dark-ritual-3KZ1gNvZRg3iV7qqfua7YzBR5IM"
+  },
+  "fasesDesde": 6
  },
  {
   "nome": "Solar Fumegante Reroll",
@@ -483,7 +583,27 @@ window.TFT_SEED = [
     "a": []
    }
   ],
-  "id": "seed-03"
+  "id": "seed-03",
+  "fases": {
+   "inicio": [
+    "DA_18_Leona",
+    "DA_18_Shen",
+    "DA_18_Varus",
+    "DA_18_Kayle"
+   ],
+   "meio": [
+    "DA_18_Shen",
+    "DA_18_Varus",
+    "DA_18_Kayle",
+    "DA_Scuttlecrab18",
+    "DA_18_Leona",
+    "DA_18_Sejuani"
+   ],
+   "origem": "fonte",
+   "ref": "Mobalytics · The Eclipse · patch 18.6 (variante)",
+   "url": "https://mobalytics.gg/tft/comps-guide/the-eclipse-3KMQCX7doCgzY4en0qzPAG3j2pp"
+  },
+  "fasesDesde": 6
  },
  {
   "nome": "Lunar Primitiva Aphelios",
@@ -557,7 +677,27 @@ window.TFT_SEED = [
    }
   ],
   "flex": [],
-  "id": "seed-04"
+  "id": "seed-04",
+  "fases": {
+   "inicio": [
+    "DA_18_Xayah",
+    "DA_18_Rakan",
+    "DA_18_Yorick",
+    "DA_18_Varus"
+   ],
+   "meio": [
+    "DA_18_Varus",
+    "DA_18_Xayah",
+    "DA_18_Ornn",
+    "DA_18_Rakan",
+    "DA_18_Hecarim",
+    "DA_18_Shen"
+   ],
+   "origem": "fonte",
+   "ref": "Mobalytics · Moonlit Hunt · patch 18.6",
+   "url": "https://mobalytics.gg/tft/comps-guide/moonlit-hunt-3JBJHbLQQVkdfm6vFl6EPiJcEKw"
+  },
+  "fasesDesde": 6
  },
  {
   "nome": "Sabugueiro Carrasco Reroll",
@@ -632,7 +772,27 @@ window.TFT_SEED = [
     "a": []
    }
   ],
-  "id": "seed-05"
+  "id": "seed-05",
+  "fases": {
+   "inicio": [
+    "DA_18_KhaZix",
+    "DA_18_Ornn",
+    "DA_18_LeBlanc",
+    "DA_18_Alistar"
+   ],
+   "meio": [
+    "DA_18_Hecarim",
+    "DA_18_Diana",
+    "DA_Fiddlesticks18",
+    "DA_18_Ornn",
+    "DA_18_KhaZix",
+    "DA_18_LeBlanc"
+   ],
+   "origem": "fonte",
+   "ref": "Mobalytics · Moonlight Mantis · patch 18.6",
+   "url": "https://mobalytics.gg/tft/comps-guide/moonlight-mantis-3J97BdQFVwSHCHZqKyqpNU6Jr19"
+  },
+  "fasesDesde": 6
  },
  {
   "nome": "Vivaz com Sabugueiro",
@@ -694,7 +854,26 @@ window.TFT_SEED = [
    }
   ],
   "flex": [],
-  "id": "seed-06"
+  "id": "seed-06",
+  "fases": {
+   "inicio": [
+    "DA_18_Veigar",
+    "DA_18_Kobuko",
+    "DA_18_Teemo",
+    "DA_18_Alistar"
+   ],
+   "meio": [
+    "DA_18_Veigar",
+    "DA_18_Kobuko",
+    "DA_18_Teemo",
+    "DA_18_Alistar",
+    "DA_18_LeBlanc",
+    "DA_18_Hecarim"
+   ],
+   "origem": "derivado",
+   "ref": "Derivado do catálogo: traços e custo do board final"
+  },
+  "fasesDesde": 6
  },
  {
   "nome": "Vivaz Sabugueiro Veigar",
@@ -752,7 +931,26 @@ window.TFT_SEED = [
    }
   ],
   "flex": [],
-  "id": "seed-07"
+  "id": "seed-07",
+  "fases": {
+   "inicio": [
+    "DA_18_Veigar",
+    "DA_18_Kobuko",
+    "DA_18_Teemo",
+    "DA_18_Alistar"
+   ],
+   "meio": [
+    "DA_18_Veigar",
+    "DA_18_Kobuko",
+    "DA_18_Teemo",
+    "DA_18_Alistar",
+    "DA_18_LeBlanc",
+    "DA_18_Hecarim"
+   ],
+   "origem": "derivado",
+   "ref": "Derivado do catálogo: traços e custo do board final"
+  },
+  "fasesDesde": 6
  },
  {
   "nome": "Devastador com Fera do Rift",
@@ -816,7 +1014,26 @@ window.TFT_SEED = [
    }
   ],
   "flex": [],
-  "id": "seed-08"
+  "id": "seed-08",
+  "fases": {
+   "inicio": [
+    "DA_18_Akali_AD",
+    "DA_18_Camille",
+    "DA_Murkwolf18",
+    "DA_18_Warwick"
+   ],
+   "meio": [
+    "DA_18_Akali_AD",
+    "DA_18_Camille",
+    "DA_Murkwolf18",
+    "DA_18_Warwick",
+    "DA_18_Diana",
+    "DA_Brambleback18"
+   ],
+   "origem": "derivado",
+   "ref": "Derivado do catálogo: traços e custo do board final"
+  },
+  "fasesDesde": 6
  },
  {
   "nome": "Solar Lunar Lillia",
@@ -918,7 +1135,27 @@ window.TFT_SEED = [
    }
   ],
   "flex": [],
-  "id": "seed-09"
+  "id": "seed-09",
+  "fases": {
+   "inicio": [
+    "DA_18_Leona",
+    "DA_18_Shen",
+    "DA_18_Varus",
+    "DA_18_Kayle"
+   ],
+   "meio": [
+    "DA_18_Shen",
+    "DA_18_Varus",
+    "DA_18_Kayle",
+    "DA_Scuttlecrab18",
+    "DA_18_Leona",
+    "DA_18_Sejuani"
+   ],
+   "origem": "fonte",
+   "ref": "Mobalytics · The Eclipse · patch 18.6 (variante)",
+   "url": "https://mobalytics.gg/tft/comps-guide/the-eclipse-3KMQCX7doCgzY4en0qzPAG3j2pp"
+  },
+  "fasesDesde": 6
  },
  {
   "nome": "Fera do Rift Dragão Ancião Draven",
@@ -1023,7 +1260,27 @@ window.TFT_SEED = [
    }
   ],
   "flex": [],
-  "id": "seed-10"
+  "id": "seed-10",
+  "fases": {
+   "inicio": [
+    "DA_18_Leona",
+    "DA_18_Shen",
+    "DA_18_Xayah",
+    "DA_18_Varus"
+   ],
+   "meio": [
+    "DA_18_Xayah",
+    "DA_18_Varus",
+    "DA_18_Alistar",
+    "DA_18_Ornn",
+    "DA_18_Shen",
+    "DA_18_Akali_AD"
+   ],
+   "origem": "fonte",
+   "ref": "Mobalytics · AD Exodia · patch 18.6",
+   "url": "https://mobalytics.gg/tft/comps-guide/ad-fast-9-3HIz3Cx7oNI4RGtlcnOVu0H4xFh"
+  },
+  "fasesDesde": 6
  },
  {
   "nome": "Florescer Invocador",
@@ -1126,7 +1383,27 @@ window.TFT_SEED = [
    }
   ],
   "flex": [],
-  "id": "seed-11"
+  "id": "seed-11",
+  "fases": {
+   "inicio": [
+    "DA_18_Kobuko",
+    "DA_18_Azir",
+    "DA_18_Yunara",
+    "DA_18_RekSai"
+   ],
+   "meio": [
+    "DA_18_KhaZix",
+    "DA_18_Yorick",
+    "DA_18_RekSai",
+    "DA_18_Azir",
+    "DA_18_Yunara",
+    "DA_Vi18"
+   ],
+   "origem": "fonte",
+   "ref": "Mobalytics · Three Star Emperor · patch 18.6",
+   "url": "https://mobalytics.gg/tft/comps-guide/three-star-emperor-3JleFSihZmRJFqsONvCdwERjiax"
+  },
+  "fasesDesde": 6
  },
  {
   "nome": "Eclipse",
@@ -1184,7 +1461,27 @@ window.TFT_SEED = [
    }
   ],
   "flex": [],
-  "id": "seed-12"
+  "id": "seed-12",
+  "fases": {
+   "inicio": [
+    "DA_18_Leona",
+    "DA_18_Shen",
+    "DA_18_Varus",
+    "DA_18_Kayle"
+   ],
+   "meio": [
+    "DA_18_Shen",
+    "DA_18_Varus",
+    "DA_18_Kayle",
+    "DA_Scuttlecrab18",
+    "DA_18_Leona",
+    "DA_18_Sejuani"
+   ],
+   "origem": "fonte",
+   "ref": "Mobalytics · The Eclipse · patch 18.6",
+   "url": "https://mobalytics.gg/tft/comps-guide/the-eclipse-3KMQCX7doCgzY4en0qzPAG3j2pp"
+  },
+  "fasesDesde": 6
  },
  {
   "nome": "Sabugueiro Draven",
@@ -1265,7 +1562,27 @@ window.TFT_SEED = [
     "a": []
    }
   ],
-  "id": "seed-13"
+  "id": "seed-13",
+  "fases": {
+   "inicio": [
+    "DA_18_Alistar",
+    "DA_18_Ornn",
+    "DA_18_Varus",
+    "DA_18_Xayah"
+   ],
+   "meio": [
+    "DA_18_Varus",
+    "DA_18_Xayah",
+    "DA_18_Alistar",
+    "DA_18_Ornn",
+    "DA_18_Shen",
+    "DA_18_Akali_AD"
+   ],
+   "origem": "fonte",
+   "ref": "Mobalytics · The Final Forest · patch 18.6",
+   "url": "https://mobalytics.gg/tft/comps-guide/elderwood-cap-3HBMcPmR81fWMyuppwi8smQJ37O"
+  },
+  "fasesDesde": 6
  },
  {
   "nome": "Fera do Rift Rubrivira Dragão Ancião",
@@ -1340,7 +1657,27 @@ window.TFT_SEED = [
     "a": []
    }
   ],
-  "id": "seed-14"
+  "id": "seed-14",
+  "fases": {
+   "inicio": [
+    "DA_18_Rakan",
+    "DA_Murkwolf18",
+    "DA_18_Sentry",
+    "DA_Scuttlecrab18"
+   ],
+   "meio": [
+    "DA_18_Diana",
+    "DA_Scuttlecrab18",
+    "DA_Murkwolf18",
+    "DA_Cinderling18",
+    "DA_18_Sentry",
+    "DA_Krug18"
+   ],
+   "origem": "fonte",
+   "ref": "Mobalytics · Riftbeast Ascension · patch 18.6",
+   "url": "https://mobalytics.gg/tft/comps-guide/riftbeasts-3GPdjNA6ylpo7iCTllcNRj1b8fs"
+  },
+  "fasesDesde": 6
  },
  {
   "nome": "Sabugueiro Draven Taric",
@@ -1404,9 +1741,28 @@ window.TFT_SEED = [
    }
   ],
   "flex": [],
-  "id": "seed-15"
- }
-,
+  "id": "seed-15",
+  "fases": {
+   "inicio": [
+    "DA_18_Alistar",
+    "DA_18_Ornn",
+    "DA_18_Varus",
+    "DA_18_Xayah"
+   ],
+   "meio": [
+    "DA_18_Varus",
+    "DA_18_Xayah",
+    "DA_18_Alistar",
+    "DA_18_Ornn",
+    "DA_18_Shen",
+    "DA_18_Akali_AD"
+   ],
+   "origem": "fonte",
+   "ref": "Mobalytics · The Final Forest · patch 18.6",
+   "url": "https://mobalytics.gg/tft/comps-guide/elderwood-cap-3HBMcPmR81fWMyuppwi8smQJ37O"
+  },
+  "fasesDesde": 6
+ },
  {
   "nome": "Defendente Congregação das Bruxas Rengar",
   "estilo": "Nível 8 (5-3)",
@@ -1479,7 +1835,27 @@ window.TFT_SEED = [
   ],
   "flex": [],
   "id": "seed-16",
-  "desde": 2
+  "desde": 2,
+  "fases": {
+   "inicio": [
+    "DA_18_Ornn",
+    "DA_18_Xayah",
+    "DA_18_LeBlanc",
+    "DA_18_Leona"
+   ],
+   "meio": [
+    "DA_18_Cassiopeia",
+    "DA_18_Shen",
+    "DA_18_Ornn",
+    "DA_Fiddlesticks18",
+    "DA_18_Rammus",
+    "DA_18_Leona"
+   ],
+   "origem": "fonte",
+   "ref": "Mobalytics · Defenders of the DoT · patch 18.6 (variante)",
+   "url": "https://mobalytics.gg/tft/comps-guide/defenders-of-the-dot-3IQjiZdfHWypkfHdKpdhuYQindM"
+  },
+  "fasesDesde": 6
  }
 ];
-window.TFT_SEED_VERSION = 5;
+window.TFT_SEED_VERSION = 6;

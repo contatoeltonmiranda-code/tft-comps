@@ -7,6 +7,8 @@
   const MAX_ITEMS = 3;
   const MAX_ALT = 6;
   const ECLIPSE = 'DA_18_Eclipse';
+  const MAX_FASE = { inicio: 6, meio: 8 };
+  const FASE_ORIGENS = ['fonte', 'derivado', 'manual'];
 
   function norm(s) {
     return String(s == null ? '' : s)
@@ -213,6 +215,25 @@
     return out;
   }
 
+  function sanitizeFases(raw, idx) {
+    if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return null;
+    const pick = (list, max) => {
+      const out = [];
+      (Array.isArray(list) ? list : []).forEach((id) => {
+        if (typeof id === 'string' && idx.champs.has(id) && !out.includes(id) && out.length < max) out.push(id);
+      });
+      return out;
+    };
+    const inicio = pick(raw.inicio, MAX_FASE.inicio);
+    const meio = pick(raw.meio, MAX_FASE.meio);
+    if (!inicio.length && !meio.length) return null;
+    const fases = { inicio, meio, origem: FASE_ORIGENS.includes(raw.origem) ? raw.origem : 'manual' };
+    const ref = str(raw.ref, 100);
+    if (ref) fases.ref = ref;
+    if (typeof raw.url === 'string' && raw.url.length <= 200 && /^https:\/\/\S+$/.test(raw.url)) fases.url = raw.url;
+    return fases;
+  }
+
   function sanitizeImport(data, catalog) {
     const idx = indexCatalog(catalog);
     let raw = [];
@@ -254,7 +275,7 @@
       let id = typeof rc.id === 'string' && rc.id.length <= 60 ? rc.id : '';
       if (!id || ids.has(id)) id = newId();
       ids.add(id);
-      comps.push({
+      const comp = {
         id,
         nome: str(rc.nome, 80),
         estilo: str(rc.estilo, 40),
@@ -263,7 +284,10 @@
         board: !!rc.board,
         main: cleanUnits(rc.main, MAX_MAIN),
         flex: cleanUnits(rc.flex, MAX_FLEX),
-      });
+      };
+      const fases = sanitizeFases(rc.fases, idx);
+      if (fases) comp.fases = fases;
+      comps.push(comp);
     });
     return { comps, dropped };
   }
@@ -294,10 +318,25 @@
     return positioned;
   }
 
+  function applySeedFases(comps, seed, seen, seedVersion, catalog) {
+    const idx = indexCatalog(catalog);
+    const applied = [];
+    (Array.isArray(seed) ? seed : []).forEach((s) => {
+      if (!s || !Number.isInteger(s.fasesDesde) || s.fasesDesde <= seen || s.fasesDesde > seedVersion) return;
+      const comp = comps.find((c) => c.id === s.id);
+      if (!comp || comp.fases) return;
+      const fases = sanitizeFases(s.fases, idx);
+      if (!fases) return;
+      comp.fases = fases;
+      applied.push(comp.id);
+    });
+    return applied;
+  }
+
   function mergeSeed(stored, seed, seedVersion, catalog) {
     const valid = stored && typeof stored === 'object' && !Array.isArray(stored) && Array.isArray(stored.comps);
     if (!valid) {
-      return { comps: sanitizeImport(seed, catalog).comps, seedVersao: seedVersion, excluidos: [], added: [], positioned: [] };
+      return { comps: sanitizeImport(seed, catalog).comps, seedVersao: seedVersion, excluidos: [], added: [], positioned: [], fasesAplicadas: [] };
     }
     const comps = sanitizeImport(stored, catalog).comps;
     const excluidos = [];
@@ -309,6 +348,7 @@
     const fresh = (Array.isArray(seed) ? seed : []).filter((s) => s && (Number.isInteger(s.desde) ? s.desde : 1) > seen && !used.has(s.id) && !excluidos.includes(s.id));
     const added = sanitizeImport(fresh, catalog).comps;
     const positioned = applySeedPositions(comps, seed, seen, seedVersion);
+    const fasesAplicadas = applySeedFases(comps, seed, seen, seedVersion, catalog);
     const seedById = new Map(fresh.map((s) => [s.id, s]));
     const topo = added.filter((c) => seedById.get(c.id).topo === true);
     const back = added.filter((c) => seedById.get(c.id).topo !== true);
@@ -331,10 +371,31 @@
         pinned++;
       }
     });
-    return { comps: list.concat(back), seedVersao: Math.max(seen, seedVersion), excluidos, added: added.map((c) => c.id), positioned };
+    return { comps: list.concat(back), seedVersao: Math.max(seen, seedVersion), excluidos, added: added.map((c) => c.id), positioned, fasesAplicadas };
   }
 
-  const api = { ROWS, COLS, MAX_ITEMS, MAX_ALT, norm, indexCatalog, activeTraits, searchComps, filterUnits, sanitizeChecks, isChecked, toggleCheck, clearChecks, clearAllChecks, summarizeChecks, countChecked, duplicateComp, sanitizeImport, mergeSeed, newId, clone };
+  const FASES_ROTULOS = [
+    { key: 'inicio', label: 'Início', hint: 'Estágio 2 · nível 3-5' },
+    { key: 'meio', label: 'Meio', hint: 'Estágio 3-4 · nível 6-7' },
+  ];
+
+  function phaseBoards(comp, catalog) {
+    const f = comp && comp.fases;
+    if (!f || typeof f !== 'object') return null;
+    const idx = indexCatalog(catalog);
+    const unit = (id) => {
+      const c = idx.champs.get(id);
+      return c ? { c: id, n: c.n, cost: c.c, img: c.img } : null;
+    };
+    const units = (ids) => (Array.isArray(ids) ? ids : []).map(unit).filter(Boolean);
+    const rows = FASES_ROTULOS.map((r) => ({ key: r.key, label: r.label, hint: r.hint, units: units(f[r.key]) }));
+    rows.push({ key: 'fim', label: 'Fim', hint: 'Board final', units: units((comp.main || []).map((u) => u.c)) });
+    const out = { origem: f.origem, ref: f.ref || '', fases: rows };
+    if (f.url) out.url = f.url;
+    return out;
+  }
+
+  const api = { ROWS, COLS, MAX_ITEMS, MAX_ALT, MAX_FASE, phaseBoards, norm, indexCatalog, activeTraits, searchComps, filterUnits, sanitizeChecks, isChecked, toggleCheck, clearChecks, clearAllChecks, summarizeChecks, countChecked, duplicateComp, sanitizeImport, mergeSeed, newId, clone };
   root.TFTLogic = api;
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
 })(typeof window !== 'undefined' ? window : globalThis);
