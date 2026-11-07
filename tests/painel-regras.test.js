@@ -43,8 +43,25 @@ test('fidelidade: cada trecho citado existe, palavra por palavra, no .md de orig
   assert.deepEqual(faltam, []);
 });
 
-const MARCA = /regra derivada do guia/;
-// Marca "(regra derivada do guia)": na propria linha/linha da tabela ou numa linha so dela logo abaixo do titulo do bloco.
+// Marca "(regra derivada do guia)". Vale para o texto que vem antes dela na mesma celula/linha, desde a marca anterior.
+// Marca com escopo ("..., no custo 3") so vale para o trecho que cita esse escopo.
+const MARCA_G = /\(regra derivada do guia(?:,\s*(?:no|na|nos|nas)\s+([^)]*))?[^)]*\)/g;
+const STOP = new Set(['de', 'do', 'da', 'no', 'na', 'nos', 'nas', 'o', 'a', 'os', 'as', 'e']);
+const canon = (s) => ' ' + s.toLowerCase().split(/[^\p{L}\p{N}★]+/u).filter((w) => w && !STOP.has(w)).join(' ') + ' ';
+
+function marcadoNaCelula(cel, a, b, trecho) {
+  let anterior = 0;
+  let marcado = false;
+  for (const m of cel.matchAll(MARCA_G)) {
+    const fim = m.index + m[0].length;
+    const escopoOk = !m[1] || canon(trecho).includes(canon(m[1]));
+    if (anterior < b && fim > a && escopoOk) marcado = true;
+    anterior = fim;
+  }
+  return marcado;
+}
+
+// Marca "(regra derivada do guia)": no texto do trecho (por celula da tabela) ou numa linha so dela logo abaixo do titulo do bloco.
 function marcaDoTrecho(md, trecho) {
   const pos = md.indexOf(trecho);
   const ini = md.lastIndexOf('\n', pos) + 1;
@@ -53,19 +70,18 @@ function marcaDoTrecho(md, trecho) {
   const titulo = md.lastIndexOf('\n#', pos);
   const bloco = md.slice(titulo < 0 ? 0 : titulo + 1, ini).split('\n').slice(0, 4);
   const blocoMarcado = bloco.slice(1).some((l) => l.trim().startsWith('(regra derivada do guia'));
-  let naLinha = MARCA.test(linha);
-  if (naLinha && linha.includes(' | ')) {
-    // tabela: so conta a marca nas celulas que o trecho cobre
-    const a = pos - ini;
-    const b = a + trecho.length;
-    let off = 0;
-    naLinha = linha.split(' | ').some((cel) => {
-      const ini2 = off;
-      const fim2 = off + cel.length;
-      off = fim2 + 3;
-      return fim2 > a && ini2 < b && MARCA.test(cel);
-    });
-  }
+  const a = pos - ini;
+  const b = a + trecho.length;
+  const celulas = /^\s*\|/.test(linha) || linha.includes(' | ') ? linha.split(' | ') : [linha];
+  let off = 0;
+  let naLinha = false;
+  celulas.forEach((cel) => {
+    const ini2 = off;
+    const fim2 = off + cel.length;
+    off = fim2 + 3;
+    if (fim2 <= a || ini2 >= b) return;
+    if (marcadoNaCelula(cel, Math.max(a, ini2) - ini2, Math.min(b, fim2) - ini2, trecho)) naLinha = true;
+  });
   return { naLinha, blocoMarcado };
 }
 

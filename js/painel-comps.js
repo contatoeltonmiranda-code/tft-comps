@@ -3,6 +3,7 @@
   // Reusa a pontuacao de js/recommend.js (campeoes 60%, itens 25%, ouro/nivel 15%) sobre as fases inicio/meio/fim.
   const Rec = typeof require === 'function' && typeof module !== 'undefined' ? require('./recommend.js') : root.TFTRecommend;
   const Pn = () => (typeof require === 'function' && typeof module !== 'undefined' ? require('./painel-logic.js') : root.TFTPainel);
+  const Logic = () => (typeof require === 'function' && typeof module !== 'undefined' ? require('./logic.js') : root.TFTLogic);
 
   const ORD_3_2 = 13; // 3-2
   const ORD_3_5 = 16; // 3-5
@@ -140,6 +141,28 @@
     return { estado: montaveis.length ? 'ok' : 'falta', bis, montaveis };
   }
 
+  // ---- Slamaveis: itens completos que os componentes na mao montam agora (qualquer receita, nao so os BIS dos seeds).
+  // "Slamavel" e a leitura do painel para "BIS ou slamaveis que poupem vida" (regra pn-slamavel).
+  function itensSlamaveis(estado, dados) {
+    const receitas = (dados.recipes && dados.recipes.receitas) || {};
+    const tem = (id) => (estado.comps && estado.comps[id]) || 0;
+    return Object.keys(receitas).filter((id) => {
+      const [a, b] = receitas[id];
+      return a === b ? tem(a) >= 2 : tem(a) >= 1 && tem(b) >= 1;
+    });
+  }
+
+  // ---- Comps atuais do Elton: a lista salva pelo app de comps (editadas, novas, sem as excluidas), como o app a mostra.
+  // `raw` e o texto do localStorage (ou null). Sem nada salvo ou com lixo, cai no seed. Nao grava nada.
+  const STORAGE_KEY_COMPS = 'tft-comps:v1';
+  function carregarComps(raw, seed, seedVersion, catalog) {
+    let stored = null;
+    if (typeof raw === 'string' && raw) {
+      try { stored = JSON.parse(raw); } catch (e) { stored = null; }
+    }
+    return Logic().mergeSeed(stored, lista(seed), seedVersion, catalog).comps;
+  }
+
   // ---- Forcar comp (criterios do guia onde existem; limiares de cobertura sao do painel e vem marcados)
   const SEV = { ok: 0, arriscado: 1, nao: 2 };
   const NOME_SEV = ['ok', 'arriscado', 'nao'];
@@ -218,7 +241,7 @@
     };
   }
 
-  const api = { faseDaRodada, estadoParaRecommend, rankear, bisDoCampeao, bisAvaliacao, avaliarForca, tipoDaComp, SEV };
+  const api = { faseDaRodada, estadoParaRecommend, rankear, bisDoCampeao, bisAvaliacao, itensSlamaveis, carregarComps, STORAGE_KEY_COMPS, avaliarForca, tipoDaComp, SEV };
   root.TFTPainelComps = api;
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
 })(typeof window !== 'undefined' ? window : globalThis);

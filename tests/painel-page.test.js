@@ -136,3 +136,13 @@ test('layout: DOM com entrada antes da saida (teclado) e CSS inverte no mobile',
 test('localStorage usa a chave tft-comps:painel:v1', () => {
   assert.match(read('js/painel-logic.js'), /'tft-comps:painel:v1'/);
 });
+
+test('comps do ranking: painel.js le a lista atual do Elton (carregarComps) e nunca grava nela', () => {
+  const src = read('js/painel.js');
+  assert.match(src, /CompsApi\.carregarComps\(/);
+  assert.match(src, /STORAGE_KEY_COMPS/);
+  assert.ok(!/seed:\s*window\.TFT_SEED\b/.test(src), 'dados.seed nao pode ser so o seed');
+  assert.ok(!/setItem\([^)]*STORAGE_KEY_COMPS/.test(src), 'o painel so le a lista de comps');
+  assert.ok(!/removeItem|localStorage\.clear/.test(src), 'o painel nao apaga armazenamento');
+  assert.match(src, /addEventListener\('storage'/, 'acompanha mudancas feitas na pagina Comps em outra aba');
+});

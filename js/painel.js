@@ -3,7 +3,14 @@
   // Texto sempre por textContent. Classes proprias com prefixo pn-.
   const P = window.TFTPainel;
   const Logic = window.TFTLogic;
-  const dados = { seed: window.TFT_SEED || [], catalog: window.TFT_CATALOG, recipes: window.TFT_RECIPES };
+  const CompsApi = window.TFTPainelComps;
+  // As comps do ranking sao as atuais do Elton (lista salva pelo app de comps: editadas, novas, sem as excluidas). Leitura apenas.
+  function lerComps() {
+    let raw = null;
+    try { raw = localStorage.getItem(CompsApi.STORAGE_KEY_COMPS); } catch (e) { /* sem armazenamento: usa o seed */ }
+    return CompsApi.carregarComps(raw, window.TFT_SEED || [], window.TFT_SEED_VERSION || 1, window.TFT_CATALOG);
+  }
+  const dados = { seed: lerComps(), catalog: window.TFT_CATALOG, recipes: window.TFT_RECIPES };
   const champs = dados.catalog.champs.slice().sort((a, b) => a.c - b.c || a.n.localeCompare(b.n, 'pt'));
   const champById = new Map(dados.catalog.champs.map((c) => [c.id, c]));
   const itemById = new Map(dados.catalog.items.map((i) => [i.id, i]));
@@ -273,8 +280,10 @@
 
   // ------------------------------------------------------------------ entrada: contest e favorita
   const linhasContest = new Map();
-  function montarContest() {
+  function desenharContest() {
     const ul = $('#pn-contest');
+    ul.textContent = '';
+    linhasContest.clear();
     dados.seed.forEach((comp) => {
       const star = h('button', { type: 'button', class: 'pn-star', 'data-star': comp.id, 'data-fk': `cstar-${comp.id}` }, icone('i-star-o'));
       const val = h('output', { class: 'pn-cn' });
@@ -288,6 +297,16 @@
       linhasContest.set(comp.id, { li, star, val, comp });
       ul.append(li);
     });
+    if (!dados.seed.length) ul.append(h('li', { class: 'pn-dica', text: 'Nenhuma comp salva. Crie ou restaure comps na página Comps.' }));
+    filtrarContest();
+  }
+  function filtrarContest() {
+    const q = Logic.norm($('#pn-q-contest').value);
+    linhasContest.forEach(({ li, comp }) => { li.hidden = !!q && !Logic.norm(comp.nome + ' ' + (comp.estilo || '')).includes(q); });
+  }
+  function montarContest() {
+    const ul = $('#pn-contest');
+    desenharContest();
     ul.addEventListener('click', (e) => {
       const s = e.target.closest('[data-star]');
       if (s) return mudar((st) => { st.favorita = st.favorita === s.dataset.star ? null : s.dataset.star; });
@@ -297,9 +316,13 @@
         mudar((st) => { const n = (st.contest[id] || 0) + Number(d); if (n > 0) st.contest[id] = n; else delete st.contest[id]; });
       }
     });
-    $('#pn-q-contest').addEventListener('input', () => {
-      const q = Logic.norm($('#pn-q-contest').value);
-      linhasContest.forEach(({ li, comp }) => { li.hidden = !!q && !Logic.norm(comp.nome + ' ' + (comp.estilo || '')).includes(q); });
+    $('#pn-q-contest').addEventListener('input', filtrarContest);
+    // o app de comps pode mudar em outra aba: o ranking acompanha a lista salva
+    window.addEventListener('storage', (ev) => {
+      if (ev.key !== CompsApi.STORAGE_KEY_COMPS && ev.key !== null) return;
+      dados.seed = lerComps();
+      desenharContest();
+      atualizar();
     });
   }
   function atualizarContestLista() {
@@ -338,7 +361,9 @@
     const st = c.ok === true ? 'ok' : c.ok === false ? 'no' : 'unk';
     const ic = c.ok === true ? 'i-check' : c.ok === false ? 'i-x' : 'i-unknown';
     const nome = { ok: 'Critério atendido', no: 'Critério não atendido', unk: 'Critério sem informação' }[st];
-    return h('li', { class: `pn-crit pn-crit-${st}` }, h('span', { class: 'pn-crit-i', title: nome }, icone(ic), h('span', { class: 'sr', text: nome + ': ' })), h('span', {}, c.texto, ' ', refRegra(c.regra)));
+    const nomeRot = c.rotulo && !c.texto.toLowerCase().startsWith(c.rotulo.toLowerCase()) ? c.rotulo + ': ' : '';
+    const rot = c.letra ? `(${c.letra}) ${nomeRot}` : nomeRot;
+    return h('li', { class: `pn-crit pn-crit-${st}` }, h('span', { class: 'pn-crit-i', title: nome }, icone(ic), h('span', { class: 'sr', text: nome + ': ' })), h('span', {}, rot ? h('strong', { class: 'pn-crit-l', text: rot }) : null, c.texto, ' ', refRegra(c.regra)));
   }
 
   function blocoEstrategia(r) {
@@ -347,6 +372,7 @@
       h('p', { class: 'pn-est-nome', text: e.rotulo }),
       e.carry ? h('p', { class: 'pn-dica', text: `Carry do reroll: ${e.carry.n} (custo ${e.carry.custo}, ${e.carry.copias} cópias).` }) : null,
       h('h3', { text: 'Por que' }),
+      e.totalCriterios ? h('p', { class: 'pn-bateram', text: `Critérios de "Melhor momento para seguir" que bateram: ${e.bateram.length} de ${e.totalCriterios}${e.bateram.length ? ` (${e.bateram.join(', ')})` : ''}.` }) : null,
       h('ul', { class: 'pn-crits' }, e.porque.map(itemCrit)),
       h('h3', { text: 'O que faria mudar' }),
       e.mudaria.length ? h('ul', { class: 'pn-mud' }, e.mudaria.map((m) => h('li', {}, m.texto, ' ', refRegra(m.regra)))) : h('p', { class: 'pn-dica', text: 'Nada a mudar agora: todos os critérios batem.' }));
@@ -420,7 +446,8 @@
   function blocoComps(r) {
     const c = r.comps;
     return secao('pn-h-comps-s', 'Comps',
-      h('p', { class: 'pn-dica', text: `Fase: ${NOME_FASE[c.fase]}. Ranking das ${c.todas.length} comps do seed pelo que você tem.` }),
+      h('p', { class: 'pn-dica', text: `Fase: ${NOME_FASE[c.fase]}. Ranking das ${c.todas.length} ${c.todas.length === 1 ? 'comp salva' : 'comps salvas'} (as suas, com edições e novas, sem as excluídas) pelo que você tem.` }),
+      !c.todas.length ? h('p', { class: 'pn-vazio-i', text: 'Nenhuma comp salva. Crie ou restaure comps na página Comps.' }) : null,
       c.vazio ? h('p', { class: 'pn-vazio-i', text: 'Sem campeões nem componentes: o ranking ainda não tem sinal. Adicione o que você tem.' }) : null,
       h('ol', { class: 'pn-top' }, c.top3.map((x, k) => itemTop(x, k + 1))),
       h('details', { class: 'pn-todas' },

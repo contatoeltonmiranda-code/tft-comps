@@ -240,3 +240,66 @@ test('pontuarComp (recommend.js) continua exportado e aceita unidades da fase', 
   const fase = R.pontuarComp(comp, estado, catalog, recipes, { unidades: ['A', 'E'] });
   assert.ok(fase.partes.campeoes > base.partes.campeoes);
 });
+
+// -------------------------------------------------------------- slamaveis e comps atuais do Elton
+
+test('itensSlamaveis: itens completos que os componentes na mao montam (qualquer receita, nao so os dos seeds)', () => {
+  assert.deepEqual(C.itensSlamaveis(est({ comps: {} }), dados), []);
+  assert.deepEqual(C.itensSlamaveis(est({ comps: { CS: 1 } }), dados), []);
+  assert.deepEqual(C.itensSlamaveis(est({ comps: { CS: 2 } }), dados), ['IE']);
+  assert.deepEqual(C.itensSlamaveis(est({ comps: { CS: 1, CB: 1 } }), dados), ['IR']);
+  assert.deepEqual(C.itensSlamaveis(est({ comps: { CS: 2, CB: 1 } }), dados).sort(), ['IE', 'IR']);
+  assert.deepEqual(C.itensSlamaveis(est({ comps: { CS: 2 } }), { seed: [], catalog, recipes: { componentes: {}, receitas: {} } }), []);
+});
+
+const guardado = (o) => JSON.stringify(Object.assign({ versao: 1, seedVersao: 1, excluidos: [], comps: [] }, o));
+const compU = (c, extra) => ({ c, s: 1, i: [], a: [], ...extra });
+
+test('carregarComps: sem nada salvo (ou lixo) devolve as comps do seed', () => {
+  [null, '', 'nao e json', '{"a":1}', '[]', 'null'].forEach((raw) => {
+    const r = C.carregarComps(raw, seed, 1, catalog);
+    assert.deepEqual(r.map((c) => c.id), ['x1', 'y1', 'z1'], String(raw));
+  });
+});
+
+test('carregarComps: usa a lista salva do Elton: comp editada, comp nova e comp excluida', () => {
+  const raw = guardado({
+    excluidos: ['y1', 'z1'],
+    comps: [
+      { id: 'x1', nome: 'Comp X do Elton', estilo: 'Fast 8', main: [compU('C'), compU('D')], flex: [] },
+      { id: 'minha-1', nome: 'Minha comp nova', estilo: 'Slowroll Nvl 6', main: [compU('A'), compU('E')], flex: [] },
+    ],
+  });
+  const r = C.carregarComps(raw, seed, 1, catalog);
+  assert.deepEqual(r.map((c) => c.id), ['x1', 'minha-1']);
+  assert.equal(r[0].nome, 'Comp X do Elton');
+  assert.deepEqual(r[0].main.map((u) => u.c), ['C', 'D']);
+  assert.ok(!r.some((c) => c.id === 'y1' || c.id === 'z1'), 'excluidas ficam de fora');
+});
+
+test('carregarComps: comp nova do seed (desde > versao vista) entra; excluida de proposito nao volta', () => {
+  const seed2 = seed.concat([{ id: 'n1', nome: 'Comp N', estilo: 'Fast 8', desde: 2, main: [u('D')], flex: [] }, { id: 'n2', nome: 'Comp N2', estilo: 'Fast 8', desde: 2, main: [u('G')], flex: [] }]);
+  const raw = guardado({ seedVersao: 1, excluidos: ['n2'], comps: seed });
+  const r = C.carregarComps(raw, seed2, 2, catalog);
+  assert.ok(r.some((c) => c.id === 'n1'));
+  assert.ok(!r.some((c) => c.id === 'n2'));
+});
+
+test('carregarComps: lista salva vazia = nenhuma comp (o Elton apagou todas); nao volta o seed', () => {
+  assert.deepEqual(C.carregarComps(guardado({ excluidos: ['x1', 'y1', 'z1'], comps: [] }), seed, 1, catalog), []);
+});
+
+test('rankear com as comps atuais: ranking, contest e favorita usam a lista do Elton, nao o seed', () => {
+  const comps = C.carregarComps(guardado({
+    excluidos: ['x1', 'y1', 'z1'],
+    comps: [{ id: 'minha-1', nome: 'Minha comp nova', estilo: 'Fast 8', main: [compU('A'), compU('E'), compU('B')], flex: [] }],
+  }), seed, 1, catalog);
+  const r = C.rankear(est({ champs: { A: 2 }, contest: { 'minha-1': 2, x1: 3 }, favorita: 'minha-1' }), { seed: comps, catalog, recipes });
+  assert.deepEqual(r.itens.map((x) => x.id), ['minha-1']);
+  assert.equal(r.itens[0].nome, 'Minha comp nova');
+  assert.equal(r.itens[0].contest, 2);
+  assert.equal(r.itens[0].favorita, true);
+  const vazio = C.rankear(est({ champs: { A: 2 } }), { seed: [], catalog, recipes });
+  assert.deepEqual(vazio.itens, []);
+  assert.equal(C.avaliarForca(est({ favorita: 'x1' }), { seed: comps, catalog, recipes }).semComp, true);
+});

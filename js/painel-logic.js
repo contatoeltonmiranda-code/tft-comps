@@ -180,17 +180,39 @@
   const fmtFaixa = (r) => (r.min === r.max ? String(r.min) : `${r.min}–${r.max}`);
   const R = (id) => Regras().regra(id);
 
-  function itensUteisDe(estado, dados) {
+  // Itens que as comps do seed usam e que os componentes na mao montam (ou que ja estao prontos).
+  // opts.comp: so essa comp; opts.minCusto: so unidades desse custo para cima (carry/tanque de custo 4, custo 5 do Fast 9).
+  function itensUteisDe(estado, dados, opts) {
     const receitas = (dados.recipes && dados.recipes.receitas) || {};
+    const o = opts || {};
+    const custo = new Map((((dados.catalog && dados.catalog.champs) || [])).map((x) => [x.id, x.c]));
     const alvos = new Set();
-    (dados.seed || []).forEach((comp) => (comp.main || []).forEach((u) => ((u && u.i) || []).forEach((id) => { if (receitas[id]) alvos.add(id); })));
+    (o.comp ? [o.comp] : dados.seed || []).forEach((comp) => (comp.main || []).forEach((u) => {
+      if (o.minCusto && (custo.get(u && u.c) || 0) < o.minCusto) return;
+      ((u && u.i) || []).forEach((id) => { if (receitas[id]) alvos.add(id); });
+    }));
     const tem = (id) => (estado.comps && estado.comps[id]) || 0;
     for (const id of alvos) {
-      if (tem(id) > 0) return true;
+      if (tem(id) > 0) return o.detalhe ? { ok: true, sem: false } : true;
       const [a, b] = receitas[id];
-      if (a === b ? tem(a) >= 2 : tem(a) >= 1 && tem(b) >= 1) return true;
+      if (a === b ? tem(a) >= 2 : tem(a) >= 1 && tem(b) >= 1) return o.detalhe ? { ok: true, sem: false } : true;
     }
-    return false;
+    return o.detalhe ? { ok: false, sem: alvos.size === 0 } : false;
+  }
+
+  // Degrau de ouro esperado em dia (14 -> 20 -> 32). Mapeamento por rodada e do painel (regra pn-degraus).
+  function degrauEsperado(ord) {
+    if (ord <= ORD.r24) return 14;
+    if (ord <= ORD.r27) return 20;
+    return 32;
+  }
+
+  // Ouro que sobra depois de subir ao nivel `nivel`. Sem XP informado assume o pre-level da curva (custo ~0) e marca exato:false.
+  function ouroAposSubir(c, nivel) {
+    if (c.level >= nivel) return { sobra: c.gold, exato: true };
+    const { atual, max } = c.xp || {};
+    if (c.level === nivel - 1 && atual != null && max != null && max > atual) return { sobra: c.gold - (max - atual), exato: true };
+    return { sobra: c.gold, exato: false };
   }
 
   // ---------------------------------------------------------------- contexto
@@ -202,22 +224,91 @@
     const favorita = estado.favorita ? rank.itens.find((x) => x.id === estado.favorita) || null : null;
     const alvo = favorita || (rank.vazio ? null : rank.itens[0] || null);
     const faixa = faixaVida(estado.hp);
+    const alvoSeed = alvo ? (dados.seed || []).find((s) => s.id === alvo.id) || null : null;
     const c = {
       estado, dados, a: st.a, b: st.b, ord, level: estado.level, gold: estado.gold, hp: estado.hp, faixa,
       valeFaixa: st.a >= 3, streak: estado.streak, xp: estado.xp, aprim: estado.aprim, board: forcaBoard(estado),
       res, pares: res.pares, upgrade: res.estrelas2 + res.estrelas3 > 0, itensUteis: itensUteisDe(estado, dados),
+      slamaveis: Comps().itensSlamaveis(estado, dados), alvoSeed,
       rank, favorita, alvo, contestAlvo: alvo ? alvo.contest : 0,
     };
+    c.sobra8 = ouroAposSubir(c, 8);
     c.reroll = candidatosReroll(c);
     return c;
   }
 
-  // Reroll: 4+ copias de custo 1 ou 2+ de custo 2 (do mesmo campeao), item BIS montavel, sem contest.
+  const crit = (ok, texto, regra, mudar, letra, rotulo) => ({ ok, texto, regra, mudar, letra: letra || null, rotulo: rotulo || null });
+
+  // ---------------------------------------------------------------- Reroll: candidatos e criterios (a)-(g) do "Melhor momento para seguir"
+  const REROLL_MIN = { 1: 4, 2: 2, 3: 2 };
+  const nJog = (n) => `${n} ${n === 1 ? 'jogador' : 'jogadores'}`;
+
+  function criteriosRerollCusto(c, custo, cand) {
+    const min = REROLL_MIN[custo];
+    const pc = c.res.porCusto[custo];
+    const copias = cand ? cand.copias : (pc && pc.maxCopias) || 0;
+    const nome = cand ? cand.nome : null;
+    const L = [];
+    const add = (letra, ok, texto, regra, mudar, bloqueia) => L.push(Object.assign(crit(ok, texto, regra, mudar, letra), { bloqueia: !!bloqueia }));
+    // (a) copias do carry
+    const textoCopias = cand ? `${copias} ${copias === 1 ? 'cópia' : 'cópias'} de ${nome} (custo ${custo}; precisa ${min}+)` : `Cópias: custo 1 com ${(c.res.porCusto[1] && c.res.porCusto[1].maxCopias) || 0} (precisa 4+), custo 2 com ${(c.res.porCusto[2] && c.res.porCusto[2].maxCopias) || 0} (2+) ou custo 3 com ${(c.res.porCusto[3] && c.res.porCusto[3].maxCopias) || 0} (um par)`;
+    add('a', copias >= min, textoCopias, custo === 3 ? 'rrm-a-c3' : 'rr-q-copias', 'juntar 4+ cópias de um campeão de custo 1, 2+ de custo 2 ou um par de custo 3', true);
+    // (b) contest
+    const cont = cand ? cand.contest : null;
+    add('b', cont == null ? null : cont === 0, cont == null ? 'Contest: ninguém na comp do carry (sem carry ainda)' : cont === 0 ? 'Ninguém mais na comp do carry' : `${nJog(cont)} na comp do carry (qualquer contest pesa; máximo 0)`, 'rrm-b', 'sem nenhum jogador na comp do carry', true);
+    // (c) itens
+    if (custo === 3) {
+      const tem = c.slamaveis.length > 0 || c.itensUteis;
+      add('c', tem ? true : null, tem ? 'Itens para um board que vença (as fontes não exigem BIS)' : 'Sem itens montáveis ainda (as fontes não exigem BIS para o custo 3)', 'rrm-c', undefined, false);
+    } else if (!cand) {
+      add('c', null, 'Item BIS montável (custo 1) ou BIS/slamável (custo 2)', 'rr-q-itens', 'ter componentes para o item BIS do carry', true);
+    } else {
+      const bisOk = cand.bis.estado === 'ok';
+      if (bisOk) add('c', true, `Item BIS de ${nome} montável com seus componentes`, 'rr-q-itens', undefined, true);
+      else if (custo === 2 && c.slamaveis.length) add('c', true, `Itens slamáveis para poupar vida (${c.slamaveis.length}): ${nome} não tem BIS montável agora`, 'pn-slamavel', undefined, true);
+      else if (custo === 2) add('c', false, cand.bis.estado === 'desconhecido' ? `Sem item BIS no seed para ${nome} e sem componentes para slamar` : `Item BIS de ${nome}: faltam componentes e não há item para slamar`, 'rr-q-itens', 'ter o item BIS do carry ou componentes que montem um item (slamável)', true);
+      else add('c', cand.bis.estado === 'falta' ? false : null, cand.bis.estado === 'falta' ? `Item BIS de ${nome}: faltam componentes` : `Item BIS de ${nome}: sem item no seed, não dá para confirmar`, 'rr-q-itens', cand.bis.estado === 'falta' ? 'falta item BIS: junte os componentes do item do carry' : 'carry com item BIS conhecido no seed', true);
+    }
+    // (d) streak
+    if (custo === 3) {
+      const ok = c.streak >= 2 && c.board === 'forte';
+      add('d', ok, ok ? `Win streak de ${c.streak} e board forte: precisa durar até o 4-2` : 'Sem win streak e board forte (a streak precisa durar até o 4-2)', 'rrm-d', 'win streak e board forte, que durem até o 4-2', true);
+    } else if (c.ord <= ORD.r27) {
+      const ok = c.streak <= -2 ? true : null;
+      add('d', ok, ok ? `Loss streak do Open Fort no estágio 2 (${-c.streak} derrotas)` : 'Open Fort no estágio 2: loss streak (ainda sem derrotas seguidas)', 'rrm-d', undefined, false);
+    } else {
+      add('d', null, 'Loss streak só vale no estágio 2', 'rrm-d', undefined, false);
+    }
+    // (e) ouro
+    if (custo === 1) {
+      const ok = c.ord <= ORD.r31 ? (c.gold > 32 ? true : c.ord === ORD.r31 ? false : null) : (c.gold >= 50 ? true : null);
+      add('e', ok, c.ord <= ORD.r31 ? `Ouro ${c.gold}: acima de 32 no 3-1 (você rola o que passa de 32)` : `Ouro ${c.gold}: guarde até 50 e role só o excedente`, 'rrm-e', 'passar de 32 de ouro no 3-1', false);
+    } else if (custo === 2) {
+      add('e', c.gold >= 50 ? true : null, `Ouro ${c.gold}: 50 no 3-2 para UPAR 6 já; senão, UPAR 6 no 3-5`, 'rrm-e', undefined, false);
+    } else {
+      const meta = c.ord >= ORD.r41 ? 50 : 30;
+      const marco = c.ord >= ORD.r41 ? ORD.r41 : ORD.r32;
+      add('e', c.gold >= meta ? true : c.ord >= marco ? false : null, `Ouro ${c.gold}: ${meta === 30 ? '30–32 no 3-2' : '50+ no 4-1 para o slow roll no 7'}`, 'rrm-e-c3', `${meta}+ de ouro ${meta === 30 ? 'no 3-2' : 'no 4-1'}`, false);
+    }
+    // (f) vida
+    if (custo === 3) {
+      add('f', c.hp >= 41, c.hp >= 41 ? `Vida ${c.hp} (Folga ou Segura), mantida pela win streak` : `Vida ${c.hp}: o custo 3 pede 41+ (Folga ou Segura)`, 'rrm-f', 'vida 41+ (Folga ou Segura)', c.valeFaixa);
+    } else {
+      add('f', c.hp > 40, c.hp > 40 ? `Vida ${c.hp}: acima de 40 no 4-1` : `Vida ${c.hp} em ${c.hp >= 30 ? 'Atenção' : 'Crítica'}: saia do slow roll e role para estabilizar`, 'rrm-f', 'chegar ao 4-1 acima de 40 de vida', false);
+    }
+    // (g) prazo e lobby
+    const limite = custo === 3 ? ORD.r42 : ORD.r41;
+    const prazoTxt = { 1: 'custo 1: 3★ até o 3-5 (limite 4-1)', 2: 'custo 2: hitar até o 3-5; última rolagem no 4-1', 3: 'custo 3: spike no fim do 4 ou começo do 5' }[custo];
+    add('g', c.ord <= limite, c.ord <= limite ? `Dentro do prazo (${prazoTxt})` : `Fora do prazo (${prazoTxt})`, 'rrm-g', `estar até o ${custo === 3 ? '4-2' : '4-1'}`, true);
+    return L;
+  }
+
+  // Reroll: custo 1 (4+ copias, BIS), custo 2 (2+, BIS ou slamavel), custo 3 (par, board forte, win streak ate o 4-2); sem contest.
   function candidatosReroll(c) {
     const out = [];
-    [[1, 4], [2, 2]].forEach(([custo, min]) => {
+    [1, 2, 3].forEach((custo) => {
       const pc = c.res.porCusto[custo];
-      if (!pc || pc.maxCopias < min) return;
+      if (!pc || pc.maxCopias < REROLL_MIN[custo]) return;
       const champId = pc.id;
       const bis = Comps().bisAvaliacao(champId, c.estado, c.dados);
       let contest = 0;
@@ -225,8 +316,11 @@
         if ((comp.main || []).some((u) => u && u.c === champId)) contest = Math.max(contest, (c.estado.contest && c.estado.contest[comp.id]) || 0);
       });
       const nome = ((c.dados.catalog.champs || []).find((x) => x.id === champId) || {}).n || champId;
-      out.push({ custo, champId, nome, copias: pc.maxCopias, min, bis, contest, janela: c.ord <= ORD.r41 });
-      out[out.length - 1].ok = bis.estado === 'ok' && contest === 0 && c.ord <= ORD.r41;
+      const cand = { custo, champId, nome, copias: pc.maxCopias, min: REROLL_MIN[custo], bis, contest };
+      cand.crits = criteriosRerollCusto(c, custo, cand);
+      cand.janela = cand.crits.find((x) => x.letra === 'g').ok === true;
+      cand.ok = cand.crits.filter((x) => x.bloqueia).every((x) => x.ok === true) && (custo !== 3 || c.ord >= ORD.r21);
+      out.push(cand);
     });
     return out;
   }
@@ -241,75 +335,120 @@
     padrao: 'Fast 8 padrão',
     custo1: 'Reroll de custo 1',
     custo2: 'Reroll de custo 2',
+    custo3: 'Reroll de custo 3',
     openfort: 'Economia máxima · Open Fort até o 3-1',
     antecipado: 'Economia máxima · Fast 8 antecipado (3A)',
     fast9: 'Economia máxima · Fast 9 (3B)',
   };
 
+  // Open Fort: nenhum upgrade, nenhum item util, sem aprimoramento de combate (economia reforca, nao e requisito), board que nao e forte.
+  function abreOpenFort(c) {
+    const fraco = !c.upgrade && !c.itensUteis && c.aprim !== 'forca';
+    return c.ord >= ORD.r21 && c.ord <= ORD.r31 && fraco && c.board !== 'forte' && (c.a === 2 || c.faixa === 'folga' || c.faixa === 'segura');
+  }
+
   function escolherEstrategia(c) {
     const eco = c.aprim === 'eco';
-    const fraco = !c.upgrade && !c.itensUteis;
     const rr = c.reroll.find((x) => x.ok);
-    if (rr) return { id: 'reroll', variante: rr.custo === 1 ? 'custo1' : 'custo2', carry: rr };
-    if (c.ord >= ORD.r21 && c.ord <= ORD.r31 && fraco && c.board !== 'forte' && (c.a === 2 || c.faixa === 'folga' || c.faixa === 'segura')) return { id: 'economia', variante: 'openfort' };
+    if (rr) return { id: 'reroll', variante: 'custo' + rr.custo, carry: rr };
+    if (abreOpenFort(c)) return { id: 'economia', variante: 'openfort' };
     if (eco && c.ord >= ORD.r37 && c.ord <= ORD.r51) {
-      if (c.ord >= ORD.r41 && c.hp >= 80 && c.contestAlvo === 0) return { id: 'economia', variante: 'fast9' };
-      if (c.ord <= ORD.r41) return { id: 'economia', variante: 'antecipado' };
+      // 3B: no 4-1 pede tambem 50+ de ouro; depois do 4-1 o plano ja esta em andamento
+      if (c.ord >= ORD.r41 && c.hp >= 80 && c.contestAlvo === 0 && (c.ord > ORD.r41 || c.gold >= 50)) return { id: 'economia', variante: 'fast9' };
+      // 3A: ~40+ sobrando depois de subir ao 8; contest maximo 2
+      if (c.ord <= ORD.r41 && c.sobra8.sobra >= 40 && c.contestAlvo <= 2) return { id: 'economia', variante: 'antecipado' };
     }
     return { id: 'fast8', variante: 'padrao' };
   }
 
-  const crit = (ok, texto, regra, mudar) => ({ ok, texto, regra, mudar });
-
+  // Fast 8: criterios (a)-(f) de "Melhor momento para seguir"
   function criteriosFast8(c) {
-    const custo4 = c.alvo ? ((c.dados.seed.find((s) => s.id === c.alvo.id) || {}).main || []).some((u) => ((c.dados.catalog.champs.find((x) => x.id === u.c) || {}).c || 0) >= 4) : true;
-    const lista = [
-      crit(custo4, c.alvo ? `Comp final de custo 4+ (${c.alvo.nome})` : 'Nenhuma comp clara ainda (Fast 8 é o padrão)', 'f8-q-comp', 'ter uma comp final de custo 4'),
-      crit(c.aprim === 'eco' || c.streak >= 2 || c.gold >= 20, 'Aprimoramento de economia, win streak ou economia bem planejada (ouro 20+)', 'f8-q-eco', 'win streak, aprimoramento de economia ou ouro 20+'),
-      crit(c.contestAlvo <= 1, c.contestAlvo <= 1 ? `Até 1 jogador na mesma comp (${c.contestAlvo})` : `${c.contestAlvo} jogadores na mesma comp`, 'f8-q-contest', 'no máximo 1 jogador na comp'),
-    ];
-    if (c.a === 2) lista.push(crit(c.upgrade && c.itensUteis, 'Upgrade e itens úteis (abertura forte)', 'q-2-1-f8', 'ter upgrade (campeão 2★) e itens úteis'));
-    return lista;
+    const champs = c.dados.catalog.champs;
+    const custo4 = c.alvoSeed ? (c.alvoSeed.main || []).some((u) => ((champs.find((x) => x.id === u.c) || {}).c || 0) >= 4) : true;
+    const rrAlgum = c.reroll.some((x) => x.ok);
+    const nomeAlvo = c.alvo ? c.alvo.nome : null;
+    const L = [];
+    // (a) vida
+    const hp = c.hp;
+    L.push(crit(hp >= 30, hp >= 41 ? `Vida ${hp} (${hp >= 80 ? 'Folga' : 'Segura'}): 41+ no 3-2` : hp >= 30 ? `Vida ${hp} em Atenção: ainda vale, mas o roll down é no 4-2, nunca no 4-5` : `Vida ${hp} em Crítica: estabilize antes (passo 7)`, 'f8m-a', `ter 41+ de vida (hoje ${hp})`, 'a', 'Vida'));
+    // (b) ouro
+    const g = c.gold;
+    let okB;
+    let txtB;
+    if (g >= 30) { okB = true; txtB = `Ouro ${g}: 30–32 no 3-2 para o nível 6, com rota para ~40 no 4-2`; }
+    else if (c.ord >= ORD.r42 && c.level >= 8) { okB = null; txtB = `Ouro ${g}: já no nível 8, o ouro agora é do roll down (20–30)`; }
+    else if (c.ord < ORD.r32) { okB = null; txtB = `Ouro ${g}: a meta é 30–32 no 3-2 (rota 32 → 40 → ~50)`; }
+    else if (g >= 20 && c.board !== 'fraco') { okB = true; txtB = `Ouro ${g} (~20) com board bom: dá para subir, mas a economia fica ruim`; }
+    else { okB = false; txtB = `Ouro ${g}: abaixo de 30–32 no 3-2 (com ~20 só se o board for bom)`; }
+    L.push(crit(okB, txtB, 'f8m-b', 'chegar a 30–32 de ouro no 3-2', 'b', 'Ouro'));
+    // (c) streak ou economia
+    const win = c.streak >= 2;
+    const eco = c.aprim === 'eco';
+    const deg = g >= degrauEsperado(c.ord);
+    const okC = win || eco || deg;
+    const motivos = [win ? `win streak (${c.streak})` : null, eco ? 'aprimoramento de economia' : null, deg ? `degraus de ouro em dia (${g})` : null].filter(Boolean);
+    L.push(crit(okC, okC ? `Tem ${motivos.join(', ')}` : 'Sem win streak, sem aprimoramento de economia e com os degraus de ouro atrasados (14 → 20 → 32)', okC && !win && !eco ? 'pn-degraus' : 'f8m-c', 'win streak, aprimoramento de economia ou degraus de ouro em dia', 'c', 'Streak ou economia'));
+    // (d) unidades
+    const okD = custo4 && !rrAlgum;
+    const pares = c.pares >= PARES_MUITOS ? ` · ${c.pares} pares: 2–3 rolagens por rodada no 3-2 ou 3-5` : '';
+    L.push(crit(okD, rrAlgum ? 'Há condições de reroll (Estratégia 2): o Fast 8 não é a linha' : !custo4 ? `${nomeAlvo || 'A comp'}: comp final sem custo 4` : (nomeAlvo ? `Comp final de custo 4+ (${nomeAlvo}), sem as condições de reroll${pares}` : `Nenhuma comp clara ainda (Fast 8 é o padrão)${pares}`), 'f8m-d', rrAlgum ? 'não ter as condições de reroll' : 'ter uma comp final de custo 4', 'd', 'Unidades'));
+    // (e) contest
+    const n = c.contestAlvo;
+    L.push(crit(n <= 2, n <= 1 ? `Contest ${n}: dentro do ideal (até 1 jogador na comp)` : n === 2 ? '2 jogadores na comp: no limite. UPAR 8 e ROLAR no 3-7 ou 4-1, antes de todos' : `${n} jogadores na comp: troque de comp, não de linha`, 'f8m-e', 'no máximo 2 jogadores na comp (ideal até 1)', 'e', 'Contest'));
+    // (f) itens
+    const it = c.alvoSeed ? itensUteisDe(c.estado, c.dados, { comp: c.alvoSeed, minCusto: 4, detalhe: true }) : { ok: c.itensUteis, sem: false };
+    const okF = it.ok;
+    L.push(crit(okF, okF ? `Componentes para os itens do carry ou do tanque de custo 4${nomeAlvo ? ` (${nomeAlvo})` : ''} (não exige BIS)` : it.sem ? 'Seed sem itens para o carry/tanque de custo 4 da comp: não dá para confirmar' : 'Sem componentes para os itens do carry ou do tanque de custo 4 (não exige BIS)', 'f8m-f', 'componentes que sirvam ao carry ou ao tanque de custo 4', 'f', 'Itens'));
+    if (c.a === 2) L.push(crit(c.upgrade && c.itensUteis, 'Upgrade e itens úteis (abertura forte)', 'q-2-1-f8', 'ter upgrade (campeão 2★) e itens úteis'));
+    return L;
   }
 
+  // Reroll: lista do candidato escolhido; sem escolhido, o candidato mais perto; sem nenhum, o molde do custo 1
   function criteriosReroll(c) {
-    const cand = c.reroll.find((x) => x.ok) || c.reroll[0];
-    const p1 = c.res.porCusto[1];
-    const p2 = c.res.porCusto[2];
-    if (!cand) {
-      return [
-        crit(false, `Cópias: custo 1 com ${(p1 && p1.maxCopias) || 0} (precisa 4+) ou custo 2 com ${(p2 && p2.maxCopias) || 0} (precisa 2+)`, 'rr-q-copias', 'juntar 4+ cópias de um campeão de custo 1 ou 2+ de custo 2'),
-        crit(null, 'Item BIS montável', 'rr-q-itens', 'ter componentes para o item BIS do carry'),
-        crit(c.ord <= ORD.r41, 'Dentro da janela do reroll (até o 4-1)', 'pn-janela-reroll', 'estar até o 4-1'),
-      ];
-    }
-    const bisOk = cand.bis.estado === 'ok' ? true : cand.bis.estado === 'falta' ? false : null;
-    return [
-      crit(true, `${cand.copias} cópias de ${cand.nome} (custo ${cand.custo}; precisa ${cand.min}+)`, 'rr-q-copias'),
-      crit(bisOk, bisOk === null ? `Item BIS de ${cand.nome}: sem item no seed, não dá para confirmar` : bisOk ? `Item BIS de ${cand.nome} montável com seus componentes` : `Item BIS de ${cand.nome}: faltam componentes`, 'rr-q-itens', bisOk === null ? 'carry com item BIS conhecido no seed' : 'falta item BIS: junte os componentes do item do carry'),
-      crit(cand.contest === 0, cand.contest === 0 ? 'Ninguém mais na comp do carry' : `${cand.contest} jogador(es) na comp do carry (qualquer contest pesa)`, 'rr-q-contest', 'sem nenhum jogador na comp do carry'),
-      crit(cand.janela, 'Dentro da janela do reroll (até o 4-1)', 'pn-janela-reroll', 'estar até o 4-1'),
-    ];
+    const ok = c.reroll.find((x) => x.ok);
+    if (ok) return ok.crits;
+    if (!c.reroll.length) return criteriosRerollCusto(c, 1, null);
+    return c.reroll.slice().sort((x, y) => y.crits.filter((k) => k.ok === true).length - x.crits.filter((k) => k.ok === true).length || x.custo - y.custo)[0].crits;
   }
 
   function criteriosEconomia(c, variante) {
     if (variante === 'openfort') {
+      const rrAlgum = c.reroll.some((x) => x.ok);
+      const okA = !c.upgrade && c.aprim !== 'forca';
+      const okE = c.a === 2 || c.faixa === 'folga' || c.faixa === 'segura';
+      const esp = degrauEsperado(c.ord);
       return [
-        crit(!c.upgrade, 'Sem upgrade (nenhum campeão 2★)', 'ec-q-sem-upgrade', 'ficar sem upgrade (só pares)'),
-        crit(!c.itensUteis, 'Sem itens úteis para montar', 'ec-q-sem-upgrade', 'não ter itens úteis'),
-        crit(c.aprim === 'eco' ? true : c.aprim === 'forca' ? false : null, c.aprim === 'eco' ? 'Aprimoramento de economia' : c.aprim === 'forca' ? 'Aprimoramento de força (não é de economia)' : 'Aprimoramento de economia (não informado)', 'ec-q-eco', 'aprimoramento de economia (marque em Extras)'),
-        crit(c.a === 2 || c.faixa === 'folga' || c.faixa === 'segura', 'Vida que aguenta perder rodadas (estágio 2, ou Folga/Segura)', 'ec-piso-loss', 'vida em Folga/Segura (Open Fort só no estágio 2)'),
+        crit(okA, okA ? 'Nenhum upgrade (nenhum 2★), só pares; sem aprimoramento de combate' : c.upgrade ? 'Há upgrade (campeão 2★)' : 'Aprimoramento de combate (força)', 'ecm-of-a', 'ficar sem upgrade (só pares) e sem aprimoramento de combate', 'a', 'Board e pares'),
+        crit(!c.itensUteis, c.itensUteis ? 'Há item útil para slamar' : 'Nenhum item útil para slamar', 'ecm-of-b', 'não ter itens úteis', 'b', 'Itens'),
+        crit(c.aprim === 'eco' ? true : null, c.aprim === 'eco' ? 'Aprimoramento de economia: o sinal mais forte' : 'Sem aprimoramento de economia: não é requisito, mas é o sinal mais forte', 'ecm-of-c', undefined, 'c', 'Aprimoramento'),
+        crit(!rrAlgum, rrAlgum ? 'Há condições de reroll (Estratégia 2): saia do Open Fort' : 'Cópias não decidem a entrada; sem as condições de reroll no fim do estágio 2', 'ecm-of-d', 'não ter as condições de reroll (4+ cópias de custo 1 ou 2+ de custo 2, com itens e sem contest)', 'd', 'Cópias'),
+        crit(okE, okE ? (c.a === 2 ? 'Loss streak só no estágio 2: a derrota tira pouca vida' : `Vida ${c.hp} aguenta perder rodadas (Folga/Segura)`) : `Vida ${c.hp}: o Open Fort só vale no estágio 2 ou com Folga/Segura`, 'ecm-of-e', 'vida em Folga/Segura (Open Fort só no estágio 2)', 'e', 'Vida e streak'),
+        crit(c.gold >= esp ? true : c.ord <= O('2-2') ? null : false, `Ouro ${c.gold}: degraus 14 → 20 → 32 no estágio 2, alvo 50 no 3-1`, 'ecm-of-f', undefined, 'f', 'Ouro'),
+        crit(c.ord === ORD.r25 ? c.board !== 'forte' : null, c.ord === ORD.r25 ? (c.board !== 'forte' ? 'Board segue fraco: confirma o Open Fort' : 'Achou board forte: UPAR, quebre a loss streak e vá à Estratégia 1') : 'Confirme no 2-5: achou board forte → UPAR e vá à Estratégia 1', 'ecm-of-g', undefined, 'g', 'Confirmação no 2-5'),
       ];
     }
     const eco = c.aprim === 'eco';
-    const lista = [
-      crit(eco ? true : c.aprim === 'forca' ? false : null, eco ? 'Aprimoramento de economia' : 'Aprimoramento de economia (não marcado)', variante === 'fast9' ? 'q-4-1' : 'ec-3a', 'aprimoramento de economia (marque em Extras)'),
-    ];
-    if (variante === 'fast9') {
-      lista.push(crit(c.hp >= 80, `Vida 80+ no 4-1 (hoje ${c.hp})`, 'ec-piso-vida80', `ter 80+ de vida no 4-1 (hoje ${c.hp})`));
-      lista.push(crit(c.contestAlvo === 0, c.contestAlvo === 0 ? 'Ninguém na mesma comp (Fast 9 contestado é erro)' : `${c.contestAlvo} jogador(es) na comp: Fast 9 contestado é erro`, 'ec-erro-contest9', 'ninguém na mesma comp'));
+    if (variante === 'antecipado') {
+      const s = c.sobra8;
+      const nota = s.exato ? '' : ' (sem o XP informado: assumindo o pré-level feito)';
+      const okEco = eco && s.sobra >= 40;
+      return [
+        crit(eco ? okEco : c.aprim === 'forca' ? false : null, !eco ? 'Sem aprimoramento de economia (marque em Extras)' : okEco ? `Aprimoramento de economia e ${s.sobra} de ouro sobrando depois de subir ao 8${nota}` : `Aprimoramento de economia, mas só ${s.sobra} sobrando depois de subir ao 8 (precisa ~40+)${nota}`, 'ecm-3a-eco', eco ? `~40+ de ouro sobrando depois de subir ao 8 (hoje ${s.sobra})` : 'aprimoramento de economia (marque em Extras) e ~40+ de ouro sobrando depois de subir ao 8', null, 'Economia e ouro'),
+        crit(c.contestAlvo <= 2, c.contestAlvo === 2 ? '2 jogadores na comp de custo 4: role antes deles' : c.contestAlvo < 2 ? `Contest ${c.contestAlvo} (máximo 2)` : `${c.contestAlvo} jogadores na comp: o 3A aceita no máximo 2`, 'ecm-3a-contest', 'no máximo 2 jogadores na comp', null, 'Contest'),
+        crit(c.hp >= 30, c.hp >= 41 ? `Vida ${c.hp} (41+)` : c.hp >= 30 ? `Vida ${c.hp} em Atenção: o roll antecipado também serve para estabilizar` : `Vida ${c.hp} em Crítica: estabilize antes`, 'ecm-3a-vida', `vida 30+ (hoje ${c.hp})`, null, 'Vida'),
+      ];
     }
-    return lista;
+    // fast9 (3B): (a)-(f)
+    const entrada = c.ord <= ORD.r41;
+    const it5 = c.alvoSeed ? itensUteisDe(c.estado, c.dados, { comp: c.alvoSeed, minCusto: 5, detalhe: true }) : null;
+    return [
+      crit(c.hp >= 80, `Vida 80+ no 4-1 (hoje ${c.hp})`, 'ecm-3b-a', `ter 80+ de vida no 4-1 (hoje ${c.hp})`, 'a', 'Vida'),
+      crit(eco ? true : c.aprim === 'forca' ? false : null, eco ? 'Aprimoramento de economia' : 'Aprimoramento de economia (não marcado)', 'ecm-3b-b', 'aprimoramento de economia (marque em Extras)', 'b', 'Aprimoramento'),
+      crit(c.gold >= 50 ? true : entrada ? false : null, entrada ? `Ouro ${c.gold}: 50+ no 4-1 (juros no máximo), para subir sem rolar até o 9` : `Ouro ${c.gold}: o 50+ vale para a entrada no 4-1; o plano já está em andamento`, 'ecm-3b-c', `ter 50+ de ouro no 4-1 (hoje ${c.gold})`, 'c', 'Ouro'),
+      crit(c.contestAlvo === 0, c.contestAlvo === 0 ? 'Ninguém atrás dos mesmos custo 5' : `${c.contestAlvo} jogador(es) na comp: Fast 9 contestado é erro`, 'ecm-3b-d', 'ninguém na mesma comp', 'd', 'Contest'),
+      crit(it5 ? (it5.ok ? true : it5.sem ? null : false) : null, !it5 ? 'Sem comp definida: confira se os itens servem aos custo 5' : it5.ok ? 'Componentes para os itens dos custo 5 da comp' : it5.sem ? 'Seed sem itens para os custo 5 da comp: não dá para confirmar' : 'Sem componentes para os itens dos custo 5 da comp', 'ecm-3b-e', undefined, 'e', 'Itens'),
+      crit(null, 'Aceite perder o estágio 4 (única exceção à regra "loss streak só no estágio 2")', 'ecm-3b-f', undefined, 'f', 'Streak'),
+    ];
   }
 
   function montarEstrategia(c) {
@@ -322,7 +461,10 @@
       fast9: criteriosEconomia(c, 'fast9'),
     };
     const chave = esc.id === 'fast8' ? 'fast8' : esc.id === 'reroll' ? 'reroll' : esc.variante;
-    const porque = crits[chave].map((x) => ({ ok: x.ok, texto: x.texto, regra: R(x.regra) }));
+    const lista = crits[chave];
+    const porque = lista.map((x) => ({ letra: x.letra, rotulo: x.rotulo, ok: x.ok, texto: x.texto, regra: R(x.regra) }));
+    const rotulados = lista.filter((x) => x.letra || x.rotulo);
+    const bateram = rotulados.filter((x) => x.ok === true).map((x) => x.letra || x.rotulo);
     // alternativas relevantes na rodada
     const alts = [];
     if (chave !== 'fast8') alts.push(['fast8', 'Fast 8']);
@@ -345,6 +487,8 @@
       variante: esc.variante,
       rotulo: ROTULO_VARIANTE[esc.variante],
       porque,
+      bateram,
+      totalCriterios: rotulados.length,
       mudaria,
       carry: esc.carry ? { id: esc.carry.champId, n: esc.carry.nome, custo: esc.carry.custo, copias: esc.carry.copias } : null,
     };
@@ -446,7 +590,7 @@
     }
     if (o === ORD.r36) return fica(c, 'f8-3-6', 'Level torto: não compre XP.', { preLevel: preLevel('Pré-level se for subir no 3-7: termine 2 XP abaixo do próximo nível.', true) });
     if (o === ORD.r37) {
-      if (c.aprim === 'eco' || c.contestAlvo >= 2) return uparRolar(c, 8, 20, 30, 'f8-3-7', c.contestAlvo >= 2 ? '2 jogadores na comp: suba ao 8 e role antes de todos.' : 'Economia alta: suba ao 8 e role antes de todos.', { piso: { valor: 30, texto: 'Role até 20–30.', regra: 'f8-piso-2030' } });
+      if (c.contestAlvo >= 2) return uparRolar(c, 8, 20, 30, 'f8-3-7', '2 jogadores na comp: suba ao 8 e role antes de todos.', { piso: { valor: 30, texto: 'Role até 20–30.', regra: 'f8-piso-2030' } });
       return upar(c, 7, 'f8-3-7', 'Suba ao 7 se ainda não foi. Revise a curva.');
     }
     if (o === ORD.r41) {
@@ -460,6 +604,8 @@
       if (c.gold >= 40 || urgente) {
         const piso = { valor: 40, texto: 'Ouro ~40 para subir ao 8 no 4-2. Role até 20–30 atrás de 1 cópia do carry e do tanque.', regra: 'f8-piso-40' };
         const p = uparRolar(c, 8, 20, 30, urgente && c.gold < 40 ? 'f8-piso-vida' : 'f8-4-2', urgente && c.gold < 40 ? 'Vida em Atenção: não adie o roll down para o 4-5.' : 'Suba ao 8 e role atrás de 1 cópia do carry e do tanque.', { piso });
+        const { atual, max } = c.xp || {};
+        if (c.level === 7 && atual != null && max != null && max - atual > 2) p.extras.push(extra(`O pré-level do 4-1 não foi feito (faltam ${max - atual} XP): o XP sai do seu ouro. O ~40 conta com os 2 XP grátis; confira o que sobra para o roll down.`, 'f8-4-2-ouro'));
         return p;
       }
       if (c.level >= 8) {
@@ -482,14 +628,38 @@
   }
 
   // ---------------------------------------------------------------- Reroll (secao 3)
+  // Custo 3: abre com UPAR 4 e win streak, que precisa durar ate o 4-2; spike no fim do 4 ou comeco do 5.
+  function planoRerollC3(c) {
+    const o = c.ord;
+    if (o === ORD.r21) return upar(c, 4, 'rr-c3-2-1', 'Board forte e win streak: suba ao 4.');
+    if (o === ORD.r25) {
+      if (c.board === 'forte' && c.gold >= 10) return upar(c, 5, 'rr-c3-2-5', c.gold >= 20 ? 'Board forte e ouro 20+ (ideal): suba ao 5.' : 'Board forte e ouro 10+: suba ao 5 (ideal 20).');
+      return guarda(c, 'rr-c3-2-5', 'Sem board forte ou sem 10 de ouro: guarde.');
+    }
+    if (c.a === 2) return guarda(c, 'rr-c3-2-1', 'Estágio 2: guarde e mantenha a win streak.');
+    if (o === ORD.r31) return fica(c, 'rr-c3-3-1', 'Fique e guarde. Não suba ao 6 por impulso.');
+    if (o === ORD.r32) {
+      if (c.gold >= 30) return upar(c, 6, 'rr-c3-3-2', 'Ouro 30–32: suba ao 6. Board forte poupa vida.');
+      return guarda(c, 'rr-c3-3-2', `Ouro ${c.gold}: abaixo de 30–32 para subir ao 6. Guarde.`);
+    }
+    const slow = (regra, texto, o2) => rolar(c, 50, 50, regra, texto, Object.assign({ piso: { valor: 50, texto: 'Custo 3: 50 no slow roll.', regra: 'rr-piso-c3' } }, o2)) || guarda(c, regra, `Guarde até 50 (hoje ${c.gold}); depois slow roll.`);
+    if (o === ORD.r41) {
+      if (c.level < 7) return plano('UPAR', 'rr-c3-4-1', { nivel: 7, rolarAte: { min: 50, max: 50 }, texto: 'Suba ao 7 e faça slow roll acima de 50.', piso: { valor: 50, texto: 'Custo 3: 50 no slow roll.', regra: 'rr-piso-c3' } });
+      return slow('rr-c3-4-1', 'No 7: slow roll acima de 50.');
+    }
+    if (o >= ORD.r42) return slow('rr-c3-4-2', 'A win streak precisa durar até aqui. Slow roll segue.', { extras: [extra('Spike no fim do 4 ou começo do 5: volte com mais ouro e role de novo.', 'rr-c3-estagio5')] });
+    return fica(c, 'rr-c3-3-5', 'Fique e guarde rumo ao spike do fim do 4.');
+  }
+
   function planoReroll(c, variante) {
     const o = c.ord;
     const c1 = variante === 'custo1';
     const p = (id) => (c1 ? 'rr-c1-' : 'rr-c2-') + id;
     if (c.a === 1) return guarda(c, 'g-est1', 'Estágio 1: sem tabela nas fontes. Juros já valem (10 de ouro = +1).');
+    if (variante === 'custo3') return planoRerollC3(c);
     if (o === ORD.r21) {
       if (c1) return fica(c, p('2-1'), 'Open Fort: fique no 3 e segure os pares.', { nivel: 3 });
-      if (c.itensUteis) return fica(c, p('2-1'), 'Itens slamáveis: monte um board razoável para poupar vida.');
+      if (c.slamaveis.length) return fica(c, p('2-1'), 'Itens slamáveis: monte um board razoável para poupar vida.');
       return fica(c, p('2-1'), 'Sem itens slamáveis: Open Fort (cuidado com a vida).', { nivel: 3 });
     }
     if (o === ORD.r25) {
@@ -540,11 +710,11 @@
       if (o === ORD.r25) return guarda(c, 'ec-2-5', 'Fique. Se achou board forte, pode subir e quebrar a loss streak (vá à Estratégia 1).');
       if (o === ORD.r31) return fica(c, 'ec-3-1', 'Saia da loss streak: comece a montar board com a maior economia possível.', { extras: [extra('Alvo de ouro: 50 no 3-1 (teto de juros).', 'ec-piso-50')] });
       const p = guarda(c, 'ec-2-2', 'Juros desde cedo: degraus 14, 20, 32. Não role. Venda pares que não entram.');
-      if (o === ORD.r27) p.extras.push(extra('Fim do estágio 2: decida a saída. 4+ cópias de custo 1 ou 2+ de custo 2, com itens BIS, vão para o Reroll.', 'ec-fim2'));
+      if (o === ORD.r27) p.extras.push(extra('Fim do estágio 2: decida a saída. 4+ cópias de custo 1 (itens BIS) ou 2+ de custo 2 (itens BIS ou slamáveis que poupem vida), sem contest, vão para o Reroll.', 'ec-fim2'));
       return p;
     }
     if (variante === 'antecipado') {
-      return uparRolar(c, 8, 20, 30, 'ec-3a', 'Economia alta: suba ao 8 e role antes de todos.', { piso: { valor: 30, texto: 'Role até 20–30.', regra: 'f8-piso-2030' }, extras: [extra('Pare ao achar 1 cópia do carry e do tanque.', 'f8-gat-parar-carry')] });
+      return uparRolar(c, 8, 20, 30, 'ec-3a', 'Economia alta: suba ao 8 e role antes de todos.', { piso: { valor: 30, texto: 'Role até 20–30.', regra: 'f8-piso-2030' }, extras: [extra(`~40+ sobrando depois de subir ao 8 (hoje ${c.sobra8.sobra}${c.sobra8.exato ? '' : '; informe o XP para confirmar'}).`, 'f8-piso-40-3a'), extra('Pare ao achar 1 cópia do carry e do tanque.', 'f8-gat-parar-carry')] });
     }
     // fast9 (3B)
     if (o >= ORD.r51) {

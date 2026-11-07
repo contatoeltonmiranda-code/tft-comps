@@ -58,17 +58,37 @@ test('2-1, vida 100, ouro 4, sem nada: Economia (Open Fort), FICAR no 3, juros 0
 });
 
 test('2-1 com upgrade (3 copias), itens uteis (2 espadas) e aprimoramento de forca: Fast 8, UPAR 4', () => {
-  const d = dec({ champs: { B: 3 }, comps: { CS: 2 }, aprim: 'forca' });
+  const d = dec({ champs: { A: 3 }, comps: { CS: 2 }, aprim: 'forca' });
   assert.equal(d.estrategia.id, 'fast8');
   assert.equal(d.acao.tipo, 'UPAR');
   assert.equal(d.acao.nivel, 4);
   assert.equal(d.acao.regra.id, 'f8-2-1');
 });
 
-test('2-1 so com pares e sem itens: Economia mesmo com aprimoramento de forca (SENAO -> FICAR 3)', () => {
-  const d = dec({ champs: { B: 2, F: 2 }, aprim: 'forca' });
+test('2-1 so com pares e sem itens: Open Fort (aprimoramento de economia nao e requisito)', () => {
+  const d = dec({ champs: { E: 2, D: 2 } });
   assert.equal(d.estrategia.id, 'economia');
+  assert.equal(d.estrategia.variante, 'openfort');
   assert.equal(d.acao.tipo, 'FICAR');
+  const c = d.estrategia.porque.find((p) => p.letra === 'c');
+  assert.notEqual(c.ok, false, 'sem aprimoramento de economia nao reprova o Open Fort');
+  assert.match(c.texto, /sinal mais forte/i);
+});
+
+test('2-1 so com pares, sem itens, mas COM aprimoramento de combate: nao e Open Fort, e Fast 8 (FICAR 3)', () => {
+  const d = dec({ champs: { E: 2, D: 2 }, aprim: 'forca' });
+  assert.equal(d.estrategia.id, 'fast8');
+  assert.equal(d.acao.tipo, 'FICAR');
+  assert.equal(d.acao.nivel, 3);
+  assert.ok(d.estrategia.mudaria.some((m) => /Open Fort/.test(m.texto) && /combate|força/.test(m.texto)));
+});
+
+test('2-1 com aprimoramento de economia: Open Fort e o criterio (c) bate como sinal mais forte', () => {
+  const d = dec({ champs: { E: 2, D: 2 }, aprim: 'eco' });
+  assert.equal(d.estrategia.variante, 'openfort');
+  const c = d.estrategia.porque.find((p) => p.letra === 'c');
+  assert.equal(c.ok, true);
+  assert.ok(d.estrategia.bateram.includes('c'));
 });
 
 test('2-1 com aprimoramento de economia e board vazio: Economia, criterio de aprimoramento marcado', () => {
@@ -79,7 +99,7 @@ test('2-1 com aprimoramento de economia e board vazio: Economia, criterio de apr
 
 // -------------------------------------------------------------- estagio 2 (Fast 8)
 
-const F8_2 = { champs: { B: 3 }, comps: { CS: 2 } };
+const F8_2 = { champs: { A: 3 }, comps: { CS: 2 } };
 
 test('2-2 a 2-7: GUARDAR, nao role (Fast 8)', () => {
   ['2-2', '2-3', '2-6', '2-7'].forEach((stage) => {
@@ -90,7 +110,7 @@ test('2-2 a 2-7: GUARDAR, nao role (Fast 8)', () => {
 });
 
 test('2-x com muitos pares (3+): rola um pouco e para em 14 ou 20, nunca em 10', () => {
-  const base = { stage: '2-2', level: 4, champs: { B: 3, A: 2, E: 2, F: 2 }, comps: { CS: 2 } };
+  const base = { stage: '2-2', level: 4, champs: { A: 3, E: 2, D: 2, G: 2 }, comps: { CS: 2 } };
   const alto = dec({ ...base, gold: 25 });
   assert.equal(alto.acao.tipo, 'ROLAR');
   assert.equal(alto.acao.rolarAte.min, 20);
@@ -129,7 +149,7 @@ test('2-5: board forte e ouro >= 10 = UPAR 5; senao FICAR', () => {
 
 // -------------------------------------------------------------- estagio 3
 
-const F8_3 = { champs: { B: 3, C: 1 }, comps: { CS: 2 }, hp: 70 };
+const F8_3 = { champs: { A: 3, C: 1 }, comps: { CS: 2 }, hp: 70 };
 
 test('3-1: FICAR, nao sobe ao 6 por impulso; win streak + board forte = UPAR 6; pre-level para o 3-2', () => {
   const d = dec({ ...F8_3, stage: '3-1', level: 5, gold: 30, streak: 0 });
@@ -172,13 +192,13 @@ test('3-2 com ouro ~20 e board bom: pode UPAR (opcional, economia fica ruim); co
 });
 
 test('3-2 a 3-5 com 3+ pares: 2-3 rolagens por rodada, parando em 32', () => {
-  const d = dec({ stage: '3-3', level: 6, hp: 70, gold: 42, champs: { B: 3, A: 2, E: 2, F: 2 }, comps: { CS: 2 } });
+  const d = dec({ stage: '3-3', level: 6, hp: 70, gold: 42, champs: { A: 3, E: 2, D: 2, G: 2 }, comps: { CS: 2 } });
   assert.equal(d.acao.tipo, 'ROLAR');
   assert.equal(d.acao.rolarAte.min, 32);
   assert.equal(d.acao.limiteRolagens, 3);
   assert.equal(d.acao.regra.id, 'f8-3-roll');
   assert.ok(d.acao.sobra.min >= 32);
-  const parado = dec({ stage: '3-3', level: 6, hp: 70, gold: 32, champs: { B: 3, A: 2, E: 2, F: 2 }, comps: { CS: 2 } });
+  const parado = dec({ stage: '3-3', level: 6, hp: 70, gold: 32, champs: { A: 3, E: 2, D: 2, G: 2 }, comps: { CS: 2 } });
   assert.notEqual(parado.acao.tipo, 'ROLAR');
 });
 
@@ -337,7 +357,7 @@ test('estagio 2 ignora faixas de vida (cada derrota tira pouca vida)', () => {
 
 // -------------------------------------------------------------- reroll
 
-const RR = { champs: { A: 5, E: 2, B: 2 }, comps: { CS: 1, CB: 1 }, hp: 90 };
+const RR = { champs: { A: 5, E: 2 }, comps: { CS: 1, CB: 1 }, hp: 90 };
 
 test('Reroll custo 1: 5 copias de custo 1, item BIS montavel e sem contest, 3-1 no nivel 4: ROLAR ate 32', () => {
   const d = dec({ ...RR, stage: '3-1', level: 4, gold: 40 });
@@ -515,7 +535,7 @@ test('Open Fort: 2-5 com win streak (board forte) quebra a loss streak e vai de 
 });
 
 test('3-2 ja no nivel 6 com 3+ pares: nao manda "subir ao 6", vai para a rolagem de estagio 3', () => {
-  const d = dec({ stage: '3-2', level: 6, hp: 70, gold: 44, champs: { B: 3, A: 2, E: 2, F: 2 }, comps: { CS: 2 } });
+  const d = dec({ stage: '3-2', level: 6, hp: 70, gold: 44, champs: { A: 3, E: 2, D: 2, G: 2 }, comps: { CS: 2 } });
   assert.equal(d.acao.tipo, 'ROLAR');
   assert.equal(d.acao.regra.id, 'f8-3-roll');
 });
@@ -532,4 +552,292 @@ test('sanitizarEstado com recipes: componente desconhecido sai, os 10 componente
   assert.deepEqual(e.comps, { CS: 2 });
   const sem = P.sanitizarEstado({ comps: { CS: 2, LIXO: 1 } }, catalog);
   assert.deepEqual(sem.comps, { CS: 2, LIXO: 1 });
+});
+
+// -------------------------------------------------------------- Melhor momento para seguir: criterios (a)(b)(c)... com letra
+
+test('Fast 8 no 3-2: mostra os criterios (a) a (f) do bloco "Melhor momento para seguir", cada um com a regra', () => {
+  const d = dec({ ...F8_3, stage: '3-2', level: 5, gold: 32, streak: 2, favorita: 'x1' });
+  assert.equal(d.estrategia.id, 'fast8');
+  const letras = d.estrategia.porque.filter((p) => p.letra).map((p) => p.letra);
+  assert.deepEqual(letras, ['a', 'b', 'c', 'd', 'e', 'f']);
+  d.estrategia.porque.forEach((p) => {
+    assert.ok(p.regra && p.regra.id && p.regra.trecho, p.letra);
+  });
+  const por = (l) => d.estrategia.porque.find((p) => p.letra === l);
+  assert.equal(por('a').regra.id, 'f8m-a');
+  assert.equal(por('a').regra.origem, 'derivada');
+  assert.equal(por('b').regra.id, 'f8m-b');
+  assert.equal(por('e').regra.id, 'f8m-e');
+  assert.ok(Array.isArray(d.estrategia.bateram));
+  assert.ok(d.estrategia.bateram.includes('b') && d.estrategia.bateram.includes('c'), d.estrategia.bateram.join());
+  assert.equal(d.estrategia.totalCriterios, 6);
+});
+
+test('Fast 8: (a) vida cai em Critica, (b) ouro baixo no 3-2 reprova, (c) sem streak/eco/degrau reprova', () => {
+  const d = dec({ ...F8_3, stage: '3-2', level: 5, gold: 12, hp: 25, streak: 0 });
+  const por = (l) => d.estrategia.porque.find((p) => p.letra === l);
+  assert.equal(por('a').ok, false);
+  assert.equal(por('b').ok, false);
+  assert.equal(por('c').ok, false);
+  assert.ok(!d.estrategia.bateram.includes('a'));
+});
+
+test('Fast 8: contest ideal ate 1; maximo 2 (UPAR 8 e ROLAR no 3-7 ou 4-1); 3+ reprova o criterio (e)', () => {
+  const e = (n) => dec({ ...F8_3, stage: '3-2', level: 5, gold: 32, favorita: 'x1', contest: { x1: n } }).estrategia.porque.find((p) => p.letra === 'e');
+  assert.equal(e(0).ok, true);
+  assert.equal(e(1).ok, true);
+  assert.equal(e(2).ok, true);
+  assert.match(e(2).texto, /3-7 ou 4-1/);
+  assert.equal(e(3).ok, false);
+  assert.match(e(3).texto, /troque de comp/);
+  assert.equal(e(2).regra.id, 'f8m-e');
+});
+
+test('contest 2 no Fast 8: 3-7 e 4-1 mandam UPAR 8 e ROLAR antes de todos', () => {
+  const a = dec({ ...F8_3, stage: '3-7', level: 7, gold: 50, favorita: 'x1', contest: { x1: 2 } });
+  assert.equal(a.acao.nivel, 8);
+  assert.equal(a.acao.regra.id, 'f8-3-7');
+  assert.equal(a.acao.regra.origem, 'guia');
+  const b = dec({ ...F8_3, stage: '4-1', level: 7, gold: 50, favorita: 'x1', contest: { x1: 2 } });
+  assert.equal(b.acao.tipo, 'UPAR');
+  assert.equal(b.acao.nivel, 8);
+  assert.deepEqual([b.acao.rolarAte.min, b.acao.rolarAte.max], [20, 30]);
+  assert.equal(b.acao.regra.id, 'f8-4-1-contest');
+});
+
+test('Fast 8: (f) itens que servem ao carry ou ao tanque de custo 4 da comp; nao exige BIS', () => {
+  const sem = dec({ ...F8_3, comps: {}, stage: '3-2', level: 5, gold: 32, favorita: 'x1' });
+  assert.equal(sem.estrategia.porque.find((p) => p.letra === 'f').ok, false);
+  const com = dec({ ...F8_3, comps: { CS: 2 }, stage: '3-2', level: 5, gold: 32, favorita: 'x1' });
+  assert.equal(com.estrategia.porque.find((p) => p.letra === 'f').ok, true);
+  assert.match(com.estrategia.porque.find((p) => p.letra === 'f').texto, /BIS/);
+});
+
+// -------------------------------------------------------------- Reroll custo 2: BIS ou slamavel
+
+test('Reroll custo 2 aceita itens slamaveis quando nao ha BIS conhecido (par de custo 2 + 2 espadas)', () => {
+  const d = dec({ champs: { B: 2 }, comps: { CS: 2 }, hp: 80, stage: '3-1', level: 5, gold: 40 });
+  assert.equal(d.estrategia.id, 'reroll');
+  assert.equal(d.estrategia.variante, 'custo2');
+  const c = d.estrategia.porque.find((p) => p.letra === 'c');
+  assert.equal(c.ok, true);
+  assert.match(c.texto, /slamáve/i);
+  assert.equal(c.regra.id, 'pn-slamavel');
+  assert.equal(c.regra.origem, 'painel');
+});
+
+test('Reroll custo 2 sem BIS e sem slamavel: nao entra; o painel diz o que falta', () => {
+  const d = dec({ champs: { B: 2 }, comps: {}, hp: 80, stage: '3-2', level: 5, gold: 40 });
+  assert.equal(d.estrategia.id, 'fast8');
+  assert.ok(d.estrategia.mudaria.some((m) => /BIS|slam/i.test(m.texto)));
+});
+
+test('Reroll custo 1 continua exigindo BIS: 4+ copias e so slamavel generico nao basta', () => {
+  const d = dec({ champs: { E: 5 }, comps: { CS: 2 }, hp: 90, stage: '3-1', level: 4, gold: 40 });
+  assert.equal(d.estrategia.id, 'fast8');
+});
+
+test('Reroll custo 2 com contest em qualquer comp do campeao: nao entra (maximo 0)', () => {
+  const d = dec({ champs: { B: 2 }, comps: { CS: 2 }, hp: 80, stage: '3-1', level: 5, gold: 40, contest: { x1: 1 } });
+  assert.equal(d.estrategia.id, 'fast8');
+});
+
+test('Reroll: criterios (a) a (g) com letra e regra; (e) ouro e (g) prazo avaliados pela rodada', () => {
+  const d = dec({ ...RR, stage: '3-1', level: 4, gold: 40 });
+  assert.equal(d.estrategia.id, 'reroll');
+  assert.deepEqual(d.estrategia.porque.map((p) => p.letra), ['a', 'b', 'c', 'd', 'e', 'f', 'g']);
+  const por = (l) => d.estrategia.porque.find((p) => p.letra === l);
+  assert.equal(por('a').ok, true);
+  assert.equal(por('b').regra.id, 'rrm-b');
+  assert.equal(por('e').ok, true, 'ouro 40 acima de 32 no 3-1');
+  assert.equal(por('f').ok, true);
+  assert.equal(por('g').ok, true);
+  assert.equal(por('g').regra.id, 'rrm-g');
+});
+
+// -------------------------------------------------------------- Reroll custo 3
+
+const C3 = { champs: { C: 2 }, hp: 90, streak: 3, comps: { CS: 1 } };
+
+test('Reroll custo 3: copias cedo (par), board forte, sem contest e win streak: Estrategia 2 custo 3, UPAR 4 no 2-1', () => {
+  const d = dec({ ...C3, stage: '2-1', level: 3, gold: 6 });
+  assert.equal(d.estrategia.id, 'reroll');
+  assert.equal(d.estrategia.variante, 'custo3');
+  assert.equal(d.estrategia.rotulo, 'Reroll de custo 3');
+  assert.equal(d.acao.tipo, 'UPAR');
+  assert.equal(d.acao.nivel, 4);
+  assert.equal(d.acao.regra.id, 'rr-c3-2-1');
+  assert.equal(d.estrategia.carry.custo, 3);
+  assert.deepEqual(d.estrategia.porque.map((p) => p.letra), ['a', 'b', 'c', 'd', 'e', 'f', 'g']);
+  const a = d.estrategia.porque.find((p) => p.letra === 'a');
+  assert.equal(a.regra.id, 'rrm-a-c3');
+  assert.equal(a.regra.origem, 'derivada');
+  assert.equal(d.estrategia.porque.find((p) => p.letra === 'd').ok, true);
+});
+
+test('Reroll custo 3 nao entra sem win streak, sem board forte, com contest, com 1 copia ou depois do 4-2', () => {
+  const v = (o) => dec({ ...C3, stage: '2-5', level: 4, gold: 12, ...o }).estrategia.variante;
+  assert.notEqual(v({ streak: 0 }), 'custo3');
+  assert.notEqual(v({ streak: -3 }), 'custo3');
+  assert.notEqual(v({ board: 'fraco' }), 'custo3');
+  assert.notEqual(v({ contest: { x1: 1 } }), 'custo3');
+  assert.notEqual(v({ champs: { C: 1 } }), 'custo3');
+  assert.notEqual(v({ stage: '4-3', level: 7, gold: 60 }), 'custo3');
+});
+
+test('Reroll custo 3 rodada a rodada: 2-5, 3-1, 3-2, 3-5, 4-1 e 4-2', () => {
+  const r = (stage, o) => dec({ ...C3, stage, ...o });
+  const a = r('2-5', { level: 4, gold: 12 });
+  assert.equal(a.estrategia.variante, 'custo3');
+  assert.equal(a.acao.tipo, 'UPAR');
+  assert.equal(a.acao.nivel, 5);
+  assert.equal(a.acao.regra.id, 'rr-c3-2-5');
+  const sem = r('2-5', { level: 4, gold: 8 });
+  assert.notEqual(sem.acao.tipo, 'UPAR');
+  const b = r('3-1', { level: 5, gold: 33 });
+  assert.equal(b.acao.regra.id, 'rr-c3-3-1');
+  assert.notEqual(b.acao.tipo, 'ROLAR');
+  const c = r('3-2', { level: 5, gold: 31 });
+  assert.equal(c.acao.tipo, 'UPAR');
+  assert.equal(c.acao.nivel, 6);
+  assert.equal(c.acao.regra.id, 'rr-c3-3-2');
+  const c2 = r('3-2', { level: 5, gold: 24 });
+  assert.notEqual(c2.acao.tipo, 'UPAR');
+  const d = r('3-5', { level: 6, gold: 45 });
+  assert.equal(d.acao.tipo, 'FICAR');
+  assert.equal(d.acao.nivel, 6);
+  assert.equal(d.acao.regra.id, 'rr-c3-3-5');
+  const e = r('4-1', { level: 6, gold: 60 });
+  assert.equal(e.acao.tipo, 'UPAR');
+  assert.equal(e.acao.nivel, 7);
+  assert.equal(e.acao.regra.id, 'rr-c3-4-1');
+  const f = r('4-2', { level: 7, gold: 60 });
+  assert.equal(f.acao.tipo, 'ROLAR');
+  assert.equal(f.acao.rolarAte.min, 50);
+  assert.equal(f.acao.regra.id, 'rr-c3-4-2');
+});
+
+test('Reroll custo 1 segue antes do custo 3 quando as condicoes batem', () => {
+  const d = dec({ champs: { A: 5, C: 2 }, comps: { CS: 1, CB: 1 }, hp: 90, streak: 3, stage: '3-1', level: 4, gold: 40 });
+  assert.equal(d.estrategia.variante, 'custo1');
+});
+
+// -------------------------------------------------------------- Economia: Open Fort, 3A e 3B
+
+test('Open Fort: criterios (a) a (g) com letra e regra', () => {
+  const d = dec({ stage: '2-3', level: 3, gold: 14, hp: 90 });
+  assert.equal(d.estrategia.variante, 'openfort');
+  assert.deepEqual(d.estrategia.porque.map((p) => p.letra), ['a', 'b', 'c', 'd', 'e', 'f', 'g']);
+  const por = (l) => d.estrategia.porque.find((p) => p.letra === l);
+  assert.equal(por('a').regra.id, 'ecm-of-a');
+  assert.equal(por('f').regra.origem, 'derivada');
+  assert.equal(por('a').ok, true);
+  assert.equal(por('b').ok, true);
+});
+
+test('3A exige aprimoramento de economia E ~40+ sobrando depois de subir ao 8', () => {
+  const base = { ...F8_3, aprim: 'eco', stage: '3-7', level: 7 };
+  const poucoOuro = dec({ ...base, gold: 38 });
+  assert.equal(poucoOuro.estrategia.id, 'fast8', '38 de ouro: nao sobra 40');
+  assert.equal(poucoOuro.acao.tipo, 'FICAR');
+  const ok = dec({ ...base, gold: 45 });
+  assert.equal(ok.estrategia.variante, 'antecipado');
+  assert.equal(ok.acao.tipo, 'UPAR');
+  assert.equal(ok.acao.nivel, 8);
+  assert.deepEqual([ok.acao.rolarAte.min, ok.acao.rolarAte.max], [20, 30]);
+  assert.ok(ok.estrategia.bateram.length >= 2);
+  const semEco = dec({ ...base, aprim: '', gold: 70 });
+  assert.equal(semEco.estrategia.variante, 'padrao');
+});
+
+test('3A: "sobrando depois de subir" desconta o XP informado (7 -> 8)', () => {
+  const base = { ...F8_3, aprim: 'eco', stage: '3-7', level: 7, xp: { atual: 20, max: 48 } };
+  const curto = dec({ ...base, gold: 60 });
+  assert.equal(curto.estrategia.variante, 'padrao', '60 - 28 de XP = 32, nao chega a 40');
+  const longo = dec({ ...base, gold: 75 });
+  assert.equal(longo.estrategia.variante, 'antecipado', '75 - 28 = 47');
+  const crit = longo.estrategia.porque.find((p) => p.regra.id === 'ecm-3a-eco');
+  assert.equal(crit.ok, true);
+  assert.match(crit.texto, /47/);
+});
+
+test('3A: contest maximo 2; com 3+ jogadores na comp nao entra', () => {
+  const base = { ...F8_3, aprim: 'eco', stage: '3-7', level: 7, gold: 60, favorita: 'x1' };
+  assert.equal(dec({ ...base, contest: { x1: 2 } }).estrategia.variante, 'antecipado');
+  assert.notEqual(dec({ ...base, contest: { x1: 3 } }).estrategia.variante, 'antecipado');
+});
+
+test('3A: vida em Atencao (30-40) ainda vale; abaixo de 30 reprova o criterio de vida', () => {
+  const base = { ...F8_3, aprim: 'eco', stage: '4-1', level: 7, gold: 60 };
+  const aten = dec({ ...base, hp: 35 });
+  assert.equal(aten.estrategia.variante, 'antecipado');
+  assert.equal(aten.estrategia.porque.find((p) => p.regra.id === 'ecm-3a-vida').ok, true);
+  const crit = dec({ ...base, hp: 25 });
+  assert.equal(crit.estrategia.porque.find((p) => p.regra.id === 'ecm-3a-vida').ok, false);
+});
+
+test('Fast 9 (3B) no 4-1 exige tambem 50+ de ouro; criterios (a) a (f) com letra', () => {
+  const base = { ...F8_3, aprim: 'eco', stage: '4-1', level: 7, hp: 85, favorita: 'x1' };
+  const pouco = dec({ ...base, gold: 45 });
+  assert.equal(pouco.estrategia.variante, 'antecipado');
+  assert.ok(pouco.estrategia.mudaria.some((m) => /50/.test(m.texto)));
+  const ok = dec({ ...base, gold: 50 });
+  assert.equal(ok.estrategia.variante, 'fast9');
+  assert.deepEqual(ok.estrategia.porque.map((p) => p.letra), ['a', 'b', 'c', 'd', 'e', 'f']);
+  assert.equal(ok.estrategia.porque.find((p) => p.letra === 'c').regra.id, 'ecm-3b-c');
+  assert.equal(ok.estrategia.porque.find((p) => p.letra === 'c').regra.origem, 'derivada');
+  assert.equal(ok.estrategia.porque.find((p) => p.letra === 'a').regra.id, 'ecm-3b-a');
+  assert.ok(['a', 'b', 'c', 'd'].every((l) => ok.estrategia.bateram.includes(l)));
+});
+
+test('Fast 9 ja em andamento (depois do 4-1) nao volta atras quando o ouro cai abaixo de 50', () => {
+  const d = dec({ ...F8_3, aprim: 'eco', stage: '4-4', level: 8, hp: 85, gold: 20, favorita: 'x1' });
+  assert.equal(d.estrategia.variante, 'fast9');
+});
+
+// -------------------------------------------------------------- 4-2: ouro ~40 e pre-level
+
+test('4-2: o limiar ~40 vem marcado como derivado (pre-level do 4-1) e avisa se o pre-level nao foi feito', () => {
+  const d = dec({ ...F8_3, stage: '4-2', level: 7, gold: 45, hp: 60, xp: { atual: 30, max: 48 } });
+  assert.equal(d.acao.tipo, 'UPAR');
+  assert.equal(d.acao.piso.regra.id, 'f8-piso-40');
+  assert.equal(d.acao.piso.regra.origem, 'derivada');
+  assert.ok(d.acao.extras.some((x) => /pré-level/i.test(x.texto) && x.regra && x.regra.id === 'f8-4-2-ouro'));
+  const feito = dec({ ...F8_3, stage: '4-2', level: 7, gold: 45, hp: 60, xp: { atual: 46, max: 48 } });
+  assert.ok(!feito.acao.extras.some((x) => /não foi feito/i.test(x.texto)));
+});
+
+// -------------------------------------------------------------- varredura: nenhum estado quebra o motor nem cita regra inexistente
+
+test('varredura de 3000 estados (rodada, vida, ouro, streak, aprimoramento, copias, contest): decisao valida e criterios com regra', () => {
+  let seedN = 7;
+  const rnd = (n) => { seedN = (seedN * 1103515245 + 12345) & 0x7fffffff; return seedN % n; };
+  const ids = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+  const letrasOk = new Set(['a', 'b', 'c', 'd', 'e', 'f', 'g', null]);
+  for (let i = 0; i < 3000; i++) {
+    const champs = {};
+    for (let k = rnd(5); k > 0; k--) champs[ids[rnd(ids.length)]] = 1 + rnd(9);
+    const comps = {};
+    if (rnd(2)) comps.CS = 1 + rnd(3);
+    if (rnd(2)) comps.CB = 1 + rnd(2);
+    const e = {
+      stage: P.RODADAS[rnd(P.RODADAS.length)], hp: rnd(101), gold: rnd(120), level: 1 + rnd(9), streak: rnd(13) - 6,
+      aprim: ['', 'eco', 'forca'][rnd(3)], board: ['auto', 'forte', 'medio', 'fraco'][rnd(4)], champs, comps,
+      contest: rnd(2) ? { x1: rnd(4), y1: rnd(3) } : {}, favorita: ['x1', 'y1', 'w1', null][rnd(4)],
+      xp: rnd(2) ? { atual: rnd(40), max: 40 + rnd(10) } : { atual: null, max: null },
+    };
+    const d = P.decidir(est(e), dados);
+    assert.ok(['fast8', 'reroll', 'economia'].includes(d.estrategia.id), JSON.stringify(e));
+    assert.ok(['UPAR', 'FICAR', 'ROLAR', 'GUARDAR'].includes(d.acao.tipo), JSON.stringify(e));
+    assert.ok(d.estrategia.porque.length >= 3);
+    d.estrategia.porque.forEach((p) => {
+      assert.ok(p.regra && p.regra.trecho && p.texto, JSON.stringify(e));
+      assert.ok(letrasOk.has(p.letra));
+      assert.ok(p.ok === true || p.ok === false || p.ok === null);
+    });
+    d.estrategia.mudaria.forEach((m) => assert.ok(m.regra && m.regra.id, JSON.stringify(e)));
+    assert.ok(d.estrategia.bateram.length <= d.estrategia.totalCriterios);
+    assert.ok(Number.isFinite(d.ouro.juros));
+  }
 });

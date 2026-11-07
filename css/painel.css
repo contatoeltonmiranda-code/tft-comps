@@ -124,6 +124,8 @@
 .pn-crit-ok .pn-crit-i{color:#6fd49a}
 .pn-crit-no .pn-crit-i{color:var(--danger)}
 .pn-crit-unk .pn-crit-i{color:var(--muted)}
+.pn-crit-l{color:var(--text);font-weight:600}
+.pn-bateram{margin:0 0 8px;font-size:14px;color:var(--muted)}
 .pn-mud li,.pn-mot li,.pn-extras-l li{font-size:15px;padding-left:14px;position:relative}
 .pn-mud li::before,.pn-mot li::before,.pn-extras-l li::before{content:"";position:absolute;left:2px;top:.62em;width:5px;height:5px;border-radius:50%;background:var(--muted)}
 .pn-ref{display:inline-flex;align-items:center;flex-wrap:wrap;gap:6px;margin-left:2px}

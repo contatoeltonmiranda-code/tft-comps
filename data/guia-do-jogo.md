@@ -18,7 +18,7 @@ Consulta rápida antes e durante a partida: economia, nível, rolagem e estilo d
 | Juros | +1 de ouro para cada 10 guardados no fim da rodada, até +5 (com 50). |
 | Streak | Sequência de vitórias (win streak) ou de derrotas (loss streak). Dá ouro extra a partir de 2. |
 | Spike (power spike) | Salto de força do board: subir de nível, 3 estrelas, item-chave, novo nível de traço. |
-| Par | Duas cópias do mesmo campeão. Falta uma para 2 estrelas. |
+| Par (pares) | Duas cópias iguais de um campeão 1★, a meio caminho do 2★. 3 cópias = 2★; 9 cópias = 3★ (regra do jogo, não citada nos vídeos). Pares pesam na hora de rolar: no estágio 2, "se tiver muito par" dá para rolar um pouco; no 3-2 ou 3-5, com "3 pares ou mais" no banco, 2–3 rolagens por rodada (GattaiTFT). No 2-1, "se só tem par" e nada mais: fique no 3 e faça Open Fort. |
 | Rolar (roll) | Pagar 2 de ouro para trocar a loja. |
 | Roll down | Rolar muito de uma vez, num nível alto, atrás da comp final. |
 | Slow roll | Manter 50+ de ouro e rolar só com o que passa disso, rodada a rodada. |
@@ -118,7 +118,7 @@ O ideal é ter os três. O normal é sacrificar um:
 | Ouro | +1 por vitória + bônus da streak | Bônus da streak (mesmo valor) |
 | Vida | Não perde | Perde a cada derrota |
 | Carrossel | Com mais vida, escolhe depois | Com menos vida, escolhe primeiro |
-| Quando | Board forte cedo: upgrades, itens, aprimoramento de combate | Board fraco: sem pares, sem itens úteis, aprimoramento de economia |
+| Quando | Board forte cedo: upgrades, itens, aprimoramento de combate | Board fraco: sem pares (ou só pares), sem itens úteis. Aprimoramento de economia reforça |
 | Risco | Gastou muito e a streak quebrou: a partida pode ir junto | Chegar ao meio do jogo com pouca vida (ex.: 30–40 no 4-1 em reroll de custo 2) |
 
 - **Loss streak clássico (Open Fort):** perder o estágio 2 e chegar ao 3-1 com a maior economia possível. Depois, gastar tudo no spike da comp.
@@ -200,7 +200,7 @@ Sim para pelo menos uma, com ouro sobrando (ou vida em risco): suba. **Nunca sub
 | Fast 9 | Muita vida, muita economia, aprimoramento de economia | 9 no 5-1 | Sobe sem rolar | Board fraco no caminho. Set 18: 80+ de vida no 4-1. |
 | Vertical (sinergia) | Peças do traço cedo, emblemas, itens flexíveis | 8, com o maior breakpoint | — | Chegar tarde ao 8 e ao cap da comp. |
 | Win streak (agressivo) | Board forte cedo | Curva agressiva | Gasta juros pelo spike | Streak quebrada depois de gastar muito. |
-| Loss streak (Open Fort) | Board fraco, sem pares nem itens, aprimoramento de economia | Fica baixo | Máximo de economia até o 3-1 | Pouca vida no meio do jogo. |
+| Loss streak (Open Fort) | Board fraco, sem pares (ou só pares) nem itens; aprimoramento de economia reforça | Fica baixo | Máximo de economia até o 3-1 | Pouca vida no meio do jogo. |
 
 ### Reroll de custo 1
 
@@ -271,7 +271,7 @@ Sim para pelo menos uma, com ouro sobrando (ou vida em risco): suba. **Nunca sub
 - **Objetivo:** economia e streak.
 - **2-1, a primeira decisão: fazer 10 de ouro ou montar board?**
   - Tem upgrade, aprimoramento de força e itens úteis → board forte, sobe de nível.
-  - Só pares, sem itens, aprimoramento de economia → loss streak no nível 3.
+  - Só pares, sem itens, sem aprimoramento de combate → loss streak no nível 3. Aprimoramento de economia reforça a escolha.
 - Segure os pares. Sem par, não suba de nível: você perde de qualquer jeito.
 - Não compre custo 3 ou 4 sem itens nem traço.
 - Quase não role.

@@ -103,9 +103,9 @@
   "pass": true
  },
  {
-  "name": "[d1440] badges UPAR/FICAR/ROLAR/GUARDAR/PARAR só nas tabelas (95)",
+  "name": "[d1440] badges UPAR/FICAR/ROLAR/GUARDAR/PARAR só nas tabelas (96)",
   "pass": true,
-  "extra": "n=95 texto=FICAR,GUARDAR,PARAR,ROLA,ROLAR,ROLE,UPANDO,UPAR"
+  "extra": "n=96 texto=FICAR,GUARDAR,PARAR,ROLA,ROLAR,ROLE,UPANDO,UPAR"
  },
  {
   "name": "[d1440] 5 ações com 5 cores diferentes",
@@ -130,7 +130,7 @@
   "pass": true
  },
  {
-  "name": "[d1440] \"(regra derivada do guia)\" discreta: itálico, cor mais apagada que o texto (20)",
+  "name": "[d1440] \"(regra derivada do guia)\" discreta: itálico, cor mais apagada que o texto (34)",
   "pass": true,
   "extra": "{\"it\":\"italic\",\"rd\":\"rgb(141, 154, 178)\",\"body\":\"rgb(200, 208, 223)\"}"
  },
@@ -144,9 +144,9 @@
   "pass": true
  },
  {
-  "name": "[d1440] busca \"slow roll\": destaca 18 trechos e esconde seções sem resultado",
+  "name": "[d1440] busca \"slow roll\": destaca 21 trechos e esconde seções sem resultado",
   "pass": true,
-  "extra": "marks=18 secoes=2"
+  "extra": "marks=21 secoes=2"
  },
  {
   "name": "[d1440] busca: índice mostra só seções com resultado",
@@ -156,7 +156,7 @@
  {
   "name": "[d1440] busca: contador informa ocorrências e seções",
   "pass": true,
-  "extra": "18 ocorrências em 2 seções"
+  "extra": "21 ocorrências em 2 seções"
  },
  {
   "name": "[d1440] Enter vai ao 1º resultado, dentro da tela",
@@ -165,7 +165,7 @@
  {
   "name": "[d1440] busca ignora acento e caixa (\"estrategia 3\" = \"ESTRATÉGIA 3\")",
   "pass": true,
-  "extra": "5"
+  "extra": "6"
  },
  {
   "name": "[d1440] busca acha texto dentro de badge (\"UPAR 8\")",
@@ -268,7 +268,7 @@
  {
   "name": "[d1100] \"Resumo de bolso\" leva ao resumo em caixa com 10 itens",
   "pass": true,
-  "extra": "h2.top=206"
+  "extra": "h2.top=164"
  },
  {
   "name": "[d1100] índice lateral aberto com 6 links, sem cabeçalho recolhível",
@@ -308,9 +308,9 @@
   "pass": true
  },
  {
-  "name": "[d1100] badges UPAR/FICAR/ROLAR/GUARDAR/PARAR só nas tabelas (95)",
+  "name": "[d1100] badges UPAR/FICAR/ROLAR/GUARDAR/PARAR só nas tabelas (96)",
   "pass": true,
-  "extra": "n=95 texto=FICAR,GUARDAR,PARAR,ROLA,ROLAR,ROLE,UPANDO,UPAR"
+  "extra": "n=96 texto=FICAR,GUARDAR,PARAR,ROLA,ROLAR,ROLE,UPANDO,UPAR"
  },
  {
   "name": "[d1100] 5 ações com 5 cores diferentes",
@@ -335,7 +335,7 @@
   "pass": true
  },
  {
-  "name": "[d1100] \"(regra derivada do guia)\" discreta: itálico, cor mais apagada que o texto (20)",
+  "name": "[d1100] \"(regra derivada do guia)\" discreta: itálico, cor mais apagada que o texto (34)",
   "pass": true,
   "extra": "{\"it\":\"italic\",\"rd\":\"rgb(141, 154, 178)\",\"body\":\"rgb(200, 208, 223)\"}"
  },
@@ -349,9 +349,9 @@
   "pass": true
  },
  {
-  "name": "[d1100] busca \"slow roll\": destaca 18 trechos e esconde seções sem resultado",
+  "name": "[d1100] busca \"slow roll\": destaca 21 trechos e esconde seções sem resultado",
   "pass": true,
-  "extra": "marks=18 secoes=2"
+  "extra": "marks=21 secoes=2"
  },
  {
   "name": "[d1100] busca: índice mostra só seções com resultado",
@@ -361,7 +361,7 @@
  {
   "name": "[d1100] busca: contador informa ocorrências e seções",
   "pass": true,
-  "extra": "18 ocorrências em 2 seções"
+  "extra": "21 ocorrências em 2 seções"
  },
  {
   "name": "[d1100] Enter vai ao 1º resultado, dentro da tela",
@@ -370,7 +370,7 @@
  {
   "name": "[d1100] busca ignora acento e caixa (\"estrategia 3\" = \"ESTRATÉGIA 3\")",
   "pass": true,
-  "extra": "5"
+  "extra": "6"
  },
  {
   "name": "[d1100] busca acha texto dentro de badge (\"UPAR 8\")",
@@ -508,9 +508,9 @@
   "pass": true
  },
  {
-  "name": "[m390] badges UPAR/FICAR/ROLAR/GUARDAR/PARAR só nas tabelas (95)",
+  "name": "[m390] badges UPAR/FICAR/ROLAR/GUARDAR/PARAR só nas tabelas (96)",
   "pass": true,
-  "extra": "n=95 texto=FICAR,GUARDAR,PARAR,ROLA,ROLAR,ROLE,UPANDO,UPAR"
+  "extra": "n=96 texto=FICAR,GUARDAR,PARAR,ROLA,ROLAR,ROLE,UPANDO,UPAR"
  },
  {
   "name": "[m390] 5 ações com 5 cores diferentes",
@@ -541,7 +541,7 @@
   "pass": true
  },
  {
-  "name": "[m390] \"(regra derivada do guia)\" discreta: itálico, cor mais apagada que o texto (20)",
+  "name": "[m390] \"(regra derivada do guia)\" discreta: itálico, cor mais apagada que o texto (34)",
   "pass": true,
   "extra": "{\"it\":\"italic\",\"rd\":\"rgb(141, 154, 178)\",\"body\":\"rgb(200, 208, 223)\"}"
  },
@@ -555,9 +555,9 @@
   "pass": true
  },
  {
-  "name": "[m390] busca \"slow roll\": destaca 18 trechos e esconde seções sem resultado",
+  "name": "[m390] busca \"slow roll\": destaca 21 trechos e esconde seções sem resultado",
   "pass": true,
-  "extra": "marks=18 secoes=2"
+  "extra": "marks=21 secoes=2"
  },
  {
   "name": "[m390] busca: índice mostra só seções com resultado",
@@ -567,7 +567,7 @@
  {
   "name": "[m390] busca: contador informa ocorrências e seções",
   "pass": true,
-  "extra": "18 ocorrências em 2 seções"
+  "extra": "21 ocorrências em 2 seções"
  },
  {
   "name": "[m390] Enter vai ao 1º resultado, dentro da tela",
@@ -576,7 +576,7 @@
  {
   "name": "[m390] busca ignora acento e caixa (\"estrategia 3\" = \"ESTRATÉGIA 3\")",
   "pass": true,
-  "extra": "5"
+  "extra": "6"
  },
  {
   "name": "[m390] busca acha texto dentro de badge (\"UPAR 8\")",

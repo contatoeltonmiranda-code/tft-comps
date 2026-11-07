@@ -247,6 +247,72 @@ async function run(browser, label, viewport, mobile) {
   const g2 = await guardado();
   ok(`[${label}] estado zerado também no localStorage`, g2.stage === '1-1' && Object.keys(g2.champs).length === 0 && g2.gold === 0);
 
+  /* ---------- criterios do "Melhor momento para seguir" (letras) e reroll custo 3 ---------- */
+  const custo3 = await page.evaluate(() => window.TFT_CATALOG.champs.find((c) => c.c === 3).id);
+  await page.evaluate((id) => localStorage.setItem('tft-comps:painel:v1', JSON.stringify({ v: 1, stage: '3-2', hp: 70, gold: 32, level: 5, streak: 2, champs: { [id]: 1 } })), custo3);
+  await page.reload();
+  await page.waitForSelector('.pn-card');
+  t = await saida();
+  ok(`[${label}] Fast 8 no 3-2: critérios (a) a (f) com letra, regra e contagem dos que bateram`, ['(a) Vida', '(b) Ouro', '(c) Streak ou economia', '(d) Unidades', '(e) Contest', '(f) Itens'].every((x) => t.includes(x)) && /que bateram: \d de 6/.test(t), (t.match(/que bateram[^\n]*/) || [''])[0]);
+  ok(`[${label}] critério (a) cita a regra derivada do guia com link para Melhor momento`, (await page.locator('.pn-crits a[href*="melhor-momento-para-seguir"]').count()) >= 6);
+  await shot('11-criterios');
+  await page.evaluate((id) => localStorage.setItem('tft-comps:painel:v1', JSON.stringify({ v: 1, stage: '2-1', hp: 100, gold: 6, level: 3, streak: 3, champs: { [id]: 2 } })), custo3);
+  await page.reload();
+  await page.waitForSelector('.pn-card');
+  t = await saida();
+  ok(`[${label}] Reroll de custo 3: par de custo 3 + win streak + board forte no 2-1 = UPAR para 4`, /Reroll de custo 3/.test(t) && /UPAR para 4/.test(await barra()) && /\(g\) Prazo e lobby/.test(t), (await barra()).replace(/\n/g, ' | '));
+  await shot('12-reroll-custo3');
+  await page.evaluate(() => localStorage.setItem('tft-comps:painel:v1', JSON.stringify({ v: 1, stage: '2-1', hp: 100, gold: 4, level: 3 })));
+  await page.reload();
+  await page.waitForSelector('.pn-card');
+  t = await saida();
+  ok(`[${label}] Open Fort sem aprimoramento de economia: critério (c) diz "sinal mais forte", não reprova`, /Open Fort/.test(t) && /\(c\) Aprimoramento: Sem aprimoramento de economia: não é requisito, mas é o sinal mais forte/.test(t));
+
+  /* ---------- comps atuais do Elton (lista salva pelo app de comps) ---------- */
+  const preparo = await page.evaluate(() => {
+    const seed = window.TFT_SEED;
+    const unidades = seed[0].main.slice(0, 3).map((u) => ({ c: u.c, s: 1, i: [], a: [] }));
+    const lista = seed.slice(1).map((c) => ({ id: c.id, nome: c.nome, estilo: c.estilo, main: c.main, flex: c.flex || [] }));
+    const editada = 'Comp Editada QA';
+    lista[0].nome = editada;
+    lista.push({ id: 'qa-nova', nome: 'Comp Nova QA', estilo: 'Fast 8', main: unidades, flex: [] });
+    localStorage.setItem('tft-comps:v1', JSON.stringify({ versao: 1, seedVersao: window.TFT_SEED_VERSION, excluidos: [seed[0].id], comps: lista }));
+    return { excluida: seed[0].nome, total: lista.length };
+  });
+  await page.reload();
+  await page.waitForSelector('.pn-card');
+  const nomesContest = await page.locator('.pn-ct .pn-ct-nome > span:first-child').allInnerTexts();
+  ok(`[${label}] contest/ranking usam as comps salvas: editada e nova entram, a excluída sai (${preparo.total} comps)`, nomesContest.length === preparo.total && nomesContest.includes('Comp Editada QA') && nomesContest.includes('Comp Nova QA') && !nomesContest.includes(preparo.excluida), nomesContest.length + ' | excluida=' + preparo.excluida);
+  const opcoes = await page.locator('#pn-forcar-sel option').allInnerTexts();
+  ok(`[${label}] Forçar comp lista as comps salvas (nova inclusa, excluída fora)`, opcoes.includes('Comp Nova QA') && opcoes.includes('Comp Editada QA') && !opcoes.includes(preparo.excluida));
+  const resumoTodas = await page.locator('.pn-todas summary').innerText();
+  const dicaComps = await page.locator('section[aria-labelledby="pn-h-comps-s"] .pn-dica').first().innerText();
+  ok(`[${label}] ranking: "Todas as comps (${preparo.total})" e aviso de que são as comps salvas`, resumoTodas.includes(`Todas as comps (${preparo.total})`) && /comps salvas/.test(dicaComps), resumoTodas + ' | ' + dicaComps);
+  await page.locator('.pn-todas summary').click();
+  const rank = await page.locator('#pn-saida').innerText();
+  ok(`[${label}] a comp editada aparece com o nome novo no ranking`, rank.includes('Comp Editada QA'));
+  // outra aba muda a lista: o painel acompanha pelo evento storage
+  const outra = await page.context().newPage();
+  await outra.goto(BASE + 'painel.html');
+  await outra.evaluate(() => {
+    const s = JSON.parse(localStorage.getItem('tft-comps:v1'));
+    s.comps = s.comps.filter((c) => c.id !== 'qa-nova');
+    s.excluidos.push('qa-nova');
+    localStorage.setItem('tft-comps:v1', JSON.stringify(s));
+  });
+  await outra.close();
+  await page.waitForFunction((n) => document.querySelectorAll('.pn-ct').length === n, preparo.total - 1, { timeout: 4000 }).catch(() => {});
+  ok(`[${label}] outra aba apaga uma comp: o painel acompanha sem recarregar`, (await page.locator('.pn-ct').count()) === preparo.total - 1 && !(await page.locator('#pn-forcar-sel option').allInnerTexts()).includes('Comp Nova QA'));
+  await page.evaluate(() => localStorage.setItem('tft-comps:v1', JSON.stringify({ versao: 1, seedVersao: window.TFT_SEED_VERSION, excluidos: window.TFT_SEED.map((c) => c.id), comps: [] })));
+  await page.reload();
+  await page.waitForSelector('.pn-card');
+  ok(`[${label}] sem nenhuma comp salva: mensagem clara e sem erro`, (await page.locator('.pn-ct').count()) === 0 && /Nenhuma comp salva/.test(await saida()));
+  await shot('13-comps-salvas');
+  await page.evaluate(() => { localStorage.removeItem('tft-comps:v1'); localStorage.removeItem('tft-comps:painel:v1'); });
+  await page.reload();
+  await page.waitForSelector('.pn-card');
+  ok(`[${label}] sem lista salva volta ao seed: 24 comps`, (await page.locator('.pn-ct').count()) === 24);
+
   /* ---------- navegacao ---------- */
   await page.click('.sitenav a[href="estrategia.html"]');
   await page.waitForSelector('.guia h2');

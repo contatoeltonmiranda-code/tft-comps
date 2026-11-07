@@ -1,5 +1,5 @@
 {
-  "total": 196,
+  "total": 229,
   "falhas": 0,
   "results": [
     {
@@ -58,7 +58,7 @@
     {
       "name": "[1440] 2-1 ouro 4: Open Fort, FICAR no 3, juros +0, próximo degrau 10 (faltam 6)",
       "pass": true,
-      "extra": "Estratégia recomendada |  | Economia máxima · Open Fort até o 3-1 |  | Por que | Critério atendido: | Sem upgrade (nenhum campeão 2★)  | §4 Economia · Quando escolher · 2-1 | C"
+      "extra": "Estratégia recomendada |  | Economia máxima · Open Fort até o 3-1 |  | Por que |  | Critérios de \"Melhor momento para seguir\" que bateram: 4 de 7 (a, b, d, e). |  | Critério at"
     },
     {
       "name": "[1440] barra resumo: rodada, badge FICAR, ouro",
@@ -269,6 +269,54 @@
       "pass": true
     },
     {
+      "name": "[1440] Fast 8 no 3-2: critérios (a) a (f) com letra, regra e contagem dos que bateram",
+      "pass": true,
+      "extra": "que bateram: 5 de 6 (a, b, c, d, e)."
+    },
+    {
+      "name": "[1440] critério (a) cita a regra derivada do guia com link para Melhor momento",
+      "pass": true
+    },
+    {
+      "name": "[1440] Reroll de custo 3: par de custo 3 + win streak + board forte no 2-1 = UPAR para 4",
+      "pass": true,
+      "extra": "Rodada 2-1 | UPAR | UPAR para 4 | Ouro 6 | Vida 100 · Folga | Reroll de custo 3"
+    },
+    {
+      "name": "[1440] Open Fort sem aprimoramento de economia: critério (c) diz \"sinal mais forte\", não reprova",
+      "pass": true
+    },
+    {
+      "name": "[1440] contest/ranking usam as comps salvas: editada e nova entram, a excluída sai (24 comps)",
+      "pass": true,
+      "extra": "24 | excluida=Enfeitiçador 6"
+    },
+    {
+      "name": "[1440] Forçar comp lista as comps salvas (nova inclusa, excluída fora)",
+      "pass": true
+    },
+    {
+      "name": "[1440] ranking: \"Todas as comps (24)\" e aviso de que são as comps salvas",
+      "pass": true,
+      "extra": "Todas as comps (24) | Fase: Início (estágio 2). Ranking das 24 comps salvas (as suas, com edições e novas, sem as excluídas) pelo que você tem."
+    },
+    {
+      "name": "[1440] a comp editada aparece com o nome novo no ranking",
+      "pass": true
+    },
+    {
+      "name": "[1440] outra aba apaga uma comp: o painel acompanha sem recarregar",
+      "pass": true
+    },
+    {
+      "name": "[1440] sem nenhuma comp salva: mensagem clara e sem erro",
+      "pass": true
+    },
+    {
+      "name": "[1440] sem lista salva volta ao seed: 24 comps",
+      "pass": true
+    },
+    {
       "name": "[1440] navegação Painel > Estratégia: 5 links e Painel presente",
       "pass": true
     },
@@ -342,7 +390,7 @@
     {
       "name": "[1100] 2-1 ouro 4: Open Fort, FICAR no 3, juros +0, próximo degrau 10 (faltam 6)",
       "pass": true,
-      "extra": "Estratégia recomendada |  | Economia máxima · Open Fort até o 3-1 |  | Por que | Critério atendido: | Sem upgrade (nenhum campeão 2★)  | §4 Economia · Quando escolher · 2-1 | C"
+      "extra": "Estratégia recomendada |  | Economia máxima · Open Fort até o 3-1 |  | Por que |  | Critérios de \"Melhor momento para seguir\" que bateram: 4 de 7 (a, b, d, e). |  | Critério at"
     },
     {
       "name": "[1100] barra resumo: rodada, badge FICAR, ouro",
@@ -553,6 +601,54 @@
       "pass": true
     },
     {
+      "name": "[1100] Fast 8 no 3-2: critérios (a) a (f) com letra, regra e contagem dos que bateram",
+      "pass": true,
+      "extra": "que bateram: 5 de 6 (a, b, c, d, e)."
+    },
+    {
+      "name": "[1100] critério (a) cita a regra derivada do guia com link para Melhor momento",
+      "pass": true
+    },
+    {
+      "name": "[1100] Reroll de custo 3: par de custo 3 + win streak + board forte no 2-1 = UPAR para 4",
+      "pass": true,
+      "extra": "Rodada 2-1 | UPAR | UPAR para 4 | Ouro 6 | Vida 100 · Folga | Reroll de custo 3"
+    },
+    {
+      "name": "[1100] Open Fort sem aprimoramento de economia: critério (c) diz \"sinal mais forte\", não reprova",
+      "pass": true
+    },
+    {
+      "name": "[1100] contest/ranking usam as comps salvas: editada e nova entram, a excluída sai (24 comps)",
+      "pass": true,
+      "extra": "24 | excluida=Enfeitiçador 6"
+    },
+    {
+      "name": "[1100] Forçar comp lista as comps salvas (nova inclusa, excluída fora)",
+      "pass": true
+    },
+    {
+      "name": "[1100] ranking: \"Todas as comps (24)\" e aviso de que são as comps salvas",
+      "pass": true,
+      "extra": "Todas as comps (24) | Fase: Início (estágio 2). Ranking das 24 comps salvas (as suas, com edições e novas, sem as excluídas) pelo que você tem."
+    },
+    {
+      "name": "[1100] a comp editada aparece com o nome novo no ranking",
+      "pass": true
+    },
+    {
+      "name": "[1100] outra aba apaga uma comp: o painel acompanha sem recarregar",
+      "pass": true
+    },
+    {
+      "name": "[1100] sem nenhuma comp salva: mensagem clara e sem erro",
+      "pass": true
+    },
+    {
+      "name": "[1100] sem lista salva volta ao seed: 24 comps",
+      "pass": true
+    },
+    {
       "name": "[1100] navegação Painel > Estratégia: 5 links e Painel presente",
       "pass": true
     },
@@ -613,7 +709,7 @@
     {
       "name": "[390] mobile: saída no topo e entrada abaixo",
       "pass": true,
-      "extra": "{\"sy\":267.078125,\"ey\":2627.46875}"
+      "extra": "{\"sy\":267.078125,\"ey\":2994.90625}"
     },
     {
       "name": "[390] trocar estágio mantém a rodada válida",
@@ -626,7 +722,7 @@
     {
       "name": "[390] 2-1 ouro 4: Open Fort, FICAR no 3, juros +0, próximo degrau 10 (faltam 6)",
       "pass": true,
-      "extra": "Estratégia recomendada |  | Economia máxima · Open Fort até o 3-1 |  | Por que | Critério atendido: | Sem upgrade (nenhum campeão 2★)  | §4 Economia · Quando escolher · 2-1 | C"
+      "extra": "Estratégia recomendada |  | Economia máxima · Open Fort até o 3-1 |  | Por que |  | Critérios de \"Melhor momento para seguir\" que bateram: 4 de 7 (a, b, d, e). |  | Critério at"
     },
     {
       "name": "[390] barra resumo: rodada, badge FICAR, ouro",
@@ -826,6 +922,54 @@
     },
     {
       "name": "[390] estado zerado também no localStorage",
+      "pass": true
+    },
+    {
+      "name": "[390] Fast 8 no 3-2: critérios (a) a (f) com letra, regra e contagem dos que bateram",
+      "pass": true,
+      "extra": "que bateram: 5 de 6 (a, b, c, d, e)."
+    },
+    {
+      "name": "[390] critério (a) cita a regra derivada do guia com link para Melhor momento",
+      "pass": true
+    },
+    {
+      "name": "[390] Reroll de custo 3: par de custo 3 + win streak + board forte no 2-1 = UPAR para 4",
+      "pass": true,
+      "extra": "Rodada 2-1 | UPAR | UPAR para 4 | Ouro 6 | Vida 100 · Folga | Editar estado"
+    },
+    {
+      "name": "[390] Open Fort sem aprimoramento de economia: critério (c) diz \"sinal mais forte\", não reprova",
+      "pass": true
+    },
+    {
+      "name": "[390] contest/ranking usam as comps salvas: editada e nova entram, a excluída sai (24 comps)",
+      "pass": true,
+      "extra": "24 | excluida=Enfeitiçador 6"
+    },
+    {
+      "name": "[390] Forçar comp lista as comps salvas (nova inclusa, excluída fora)",
+      "pass": true
+    },
+    {
+      "name": "[390] ranking: \"Todas as comps (24)\" e aviso de que são as comps salvas",
+      "pass": true,
+      "extra": "Todas as comps (24) | Fase: Início (estágio 2). Ranking das 24 comps salvas (as suas, com edições e novas, sem as excluídas) pelo que você tem."
+    },
+    {
+      "name": "[390] a comp editada aparece com o nome novo no ranking",
+      "pass": true
+    },
+    {
+      "name": "[390] outra aba apaga uma comp: o painel acompanha sem recarregar",
+      "pass": true
+    },
+    {
+      "name": "[390] sem nenhuma comp salva: mensagem clara e sem erro",
+      "pass": true
+    },
+    {
+      "name": "[390] sem lista salva volta ao seed: 24 comps",
       "pass": true
     },
     {
