@@ -75,7 +75,7 @@
     if (ic) box.append(h('img', { src: ic.img, alt: ic.alt, width: 48, height: 48, class: /\/traits\//.test(ic.img) ? 'trait' : false, decoding: 'async' }));
     else box.append(icon(TIPO_ICONE[n.tipo] || 'hex'));
     const tipo = TIPO_NOME[n.tipo] || n.tipo;
-    return h('article', { class: 'ncard ' + n.tipo, 'data-id': n.id },
+    return h('article', { class: 'ncard t-' + n.tipo, 'data-id': n.id },
       box,
       h('div', { class: 'nbody' },
         h('div', { class: 'nmeta' }, h('span', { class: 'badge' }, tipo), h('span', {}, 'Patch ' + n.patch), h('time', { datetime: n.data }, br(n.data))),

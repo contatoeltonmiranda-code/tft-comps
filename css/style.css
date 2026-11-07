@@ -308,10 +308,10 @@ input[type=search]::-webkit-search-cancel-button{display:none}
 .fcount{color:var(--muted);font-size:13px;font-variant-numeric:tabular-nums}
 .news{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(min(100%,460px),1fr))}
 .ncard{--tc:var(--line);display:grid;grid-template-columns:48px minmax(0,1fr);gap:12px;min-width:0;padding:14px;border:1px solid var(--line-soft);border-left:3px solid var(--tc);border-radius:12px;background:var(--panel)}
-.ncard.buff{--tc:var(--ok)}
-.ncard.nerf{--tc:var(--danger)}
-.ncard.ajuste,.ncard.comp-meta{--tc:var(--gold)}
-.ncard.item,.ncard.aprimoramento,.ncard.sistema{--tc:#7fa6e8}
+.ncard.t-buff{--tc:var(--ok)}
+.ncard.t-nerf{--tc:var(--danger)}
+.ncard.t-ajuste,.ncard.t-comp-meta{--tc:var(--gold)}
+.ncard.t-item,.ncard.t-aprimoramento,.ncard.t-sistema{--tc:#7fa6e8}
 .nicon{display:grid;place-items:center;width:48px;height:48px;border:1px solid var(--line);border-radius:8px;background:var(--panel-2);color:var(--tc)}
 .nicon img{width:100%;height:100%;border-radius:7px;object-fit:cover}
 .nicon img.trait{padding:6px;object-fit:contain}
