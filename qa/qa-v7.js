@@ -42,7 +42,7 @@ async function run(label, viewport, mobile, cols) {
 
   // navegacao
   const nav = await page.locator('.sitenav a').evaluateAll((as) => as.map((a) => ({ t: a.textContent.trim(), h: a.getAttribute('href'), cur: a.getAttribute('aria-current') })));
-  ok(`[${label}] nav: Comps | Guia do Jogo | Notícias, Comps atual, sem badge`, nav.length === 3 && nav[0].h === 'index.html' && nav[0].cur === 'page' && nav[1].h === 'guia.html' && nav[1].t === 'Guia do Jogo' && nav[2].h === 'noticias.html', JSON.stringify(nav));
+  ok(`[${label}] nav: Comps | Guia do Jogo | Estratégia padrão | Notícias, Comps atual, sem badge`, nav.length === 4 && nav[0].h === 'index.html' && nav[0].cur === 'page' && nav[1].h === 'guia.html' && nav[1].t === 'Guia do Jogo' && nav[2].h === 'estrategia.html' && nav[2].t === 'Estratégia padrão' && nav[3].h === 'noticias.html', JSON.stringify(nav));
 
   // 2 colunas
   const geo = await page.evaluate(() => {
@@ -147,7 +147,7 @@ async function run(label, viewport, mobile, cols) {
   ok(`[${label}] noticias: filtros por tipo`, tipos.some((t) => /^Buff/.test(t)) && tipos.some((t) => /^Nerf/.test(t)) && tipos.some((t) => /^Item/.test(t)) && tipos.some((t) => /^Sistema/.test(t)), tipos.join(' | '));
   await page.locator('#f-tipo button', { hasText: /^Nerf/ }).click();
   const nerfs = NEWS.filter((n) => n.tipo === 'nerf').length;
-  ok(`[${label}] noticias: filtro Nerf mostra só nerfs (${nerfs})`, (await page.locator('.ncard').count()) === nerfs && (await page.locator('.ncard:not(.nerf)').count()) === 0 && (await page.locator('#f-tipo button[aria-pressed="true"]').innerText()).startsWith('Nerf'));
+  ok(`[${label}] noticias: filtro Nerf mostra só nerfs (${nerfs})`, (await page.locator('.ncard').count()) === nerfs && (await page.locator('.ncard:not(.t-nerf)').count()) === 0 && (await page.locator('#f-tipo button[aria-pressed="true"]').innerText()).startsWith('Nerf'));
   await page.locator('#f-patch button', { hasText: '18.5' }).click();
   const n185 = NEWS.filter((n) => n.tipo === 'nerf' && n.patch === '18.5').length;
   ok(`[${label}] noticias: Nerf + patch 18.5 combinados (${n185})`, (await page.locator('.ncard').count()) === n185 && (await page.locator('.ncard .nmeta', { hasText: 'Patch 18.6' }).count()) === 0);

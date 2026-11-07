@@ -56,6 +56,7 @@
     ticking = false;
     let active = 0;
     heads.forEach((h, i) => { if (h.getBoundingClientRect().top <= 140) active = i; });
+    if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2) active = heads.length - 1;
     tocLinks.forEach((a, i) => { if (i === active) a.setAttribute('aria-current', 'location'); else a.removeAttribute('aria-current'); });
   }
   window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(spy); } }, { passive: true });
@@ -144,4 +145,6 @@
     if (e.key === 'Escape') { input.value = ''; search(''); }
   });
   clear.addEventListener('click', () => { input.value = ''; search(''); input.focus(); });
+  /* atalhos do topo (checklist, resumo): se a busca escondeu o alvo, limpa antes de ir */
+  document.querySelectorAll('.quick a').forEach((a) => a.addEventListener('click', () => { if (input.value) { input.value = ''; search(''); } }));
 })(typeof window !== 'undefined' ? window : globalThis);

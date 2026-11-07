@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Estratégia padrão de TFT: Fast 8, Reroll e Fast 9</title>
+<meta name="description" content="Estratégia padrão de TFT (Set 18): quando upar, ficar, rolar ou guardar no Fast 8, Reroll e Fast 9, com leitura de jogo padronizada e checklist de 30 segundos.">
+<meta name="robots" content="noindex">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0b0f17">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Estratégia padrão de TFT: Fast 8, Reroll e Fast 9">
+<meta property="og:description" content="Quando upar, ficar, rolar ou guardar no Fast 8, Reroll e Fast 9 do Teamfight Tactics (Set 18), com checklist de 30 segundos.">
+<meta property="og:locale" content="pt_BR">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Estratégia padrão de TFT: Fast 8, Reroll e Fast 9">
+<meta name="twitter:description" content="Quando upar, ficar, rolar ou guardar no Fast 8, Reroll e Fast 9 do Teamfight Tactics (Set 18), com checklist de 30 segundos.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 2l12 7v14l-12 7L4 23V9z' fill='%23d4a85a'/%3E%3Cpath d='M16 9l6 3.5v7L16 23l-6-3.5v-7z' fill='%230b0f17'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<!-- Gerado por tools/gen-guia.js a partir de data/estrategia-padrao.md. Nao editar a mao. -->
+
+<nav class="sitenav" aria-label="Páginas do site">
+  <div class="sitenav-in">
+    <a class="navlink" href="index.html">Comps</a>
+    <a class="navlink" href="guia.html">Guia do Jogo</a>
+    <a class="navlink" href="estrategia.html" aria-current="page">Estratégia padrão</a>
+    <a class="navlink" href="noticias.html">Notícias</a>
+  </div>
+</nav>
+
+<header class="top">
+  <div class="brand">
+    <h1>Estratégia padrão — TFT Set 18</h1>
+    <p>Set 18 · Selvas Encantadas · patch 18.6</p>
+  </div>
+</header>
+
+<main>
+  <div class="searchbar gsearch" role="search">
+    <svg class="ic" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M13.2 13.2L17 17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    <label class="sr" for="gq">Buscar na estratégia</label>
+    <input id="gq" type="search" placeholder="Buscar na estratégia (ex.: fast 9, 4-2)" autocomplete="off" enterkeyhint="search">
+    <span class="fcount" id="gcount" aria-live="polite"></span>
+    <button class="btn sm ghost" id="gclear" type="button" hidden>Limpar</button>
+  </div>
+
+  <nav class="quick" aria-label="Atalhos">
+    <a class="btn primary" href="#checklist-de-30-segundos">Checklist rápido</a>
+    <a class="btn" href="#resumo-de-bolso">Resumo de bolso</a>
+  </nav>
+
+  <div class="glayout">
+    <nav class="toc" id="toc" aria-label="Índice da estratégia">
+      <details id="toc-d" open>
+        <summary>Índice</summary>
+        <ul>
+<li><a href="#qual-estrategia-jogar">1. Qual estratégia jogar</a></li>
+<li><a href="#estrategia-1-fast-8-padrao">2. Estratégia 1 — Fast 8 padrão</a></li>
+<li><a href="#estrategia-2-reroll-e-slow-roll">3. Estratégia 2 — Reroll e slow roll</a></li>
+<li><a href="#estrategia-3-economia-maxima-fast-8-antecipado-ou-fast-9">4. Estratégia 3 — Economia máxima: Fast 8 antecipado ou Fast 9</a></li>
+<li><a href="#leitura-de-jogo-padronizada">5. Leitura de jogo padronizada</a></li>
+<li><a href="#resumo-de-bolso">6. Resumo de bolso</a></li>
+</ul>
+      </details>
+    </nav>
+    <article class="guia" id="guia">
+<section class="gsec gintro">
+<p>Três linhas de jogo com regras de <strong>quando</strong> agir: upar, ficar, rolar ou guardar. Set 18 &quot;Selvas Encantadas&quot;, patch 18.6.</p>
+<blockquote class="nota"><p><strong>Base:</strong> a página &quot;Guia do Jogo&quot; (vídeos do GattaiTFT, Sets 12 e 13, princípios gerais; vídeo de comps do Vladimin, Set 18, patch 18.5C; resumo do Google). Em conflito, valem os vídeos.</p><p><strong>Marcações:</strong> <strong><span class="s18">(Set 18)</span></strong> = dito no vídeo do Set 18. <strong><span class="nc">(Google, não confirmado)</span></strong> = só o Google afirma. <strong><span class="dv">(divergência)</span></strong> = as fontes discordam. <em class="rd">(regra derivada do guia)</em> = junção de dois pontos das fontes; não foi dita assim nos vídeos.</p><p>É um padrão geral, não receita fixa. A seção 5 diz quando quebrá-lo.</p></blockquote>
+</section>
+<section class="gsec" aria-labelledby="qual-estrategia-jogar">
+<h2 id="qual-estrategia-jogar">1. Qual estratégia jogar</h2>
+<div class="tbl stack" role="region" tabindex="0" aria-label="Tabela: 1. Qual estratégia jogar">
+<table class="tc3">
+<thead><tr><th scope="col">Momento</th><th scope="col">SE</th><th scope="col">ENTÃO</th></tr></thead>
+<tbody>
+<tr><th scope="row">2-1</th><td data-label="SE">Upgrade, itens úteis e aprimoramento de força</td><td data-label="ENTÃO"><strong>Estratégia 1</strong> (Fast 8), com board forte.</td></tr>
+<tr><th scope="row">2-1</th><td data-label="SE">Só pares, sem itens úteis, aprimoramento de economia</td><td data-label="ENTÃO"><strong>Estratégia 3</strong> (Open Fort) até o 3-1.</td></tr>
+<tr><th scope="row">2-1 a fim do 2</th><td data-label="SE">4+ cópias de custo 1, ou 2+ de custo 2, com itens BIS e sem contest</td><td data-label="ENTÃO"><strong>Estratégia 2</strong> (Reroll).</td></tr>
+<tr><th scope="row">3-2</th><td data-label="SE">Ainda indeciso</td><td data-label="ENTÃO">Maior economia possível e <strong>Estratégia 1</strong>. Indeciso no 3-2 = atrasado.</td></tr>
+<tr><th scope="row">4-1</th><td data-label="SE">80+ de vida e aprimoramento de economia</td><td data-label="ENTÃO">Pode virar <strong>Fast 9</strong> (Estratégia 3B). <strong><span class="s18">(Set 18)</span></strong></td></tr>
+</tbody>
+</table>
+</div>
+<ul><li><strong>Não sabe o que jogar? Fast 8.</strong> É o caminho padrão.</li><li>O Open Fort é a mesma abertura do reroll de custo 1. Decida a saída no fim do estágio 2, com componentes na mão e scout feito. <em class="rd">(regra derivada do guia)</em></li></ul>
+</section>
+<section class="gsec" aria-labelledby="estrategia-1-fast-8-padrao">
+<h2 id="estrategia-1-fast-8-padrao">2. Estratégia 1 — Fast 8 padrão</h2>
+<p>A linha segura da maioria das partidas: chegar ao nível 8 com ouro e achar custo 4.</p>
+<h3 id="estrategia-1-fast-8-padrao-quando-escolher">Quando escolher</h3>
+<ul><li>Comp final de custo 4, ou nenhuma comp clara.</li><li>Aprimoramento de economia, win streak ou economia bem planejada.</li><li>Até 1 jogador na mesma comp. O fast 8 aguenta mais contest: cada jogador só precisa de 3 cópias do campeão.</li></ul>
+<h3 id="estrategia-1-fast-8-padrao-rodada-a-rodada">Rodada a rodada</h3>
+<div class="tbl stack" role="region" tabindex="0" aria-label="Tabela: Rodada a rodada">
+<table class="tc3">
+<thead><tr><th scope="col">Rodada</th><th scope="col">Ação</th><th scope="col">Condição</th></tr></thead>
+<tbody>
+<tr><th scope="row">2-1</th><td data-label="Ação"><strong><span class="act act-upar">UPAR 4</span></strong> ou <strong><span class="act act-ficar">FICAR 3</span></strong></td><td data-label="Condição">SE upgrade + itens úteis + aprimoramento de força → <span class="act act-upar">UPAR 4</span> e buscar win streak. SENÃO → <span class="act act-ficar">FICAR 3</span>, loss streak (abertura da Estratégia 3).</td></tr>
+<tr><th scope="row">2-2 a 2-7</th><td data-label="Ação"><strong><span class="act act-guardar">GUARDAR</span></strong></td><td data-label="Condição">Não role. Exceção: muitos pares. Pare de gastar em 14 ou 20, nunca em 10.</td></tr>
+<tr><th scope="row">2-3</th><td data-label="Ação"><strong><span class="act act-upar">UPAR 5</span></strong> (só agressivo)</td><td data-label="Condição">SE win streak e board forte → <span class="act act-upar">UPAR 5</span>. O ouro da streak paga.</td></tr>
+<tr><th scope="row">2-4</th><td data-label="Ação">Carrossel</td><td data-label="Condição">Pegue o item que a comp precisa.</td></tr>
+<tr><th scope="row">2-5</th><td data-label="Ação"><strong><span class="act act-upar">UPAR 5</span></strong> ou <strong><span class="act act-ficar">FICAR</span></strong></td><td data-label="Condição">SE board forte (ou quer poupar vida) E ouro ≥ 10 (ideal 20) → <span class="act act-upar">UPAR 5</span>. SENÃO → <span class="act act-ficar">FICAR</span> e <span class="act act-guardar">GUARDAR</span>.</td></tr>
+<tr><th scope="row">Fim do 2</th><td data-label="Ação"><strong>Scout</strong></td><td data-label="Condição">Componentes na mão. Veja os boards e comece a se comprometer.</td></tr>
+<tr><th scope="row">3-1</th><td data-label="Ação"><strong><span class="act act-ficar">FICAR</span></strong></td><td data-label="Condição">Não suba ao 6 por impulso. SE win streak e board forte → <span class="act act-upar">UPAR 6</span> (curva agressiva). Pré-level para o 3-2, SE não custar economia.</td></tr>
+<tr><th scope="row">3-2</th><td data-label="Ação"><strong><span class="act act-upar">UPAR 6</span></strong></td><td data-label="Condição">SE ouro ≥ 30–32 → <span class="act act-upar">UPAR 6</span>. SE ~20 e board bom → pode <span class="act act-upar">UPAR</span> (a economia fica ruim). Comp definida aqui.</td></tr>
+<tr><th scope="row">3-2 a 3-5</th><td data-label="Ação"><strong><span class="act act-rolar">ROLAR</span></strong> pouco ou <strong><span class="act act-guardar">GUARDAR</span></strong></td><td data-label="Condição">SE 3+ pares e quer ganhar → 2–3 rolagens por rodada, parando em 32. SE falta 1 peça para fechar um traço → role até achar, parando em 32. SENÃO → <span class="act act-guardar">GUARDAR</span>.</td></tr>
+<tr><th scope="row">3-3</th><td data-label="Ação"><strong><span class="act act-ficar">FICAR</span></strong></td><td data-label="Condição">Level torto. Não compre XP; faça pré-level se for subir no 3-5.</td></tr>
+<tr><th scope="row">3-5</th><td data-label="Ação"><strong><span class="act act-upar">UPAR 7</span></strong> ou <strong><span class="act act-ficar">FICAR</span></strong></td><td data-label="Condição">SE muito rico ou para segurar a streak → <span class="act act-upar">UPAR 7</span>. SENÃO → <span class="act act-ficar">FICAR 6</span> e <span class="act act-guardar">GUARDAR</span> rumo a 50.</td></tr>
+<tr><th scope="row">3-6</th><td data-label="Ação"><strong><span class="act act-ficar">FICAR</span></strong></td><td data-label="Condição">Level torto. Pré-level, se for subir no 3-7.</td></tr>
+<tr><th scope="row">3-7 (PvE)</th><td data-label="Ação"><strong><span class="act act-upar">UPAR 8</span> + <span class="act act-rolar">ROLAR</span></strong> ou <strong><span class="act act-upar">UPAR 7</span></strong></td><td data-label="Condição">SE economia alta (aprimoramento de economia) OU 2 jogadores na sua comp → <span class="act act-upar">UPAR 8</span> e <span class="act act-rolar">ROLAR</span> antes de todos, até 20–30. SENÃO → <span class="act act-upar">UPAR 7</span>, se ainda não foi. Revise a curva.</td></tr>
+<tr><th scope="row">4-1</th><td data-label="Ação"><strong><span class="act act-upar">UPAR 7</span></strong> + pré-level</td><td data-label="Condição">SE ainda no 6 → <span class="act act-upar">UPAR 7</span>. Termine 2 XP abaixo do 8, SE não custar economia. Curva agressiva: <span class="act act-upar">UPAR 8</span> aqui.</td></tr>
+<tr><th scope="row">4-2</th><td data-label="Ação"><strong><span class="act act-upar">UPAR 8</span> + <span class="act act-rolar">ROLAR</span> até 20–30</strong></td><td data-label="Condição">SE ouro ≥ ~40 → <span class="act act-upar">UPAR 8</span> e rolar atrás de 1 cópia do carry e do tanque. SENÃO → <span class="act act-ficar">FICAR 7</span>, <span class="act act-guardar">GUARDAR</span> e subir no 4-5.</td></tr>
+<tr><th scope="row">4-5</th><td data-label="Ação"><strong><span class="act act-upar">UPAR 8</span> + <span class="act act-rolar">ROLAR</span></strong></td><td data-label="Condição">Só SE não subiu no 4-2. Mais ouro, mas o lobby já tirou peças do pool.</td></tr>
+<tr><th scope="row">5-1</th><td data-label="Ação"><strong><span class="act act-upar">UPAR 9</span></strong> ou <strong><span class="act act-rolar">ROLAR</span> no 8</strong></td><td data-label="Condição">SE achou carry e tanque e estabilizou → refaça economia e <span class="act act-upar">UPAR 9</span> (5-1, 5-2 ou 5-5). SENÃO → jogue com custo 4 de 1★, refaça economia e <span class="act act-rolar">ROLE</span> de novo no 8. O 9 fica para o estágio 6.</td></tr>
+<tr><th scope="row">5-5 / 6-1</th><td data-label="Ação"><strong><span class="act act-upar">UPAR 9</span></strong></td><td data-label="Condição">SE ainda não foi. Cape o board.</td></tr>
+</tbody>
+</table>
+</div>
+<blockquote class="nota"><p><strong>Divergência:</strong> a regra dos &quot;3 pares&quot; vem do Set 12, que premiava quem rolava toda rodada. O princípio vale; a intensidade, avalie.</p><p><strong>Nota:</strong> aprimoramentos em 2-1, 3-2 e 4-2 vêm de slide do Set 12. Confira na partida.</p></blockquote>
+<h3 id="estrategia-1-fast-8-padrao-gatilhos">Gatilhos</h3>
+<p><strong>Rolar</strong></p>
+<ul><li>SE nível 8 no 4-2 com ~40 → ENTÃO role até 20–30.</li><li>SE 2 jogadores na sua comp → ENTÃO suba ao 8 e role no 3-7 ou 4-1, antes de todos.</li><li>SE falta 1 peça para fechar um traço → ENTÃO role até achar, parando em 32. <em class="rd">(regra derivada do guia)</em></li><li>SE 3+ pares no 3-2 ou 3-5 → ENTÃO 2–3 rolagens por rodada. <strong><span class="dv">(divergência)</span></strong></li></ul>
+<p><strong>Upar</strong></p>
+<ul><li>SE o nível poupa vida, OU mantém uma streak importante, OU dá chance de custo mais alto → E sobra ouro (ou a vida está em risco) → ENTÃO suba.</li><li>SENÃO → não suba. Nunca por impulso.</li></ul>
+<p><strong>Parar de rolar</strong></p>
+<ul><li>SE achou 1 cópia do carry e do tanque → pare.</li><li>SE o ouro chegou a 20 no roll down → pare.</li><li>SE há spike maior em 2–3 rodadas (nível novo + roll por custo 4) → não gaste agora em upgrade pequeno.</li></ul>
+<p><strong>Abandonar ou pivotar</strong></p>
+<ul><li>SE 3+ jogadores na sua comp → troque de comp, mantendo o fast 8. <strong><span class="nc">(Google, não confirmado)</span></strong></li><li>SE 80+ de vida no 4-1 e aprimoramento de economia → pode virar Fast 9 (Estratégia 3B). <strong><span class="s18">(Set 18)</span></strong> <em class="rd">(regra derivada do guia)</em></li><li>SE no fim do estágio 2 tem 4+ cópias de custo 1 ou 2+ de custo 2, com itens BIS e sem contest → Estratégia 2. <em class="rd">(regra derivada do guia)</em></li></ul>
+<h3 id="estrategia-1-fast-8-padrao-pisos">Pisos</h3>
+<div class="tbl stack" role="region" tabindex="0" aria-label="Tabela: Pisos">
+<table class="tc3">
+<thead><tr><th scope="col">Recurso</th><th scope="col">Piso</th><th scope="col">Quando</th></tr></thead>
+<tbody>
+<tr><th scope="row">Ouro</th><td data-label="Piso">10</td><td data-label="Quando">Sempre. Exceção: fim de jogo, morrendo.</td></tr>
+<tr><th scope="row">Ouro</th><td data-label="Piso">32</td><td data-label="Quando">Ao rolar no estágio 3. Volta perto de 50 em 2 rodadas.</td></tr>
+<tr><th scope="row">Ouro</th><td data-label="Piso">~40</td><td data-label="Quando">Para subir ao 8 no 4-2.</td></tr>
+<tr><th scope="row">Ouro</th><td data-label="Piso">20–30</td><td data-label="Quando">Fim do roll down no 4-2 ou 4-5.</td></tr>
+<tr><th scope="row">Vida</th><td data-label="Piso">Sem número nas fontes</td><td data-label="Quando">SE vida em Atenção (30–40) no 4-1 → não adie o roll down para o 4-5. <em class="rd">(regra derivada do guia)</em></td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="estrategia-1-fast-8-padrao-erros-comuns">Erros comuns</h3>
+<ol><li>Subir ao 6 no 3-1 por impulso. Quebra juros e streak.</li><li>Parar de gastar em 10. Vira 16. Pare em 14 ou 20.</li><li>Comprar custo 3 ou 4 que não entra (sem itens, sem traço).</li><li>Rolar por upgrade pequeno com o roll down do 4-2 a 2–3 rodadas.</li><li>Acompanhar o nível do lobby sem avaliar. Às vezes vale aceitar 1–2 derrotas por um spike maior.</li><li>Ir ao 9 com pouco ouro depois de um roll down que falhou.</li></ol>
+</section>
+<section class="gsec" aria-labelledby="estrategia-2-reroll-e-slow-roll">
+<h2 id="estrategia-2-reroll-e-slow-roll">3. Estratégia 2 — Reroll e slow roll</h2>
+<p>Campeões baratos em 3★. O nível acompanha o custo do carry.</p>
+<h3 id="estrategia-2-reroll-e-slow-roll-quando-escolher">Quando escolher</h3>
+<div class="tbl stack" role="region" tabindex="0" aria-label="Tabela: Quando escolher">
+<table class="tc4">
+<thead><tr><th scope="col" aria-label="Critério"></th><th scope="col">Custo 1</th><th scope="col">Custo 2</th><th scope="col">Custo 3</th></tr></thead>
+<tbody>
+<tr><th scope="row">Cópias cedo</th><td data-label="Custo 1">4+ (5 ideal)</td><td data-label="Custo 2">2+</td><td data-label="Custo 3">Cópias cedo</td></tr>
+<tr><th scope="row">Itens</th><td data-label="Custo 1">BIS</td><td data-label="Custo 2">BIS ou slamáveis que poupem vida</td><td data-label="Custo 3">—</td></tr>
+<tr><th scope="row">Outros</th><td data-label="Custo 1">Lobby lento; hitar até o 3-5</td><td data-label="Custo 2">Hitar até o 3-5</td><td data-label="Custo 3">Boa economia; win streak até o 4-2</td></tr>
+<tr><th scope="row">Nível de rolar</th><td data-label="Custo 1">4 no 3-1, depois 5</td><td data-label="Custo 2">6</td><td data-label="Custo 3">7</td></tr>
+<tr><th scope="row">Contest</th><td data-label="Custo 1">Qualquer contest pesa</td><td data-label="Custo 2">Qualquer contest pesa</td><td data-label="Custo 3">Qualquer contest pesa</td></tr>
+</tbody>
+</table>
+</div>
+<ul><li><strong>Hyper roll:</strong> variação do custo 1. Precisa de só 1–2 peças em 3★. Rola mais forte no 3-1.</li><li><strong>Slow roll:</strong> fique acima de 50 e role só o excedente. Se precisar, desça um pouco.</li></ul>
+<h3 id="estrategia-2-reroll-e-slow-roll-rodada-a-rodada">Rodada a rodada</h3>
+<div class="tbl stack" role="region" tabindex="0" aria-label="Tabela: Rodada a rodada">
+<table class="tc4">
+<thead><tr><th scope="col">Rodada</th><th scope="col">Custo 1</th><th scope="col">Custo 2</th><th scope="col">Custo 3</th></tr></thead>
+<tbody>
+<tr><th scope="row">2-1</th><td data-label="Custo 1"><strong><span class="act act-ficar">FICAR 3</span></strong>. Open Fort. Segure os pares.</td><td data-label="Custo 2">SE itens slamáveis → board razoável para poupar vida. SENÃO → Open Fort (cuidado com a vida).</td><td data-label="Custo 3"><strong><span class="act act-upar">UPAR 4</span></strong>. Board forte, win streak.</td></tr>
+<tr><th scope="row">2-5</th><td data-label="Custo 1"><strong><span class="act act-ficar">FICAR</span></strong> e <strong><span class="act act-guardar">GUARDAR</span></strong>.</td><td data-label="Custo 2"><strong><span class="act act-guardar">GUARDAR</span></strong>. <span class="act act-upar">UPAR 5</span> só SE board forte.</td><td data-label="Custo 3"><strong><span class="act act-upar">UPAR 5</span></strong> SE board forte e ouro ≥ 10 (ideal 20).</td></tr>
+<tr><th scope="row">3-1</th><td data-label="Custo 1">Nível 4. <strong><span class="act act-rolar">ROLAR</span> até 32</strong>. Hyper roll: desce mais, nunca abaixo de 10.</td><td data-label="Custo 2"><strong><span class="act act-ficar">FICAR</span></strong>. Não suba ao 6 por impulso.</td><td data-label="Custo 3"><strong><span class="act act-ficar">FICAR</span></strong> e <strong><span class="act act-guardar">GUARDAR</span></strong>.</td></tr>
+<tr><th scope="row">3-2</th><td data-label="Custo 1">Nível 5 (o jogo te leva). <strong><span class="act act-guardar">GUARDAR</span></strong> até 50; depois slow roll.</td><td data-label="Custo 2">SE ouro ≥ 50 → <strong><span class="act act-upar">UPAR 6</span></strong> e slow roll. SENÃO → <span class="act act-upar">UPAR 6</span> no 3-5.</td><td data-label="Custo 3"><strong><span class="act act-upar">UPAR 6</span></strong> com 30–32. Board forte para poupar vida.</td></tr>
+<tr><th scope="row">3-5</th><td data-label="Custo 1">Prazo ideal. SE bateu os 3★ → <strong><span class="act act-parar">PARAR</span></strong> e <strong><span class="act act-upar">UPAR</span></strong>. SENÃO → slow roll segue.</td><td data-label="Custo 2"><strong><span class="act act-upar">UPAR 6</span></strong>, se não foi. Slow roll acima de 50.</td><td data-label="Custo 3"><strong><span class="act act-ficar">FICAR 6</span></strong> e <strong><span class="act act-guardar">GUARDAR</span></strong>.</td></tr>
+<tr><th scope="row">4-1</th><td data-label="Custo 1">Última rodada de rolar. SE não bateu → veja &quot;Abandonar&quot;.</td><td data-label="Custo 2"><strong><span class="act act-rolar">ROLAR</span> até 20</strong> por upgrades e 3★.</td><td data-label="Custo 3"><strong><span class="act act-upar">UPAR 7</span></strong>. Slow roll, ou <span class="act act-rolar">ROLAR</span> até ter board forte.</td></tr>
+<tr><th scope="row">4-2</th><td data-label="Custo 1">Comp pronta. <strong><span class="act act-upar">UPAR</span></strong>.</td><td data-label="Custo 2">Sai <strong><span class="act act-upar">UPANDO</span></strong>.</td><td data-label="Custo 3">Win streak precisa durar até aqui. Slow roll segue.</td></tr>
+<tr><th scope="row">Estágio 5</th><td data-label="Custo 1">Sobe de nível. Hyper roll: rola de novo nos 7, 8 e 9.</td><td data-label="Custo 2">Sobe de nível.</td><td data-label="Custo 3">Spike no fim do 4 ou começo do 5. Volta com mais ouro e <strong><span class="act act-rolar">ROLA</span></strong> de novo.</td></tr>
+</tbody>
+</table>
+</div>
+<blockquote class="nota"><p><strong>Nota:</strong> subir do 7 ao 8 custa 48 de ouro (Set 13). No custo 3, esses 48 muitas vezes rendem mais em rolagens no 7. Confira o custo no Set 18.</p></blockquote>
+<h3 id="estrategia-2-reroll-e-slow-roll-gatilhos">Gatilhos</h3>
+<p><strong>Rolar</strong></p>
+<ul><li>SE custo 1 no 3-1 → ENTÃO role no nível 4 até 32.</li><li>SE slow roll e ouro acima de 50 → ENTÃO role só o excedente.</li><li>SE custo 2 no 4-1 → ENTÃO role até 20.</li><li>SE lobby forte ou vida baixa → ENTÃO desça o ouro, mantendo o piso de 10.</li></ul>
+<p><strong>Upar</strong></p>
+<ul><li>SE bateu os 3★ → ENTÃO pare de rolar e suba de nível.</li><li>SE custo 1: não suba antes de bater. O nível 4 é melhor que o 5 ou o 6 para achar custo 1.</li></ul>
+<p><strong>Parar de rolar</strong></p>
+<ul><li>SE bateu os 3★ → pare.</li><li>SE o ouro chegou ao piso: 32 (custo 1 no 3-1), 50 (slow roll), 20 (custo 2 no 4-1) → pare.</li></ul>
+<p><strong>Abandonar ou pivotar</strong></p>
+<ul><li>SE 1 jogador na mesma comp → já pesa. Saia, se ainda investiu pouco. SE 2+ → saia. <em class="rd">(regra derivada do guia)</em></li><li>SE custo 2 falhou sem gastar muito → jogue o board e vá ao 8 (Estratégia 1).</li><li>SE custo 2 falhou depois de gastar muito → não vire fast 8: falta ouro.</li><li>SE custo 1 não bateu até o 4-1 → pare de rolar e suba de nível com o board que tem. <em class="rd">(regra derivada do guia: as fontes não dão plano B)</em></li><li>SE custo 3 perdeu a win streak cedo e a economia caiu → reavalie. A comp precisa de muito ouro. <em class="rd">(regra derivada do guia)</em></li></ul>
+<h3 id="estrategia-2-reroll-e-slow-roll-pisos">Pisos</h3>
+<div class="tbl stack" role="region" tabindex="0" aria-label="Tabela: Pisos">
+<table class="tc3">
+<thead><tr><th scope="col">Variação</th><th scope="col">Ouro</th><th scope="col">Vida</th></tr></thead>
+<tbody>
+<tr><th scope="row">Custo 1</th><td data-label="Ouro">32 no 3-1; 50 no slow roll</td><td data-label="Vida">Lobby forte → desça o ouro.</td></tr>
+<tr><th scope="row">Hyper roll</th><td data-label="Ouro">Desce bastante; nunca abaixo de 10. <strong><span class="dv">(divergência)</span></strong> O Google diz &quot;até ~0&quot;.</td><td data-label="Vida">Forte no estágio 3; depois precisa rolar de novo.</td></tr>
+<tr><th scope="row">Custo 2</th><td data-label="Ouro">50 no slow roll; 20 no 4-1</td><td data-label="Vida">Open Fort pode deixar você com 30–40 no 4-1.</td></tr>
+<tr><th scope="row">Custo 3</th><td data-label="Ouro">50 no slow roll</td><td data-label="Vida">Boards fortes para poupar vida.</td></tr>
+<tr><th scope="row">Todas</th><td data-label="Ouro">10, sempre</td><td data-label="Vida">SE vida em Atenção (30–40) → saia do slow roll e role para estabilizar. <em class="rd">(regra derivada do guia)</em></td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="estrategia-2-reroll-e-slow-roll-erros-comuns">Erros comuns</h3>
+<ol><li>Fazer slow roll com comp contestada ou vida baixa.</li><li>Continuar rolando depois de bater os 3★.</li><li>Rolar custo 1 no nível 6. A chance de custo 1 é maior no 4.</li><li>Segurar campeões caros que não entram.</li><li>Virar fast 8 depois de gastar muito rolando por custo 2.</li><li>Pagar 48 para subir ao 8 no custo 3 sem pesar as rolagens.</li></ol>
+</section>
+<section class="gsec" aria-labelledby="estrategia-3-economia-maxima-fast-8-antecipado-ou-fast-9">
+<h2 id="estrategia-3-economia-maxima-fast-8-antecipado-ou-fast-9">4. Estratégia 3 — Economia máxima: Fast 8 antecipado ou Fast 9</h2>
+<p>Open Fort no estágio 2, chegar ao 3-1 rico e converter o ouro em nível.</p>
+<h3 id="estrategia-3-economia-maxima-fast-8-antecipado-ou-fast-9-quando-escolher">Quando escolher</h3>
+<ul><li>No 2-1: sem upgrade, só pares, sem itens úteis.</li><li>Aprimoramento de economia. No 2-1, ele compromete com fast 8 ou fast 9.</li><li>Sem cópias suficientes para reroll (senão, Estratégia 2).</li></ul>
+<h3 id="estrategia-3-economia-maxima-fast-8-antecipado-ou-fast-9-rodada-a-rodada">Rodada a rodada</h3>
+<div class="tbl stack" role="region" tabindex="0" aria-label="Tabela: Rodada a rodada">
+<table class="tc3">
+<thead><tr><th scope="col">Rodada</th><th scope="col">Ação</th><th scope="col">Condição</th></tr></thead>
+<tbody>
+<tr><th scope="row">2-1</th><td data-label="Ação"><strong><span class="act act-ficar">FICAR 3</span></strong> + Open Fort</td><td data-label="Condição">Não monte board: venda, não compre, às vezes nem slame.</td></tr>
+<tr><th scope="row">2-2 a 2-7</th><td data-label="Ação"><strong><span class="act act-guardar">GUARDAR</span></strong></td><td data-label="Condição">Juros desde cedo. Degraus 14, 20, 32. Não role. Venda pares que não entram.</td></tr>
+<tr><th scope="row">2-4</th><td data-label="Ação">Carrossel</td><td data-label="Condição">Você escolhe antes (menos vida). Pegue o item da comp.</td></tr>
+<tr><th scope="row">2-5</th><td data-label="Ação"><strong><span class="act act-ficar">FICAR</span></strong></td><td data-label="Condição">SE achou board forte → pode <span class="act act-upar">UPAR</span> e quebrar a loss streak. Vá à Estratégia 1.</td></tr>
+<tr><th scope="row">Fim do 2</th><td data-label="Ação"><strong>Decidir a saída</strong></td><td data-label="Condição">SE 4+ cópias de custo 1 ou 2+ de custo 2, com itens BIS → Estratégia 2. <em class="rd">(regra derivada do guia)</em> SENÃO → segue. Scout.</td></tr>
+<tr><th scope="row">3-1</th><td data-label="Ação"><strong>Sair da loss streak</strong></td><td data-label="Condição">Comece a montar board com a maior economia possível.</td></tr>
+<tr><th scope="row">3-2</th><td data-label="Ação"><strong><span class="act act-upar">UPAR 6</span></strong></td><td data-label="Condição">Com 30–32 ou mais.</td></tr>
+<tr><th scope="row">3-5</th><td data-label="Ação"><strong><span class="act act-upar">UPAR 7</span></strong> ou <strong><span class="act act-ficar">FICAR</span></strong></td><td data-label="Condição">SE muito rico → <span class="act act-upar">UPAR 7</span>, já atrás de custo 4. SENÃO → <span class="act act-ficar">FICAR</span> e <span class="act act-guardar">GUARDAR</span>.</td></tr>
+<tr><th scope="row">3-7 / 4-1</th><td data-label="Ação"><strong>Bifurcação</strong></td><td data-label="Condição"><strong>3A:</strong> SE economia alta + aprimoramento de economia → <span class="act act-upar">UPAR 8</span> e <span class="act act-rolar">ROLAR</span> antes de todos, até 20–30. <strong>3B:</strong> SE 80+ de vida no 4-1 + aprimoramento de economia → Fast 9. SENÃO → Fast 8 padrão (<span class="act act-upar">UPAR 8</span> no 4-2).</td></tr>
+<tr><th scope="row">4-2 a 4-7 (3A)</th><td data-label="Ação">Estabilizar</td><td data-label="Condição">Refaça economia. Siga a Estratégia 1 a partir do 5-1.</td></tr>
+<tr><th scope="row">4-1 a 4-7 (3B)</th><td data-label="Ação"><strong><span class="act act-upar">UPAR</span></strong> sem rolar</td><td data-label="Condição">Aceite perder o estágio 4. <strong><span class="s18">(Set 18)</span></strong></td></tr>
+<tr><th scope="row">5-1 (3B)</th><td data-label="Ação"><strong><span class="act act-upar">UPAR 9</span> + <span class="act act-rolar">ROLAR</span></strong></td><td data-label="Condição">Role pelos custo 5. Alvo: 1–2 custo 5 de 2★ (linha de frente, linha de trás, carry). <strong><span class="s18">(Set 18)</span></strong></td></tr>
+</tbody>
+</table>
+</div>
+<blockquote class="nota"><p><strong>Divergência:</strong> o Google fala em perder os estágios 2 e 3 e sair no 4-1. Os vídeos põem o foco no estágio 2: no 3 e no 4, cada derrota tira mais vida. Aqui vale o 3-1.</p></blockquote>
+<h3 id="estrategia-3-economia-maxima-fast-8-antecipado-ou-fast-9-gatilhos">Gatilhos</h3>
+<p><strong>Rolar</strong></p>
+<ul><li>Estágio 2: nunca.</li><li>3A: no 3-7 ou 4-1, no nível 8, até 20–30.</li><li>3B: só no 5-1, no nível 9.</li></ul>
+<p><strong>Upar</strong></p>
+<ul><li>SE muito rico no 3-5 → UPAR 7.</li><li>3A: UPAR 8 no 3-7 ou 4-1. 3B: suba sem rolar até o 9 no 5-1.</li></ul>
+<p><strong>Parar de rolar</strong></p>
+<ul><li>3A: achou 1 cópia do carry e do tanque, ou chegou a 20.</li><li>3B: achou os custo 5 de 2★ que a comp precisa, ou chegou a 10. <em class="rd">(regra derivada do guia)</em></li></ul>
+<p><strong>Abandonar ou pivotar</strong></p>
+<ul><li>SE menos de 80 de vida no 4-1 → sem Fast 9. Vá de 3A ou Fast 8 padrão. <strong><span class="s18">(Set 18)</span></strong></li><li>SE outro jogador vai atrás dos mesmos custo 5 → Fast 8. <em class="rd">(regra derivada do guia)</em></li><li>SE achou board forte no estágio 2 → quebre a loss streak e vá à Estratégia 1.</li><li>SE a vida cai rápido no caminho do 9 com board fraco → pare de subir e role no 8. <em class="rd">(regra derivada do guia)</em></li></ul>
+<h3 id="estrategia-3-economia-maxima-fast-8-antecipado-ou-fast-9-pisos">Pisos</h3>
+<div class="tbl stack" role="region" tabindex="0" aria-label="Tabela: Pisos">
+<table class="tc3">
+<thead><tr><th scope="col">Recurso</th><th scope="col">Piso</th><th scope="col">Quando</th></tr></thead>
+<tbody>
+<tr><th scope="row">Ouro</th><td data-label="Piso">10</td><td data-label="Quando">Sempre. Exceção: fim de jogo, morrendo.</td></tr>
+<tr><th scope="row">Ouro</th><td data-label="Piso">Alvo: 50 no 3-1 (teto de juros)</td><td data-label="Quando">Saída do Open Fort. <em class="rd">(regra derivada do guia)</em></td></tr>
+<tr><th scope="row">Vida</th><td data-label="Piso">80+ no 4-1</td><td data-label="Quando">Condição para o Fast 9. <strong><span class="s18">(Set 18)</span></strong></td></tr>
+<tr><th scope="row">Vida</th><td data-label="Piso">Loss streak só no estágio 2</td><td data-label="Quando">No estágio 2 a derrota é barata; depois, não.</td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="estrategia-3-economia-maxima-fast-8-antecipado-ou-fast-9-erros-comuns">Erros comuns</h3>
+<ol><li>Esticar a loss streak para os estágios 3 e 4.</li><li>Ir de Fast 9 com menos de 80 de vida ou sem aprimoramento de economia.</li><li>Ir de Fast 9 contestado.</li><li>Sair do Open Fort gastando em pingos. Ouro rende mais gasto de uma vez, no nível certo.</li><li>Desperdiçar a prioridade do carrossel.</li><li>Banco lotado &quot;por segurança&quot;. Custa juros.</li></ol>
+</section>
+<section class="gsec" aria-labelledby="leitura-de-jogo-padronizada">
+<h2 id="leitura-de-jogo-padronizada">5. Leitura de jogo padronizada</h2>
+<p>Mesmo roteiro, toda rodada. Leitura obrigatória em: 2-1, fim do estágio 2, 3-2, 3-7, 4-1 e 4-2. Use o PvE e o carrossel para pensar.</p>
+<h3 id="leitura-de-jogo-padronizada-o-roteiro">O roteiro</h3>
+<ol><li><strong>Vida</strong> → qual faixa?</li><li><strong>Ouro</strong> → qual degrau?</li><li><strong>Streak</strong> → de vitória, de derrota ou nenhuma? Vale manter?</li><li><strong>Board x lobby</strong> → forte, médio ou fraco?</li><li><strong>Contest</strong> → scout de 2 boards. Quantos jogam a sua comp?</li><li><strong>Próximo spike</strong> → qual e em quantas rodadas?</li><li><strong>Decisão</strong> → qual estratégia e qual ação: UPAR, FICAR, ROLAR até X ou GUARDAR.</li></ol>
+<h3 id="leitura-de-jogo-padronizada-passo-1-faixas-de-vida">Passo 1 — Faixas de vida</h3>
+<p><em class="rd">(regra derivada do guia — as fontes dão âncoras, não faixas)</em></p>
+<div class="tbl stack" role="region" tabindex="0" aria-label="Tabela: Passo 1 — Faixas de vida">
+<table class="tc4">
+<thead><tr><th scope="col">Faixa</th><th scope="col">Vida</th><th scope="col">Leitura</th><th scope="col">Âncora</th></tr></thead>
+<tbody>
+<tr><th scope="row">Folga</th><td data-label="Vida">80+</td><td data-label="Leitura">Tempo de sobra. Guarde, atrase o spike. Fast 9 possível.</td><td data-label="Âncora">80+ no 4-1 <strong><span class="s18">(Set 18)</span></strong></td></tr>
+<tr><th scope="row">Segura</th><td data-label="Vida">41–79</td><td data-label="Leitura">Ainda dá para trocar vida por ouro.</td><td data-label="Âncora">&quot;60 → 40 ainda te deixa no jogo&quot;</td></tr>
+<tr><th scope="row">Atenção</th><td data-label="Vida">30–40</td><td data-label="Leitura">Margem curta. Antecipe o spike que já estava planejado.</td><td data-label="Âncora">Risco citado no reroll de custo 2, no 4-1</td></tr>
+<tr><th scope="row">Crítica</th><td data-label="Vida">Abaixo de 30</td><td data-label="Leitura">Agir já. Gaste para estabilizar.</td><td data-label="Âncora">Sem número nas fontes</td></tr>
+</tbody>
+</table>
+</div>
+<ul><li>Valem do estágio 3 em diante. No estágio 2, cada derrota tira pouca vida.</li></ul>
+<h3 id="leitura-de-jogo-padronizada-passo-2-degraus-de-ouro">Passo 2 — Degraus de ouro</h3>
+<div class="tbl stack" role="region" tabindex="0" aria-label="Tabela: Passo 2 — Degraus de ouro">
+<table class="tc3">
+<thead><tr><th scope="col">Ouro</th><th scope="col">Leitura</th><th scope="col">Ação</th></tr></thead>
+<tbody>
+<tr><th scope="row">Abaixo de 10</th><td data-label="Leitura">Abaixo do piso</td><td data-label="Ação">Só no fim, morrendo.</td></tr>
+<tr><th scope="row">10–13</th><td data-label="Leitura">Armadilha</td><td data-label="Ação">10 vira 16, que ainda dá só +1. Chegue a 14 antes de parar.</td></tr>
+<tr><th scope="row">14–19</th><td data-label="Leitura">Rota lenta</td><td data-label="Ação">14 vira 20; 32 em 3 rodadas.</td></tr>
+<tr><th scope="row">20–31</th><td data-label="Leitura">Rota rápida</td><td data-label="Ação">19–20 vira 32 em 2 rodadas.</td></tr>
+<tr><th scope="row">32–49</th><td data-label="Leitura">Piso do meio do jogo</td><td data-label="Ação">32 vira 40, depois ~50. Pare de rolar aqui.</td></tr>
+<tr><th scope="row">50+</th><td data-label="Leitura">Juros no máximo</td><td data-label="Ação">Só aqui o slow roll gasta o excedente.</td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="leitura-de-jogo-padronizada-passo-3-streak">Passo 3 — Streak</h3>
+<ul><li>Streak de 2 a 4: +1. De 5: +2. De 6 ou mais: +3.</li><li>Manter uma streak importante é motivo válido para upar.</li><li>Win streak forte → curva agressiva. Perder a streak depois de gastar muito pode custar a partida.</li></ul>
+<h3 id="leitura-de-jogo-padronizada-passo-4-forca-do-board">Passo 4 — Força do board</h3>
+<p><em class="rd">(regra derivada do guia)</em></p>
+<div class="tbl stack" role="region" tabindex="0" aria-label="Tabela: Passo 4 — Força do board">
+<table>
+<thead><tr><th scope="col">Força</th><th scope="col">Sinal</th></tr></thead>
+<tbody>
+<tr><th scope="row">Forte</th><td data-label="Sinal">Em win streak ou vencendo a maioria. Upgrades e itens acima dos boards que você viu.</td></tr>
+<tr><th scope="row">Médio</th><td data-label="Sinal">Alterna vitórias e derrotas.</td></tr>
+<tr><th scope="row">Fraco</th><td data-label="Sinal">Perde seguido sem querer. Sem pares, sem itens úteis.</td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="leitura-de-jogo-padronizada-passo-5-contest">Passo 5 — Contest</h3>
+<p><strong>Meta:</strong> scout de pelo menos 2 boards por rodada. <strong><span class="nc">(Google, não confirmado)</span></strong></p>
+<div class="tbl stack" role="region" tabindex="0" aria-label="Tabela: Passo 5 — Contest">
+<table class="tc3">
+<thead><tr><th scope="col">Na sua comp</th><th scope="col">Fast 8</th><th scope="col">Reroll e Fast 9</th></tr></thead>
+<tbody>
+<tr><th scope="row">0</th><td data-label="Fast 8">Comprometa cedo.</td><td data-label="Reroll e Fast 9">Comprometa cedo.</td></tr>
+<tr><th scope="row">1</th><td data-label="Fast 8">Segue.</td><td data-label="Reroll e Fast 9">Já pesa.</td></tr>
+<tr><th scope="row">2</th><td data-label="Fast 8">Role antes dos outros (3-7 ou 4-1) ou prepare o plano B.</td><td data-label="Reroll e Fast 9">Saia. <em class="rd">(regra derivada do guia)</em></td></tr>
+<tr><th scope="row">3 ou mais</th><td data-label="Fast 8">Pivote, mantendo o fast 8.</td><td data-label="Reroll e Fast 9">Saia.</td></tr>
+</tbody>
+</table>
+</div>
+<blockquote class="nota"><p><strong>Nota:</strong> a escala 1/2/3+ é do Google. Os vídeos são mais rígidos com reroll e fast 9: qualquer contest &quot;vai ser um problema&quot;.</p></blockquote>
+<h3 id="leitura-de-jogo-padronizada-passo-6-proximo-spike">Passo 6 — Próximo spike</h3>
+<ul><li>Spike = nível novo, 3★, item-chave ou novo nível de traço.</li><li>SE há spike maior em 2–3 rodadas → não gaste agora em upgrade pequeno.</li></ul>
+<h3 id="leitura-de-jogo-padronizada-passo-7-matriz-de-decisao-vida-x-board">Passo 7 — Matriz de decisão: vida x board</h3>
+<p><em class="rd">(regra derivada do guia)</em></p>
+<div class="tbl stack" role="region" tabindex="0" aria-label="Tabela: Passo 7 — Matriz de decisão: vida x board">
+<table class="tc4">
+<thead><tr><th scope="col">Vida \ Board</th><th scope="col">Forte</th><th scope="col">Médio</th><th scope="col">Fraco</th></tr></thead>
+<tbody>
+<tr><th scope="row"><strong>Folga (80+)</strong></th><td data-label="Forte">Siga a curva (ou a agressiva). Guarde juros. Fast 9 possível.</td><td data-label="Médio"><strong><span class="act act-guardar">GUARDAR</span></strong>. Curva padrão. Aceite 1–2 derrotas por spike maior.</td><td data-label="Fraco"><strong><span class="act act-guardar">GUARDAR</span></strong>. Estágio 2: Open Fort. A vida compra tempo.</td></tr>
+<tr><th scope="row"><strong>Segura (41–79)</strong></th><td data-label="Forte">Siga a curva e mantenha a streak. Role só no gatilho da estratégia.</td><td data-label="Médio">Curva padrão. Role só no gatilho.</td><td data-label="Fraco">Estágio 2: loss streak. Estágio 3+: board mínimo; role até 32 se falta 1 peça para o spike.</td></tr>
+<tr><th scope="row"><strong>Atenção (30–40)</strong></th><td data-label="Forte">Segure o board. Upe para poupar vida se sobra ouro.</td><td data-label="Médio">Antecipe o spike: role no 4-2, não no 4-5. Saia do slow roll.</td><td data-label="Fraco"><strong><span class="act act-rolar">ROLAR</span></strong> agora para estabilizar: até 32 no estágio 3, até 20 no 4. Sem Fast 9, sem Open Fort.</td></tr>
+<tr><th scope="row"><strong>Crítica (&lt;30)</strong></th><td data-label="Forte">Gaste para manter a streak. Piso 10.</td><td data-label="Médio"><strong><span class="act act-rolar">ROLAR</span></strong> até 10 pelo spike.</td><td data-label="Fraco"><strong><span class="act act-rolar">ROLAR</span></strong> até 10. Abaixo de 10 só se for cair nesta rodada.</td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="leitura-de-jogo-padronizada-panico-x-agir">Pânico x agir</h3>
+<p><em class="rd">(regra derivada do guia)</em></p>
+<ul><li><strong>Pânico:</strong> rolar ou upar fora do gatilho só porque perdeu vida. Proibido.</li><li><strong>Agir:</strong> antecipar o spike que já estava no plano, porque a vida entrou em Atenção ou Crítica.</li><li>Na dúvida: 2–3 rodadas ruins custam menos que a economia inteira.</li></ul>
+<div class="caixa">
+<h3 id="checklist-de-30-segundos">Checklist de 30 segundos</h3>
+<ol><li>Vida: Folga, Segura, Atenção ou Crítica?</li><li>Ouro: qual degrau? Paro em 14, 20, 32 ou 50 — nunca em 10.</li><li>Streak: manter ou quebrar?</li><li>Board: forte, médio ou fraco contra o que vi?</li><li>Scout: 2 boards. Alguém na minha comp?</li><li>Próximo spike: qual, em quantas rodadas?</li><li>XP: poupa vida, mantém streak ou dá custo mais alto? Nenhum sim → não upe.</li></ol>
+</div>
+<h3 id="leitura-de-jogo-padronizada-quando-quebrar-o-padrao">Quando quebrar o padrão</h3>
+<ul><li><strong>Aprimoramento muda o plano.</strong> Economia no 2-1 → fast 8 ou 9. Aprimoramento de reroll → reroll. Emblema ou aprimoramento de traço → comp daquele traço.</li><li><strong>Comp com prazo próprio.</strong> Ex.: Rubrivira (fast 8): 5 Fera do Rift até o 3-1 e 7 até o 3-5. <strong><span class="s18">(Set 18, patch 18.5C)</span></strong></li><li><strong>Win streak com board forte</strong> → curva agressiva: 5 no 2-3, 6 no 3-1, 7 no 3-5, 8 no 4-1.</li><li><strong>Fast 8 contestado</strong> → nível 8 e roll no 3-7 ou 4-1.</li><li><strong>Bateu os 3★ no slow roll</strong> → pare e suba.</li><li><strong>Late game, morrendo</strong> → abaixo de 10 de ouro é permitido.</li><li><strong>Board estável depois de começo fraco</strong> → pode upar a qualquer momento.</li></ul>
+</section>
+<section class="gsec caixa" aria-labelledby="resumo-de-bolso">
+<h2 id="resumo-de-bolso">6. Resumo de bolso</h2>
+<ol><li>Não sabe o que jogar? <strong>Fast 8</strong>: 6 no 3-2 com 30–32, 8 no 4-2 com ~40, rola até 20–30.</li><li>2-1 fraco e aprimoramento de economia → <strong>Open Fort</strong> até o 3-1.</li><li>Muitas cópias baratas cedo e sem contest → <strong>Reroll</strong>: custo 1 no 4 (3-1), custo 2 no 6, custo 3 no 7.</li><li>80+ de vida no 4-1 e aprimoramento de economia → <strong>Fast 9</strong>, nível 9 no 5-1. <strong><span class="s18">(Set 18)</span></strong></li><li>Ouro: nunca abaixo de 10. Pare em 14 ou 20, nunca em 10. Rolando no meio do jogo, pare em 32.</li><li>Estágio 2 quase sem rolar. Late é a hora de gastar.</li><li>Antes do XP: poupa vida, mantém streak ou dá custo mais alto? Nenhum sim → não suba.</li><li>Contest: fast 8 aguenta 1; reroll e fast 9 sentem qualquer um.</li><li>Indeciso no 3-2 = atrasado. Economia máxima e fast 8.</li><li>Vida caiu? Antecipe o spike planejado. Pânico, nunca.</li></ol>
+</section>
+      <p class="empty" id="gempty" hidden>Nada na estratégia para essa busca.</p>
+    </article>
+  </div>
+</main>
+
+<script src="js/guia.js"></script>
+</body>
+</html>

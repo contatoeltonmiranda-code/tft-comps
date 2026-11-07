@@ -1,0 +1,618 @@
+[
+ {
+  "name": "[d1440] estrategia.html responde 200",
+  "pass": true
+ },
+ {
+  "name": "[d1440] nav: Comps | Guia do Jogo | Estratégia padrão | Notícias, ativo = Estratégia padrão",
+  "pass": true,
+  "extra": "[{\"t\":\"Comps\",\"h\":\"index.html\",\"cur\":null},{\"t\":\"Guia do Jogo\",\"h\":\"guia.html\",\"cur\":null},{\"t\":\"Estratégia padrão\",\"h\":\"estrategia.html\",\"cur\":\"page\"},{\"t\":\"Notícias\",\"h\":\"noticias.html\",\"cur\":null}]"
+ },
+ {
+  "name": "[d1440] nav cabe sem rolar (4 links visíveis)",
+  "pass": true,
+  "extra": "sobra=0"
+ },
+ {
+  "name": "[d1440] sem badge \"Em breve\"",
+  "pass": true
+ },
+ {
+  "name": "[d1440] title e h1",
+  "pass": true
+ },
+ {
+  "name": "[d1440] 6 seções e 13 tabelas",
+  "pass": true,
+  "extra": "tabelas md=13"
+ },
+ {
+  "name": "[d1440] sem scroll horizontal da página",
+  "pass": true,
+  "extra": "overflow=0"
+ },
+ {
+  "name": "[d1440] acentos e símbolos preservados (Estratégia, Atenção, ≥, →, ★)",
+  "pass": true
+ },
+ {
+  "name": "[d1440] atalhos no topo: \"Checklist rápido\" e \"Resumo de bolso\" (>= 44px)",
+  "pass": true,
+  "extra": "[{\"t\":\"Checklist rápido\",\"h\":\"#checklist-de-30-segundos\",\"height\":44},{\"t\":\"Resumo de bolso\",\"h\":\"#resumo-de-bolso\",\"height\":44}]"
+ },
+ {
+  "name": "[d1440] atalhos visíveis sem rolar (primeira dobra)",
+  "pass": true,
+  "extra": "bottom=265"
+ },
+ {
+  "name": "[d1440] \"Checklist rápido\" leva ao checklist (título logo abaixo da busca fixa)",
+  "pass": true,
+  "extra": "h3.top=84 barra.bottom=66"
+ },
+ {
+  "name": "[d1440] checklist em caixa destacada, 7 itens, inteiro na tela",
+  "pass": true,
+  "extra": "{\"b\":\"4px\",\"bg\":true,\"items\":7,\"inView\":true}"
+ },
+ {
+  "name": "[d1440] itens do checklist numerados (contador)",
+  "pass": true,
+  "extra": "counter(cx)"
+ },
+ {
+  "name": "[d1440] \"Resumo de bolso\" leva ao resumo em caixa com 10 itens",
+  "pass": true,
+  "extra": "h2.top=349"
+ },
+ {
+  "name": "[d1440] índice lateral aberto com 6 links, sem cabeçalho recolhível",
+  "pass": true,
+  "extra": "visiveis=6"
+ },
+ {
+  "name": "[d1440] índice ao lado do texto (2 colunas)",
+  "pass": true,
+  "extra": "{\"tr\":300,\"al\":340}"
+ },
+ {
+  "name": "[d1440] índice fixo (sticky) ao rolar",
+  "pass": true,
+  "extra": "y=78 h=243"
+ },
+ {
+  "name": "[d1440] scrollspy marca 1 seção",
+  "pass": true,
+  "extra": "2. Estratégia 1 — Fast 8 padrão"
+ },
+ {
+  "name": "[d1440] 6 âncoras do índice têm alvo",
+  "pass": true
+ },
+ {
+  "name": "[d1440] clicar em cada item do índice: URL e título logo abaixo da busca fixa",
+  "pass": true,
+  "extra": ""
+ },
+ {
+  "name": "[d1440] scrollspy acompanha a última âncora",
+  "pass": true
+ },
+ {
+  "name": "[d1440] sem scroll horizontal após âncoras",
+  "pass": true
+ },
+ {
+  "name": "[d1440] badges UPAR/FICAR/ROLAR/GUARDAR/PARAR só nas tabelas (95)",
+  "pass": true,
+  "extra": "n=95 texto=FICAR,GUARDAR,PARAR,ROLA,ROLAR,ROLE,UPANDO,UPAR"
+ },
+ {
+  "name": "[d1440] 5 ações com 5 cores diferentes",
+  "pass": true,
+  "extra": "{\"upar\":\"rgb(111, 212, 154)\",\"ficar\":\"rgb(143, 180, 240)\",\"rolar\":\"rgb(240, 161, 92)\",\"guardar\":\"rgb(226, 189, 110)\",\"parar\":\"rgb(238, 143, 143)\"}"
+ },
+ {
+  "name": "[d1440] tabelas cabem na largura, sem rolar",
+  "pass": true,
+  "extra": "rolantes=0"
+ },
+ {
+  "name": "[d1440] cabeçalho de tabela estilizado",
+  "pass": true
+ },
+ {
+  "name": "[d1440] tabela focável por teclado com nome",
+  "pass": true
+ },
+ {
+  "name": "[d1440] matriz vida x board presente (4 linhas, badges)",
+  "pass": true
+ },
+ {
+  "name": "[d1440] \"(regra derivada do guia)\" discreta: itálico, cor mais apagada que o texto (20)",
+  "pass": true,
+  "extra": "{\"it\":\"italic\",\"rd\":\"rgb(141, 154, 178)\",\"body\":\"rgb(200, 208, 223)\"}"
+ },
+ {
+  "name": "[d1440] (divergência), (Google, não confirmado) e (Set 18) com cores próprias",
+  "pass": true,
+  "extra": "[\"rgb(217, 140, 106)\",\"rgb(205, 178, 107)\",\"rgb(127, 166, 232)\"]"
+ },
+ {
+  "name": "[d1440] notas em bloco discreto",
+  "pass": true
+ },
+ {
+  "name": "[d1440] busca \"slow roll\": destaca 18 trechos e esconde seções sem resultado",
+  "pass": true,
+  "extra": "marks=18 secoes=2"
+ },
+ {
+  "name": "[d1440] busca: índice mostra só seções com resultado",
+  "pass": true,
+  "extra": "toc=2"
+ },
+ {
+  "name": "[d1440] busca: contador informa ocorrências e seções",
+  "pass": true,
+  "extra": "18 ocorrências em 2 seções"
+ },
+ {
+  "name": "[d1440] Enter vai ao 1º resultado, dentro da tela",
+  "pass": true
+ },
+ {
+  "name": "[d1440] busca ignora acento e caixa (\"estrategia 3\" = \"ESTRATÉGIA 3\")",
+  "pass": true,
+  "extra": "5"
+ },
+ {
+  "name": "[d1440] busca acha texto dentro de badge (\"UPAR 8\")",
+  "pass": true
+ },
+ {
+  "name": "[d1440] busca sem resultado: mensagem e nada visível",
+  "pass": true
+ },
+ {
+  "name": "[d1440] busca com HTML não injeta nada",
+  "pass": true
+ },
+ {
+  "name": "[d1440] Limpar restaura o texto idêntico, sem marcas e com tudo visível",
+  "pass": true
+ },
+ {
+  "name": "[d1440] Esc limpa a busca",
+  "pass": true
+ },
+ {
+  "name": "[d1440] busca ativa + \"Checklist rápido\": limpa a busca e mostra o checklist",
+  "pass": true
+ },
+ {
+  "name": "[d1440] sem scroll horizontal ao final",
+  "pass": true
+ },
+ {
+  "name": "[d1440] navegação por clique Estratégia > Notícias > Guia > Estratégia > Comps",
+  "pass": true
+ },
+ {
+  "name": "[d1440] sem erros de console / requests falhos",
+  "pass": true,
+  "extra": ""
+ },
+ {
+  "name": "[d1100] estrategia.html responde 200",
+  "pass": true
+ },
+ {
+  "name": "[d1100] nav: Comps | Guia do Jogo | Estratégia padrão | Notícias, ativo = Estratégia padrão",
+  "pass": true,
+  "extra": "[{\"t\":\"Comps\",\"h\":\"index.html\",\"cur\":null},{\"t\":\"Guia do Jogo\",\"h\":\"guia.html\",\"cur\":null},{\"t\":\"Estratégia padrão\",\"h\":\"estrategia.html\",\"cur\":\"page\"},{\"t\":\"Notícias\",\"h\":\"noticias.html\",\"cur\":null}]"
+ },
+ {
+  "name": "[d1100] nav cabe sem rolar (4 links visíveis)",
+  "pass": true,
+  "extra": "sobra=0"
+ },
+ {
+  "name": "[d1100] sem badge \"Em breve\"",
+  "pass": true
+ },
+ {
+  "name": "[d1100] title e h1",
+  "pass": true
+ },
+ {
+  "name": "[d1100] 6 seções e 13 tabelas",
+  "pass": true,
+  "extra": "tabelas md=13"
+ },
+ {
+  "name": "[d1100] sem scroll horizontal da página",
+  "pass": true,
+  "extra": "overflow=0"
+ },
+ {
+  "name": "[d1100] acentos e símbolos preservados (Estratégia, Atenção, ≥, →, ★)",
+  "pass": true
+ },
+ {
+  "name": "[d1100] atalhos no topo: \"Checklist rápido\" e \"Resumo de bolso\" (>= 44px)",
+  "pass": true,
+  "extra": "[{\"t\":\"Checklist rápido\",\"h\":\"#checklist-de-30-segundos\",\"height\":44},{\"t\":\"Resumo de bolso\",\"h\":\"#resumo-de-bolso\",\"height\":44}]"
+ },
+ {
+  "name": "[d1100] atalhos visíveis sem rolar (primeira dobra)",
+  "pass": true,
+  "extra": "bottom=265"
+ },
+ {
+  "name": "[d1100] \"Checklist rápido\" leva ao checklist (título logo abaixo da busca fixa)",
+  "pass": true,
+  "extra": "h3.top=84 barra.bottom=66"
+ },
+ {
+  "name": "[d1100] checklist em caixa destacada, 7 itens, inteiro na tela",
+  "pass": true,
+  "extra": "{\"b\":\"4px\",\"bg\":true,\"items\":7,\"inView\":true}"
+ },
+ {
+  "name": "[d1100] itens do checklist numerados (contador)",
+  "pass": true,
+  "extra": "counter(cx)"
+ },
+ {
+  "name": "[d1100] \"Resumo de bolso\" leva ao resumo em caixa com 10 itens",
+  "pass": true,
+  "extra": "h2.top=206"
+ },
+ {
+  "name": "[d1100] índice lateral aberto com 6 links, sem cabeçalho recolhível",
+  "pass": true,
+  "extra": "visiveis=6"
+ },
+ {
+  "name": "[d1100] índice ao lado do texto (2 colunas)",
+  "pass": true,
+  "extra": "{\"tr\":280,\"al\":320}"
+ },
+ {
+  "name": "[d1100] índice fixo (sticky) ao rolar",
+  "pass": true,
+  "extra": "y=78 h=243"
+ },
+ {
+  "name": "[d1100] scrollspy marca 1 seção",
+  "pass": true,
+  "extra": "2. Estratégia 1 — Fast 8 padrão"
+ },
+ {
+  "name": "[d1100] 6 âncoras do índice têm alvo",
+  "pass": true
+ },
+ {
+  "name": "[d1100] clicar em cada item do índice: URL e título logo abaixo da busca fixa",
+  "pass": true,
+  "extra": ""
+ },
+ {
+  "name": "[d1100] scrollspy acompanha a última âncora",
+  "pass": true
+ },
+ {
+  "name": "[d1100] sem scroll horizontal após âncoras",
+  "pass": true
+ },
+ {
+  "name": "[d1100] badges UPAR/FICAR/ROLAR/GUARDAR/PARAR só nas tabelas (95)",
+  "pass": true,
+  "extra": "n=95 texto=FICAR,GUARDAR,PARAR,ROLA,ROLAR,ROLE,UPANDO,UPAR"
+ },
+ {
+  "name": "[d1100] 5 ações com 5 cores diferentes",
+  "pass": true,
+  "extra": "{\"upar\":\"rgb(111, 212, 154)\",\"ficar\":\"rgb(143, 180, 240)\",\"rolar\":\"rgb(240, 161, 92)\",\"guardar\":\"rgb(226, 189, 110)\",\"parar\":\"rgb(238, 143, 143)\"}"
+ },
+ {
+  "name": "[d1100] tabelas cabem na largura, sem rolar",
+  "pass": true,
+  "extra": "rolantes=0"
+ },
+ {
+  "name": "[d1100] cabeçalho de tabela estilizado",
+  "pass": true
+ },
+ {
+  "name": "[d1100] tabela focável por teclado com nome",
+  "pass": true
+ },
+ {
+  "name": "[d1100] matriz vida x board presente (4 linhas, badges)",
+  "pass": true
+ },
+ {
+  "name": "[d1100] \"(regra derivada do guia)\" discreta: itálico, cor mais apagada que o texto (20)",
+  "pass": true,
+  "extra": "{\"it\":\"italic\",\"rd\":\"rgb(141, 154, 178)\",\"body\":\"rgb(200, 208, 223)\"}"
+ },
+ {
+  "name": "[d1100] (divergência), (Google, não confirmado) e (Set 18) com cores próprias",
+  "pass": true,
+  "extra": "[\"rgb(217, 140, 106)\",\"rgb(205, 178, 107)\",\"rgb(127, 166, 232)\"]"
+ },
+ {
+  "name": "[d1100] notas em bloco discreto",
+  "pass": true
+ },
+ {
+  "name": "[d1100] busca \"slow roll\": destaca 18 trechos e esconde seções sem resultado",
+  "pass": true,
+  "extra": "marks=18 secoes=2"
+ },
+ {
+  "name": "[d1100] busca: índice mostra só seções com resultado",
+  "pass": true,
+  "extra": "toc=2"
+ },
+ {
+  "name": "[d1100] busca: contador informa ocorrências e seções",
+  "pass": true,
+  "extra": "18 ocorrências em 2 seções"
+ },
+ {
+  "name": "[d1100] Enter vai ao 1º resultado, dentro da tela",
+  "pass": true
+ },
+ {
+  "name": "[d1100] busca ignora acento e caixa (\"estrategia 3\" = \"ESTRATÉGIA 3\")",
+  "pass": true,
+  "extra": "5"
+ },
+ {
+  "name": "[d1100] busca acha texto dentro de badge (\"UPAR 8\")",
+  "pass": true
+ },
+ {
+  "name": "[d1100] busca sem resultado: mensagem e nada visível",
+  "pass": true
+ },
+ {
+  "name": "[d1100] busca com HTML não injeta nada",
+  "pass": true
+ },
+ {
+  "name": "[d1100] Limpar restaura o texto idêntico, sem marcas e com tudo visível",
+  "pass": true
+ },
+ {
+  "name": "[d1100] Esc limpa a busca",
+  "pass": true
+ },
+ {
+  "name": "[d1100] busca ativa + \"Checklist rápido\": limpa a busca e mostra o checklist",
+  "pass": true
+ },
+ {
+  "name": "[d1100] sem scroll horizontal ao final",
+  "pass": true
+ },
+ {
+  "name": "[d1100] navegação por clique Estratégia > Notícias > Guia > Estratégia > Comps",
+  "pass": true
+ },
+ {
+  "name": "[d1100] sem erros de console / requests falhos",
+  "pass": true,
+  "extra": ""
+ },
+ {
+  "name": "[m390] estrategia.html responde 200",
+  "pass": true
+ },
+ {
+  "name": "[m390] nav: Comps | Guia do Jogo | Estratégia padrão | Notícias, ativo = Estratégia padrão",
+  "pass": true,
+  "extra": "[{\"t\":\"Comps\",\"h\":\"index.html\",\"cur\":null},{\"t\":\"Guia do Jogo\",\"h\":\"guia.html\",\"cur\":null},{\"t\":\"Estratégia padrão\",\"h\":\"estrategia.html\",\"cur\":\"page\"},{\"t\":\"Notícias\",\"h\":\"noticias.html\",\"cur\":null}]"
+ },
+ {
+  "name": "[m390] nav cabe sem rolar (4 links visíveis)",
+  "pass": true,
+  "extra": "sobra=0"
+ },
+ {
+  "name": "[m390] sem badge \"Em breve\"",
+  "pass": true
+ },
+ {
+  "name": "[m390] title e h1",
+  "pass": true
+ },
+ {
+  "name": "[m390] 6 seções e 13 tabelas",
+  "pass": true,
+  "extra": "tabelas md=13"
+ },
+ {
+  "name": "[m390] sem scroll horizontal da página",
+  "pass": true,
+  "extra": "overflow=0"
+ },
+ {
+  "name": "[m390] acentos e símbolos preservados (Estratégia, Atenção, ≥, →, ★)",
+  "pass": true
+ },
+ {
+  "name": "[m390] atalhos no topo: \"Checklist rápido\" e \"Resumo de bolso\" (>= 44px)",
+  "pass": true,
+  "extra": "[{\"t\":\"Checklist rápido\",\"h\":\"#checklist-de-30-segundos\",\"height\":44},{\"t\":\"Resumo de bolso\",\"h\":\"#resumo-de-bolso\",\"height\":44}]"
+ },
+ {
+  "name": "[m390] atalhos visíveis sem rolar (primeira dobra)",
+  "pass": true,
+  "extra": "bottom=249"
+ },
+ {
+  "name": "[m390] \"Checklist rápido\" leva ao checklist (título logo abaixo da busca fixa)",
+  "pass": true,
+  "extra": "h3.top=84 barra.bottom=66"
+ },
+ {
+  "name": "[m390] checklist em caixa destacada, 7 itens, inteiro na tela",
+  "pass": true,
+  "extra": "{\"b\":\"4px\",\"bg\":true,\"items\":7,\"inView\":true}"
+ },
+ {
+  "name": "[m390] itens do checklist numerados (contador)",
+  "pass": true,
+  "extra": "counter(cx)"
+ },
+ {
+  "name": "[m390] \"Resumo de bolso\" leva ao resumo em caixa com 10 itens",
+  "pass": true,
+  "extra": "h2.top=84"
+ },
+ {
+  "name": "[m390] índice recolhido no topo (cabeçalho visível, links ocultos)",
+  "pass": true,
+  "extra": "links=0"
+ },
+ {
+  "name": "[m390] alvo do índice >= 44px",
+  "pass": true,
+  "extra": "h=44"
+ },
+ {
+  "name": "[m390] toque no Índice abre os 6 links",
+  "pass": true
+ },
+ {
+  "name": "[m390] links do índice >= 44px de altura",
+  "pass": true,
+  "extra": "h=44"
+ },
+ {
+  "name": "[m390] 6 âncoras do índice têm alvo",
+  "pass": true
+ },
+ {
+  "name": "[m390] clicar em cada item do índice: URL e título logo abaixo da busca fixa, índice fecha",
+  "pass": true,
+  "extra": ""
+ },
+ {
+  "name": "[m390] sem scroll horizontal após âncoras",
+  "pass": true
+ },
+ {
+  "name": "[m390] badges UPAR/FICAR/ROLAR/GUARDAR/PARAR só nas tabelas (95)",
+  "pass": true,
+  "extra": "n=95 texto=FICAR,GUARDAR,PARAR,ROLA,ROLAR,ROLE,UPANDO,UPAR"
+ },
+ {
+  "name": "[m390] 5 ações com 5 cores diferentes",
+  "pass": true,
+  "extra": "{\"upar\":\"rgb(111, 212, 154)\",\"ficar\":\"rgb(143, 180, 240)\",\"rolar\":\"rgb(240, 161, 92)\",\"guardar\":\"rgb(226, 189, 110)\",\"parar\":\"rgb(238, 143, 143)\"}"
+ },
+ {
+  "name": "[m390] mobile: tabelas viram cartões, nenhuma rola de lado (0)",
+  "pass": true,
+  "extra": "rolantes=0/13"
+ },
+ {
+  "name": "[m390] cartão mostra o rótulo da coluna em cada célula",
+  "pass": true,
+  "extra": "{\"thead\":\"none\",\"tr\":\"block\",\"label\":\"\\\"SE\\\"\",\"lab\":\"SE\"}"
+ },
+ {
+  "name": "[m390] nada fora da tela",
+  "pass": true,
+  "extra": ""
+ },
+ {
+  "name": "[m390] tabela focável por teclado com nome",
+  "pass": true
+ },
+ {
+  "name": "[m390] matriz vida x board presente (4 linhas, badges)",
+  "pass": true
+ },
+ {
+  "name": "[m390] \"(regra derivada do guia)\" discreta: itálico, cor mais apagada que o texto (20)",
+  "pass": true,
+  "extra": "{\"it\":\"italic\",\"rd\":\"rgb(141, 154, 178)\",\"body\":\"rgb(200, 208, 223)\"}"
+ },
+ {
+  "name": "[m390] (divergência), (Google, não confirmado) e (Set 18) com cores próprias",
+  "pass": true,
+  "extra": "[\"rgb(217, 140, 106)\",\"rgb(205, 178, 107)\",\"rgb(127, 166, 232)\"]"
+ },
+ {
+  "name": "[m390] notas em bloco discreto",
+  "pass": true
+ },
+ {
+  "name": "[m390] busca \"slow roll\": destaca 18 trechos e esconde seções sem resultado",
+  "pass": true,
+  "extra": "marks=18 secoes=2"
+ },
+ {
+  "name": "[m390] busca: índice mostra só seções com resultado",
+  "pass": true,
+  "extra": "toc=2"
+ },
+ {
+  "name": "[m390] busca: contador informa ocorrências e seções",
+  "pass": true,
+  "extra": "18 ocorrências em 2 seções"
+ },
+ {
+  "name": "[m390] Enter vai ao 1º resultado, dentro da tela",
+  "pass": true
+ },
+ {
+  "name": "[m390] busca ignora acento e caixa (\"estrategia 3\" = \"ESTRATÉGIA 3\")",
+  "pass": true,
+  "extra": "5"
+ },
+ {
+  "name": "[m390] busca acha texto dentro de badge (\"UPAR 8\")",
+  "pass": true
+ },
+ {
+  "name": "[m390] busca sem resultado: mensagem e nada visível",
+  "pass": true
+ },
+ {
+  "name": "[m390] busca com HTML não injeta nada",
+  "pass": true
+ },
+ {
+  "name": "[m390] Limpar restaura o texto idêntico, sem marcas e com tudo visível",
+  "pass": true
+ },
+ {
+  "name": "[m390] Esc limpa a busca",
+  "pass": true
+ },
+ {
+  "name": "[m390] busca ativa + \"Checklist rápido\": limpa a busca e mostra o checklist",
+  "pass": true
+ },
+ {
+  "name": "[m390] sem scroll horizontal ao final",
+  "pass": true
+ },
+ {
+  "name": "[m390] navegação por clique Estratégia > Notícias > Guia > Estratégia > Comps",
+  "pass": true
+ },
+ {
+  "name": "[m390] sem erros de console / requests falhos",
+  "pass": true,
+  "extra": ""
+ }
+]

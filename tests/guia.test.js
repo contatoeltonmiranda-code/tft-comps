@@ -8,27 +8,11 @@ const FONTE = path.join(ROOT, '../../3. copywriter/Projetos/tft-guia-do-jogo/GUI
 const read = (p) => fs.readFileSync(path.join(ROOT, p), 'utf8');
 const MD = read('data/guia-do-jogo.md');
 const gen = require('../tools/gen-guia.js');
+const { decode, htmlWords, mdWords, mdTables, lf } = require('./_texto.js');
 const busca = require('../js/guia.js');
-const OUT = gen.render(MD);
+const PG = gen.PAGES.guia;
+const OUT = gen.render(MD, PG.render);
 const PAGE = read('guia.html');
-
-const decode = (s) => s.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&amp;/g, '&');
-const BLOCK = 'h[1-6]|p|li|ul|ol|div|section|table|thead|tbody|tr|th|td|blockquote';
-function htmlWords(html) {
-  return decode(html.replace(new RegExp('</?(?:' + BLOCK + ')\\b[^>]*>', 'g'), ' ').replace(/<[^>]+>/g, '')).split(/\s+/).filter(Boolean);
-}
-function mdWords(md) {
-  const words = [];
-  md.split(/\r?\n/).forEach((raw) => {
-    if (/^\s*\|[\s|:-]+\|\s*$/.test(raw)) return;
-    const isHeading = /^#{1,3}\s/.test(raw);
-    let l = raw.replace(/^#{1,3}\s+/, '').replace(/^>\s?/, '');
-    if (!isHeading) l = l.replace(/^\s*(?:-|\d+\.)\s+/, '');
-    l = l.replace(/\|/g, ' ').replace(/\*\*/g, '');
-    words.push(...l.split(/\s+/).filter(Boolean));
-  });
-  return words;
-}
 
 test('guia: 13 secoes h2 com ids unicos e indice com ancoras para todas', () => {
   const h2 = [...OUT.content.matchAll(/<h2 id="([^"]+)">([^<]*)<\/h2>/g)];
@@ -55,27 +39,18 @@ test('guia: texto fiel ao .md (mesma sequencia de palavras, com acentos)', () =>
 });
 
 test('guia: tabelas do .md viram tabelas responsivas com a mesma grade', () => {
-  const mdTables = [];
-  const lines = MD.split(/\r?\n/);
-  for (let i = 0; i < lines.length; i++) {
-    if (/^\|/.test(lines[i]) && /^\|[\s|:-]+\|\s*$/.test(lines[i + 1] || '')) {
-      let j = i + 2;
-      while (j < lines.length && /^\|/.test(lines[j])) j++;
-      mdTables.push({ cols: lines[i].replace(/^\||\|\s*$/g, '').split('|').length, rows: j - i - 2 });
-      i = j;
-    }
-  }
-  assert.ok(mdTables.length >= 12);
+  const mdT = mdTables(MD);
+  assert.ok(mdT.length >= 12);
   const wraps = [...OUT.content.matchAll(/<div class="tbl"([^>]*)>\s*<table[^>]*>([\s\S]*?)<\/table>\s*<\/div>/g)];
-  assert.equal(wraps.length, mdTables.length);
-  assert.equal((OUT.content.match(/<table/g) || []).length, mdTables.length);
+  assert.equal(wraps.length, mdT.length);
+  assert.equal((OUT.content.match(/<table/g) || []).length, mdT.length);
   wraps.forEach((t, k) => {
     assert.match(t[1], /tabindex="0"/);
     assert.match(t[1], /role="region"/);
     assert.match(t[1], /aria-label="Tabela: [^"]+"/);
-    assert.equal((t[2].match(/<tr>/g) || []).length, mdTables[k].rows + 1, 'linhas tabela ' + k);
+    assert.equal((t[2].match(/<tr>/g) || []).length, mdT[k].rows + 1, 'linhas tabela ' + k);
     const head = t[2].match(/<thead>([\s\S]*?)<\/thead>/)[1];
-    assert.equal((head.match(/<th\b/g) || []).length, mdTables[k].cols, 'colunas tabela ' + k);
+    assert.equal((head.match(/<th\b/g) || []).length, mdT[k].cols, 'colunas tabela ' + k);
   });
 });
 
@@ -100,8 +75,7 @@ test('guia: slug sem acento, sem numero e sem repeticao', () => {
 });
 
 test('guia: guia.html gerado esta em dia com o .md (rode node tools/gen-guia.js)', () => {
-  const lf = (s) => s.split(String.fromCharCode(13)).join('');
-  assert.equal(lf(PAGE), lf(gen.build(MD, read('tools/guia-template.html'))));
+  assert.equal(lf(PAGE), lf(gen.build(MD, read('tools/pagina-template.html'), PG)));
 });
 
 test('guia: cabecalho SEO e sem dependencia externa', () => {
@@ -119,15 +93,17 @@ test('guia: cabecalho SEO e sem dependencia externa', () => {
   assert.match(PAGE, /twitter:card/);
 });
 
-test('navegacao: Guia do Jogo ativo so em guia.html e sem badge Em breve nas 3 paginas', () => {
-  const pages = { 'index.html': 'Comps', 'guia.html': 'Guia do Jogo', 'noticias.html': 'Notícias' };
+test('navegacao: 4 paginas com os mesmos 4 links, ativo correto e sem badge Em breve', () => {
+  const pages = { 'index.html': 'Comps', 'guia.html': 'Guia do Jogo', 'estrategia.html': 'Estratégia padrão', 'noticias.html': 'Notícias' };
   Object.entries(pages).forEach(([file, ativo]) => {
     const html = read(file);
     assert.ok(!/class="soon"|Em breve/.test(html), file + ' sem badge');
     const nav = html.match(/<nav class="sitenav"[\s\S]*?<\/nav>/)[0];
     const links = [...nav.matchAll(/<a class="navlink" href="([^"]+)"([^>]*)>([^<]*)<\/a>/g)].map((m) => ({ h: m[1], cur: /aria-current="page"/.test(m[2]), t: m[3].trim() }));
-    assert.deepEqual(links.map((l) => l.h), ['index.html', 'guia.html', 'noticias.html']);
+    assert.deepEqual(links.map((l) => l.h), ['index.html', 'guia.html', 'estrategia.html', 'noticias.html']);
+    assert.deepEqual(links.map((l) => l.t), ['Comps', 'Guia do Jogo', 'Estratégia padrão', 'Notícias']);
     assert.deepEqual(links.filter((l) => l.cur).map((l) => l.t), [ativo]);
+    assert.equal(lf(nav), lf(gen.nav(file)), file + ' nav igual ao gerador');
   });
 });
 
@@ -147,5 +123,5 @@ test('busca: findRanges acha trechos sem depender de acento e respeita minimo', 
 });
 
 test('dados: copia do texto oficial da Clara segue igual a fonte (se existir)', { skip: !fs.existsSync(FONTE) }, () => {
-  assert.equal(MD, fs.readFileSync(FONTE, 'utf8'));
+  assert.equal(lf(MD), lf(fs.readFileSync(FONTE, 'utf8')));
 });

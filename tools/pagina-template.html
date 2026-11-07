@@ -3,57 +3,51 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Guia do Jogo de TFT: economia, nível e rolagem</title>
-<meta name="description" content="Guia do Jogo de Teamfight Tactics (Set 18): economia e juros, quando subir de nível, quando rolar e estilos de jogo, em consulta rápida na partida.">
+<title>{{TITLE}}</title>
+<meta name="description" content="{{DESC}}">
 <meta name="robots" content="noindex">
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#0b0f17">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Guia do Jogo de TFT: economia, nível e rolagem">
-<meta property="og:description" content="Economia, juros, nível, rolagem e estilos de jogo do Teamfight Tactics (Set 18), em consulta rápida.">
+<meta property="og:title" content="{{TITLE}}">
+<meta property="og:description" content="{{OGDESC}}">
 <meta property="og:locale" content="pt_BR">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Guia do Jogo de TFT: economia, nível e rolagem">
-<meta name="twitter:description" content="Economia, juros, nível, rolagem e estilos de jogo do Teamfight Tactics (Set 18), em consulta rápida.">
+<meta name="twitter:title" content="{{TITLE}}">
+<meta name="twitter:description" content="{{OGDESC}}">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 2l12 7v14l-12 7L4 23V9z' fill='%23d4a85a'/%3E%3Cpath d='M16 9l6 3.5v7L16 23l-6-3.5v-7z' fill='%230b0f17'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<!-- Gerado por tools/gen-guia.js a partir de data/guia-do-jogo.md. Nao editar a mao. -->
+<!-- Gerado por tools/gen-guia.js a partir de data/{{MD}}. Nao editar a mao. -->
 
-<nav class="sitenav" aria-label="Páginas do site">
-  <div class="sitenav-in">
-    <a class="navlink" href="index.html">Comps</a>
-    <a class="navlink" href="guia.html" aria-current="page">Guia do Jogo</a>
-    <a class="navlink" href="noticias.html">Notícias</a>
-  </div>
-</nav>
+{{NAV}}
 
 <header class="top">
   <div class="brand">
     <h1>{{H1}}</h1>
-    <p>Set 18 · Selvas Encantadas</p>
+    <p>{{SUB}}</p>
   </div>
 </header>
 
 <main>
   <div class="searchbar gsearch" role="search">
     <svg class="ic" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="5.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M13.2 13.2L17 17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-    <label class="sr" for="gq">Buscar no guia</label>
-    <input id="gq" type="search" placeholder="Buscar no guia (ex.: juros, fast 8, 3-2)" autocomplete="off" enterkeyhint="search">
+    <label class="sr" for="gq">{{SEARCHLABEL}}</label>
+    <input id="gq" type="search" placeholder="{{PLACEHOLDER}}" autocomplete="off" enterkeyhint="search">
     <span class="fcount" id="gcount" aria-live="polite"></span>
     <button class="btn sm ghost" id="gclear" type="button" hidden>Limpar</button>
   </div>
 
-  <div class="glayout">
-    <nav class="toc" id="toc" aria-label="Índice do guia">
+{{QUICK}}  <div class="glayout">
+    <nav class="toc" id="toc" aria-label="{{TOCLABEL}}">
       <details id="toc-d" open>
         <summary>Índice</summary>
         {{TOC}}
       </details>
     </nav>
     <article class="guia" id="guia">
-{{CONTENT}}      <p class="empty" id="gempty" hidden>Nada no guia para essa busca.</p>
+{{CONTENT}}      <p class="empty" id="gempty" hidden>{{EMPTY}}</p>
     </article>
   </div>
 </main>
