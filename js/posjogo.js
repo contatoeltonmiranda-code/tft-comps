@@ -20,6 +20,20 @@
   let fonte = null;
   let analises = [];
   let mostrando = POR_PAGINA;
+  let overrides = {};
+
+  // Marcacoes manuais "Isto foi evento/ranqueada": so matchId -> 'evento'|'regular', no navegador. O Plano le a mesma chave.
+  function lerOverrides() {
+    let raw = null;
+    try { raw = localStorage.getItem(PJ.CHAVE_OVERRIDE); } catch (e) { /* sem armazenamento: so a deteccao automatica */ }
+    return PJ.lerOverrides(raw);
+  }
+
+  function marcar(id, valor) {
+    overrides = PJ.definirOverride(overrides, id, valor);
+    try { localStorage.setItem(PJ.CHAVE_OVERRIDE, JSON.stringify(overrides)); } catch (e) { /* sem armazenamento: vale so ate recarregar */ }
+    tudo();
+  }
 
   function lerComps() {
     let raw = null;
@@ -67,7 +81,7 @@
   // 'padrao' = Ranqueada + Normal (o que conta por padrao); 'todas' = tudo, inclusive evento; ou o id de uma fila.
   function filtradas() {
     const fila = $('#pj-fila').value;
-    if (fila === 'padrao') return analises.filter((a) => !PJ.ehEvento(a.partida.fila) && a.partida.tipo !== 'pve');
+    if (fila === 'padrao') return analises.filter((a) => !PJ.ehEventoPartida(a.partida, overrides) && a.partida.tipo !== 'pve');
     return analises.filter((a) => fila === 'todas' || String(a.partida.fila) === fila);
   }
 
@@ -76,7 +90,7 @@
     const bloco = $('#pj-resumo-bloco');
     bloco.hidden = !analises.length;
     if (!analises.length) return;
-    const e = PJ.estatisticas(lista, Number($('#pj-ultimas').value), { incluirEvento: $('#pj-fila').value !== 'padrao' });
+    const e = PJ.estatisticas(lista, Number($('#pj-ultimas').value), { incluirEvento: $('#pj-fila').value !== 'padrao', overrides });
     const cards = $('#pj-cards');
     cards.textContent = '';
     [
@@ -91,7 +105,7 @@
     const fila = $('#pj-fila').value;
     const deFora = lista.length - e.total;
     $('#pj-aviso-fila').textContent = fila === 'padrao'
-      ? 'Estatísticas só de Ranqueada e Normal. Evento e modos especiais têm regras próprias e distorcem a média: escolha a fila no filtro para vê-los separados.'
+      ? 'Estatísticas só de Ranqueada e Normal. Evento e modos especiais têm regras próprias e distorcem a média: escolha a fila no filtro para vê-los separados. A Riot não marca evento na partida: fila diferente ou 7+ monstros da selva no tabuleiro contam como evento, e você corrige no botão de cada partida.'
       : deFora > 0 ? `${deFora} ${deFora === 1 ? 'partida contra o computador fica' : 'partidas contra o computador ficam'} fora das estatísticas.` : '';
     $('#pj-aviso-amostra').textContent = e.total < 20
       ? `Com ${e.total} partidas a média ainda balança muito; olhe as tendências, não os números exatos. “Estilo” é inferido do board final (nível e 3★), não do que você decidiu.`
@@ -164,13 +178,20 @@
     const grupo = eu.colocacao <= 4 ? 'top' : 'baixo';
     const atencao = a.achados.filter((x) => x.gravidade === 'aviso').length;
     const resumoAnalise = `${a.comp ? 'Comp: ' + a.comp.nome : 'Sem comp reconhecida'} · ${PJ.ESTILOS[a.estilo.id]}${atencao ? ` · ${atencao} ${atencao === 1 ? 'ponto de atenção' : 'pontos de atenção'}` : ''}`;
+    const st = PJ.statusEvento(p, overrides);
+    const marcadoRegular = st.motivo === 'manual-regular';
+    const marcar1 = marcadoRegular || !st.evento ? ['Isto foi evento', 'evento'] : ['Isto foi ranqueada', 'regular'];
     const det = h('details', { class: 'pj-det', open: idx === 0 ? true : null }, h('summary', {}, h('span', { text: 'Análise' }), h('small', { text: resumoAnalise })), desenharAnalise(a));
     return h('li', { class: `pj-partida pj-col-${grupo}` },
       h('div', { class: 'pj-topo' },
         h('span', { class: `pj-col pj-col-n${eu.colocacao}`, 'aria-label': `${eu.colocacao}º lugar`, text: ord(eu.colocacao) }),
         h('div', { class: 'pj-meta' },
           h('b', {}, exemplo ? h('span', { class: 'pj-tag-exemplo', text: 'EXEMPLO' }) : null, exemplo ? ' ' : '', p.quando ? dataBR(p.quando) : 'Sem data'),
-          h('span', {}, h('span', { class: PJ.ehEvento(p.fila) ? 'pj-fila pj-fila-evento' : 'pj-fila', text: PJ.nomeFila(p.fila) }), PJ.ehEvento(p.fila) ? h('span', { class: 'pj-tag-evento', text: 'Evento' }) : null, resto(p))),
+          h('span', {}, h('span', { class: st.evento ? 'pj-fila pj-fila-evento' : 'pj-fila', text: PJ.nomeFila(p.fila) }), st.evento ? h('span', { class: 'pj-tag-evento', text: 'Evento' }) : null, resto(p)),
+          st.evento || marcadoRegular ? h('span', { class: 'pj-motivo', text: (st.evento ? 'Evento' : 'Ranqueada') + ': ' + PJ.rotuloMotivo(st.motivo) + (st.motivo === 'monstros' ? ` (${st.monstros} unidades)` : '') }) : null,
+          h('span', { class: 'pj-marcar' },
+            h('button', { type: 'button', class: 'btn pj-marcar-btn', text: marcar1[0], onclick: () => marcar(p.id, marcar1[1]) }),
+            st.motivo && st.motivo.startsWith('manual') ? h('button', { type: 'button', class: 'pj-desfazer', text: 'Desfazer marcação', onclick: () => marcar(p.id, null) }) : null)),
         h('ul', { class: 'pj-nums', 'aria-label': 'Resumo da partida' },
           h('li', {}, h('small', { text: 'Nível' }), h('b', { text: eu.nivel == null ? '–' : String(eu.nivel) })),
           h('li', {}, h('small', { text: 'Eliminado em' }), h('b', { text: eu.rodada ? `≈${eu.rodada}` : '–' })),
@@ -196,7 +217,7 @@
     const sel = $('#pj-fila');
     const atual = sel.value || 'padrao';
     const filas = [...new Set(analises.map((a) => a.partida.fila))].filter((f) => f != null).sort((a, b) => Number(PJ.ehEvento(a)) - Number(PJ.ehEvento(b)) || a - b);
-    const temRegular = analises.some((a) => !PJ.ehEvento(a.partida.fila) && a.partida.tipo !== 'pve');
+    const temRegular = analises.some((a) => !PJ.ehEventoPartida(a.partida, overrides) && a.partida.tipo !== 'pve');
     sel.textContent = '';
     sel.append(h('option', { value: 'padrao', text: 'Ranqueada + Normal' }), h('option', { value: 'todas', text: 'Todas' }),
       ...filas.map((f) => h('option', { value: String(f), text: PJ.nomeFila(f) + (PJ.ehEvento(f) ? ' (evento)' : '') })));
@@ -223,6 +244,7 @@
 
   function analisar() {
     const dados = { catalog, recipes: window.TFT_RECIPES, comps: lerComps() };
+    overrides = lerOverrides();
     analises = fonte.partidas.map((p) => PJ.analisar(p, dados));
     mostrando = POR_PAGINA;
     tudo();
@@ -246,6 +268,6 @@
     fonte = { origem: 'arquivo', motivo: 'ok', partidas: r.partidas, salvoEm: new Date().toISOString() };
     analisar();
   });
-  window.addEventListener('storage', (ev) => { if (ev.key === CompsApi.STORAGE_KEY_COMPS && fonte) analisar(); });
+  window.addEventListener('storage', (ev) => { if (ev.key === CompsApi.STORAGE_KEY_COMPS && fonte) analisar(); if (ev.key === PJ.CHAVE_OVERRIDE && fonte) { overrides = lerOverrides(); tudo(); } });
   carregar();
 })();

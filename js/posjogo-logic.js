@@ -21,10 +21,70 @@
   }
   // Sem fila no registro nao ha como saber: nao tratamos como evento.
   const ehEvento = (id) => typeof id === 'number' && Number.isFinite(id) && !FILAS_REGULARES.includes(id);
+  // ---- Evento por monstros no tabuleiro
+  // As 10 unidades neutras da selva (Krugue, Lobo, Cascalho, Dragao Ancião...) SAO unidades normais do Set 18 (traço Fera do Rift,
+  // estao no catalogo com custo), entao uma, duas ou ate 6 delas sao comp valida na Ranqueada. Um tabuleiro com 7 ou mais e raro
+  // fora do evento e foi o que as partidas de evento na fila 1100 confirmadas pelo usuario tinham (7 de 8 e 8 de 8).
+  // A API da Riot nao manda marcador de evento; isto e estimativa: o usuario corrige pelo botao (override).
+  const MIN_MONSTROS_EVENTO = 7;
+  const MONSTROS_CHAVES = ['gromp', 'murkwolf', 'sentry', 'cinderling', 'scuttlecrab', 'krug', 'sentinel', 'brambleback', 'elderdragon', 'crimsonraptor'];
+  const ehMonstro = (id) => {
+    const k = normId(id);
+    return !!k && MONSTROS_CHAVES.some((m) => k === m || (k.startsWith(m) && /^(ap|ad)?$/.test(k.slice(m.length))));
+  };
+  // Aceita o registro cru (unidades[].id) e o resolvido (unidades[].c).
+  function contarMonstros(partida) {
+    const us = partida && partida.eu && Array.isArray(partida.eu.unidades) ? partida.eu.unidades : [];
+    return us.filter((u) => u && ehMonstro(u.id || u.c || '')).length;
+  }
+
+  // Override manual: { matchId: 'evento' | 'regular' }. Vence a deteccao automatica. Mesmo localStorage no Pos-jogo e no Plano.
+  const CHAVE_OVERRIDE = 'tft-comps:posjogo-override:v1';
+  const MAX_OVERRIDES = 500;
+  const VALORES_OVERRIDE = ['evento', 'regular'];
+  const ID_OVERRIDE = /^[A-Za-z0-9_-]{3,40}$/;
+  function lerOverrides(raw) {
+    let o = null;
+    try { o = typeof raw === 'string' ? JSON.parse(raw) : null; } catch (e) { o = null; }
+    const out = {};
+    if (!o || typeof o !== 'object' || Array.isArray(o)) return out;
+    Object.keys(o).forEach((k) => {
+      if (Object.keys(out).length < MAX_OVERRIDES && ID_OVERRIDE.test(k) && VALORES_OVERRIDE.includes(o[k])) out[k] = o[k];
+    });
+    return out;
+  }
+  // Nao muta; valor null desfaz. Acima do limite descarta as entradas mais antigas (ordem de insercao).
+  function definirOverride(mapa, id, valor) {
+    const base = Object.assign({}, mapa);
+    if (typeof id !== 'string' || !ID_OVERRIDE.test(id)) return base;
+    if (valor === null) { delete base[id]; return base; }
+    if (!VALORES_OVERRIDE.includes(valor)) return base;
+    delete base[id];
+    base[id] = valor;
+    const chaves = Object.keys(base);
+    chaves.slice(0, Math.max(0, chaves.length - MAX_OVERRIDES)).forEach((k) => { delete base[k]; });
+    return base;
+  }
+
+  // motivo: 'manual-evento' | 'manual-regular' | 'fila' | 'monstros' | null
+  function statusEvento(partida, overrides) {
+    const monstros = contarMonstros(partida);
+    const v = partida && overrides && typeof partida.id === 'string' && Object.prototype.hasOwnProperty.call(overrides, partida.id) ? overrides[partida.id] : null;
+    if (v === 'evento') return { evento: true, motivo: 'manual-evento', monstros };
+    if (v === 'regular') return { evento: false, motivo: 'manual-regular', monstros };
+    if (partida && ehEvento(partida.fila)) return { evento: true, motivo: 'fila', monstros };
+    if (monstros >= MIN_MONSTROS_EVENTO) return { evento: true, motivo: 'monstros', monstros };
+    return { evento: false, motivo: null, monstros };
+  }
+  const ehEventoPartida = (partida, overrides) => statusEvento(partida, overrides).evento;
+  const ROTULOS_MOTIVO = { fila: 'fila do evento', monstros: 'monstros no tabuleiro', 'manual-evento': 'marcado por você', 'manual-regular': 'marcado por você' };
+  const rotuloMotivo = (m) => ROTULOS_MOTIVO[m] || '';
+
   // Partida contra o computador (tipo pve) nunca entra nas estatisticas; evento so quando pedido.
+  // opcoes.overrides: marcacoes manuais do usuario (ver statusEvento).
   function entraNasEstatisticas(partida, opcoes) {
     if (!partida || partida.tipo === 'pve') return false;
-    return !ehEvento(partida.fila) || !!(opcoes && opcoes.incluirEvento);
+    return !ehEventoPartida(partida, opcoes && opcoes.overrides) || !!(opcoes && opcoes.incluirEvento);
   }
   const ESTILOS = {
     reroll: 'Reroll (3★ barato)',
@@ -384,7 +444,7 @@
   }
 
   const api = {
-    REGRAS, ESTILOS, FILAS, FILAS_REGULARES, nomeFila, ehEvento, entraNasEstatisticas, NAO_SABE, normId, indexar, mapearId, ordemRodada, rodadaEstimada, normalizarPartida,
+    REGRAS, ESTILOS, FILAS, FILAS_REGULARES, nomeFila, ehEvento, MIN_MONSTROS_EVENTO, contarMonstros, statusEvento, ehEventoPartida, rotuloMotivo, CHAVE_OVERRIDE, lerOverrides, definirOverride, entraNasEstatisticas, NAO_SABE, normId, indexar, mapearId, ordemRodada, rodadaEstimada, normalizarPartida,
     sanitizarPartidas, sanitizarRegistro, resolver, compativeis, estiloDe, analisar, estatisticas, legivel,
   };
   root.TFTPosjogo = api;

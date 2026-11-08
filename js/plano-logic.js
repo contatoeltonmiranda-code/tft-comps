@@ -139,7 +139,7 @@
   }
 
   // O historico do plano so usa Ranqueada+Normal: evento tem regras proprias e pve nao e partida de verdade.
-  const regulares = (analises) => lista(analises).filter((a) => a && a.partida && PJ.entraNasEstatisticas(a.partida));
+  const regulares = (analises, overrides) => lista(analises).filter((a) => a && a.partida && PJ.entraNasEstatisticas(a.partida, { overrides }));
 
   function historicoPorComp(analises) {
     const mapa = new Map();
@@ -188,8 +188,8 @@
     return notas;
   }
 
-  function montarPlano({ comps, noticias, analises: todas, catalog, tamanho }) {
-    const analises = regulares(todas);
+  function montarPlano({ comps, noticias, analises: todas, catalog, tamanho, overrides }) {
+    const analises = regulares(todas, overrides);
     const n = Number.isInteger(tamanho) && tamanho > 0 ? tamanho : 3;
     const champById = new Map(lista(catalog && catalog.champs).map((c) => [c.id, c]));
     const patches = patchesRecentes(noticias);

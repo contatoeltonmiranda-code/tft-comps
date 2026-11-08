@@ -17,6 +17,13 @@
     return CompsApi.carregarComps(raw, window.TFT_SEED || [], window.TFT_SEED_VERSION || 1, catalog);
   }
 
+  // Marcacoes "Isto foi evento/ranqueada" feitas no Pos-jogo (mesmo navegador).
+  function lerOverrides() {
+    let raw = null;
+    try { raw = localStorage.getItem(PJ.CHAVE_OVERRIDE); } catch (e) { /* sem armazenamento: so a deteccao automatica */ }
+    return PJ.lerOverrides(raw);
+  }
+
   function mini(id) {
     const c = champById.get(id);
     if (!c) return null;
@@ -102,7 +109,7 @@
     const dados = { catalog, recipes: window.TFT_RECIPES, comps };
     const reais = f.origem === 'exemplo' ? [] : f.partidas;
     const analises = reais.map((p) => PJ.analisar(p, dados));
-    const plano = Pl.montarPlano({ comps, noticias: window.TFT_NOTICIAS || [], analises, catalog });
+    const plano = Pl.montarPlano({ comps, noticias: window.TFT_NOTICIAS || [], analises, catalog, overrides: lerOverrides() });
     desenharComps(plano, comps);
     desenharEstrategia(plano);
     desenharTempo();
@@ -124,5 +131,6 @@
   compacto(lido);
   $('#pl-compacto').addEventListener('click', () => compacto($('#pl-compacto').getAttribute('aria-pressed') !== 'true'));
   $('#pl-recarregar').addEventListener('click', () => { montar(); });
+  window.addEventListener('storage', (ev) => { if (ev.key === PJ.CHAVE_OVERRIDE) montar(); });
   montar();
 })();
