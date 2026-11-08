@@ -1,4 +1,5 @@
 (function (root) {
+  const PJ = typeof require === 'function' && typeof module !== 'undefined' ? require('./posjogo-logic.js') : root.TFTPosjogo;
   // Plano pre-jogo: 3 comps para a proxima partida + estrategia padrao com linha do tempo. Estatico: so recebe comps salvas,
   // noticias do patch e historico do pos-jogo; nunca recebe nada da partida em andamento (politica da Riot para TFT).
   // Os textos do guia sao copias exatas de data/estrategia-padrao.md (tests/plano-logic.test.js confere palavra por palavra).
@@ -137,6 +138,9 @@
     });
   }
 
+  // O historico do plano so usa Ranqueada+Normal: evento tem regras proprias e pve nao e partida de verdade.
+  const regulares = (analises) => lista(analises).filter((a) => a && a.partida && PJ.entraNasEstatisticas(a.partida));
+
   function historicoPorComp(analises) {
     const mapa = new Map();
     lista(analises).forEach((a) => {
@@ -184,7 +188,8 @@
     return notas;
   }
 
-  function montarPlano({ comps, noticias, analises, catalog, tamanho }) {
+  function montarPlano({ comps, noticias, analises: todas, catalog, tamanho }) {
+    const analises = regulares(todas);
     const n = Number.isInteger(tamanho) && tamanho > 0 ? tamanho : 3;
     const champById = new Map(lista(catalog && catalog.champs).map((c) => [c.id, c]));
     const patches = patchesRecentes(noticias);

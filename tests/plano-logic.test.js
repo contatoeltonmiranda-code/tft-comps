@@ -166,3 +166,25 @@ test('patchesRecentes ordena numericamente (18.10 > 18.9)', () => {
   const r = Pl.patchesRecentes([noticia('18.9', 'buff', []), noticia('18.10', 'buff', []), noticia('18.5', 'buff', [])]);
   assert.deepEqual(r, ['18.10', '18.9']);
 });
+
+test('historico do plano ignora evento e pve; so Ranqueada+Normal conta', () => {
+  const an = (id, fila, tipo, col) => ({ partida: { id, quando: Number(id), fila, tipo, eu: { colocacao: col } }, comp: { id: 'c3', nome: 'c3' }, estilo: { id: 'fast8' } });
+  const evento = [an('1', 1230, 'standard', 1), an('2', 1230, 'standard', 1), an('3', 1220, 'pve', 1)];
+  const p0 = Pl.montarPlano({ ...base, analises: evento });
+  assert.equal(p0.pontuacao.find((x) => x.id === 'c3').historico, 0, 'evento nao pesa');
+  assert.equal(p0.fontes.partidas, 0);
+  assert.ok(p0.comps.every((c) => c.motivos.some((m) => /Sem partidas suas/.test(m.texto)) || c.id !== 'c3'));
+  const reg = evento.concat([an('4', 1100, 'standard', 1), an('5', 1090, 'normal', 2)]);
+  const p1 = Pl.montarPlano({ ...base, analises: reg });
+  assert.ok(p1.pontuacao.find((x) => x.id === 'c3').historico > 0);
+  assert.equal(p1.fontes.partidas, 2);
+  const m = p1.comps.find((c) => c.id === 'c3').motivos.find((x) => x.tipo === 'historico');
+  assert.match(m.texto, /2 partidas/);
+});
+
+test('estrategia por estilo tambem ignora evento', () => {
+  const an = (id, col, estilo, fila) => ({ partida: { id, quando: 1, fila, tipo: 'standard', eu: { colocacao: col } }, comp: null, estilo: { id: estilo } });
+  const analises = [an('1', 6, 'fast8', 1100), an('2', 7, 'fast8', 1100), an('3', 5, 'fast8', 1100), an('4', 2, 'reroll', 1230), an('5', 1, 'reroll', 1230), an('6', 3, 'reroll', 1230)];
+  const p = Pl.montarPlano({ ...base, analises });
+  assert.ok(!p.estrategia.notas.some((n) => n.tipo === 'historico'));
+});

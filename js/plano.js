@@ -81,10 +81,13 @@
     const partes = [`${nComps} comps salvas`];
     if (plano.fontes.patches.length) partes.push(`patches ${plano.fontes.patches.join(' e ')}`);
     let hist;
+    const n = plano.fontes.partidas;
+    const fora = f.partidas.length - n;
+    const sufixo = fora > 0 ? `; ${fora} de evento ou contra o computador ficaram de fora` : '';
     if (f.origem === 'exemplo') hist = null;
-    else if (f.origem === 'local') hist = `histórico: ${f.partidas.length} partidas lidas do helper local`;
-    else if (f.origem === 'arquivo') hist = `histórico: ${f.partidas.length} partidas do arquivo importado`;
-    else hist = `histórico: ${f.partidas.length} partidas da cópia deste navegador (${dataBR(f.salvoEm)})`;
+    else if (f.origem === 'local') hist = `histórico: ${n} partidas de Ranqueada e Normal lidas do helper local${sufixo}`;
+    else if (f.origem === 'arquivo') hist = `histórico: ${n} partidas de Ranqueada e Normal do arquivo importado${sufixo}`;
+    else hist = `histórico: ${n} partidas de Ranqueada e Normal da cópia deste navegador (${dataBR(f.salvoEm)})${sufixo}`;
     return { partes, hist };
   }
 

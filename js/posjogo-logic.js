@@ -12,7 +12,20 @@
     'sem-comp': { href: 'estrategia.html#estrategia-1-fast-8-padrao', ref: 'Estratégia padrão, seção 2 (Quando escolher)', trecho: 'Comp final de custo 4, ou nenhuma comp clara.' },
   };
 
-  const FILAS = { 1090: 'Normal', 1100: 'Ranqueada', 1130: 'Hyper Roll', 1160: 'Double Up' };
+  const FILAS = { 1090: 'Normal', 1100: 'Ranqueada', 1130: 'Hyper Roll', 1160: 'Double Up', 1220: 'Desafios da Horuja', 1230: 'Chonccosuras ou Travessuras' };
+  // So Normal e Ranqueada contam como jogo regular; todo o resto (modos especiais, eventos, fila nova que ainda nao conhecemos) e "evento".
+  const FILAS_REGULARES = [1090, 1100];
+  function nomeFila(id) {
+    if (typeof id !== 'number' || !Number.isFinite(id)) return '';
+    return FILAS[id] || `Fila ${id}`;
+  }
+  // Sem fila no registro nao ha como saber: nao tratamos como evento.
+  const ehEvento = (id) => typeof id === 'number' && Number.isFinite(id) && !FILAS_REGULARES.includes(id);
+  // Partida contra o computador (tipo pve) nunca entra nas estatisticas; evento so quando pedido.
+  function entraNasEstatisticas(partida, opcoes) {
+    if (!partida || partida.tipo === 'pve') return false;
+    return !ehEvento(partida.fila) || !!(opcoes && opcoes.incluirEvento);
+  }
   const ESTILOS = {
     reroll: 'Reroll (3★ barato)',
     fast9: 'Fast 9',
@@ -354,8 +367,8 @@
       .sort((a, b) => b.n - a.n || a.media - b.media);
   }
 
-  function estatisticas(entrada, ultimasN) {
-    const analises = entrada.slice().sort((a, b) => (b.partida.quando || 0) - (a.partida.quando || 0));
+  function estatisticas(entrada, ultimasN, opcoes) {
+    const analises = entrada.filter((a) => entraNasEstatisticas(a.partida, opcoes)).sort((a, b) => (b.partida.quando || 0) - (a.partida.quando || 0));
     const base = resumo(analises);
     const nUlt = Math.max(1, ultimasN || 10);
     const ult = resumo(analises.slice(0, nUlt));
@@ -371,7 +384,7 @@
   }
 
   const api = {
-    REGRAS, ESTILOS, FILAS, NAO_SABE, normId, indexar, mapearId, ordemRodada, rodadaEstimada, normalizarPartida,
+    REGRAS, ESTILOS, FILAS, FILAS_REGULARES, nomeFila, ehEvento, entraNasEstatisticas, NAO_SABE, normId, indexar, mapearId, ordemRodada, rodadaEstimada, normalizarPartida,
     sanitizarPartidas, sanitizarRegistro, resolver, compativeis, estiloDe, analisar, estatisticas, legivel,
   };
   root.TFTPosjogo = api;

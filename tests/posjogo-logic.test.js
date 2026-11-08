@@ -394,3 +394,51 @@ test('analisar: nivel 7 tarde com top 4 nao e erro; estilo reroll precisa de 3â˜
   assert.equal(estadoResolvidoEstilo({ nivel: 8, unidades: [{ id: 'TFT18_Veigar', tier: 3, itens: [] }] }), 'fast8');
   assert.equal(estadoResolvidoEstilo({ nivel: 8, unidades: [{ id: 'TFT18_Veigar', tier: 3, itens: [] }, { id: 'TFT18_Ornn', tier: 3, itens: [] }] }), 'reroll');
 });
+
+// ------------------------------------------------------------ filas: evento x Ranqueada+Normal
+const aF = (id, fila, tipo, col) => ({ partida: { id, quando: Number(id.replace(/\D/g, '')) || 1, fila, tipo, eu: { colocacao: col } }, comp: null, estilo: { id: 'fast8' } });
+
+test('FILAS: conhece 1220 e 1230 e nomeFila nunca quebra (desconhecida vira "Fila <id>")', () => {
+  assert.equal(PJ.FILAS[1220], 'Desafios da Horuja');
+  assert.equal(PJ.FILAS[1230], 'Chonccosuras ou Travessuras');
+  assert.equal(PJ.nomeFila(1100), 'Ranqueada');
+  assert.equal(PJ.nomeFila(1230), 'Chonccosuras ou Travessuras');
+  assert.equal(PJ.nomeFila(9999), 'Fila 9999');
+  assert.equal(PJ.nomeFila(null), '');
+  assert.equal(PJ.nomeFila(undefined), '');
+});
+
+test('ehEvento: so Normal e Ranqueada sao regulares; o resto (e fila desconhecida) e evento', () => {
+  [1090, 1100].forEach((f) => assert.equal(PJ.ehEvento(f), false, String(f)));
+  [1130, 1160, 1220, 1230, 9999].forEach((f) => assert.equal(PJ.ehEvento(f), true, String(f)));
+  assert.equal(PJ.ehEvento(null), false, 'sem fila nao ha como saber: nao exclui');
+});
+
+test('entraNasEstatisticas: pve nunca; evento so quando pedido', () => {
+  assert.equal(PJ.entraNasEstatisticas({ fila: 1100, tipo: 'standard' }), true);
+  assert.equal(PJ.entraNasEstatisticas({ fila: 1090, tipo: 'normal' }), true);
+  assert.equal(PJ.entraNasEstatisticas({ fila: 1230, tipo: 'standard' }), false);
+  assert.equal(PJ.entraNasEstatisticas({ fila: 1230, tipo: 'standard' }, { incluirEvento: true }), true);
+  assert.equal(PJ.entraNasEstatisticas({ fila: 1220, tipo: 'pve' }), false);
+  assert.equal(PJ.entraNasEstatisticas({ fila: 1220, tipo: 'pve' }, { incluirEvento: true }), false);
+  assert.equal(PJ.entraNasEstatisticas({ fila: null, tipo: '' }), true);
+});
+
+test('estatisticas: por padrao so Ranqueada+Normal; evento entra so com incluirEvento; pve nunca', () => {
+  const aps = [aF('1', 1100, 'standard', 1), aF('2', 1090, 'normal', 3), aF('3', 1230, 'standard', 8), aF('4', 1220, 'pve', 8)];
+  const pad = PJ.estatisticas(aps, 10);
+  assert.equal(pad.total, 2);
+  assert.equal(pad.media, 2);
+  const com = PJ.estatisticas(aps, 10, { incluirEvento: true });
+  assert.equal(com.total, 3, 'evento entra, pve continua fora');
+  assert.equal(com.media, 4);
+  assert.equal(PJ.estatisticas([aF('5', 1220, 'pve', 1)], 10, { incluirEvento: true }).total, 0);
+});
+
+test('posjogo.js: card mostra o nome da fila, filtro tem Ranqueada+Normal e usa nomeFila', () => {
+  const js = fs.readFileSync(path.join(__dirname, '../js/posjogo.js'), 'utf8');
+  assert.match(js, /PJ\.nomeFila\(p\.fila\)/);
+  assert.match(js, /Ranqueada \+ Normal/);
+  assert.match(js, /value: 'padrao'/);
+  assert.match(js, /incluirEvento/);
+});
