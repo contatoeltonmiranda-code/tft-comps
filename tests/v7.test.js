@@ -12,6 +12,7 @@ const NEWS = window.TFT_NOTICIAS;
 const u = (c, extra) => Object.assign({ c, s: 1, i: [], a: [] }, extra || {});
 const champs = new Map(CAT.champs.map((c) => [c.id, c]));
 const NOVAS = ['seed-20', 'seed-21', 'seed-22', 'seed-23', 'seed-24'];
+const SEED7 = SEED.filter((s) => !(s.desde >= 8));
 
 /* ---------- nome do set ---------- */
 test('catalogo: set oficial 18 "Selvas Encantadas" (nao 17)', () => {
@@ -69,17 +70,17 @@ test('mergeSeed dicas: so aplica uma vez, ignora comp excluida e versao futura',
 });
 
 /* ---------- seed v7 ---------- */
-test('seed v7: 24 comps, versao 7, 5 comps novas no topo logo depois das 3 fixadas', () => {
-  assert.equal(window.TFT_SEED_VERSION, 7);
-  assert.equal(SEED.length, 24);
-  assert.deepEqual(SEED.slice(0, 8).map((c) => c.id), ['seed-17', 'seed-18', 'seed-19'].concat(NOVAS));
+test('seed v7: 5 comps novas no topo logo depois das 3 fixadas (a v8 acrescenta seed-25 acima de tudo)', () => {
+  assert.ok(window.TFT_SEED_VERSION >= 7);
+  assert.equal(SEED7.length, 24);
+  assert.deepEqual(SEED7.slice(0, 8).map((c) => c.id), ['seed-17', 'seed-18', 'seed-19'].concat(NOVAS));
   NOVAS.forEach((id, k) => {
     const c = SEED.find((s) => s.id === id);
     assert.equal(c.desde, 7, id);
     assert.equal(c.topo, true, id);
     assert.equal(c.abaixoDe, k === 0 ? 'seed-19' : NOVAS[k - 1], id);
   });
-  assert.equal(SEED.filter((c) => c.topo).length, 8);
+  assert.equal(SEED7.filter((c) => c.topo).length, 8);
 });
 
 test('seed v7: comps novas completas (fim, estrelas, itens, inicio/meio, estilo, nota curta, fonte = video + minuto)', () => {
@@ -126,7 +127,7 @@ test('seed v7: comp nova nao duplica comp existente (Jaccard do board < 0,70)', 
     const B = new Set(b);
     return [...A].filter((x) => B.has(x)).length / new Set([...A, ...B]).size;
   };
-  const antigas = SEED.filter((s) => !NOVAS.includes(s.id));
+  const antigas = SEED7.filter((s) => !NOVAS.includes(s.id));
   NOVAS.forEach((id) => {
     const n = SEED.find((s) => s.id === id);
     antigas.forEach((o) => {
@@ -161,22 +162,22 @@ test('seed v7: tracos das comps novas batem com o painel do tactics.tools (conta
 });
 
 test('seed v7: usuario na v6 recebe as 5 comps logo depois das 3 fixadas, sem perder edicao', () => {
-  const v6 = L.sanitizeImport(SEED.filter((s) => !NOVAS.includes(s.id)), CAT).comps;
+  const v6 = L.sanitizeImport(SEED7.filter((s) => !NOVAS.includes(s.id)), CAT).comps;
   v6[0].nome = 'Editada';
-  const r = L.mergeSeed(dstored(v6, 6), SEED, 7, CAT);
+  const r = L.mergeSeed(dstored(v6, 6), SEED7, 7, CAT);
   assert.deepEqual(r.added, NOVAS);
   assert.deepEqual(r.comps.slice(0, 8).map((c) => c.id), ['seed-17', 'seed-18', 'seed-19'].concat(NOVAS));
   assert.equal(r.comps[0].nome, 'Editada');
   assert.equal(r.comps.length, 24);
   assert.equal(r.seedVersao, 7);
-  const again = L.mergeSeed(dstored(r.comps, 7), SEED, 7, CAT);
+  const again = L.mergeSeed(dstored(r.comps, 7), SEED7, 7, CAT);
   assert.deepEqual(again.added, []);
   assert.equal(again.comps.length, 24);
 });
 
 test('seed v7: comp nova excluida pelo usuario nao volta', () => {
-  const v6 = L.sanitizeImport(SEED.filter((s) => !NOVAS.includes(s.id)), CAT).comps;
-  const r = L.mergeSeed(dstored(v6, 6, ['seed-22']), SEED, 7, CAT);
+  const v6 = L.sanitizeImport(SEED7.filter((s) => !NOVAS.includes(s.id)), CAT).comps;
+  const r = L.mergeSeed(dstored(v6, 6, ['seed-22']), SEED7, 7, CAT);
   assert.ok(!r.comps.some((c) => c.id === 'seed-22'));
   assert.equal(r.added.length, 4);
 });
@@ -189,7 +190,7 @@ test('seed v7: comps do video ja existentes recebem dicas e posicoes sem duplica
     assert.ok(s.dicas.linhas.length >= 3 && /youtu\.be\/shtFyRruAHM\?t=\d+$/.test(s.dicas.url), id);
   });
   ['seed-13', 'seed-14', 'seed-15', 'seed-18'].forEach((id) => assert.equal(SEED.find((x) => x.id === id).posDesde, 7, id));
-  const v6 = L.sanitizeImport(SEED.filter((s) => !NOVAS.includes(s.id)), CAT).comps.map((c) => {
+  const v6 = L.sanitizeImport(SEED7.filter((s) => !NOVAS.includes(s.id)), CAT).comps.map((c) => {
     const x = L.clone(c);
     delete x.dicas;
     x.main.forEach((m) => { delete m.p; });
@@ -197,7 +198,7 @@ test('seed v7: comps do video ja existentes recebem dicas e posicoes sem duplica
   });
   const sem = v6.find((c) => c.id === 'seed-01');
   sem.nota = 'nota do Elton';
-  const r = L.mergeSeed(dstored(v6, 6), SEED, 7, CAT);
+  const r = L.mergeSeed(dstored(v6, 6), SEED7, 7, CAT);
   assert.deepEqual(r.dicasAplicadas.sort(), ['seed-01', 'seed-10', 'seed-13', 'seed-14', 'seed-15', 'seed-18']);
   assert.deepEqual(r.positioned.sort(), ['seed-13', 'seed-14', 'seed-15', 'seed-18']);
   assert.equal(r.comps.find((c) => c.id === 'seed-01').nota, 'nota do Elton');

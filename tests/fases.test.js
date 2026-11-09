@@ -158,12 +158,12 @@ test('phaseBoards sem fases devolve null; ids sumidos do catalogo sao ignorados'
 });
 
 /* ---------- seed real ---------- */
-test('seed: as 24 comps tem fases; as 19 anteriores com fasesDesde 6, as 5 novas (desde 7) ja nascem com fases', () => {
-  assert.equal(window.TFT_SEED_VERSION, 7);
-  assert.equal(SEED.length, 24);
+test('seed: as 25 comps tem fases; as 19 anteriores com fasesDesde 6, as novas (desde 7 e 8) ja nascem com fases', () => {
+  assert.equal(window.TFT_SEED_VERSION, 8);
+  assert.equal(SEED.length, 25);
   SEED.forEach((s) => {
     assert.ok(s.fases, s.id);
-    if (s.desde === 7) assert.equal(s.fasesDesde, undefined, s.id);
+    if (s.desde >= 7) assert.equal(s.fasesDesde, undefined, s.id);
     else assert.equal(s.fasesDesde, 6, s.id);
   });
 });
@@ -202,7 +202,7 @@ test('seed: fases sobrevivem ao sanitizeImport sem perdas', () => {
 });
 
 test('seed: quem ja tinha tudo ate a versao 5 recebe as fases das 19 comps sem perder edicao', () => {
-  const originais = SEED.filter((s) => s.desde !== 7);
+  const originais = SEED.filter((s) => !(s.desde >= 7));
   const salvo = L.sanitizeImport(originais, CAT).comps.map((c) => {
     const x = L.clone(c);
     delete x.fases;

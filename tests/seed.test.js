@@ -15,24 +15,25 @@ test('seed: ids unicos e todos os campeoes/itens existem no catalogo', () => {
   assert.equal(comps.length, SEED.length);
 });
 
-test('seed: 15 comps originais intactas (ids 01..15 sem desde), seed-16 desde 2, seed-17 desde 3, seed-18 desde 4, seed-19 desde 5 e seed-20..24 desde 7 no topo', () => {
-  assert.equal(SEED.length, 24);
+test('seed: 15 comps originais intactas (ids 01..15 sem desde), seed-16 desde 2, seed-17 desde 3, seed-18 desde 4, seed-19 desde 5, seed-20..24 desde 7 e seed-25 desde 8 no topo', () => {
+  assert.equal(SEED.length, 25);
+  assert.equal(SEED[0].id, 'seed-25');
   const byId = (id) => SEED.find((c) => c.id === id);
   for (let i = 1; i <= 15; i++) assert.equal(byId('seed-' + String(i).padStart(2, '0')).desde, undefined);
   assert.equal(byId('seed-16').desde, 2);
-  assert.equal(SEED[0].id, 'seed-17');
-  assert.equal(SEED[0].desde, 3);
-  assert.equal(SEED[0].topo, true);
-  assert.equal(SEED[1].id, 'seed-18');
-  assert.equal(SEED[1].desde, 4);
+  assert.equal(SEED[1].id, 'seed-17');
+  assert.equal(SEED[1].desde, 3);
   assert.equal(SEED[1].topo, true);
-  assert.equal(SEED[1].abaixoDe, 'seed-17');
-  assert.equal(SEED[2].id, 'seed-19');
-  assert.equal(SEED[2].desde, 5);
+  assert.equal(SEED[2].id, 'seed-18');
+  assert.equal(SEED[2].desde, 4);
   assert.equal(SEED[2].topo, true);
-  assert.equal(SEED[2].abaixoDe, 'seed-18');
-  assert.equal(SEED.filter((c) => c.topo).length, 8);
-  assert.equal(window.TFT_SEED_VERSION, 7);
+  assert.equal(SEED[2].abaixoDe, 'seed-17');
+  assert.equal(SEED[3].id, 'seed-19');
+  assert.equal(SEED[3].desde, 5);
+  assert.equal(SEED[3].topo, true);
+  assert.equal(SEED[3].abaixoDe, 'seed-18');
+  assert.equal(SEED.filter((c) => c.topo).length, 9);
+  assert.equal(window.TFT_SEED_VERSION, 8);
 });
 
 test('seed-16 (print 14): tracos batem com o painel do print', () => {

@@ -102,4 +102,12 @@ Mesma regra de casamento (Jaccard do board e mesma família; abaixo de 0,70 vira
 
 Derivadas: seed-21 usa os custos baixos do board que compartilham traços (Karma de Florescer/Enfeitiçador, Cascalho de Fera do Rift/Emanador, Krugue de Fera do Rift/Lutador); o meio acrescenta Azuporã e Morgana (Emanador 3, Fera do Rift 3) e Sett (Florescer 2, Lutador 2), os 4 custos do traço principal. seed-22 usa os Sabugueiros de custo até 2 mais Xayah; o meio acrescenta Hecarim (Sabugueiro 5) e Fiddlesticks (Defendente 2 com Ornn).
 
+## Seed v8 (09/11/2026)
+
+| Seed | Comp do app | Origem | Comp da fonte | Jaccard | Início | Meio |
+|---|---|---|---|---|---|---|
+| seed-25 | Fera do Rift Rubrivira Fast 10 | derivado | - (a Mobalytics "Riftbeast Ascension" é a família, mas o guia do print é Fast 10) | - | Cascalho, Rubrivirim, Lobo Trevoguari, Grompe | Cascalho, Rubrivirim, Lobo Trevoguari, Grompe, Mamãe Bicuda, Krugue |
+
+Derivada: usa só os Fera do Rift de custo baixo do próprio board (main + flex).
+
 Dicas do vídeo (traduzidas e resumidas) ficam em `comp.dicas` no seed, com link do vídeo no minuto (`https://youtu.be/shtFyRruAHM?t=<s>`).

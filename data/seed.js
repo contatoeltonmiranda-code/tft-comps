@@ -1,5 +1,159 @@
 window.TFT_SEED = [
  {
+  "nome": "Fera do Rift Rubrivira Fast 10",
+  "estilo": "Fast 10",
+  "nota": "Guia Fast 10 (refs/21.png): suba ao nível 10 o mais rápido possível. O guia mostra 7 unidades; as outras 5 (flex) vêm de uma partida real em 2º lugar com a mesma linha. Itens e casas lidos do print por comparação de pixels com o catálogo; o 1º item da Rubrivira (Limiar da Noite, 0,53) é o menos seguro. Rubrivira lida pelos itens (o nome aparece cortado: \"Rubriv...\").",
+  "fonte": "refs/21.png",
+  "board": true,
+  "main": [
+   {
+    "c": "DA_Brambleback18",
+    "s": 2,
+    "i": [
+     "DA_EdgeOfNight",
+     "DA_GuinsoosRageblade",
+     "DA_Quicksilver"
+    ],
+    "a": [],
+    "p": [
+     4,
+     1
+    ]
+   },
+   {
+    "c": "DA_18_ElderDragon",
+    "s": 1,
+    "i": [
+     "DA_InfinityEdge",
+     "DA_LastWhisper",
+     "DA_StrikersFlail"
+    ],
+    "a": [],
+    "p": [
+     2,
+     3
+    ]
+   },
+   {
+    "c": "DA_Krug18",
+    "s": 3,
+    "i": [
+     "DA_GargoyleStoneplate",
+     "DA_SpiritVisage",
+     "DA_WarmogsArmor"
+    ],
+    "a": [],
+    "p": [
+     1,
+     4
+    ]
+   },
+   {
+    "c": "DA_Sentinel18",
+    "s": 2,
+    "i": [],
+    "a": [],
+    "p": [
+     1,
+     5
+    ]
+   },
+   {
+    "c": "DA_Taric18",
+    "s": 2,
+    "i": [],
+    "a": [],
+    "p": [
+     1,
+     3
+    ]
+   },
+   {
+    "c": "DA_Murkwolf18",
+    "s": 2,
+    "i": [],
+    "a": [],
+    "p": [
+     3,
+     2
+    ]
+   },
+   {
+    "c": "DA_18_Sentry",
+    "s": 2,
+    "i": [],
+    "a": [],
+    "p": [
+     4,
+     2
+    ]
+   }
+  ],
+  "flex": [
+   {
+    "c": "DA_Cinderling18",
+    "s": 1,
+    "i": [],
+    "a": []
+   },
+   {
+    "c": "DA_Gromp18_AP",
+    "s": 1,
+    "i": [],
+    "a": []
+   },
+   {
+    "c": "DA_CrimsonRaptor18",
+    "s": 1,
+    "i": [],
+    "a": []
+   },
+   {
+    "c": "DA_18_Ivern",
+    "s": 1,
+    "i": [],
+    "a": []
+   },
+   {
+    "c": "DA_18_Ashe",
+    "s": 1,
+    "i": [],
+    "a": []
+   }
+  ],
+  "id": "seed-25",
+  "desde": 8,
+  "topo": true,
+  "fases": {
+   "inicio": [
+    "DA_18_Sentry",
+    "DA_Cinderling18",
+    "DA_Murkwolf18",
+    "DA_Gromp18_AP"
+   ],
+   "meio": [
+    "DA_18_Sentry",
+    "DA_Cinderling18",
+    "DA_Murkwolf18",
+    "DA_Gromp18_AP",
+    "DA_CrimsonRaptor18",
+    "DA_Krug18"
+   ],
+   "origem": "derivado",
+   "ref": "Derivado do tabuleiro final (Fera do Rift de custo baixo; sem guia equivalente)"
+  },
+  "dicas": {
+   "ref": "Print do guia Fast 10 e partida real do Elton (2º lugar)",
+   "linhas": [
+    "Nível: Fast 10. Tente alcançar o nível 10 o mais rápido possível (texto do guia).",
+    "Itens do guia: Krugue 3★ com Placa Gargolítica, Semblante Espiritual e Armadura de Warmog; Dragão Ancião com Gume do Infinito, Último Sussurro e Mangual do Guerreiro; Rubrivira com Limiar da Noite, Guinsoo e Mercúrio.",
+    "Partida real (Fera do Rift 10, 2º lugar): Rubrivirim, Lobo Trevoguari, Cascalho, Krugue e Azuporã chegaram a 3★.",
+    "Itens dessa partida: Krugue com Semblante Espiritual, Talismã da Ascensão e Machadinha Infernal; Azuporã com Centelha Iônica, Capa de Fogo Solar e Coração Inabalável; Rubrivira com Limiar da Noite, Guinsoo e Mangual do Guerreiro.",
+    "Mais itens da partida: Dragão Ancião com Sedenta por Sangue, Último Sussurro e Guinsoo; Taric com Semblante Espiritual Radiante, Proteção Imutável e Colete Espinhoso; Ivern com Cajado do Arcanjo, Elmo Adaptativo e Cajado do Vazio."
+   ]
+  }
+ },
+ {
   "nome": "Enfeitiçador 6",
   "estilo": "Nível 8",
   "nota": "Print em combate (6-2): sem posições. Unidades deduzidas do painel de traços (Enfeitiçador 6/6, Comunhão, Sabugueiro 3, Defendente 2, Espinhos Negros 2, Lutador 2, Flora Fatalis, Lunar, Congregação). Fechar 6 Enfeitiçadores exige 1 Emblema de Enfeitiçador em Ornn, Rek'Sai ou Alistar. Itens e estrelas só onde a identificação é segura.",
@@ -2803,4 +2957,4 @@ window.TFT_SEED = [
   "fasesDesde": 6
  }
 ];
-window.TFT_SEED_VERSION = 7;
+window.TFT_SEED_VERSION = 8;
