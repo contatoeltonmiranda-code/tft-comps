@@ -110,4 +110,13 @@ Derivadas: seed-21 usa os custos baixos do board que compartilham traços (Karma
 
 Derivada: usa só os Fera do Rift de custo baixo do próprio board (main + flex).
 
+## Seed v9 (09/11/2026)
+
+| Seed | Comp do app | Origem | Comp da fonte | Jaccard | Início | Meio |
+|---|---|---|---|---|---|---|
+| seed-26 | Feérico Vivaz Tristana | derivado | - (lista do Elton, sem print) | - | Xayah, Rakan, Kobuko | Xayah, Rakan, Kobuko, Tristana, Rammus, Vi |
+| seed-27 | Colosso Reroll | derivado | - (sugestão do Blitz, refs/25.png e refs/26.png) | - | Rakan, Caitlyn, Sejuani, Aronguejo, Vi | Rakan, Caitlyn, Sejuani, Aronguejo, Vi, Tristana |
+
+Derivadas: seed-26 usa custo 1 no início e custo até 3 no meio (do próprio board). seed-27 usa o Início mostrado pelo Blitz no refs/26.png e, no meio, os de custo até 3 do Final. Pedido "Solar Reroll 3 estrelas" não virou comp: já é a seed-20 (Jaccard 0,75).
+
 Dicas do vídeo (traduzidas e resumidas) ficam em `comp.dicas` no seed, com link do vídeo no minuto (`https://youtu.be/shtFyRruAHM?t=<s>`).

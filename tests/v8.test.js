@@ -8,18 +8,19 @@ const CAT = window.TFT_CATALOG;
 const SEED = window.TFT_SEED;
 
 const ID = 'seed-25';
+const SEED8 = SEED.filter((s) => !(s.desde >= 9));
 const comp = () => SEED.find((s) => s.id === ID);
 const dstored = (comps, seedVersao, excluidos) => ({ versao: 1, seedVersao, excluidos: excluidos || [], comps });
-const SEED7 = SEED.filter((s) => s.id !== ID);
+const SEED7 = SEED8.filter((s) => s.id !== ID);
 
-test('seed v8: versao 8, 25 comps, Fera do Rift Fast 10 e a primeira da lista, fixada no topo', () => {
-  assert.equal(window.TFT_SEED_VERSION, 8);
-  assert.equal(SEED.length, 25);
+test('seed v8: 25 comps (a v9 acrescenta 2 abaixo), Fera do Rift Fast 10 e a primeira da lista, fixada no topo', () => {
+  assert.ok(window.TFT_SEED_VERSION >= 8);
+  assert.equal(SEED8.length, 25);
   assert.equal(SEED[0].id, ID);
   assert.equal(SEED[0].desde, 8);
   assert.equal(SEED[0].topo, true);
   assert.equal(SEED[0].abaixoDe, undefined);
-  assert.equal(SEED[1].id, 'seed-17');
+  assert.equal(SEED8[1].id, 'seed-17');
   assert.equal(SEED.filter((c) => c.desde === 8).length, 1);
 });
 
@@ -83,16 +84,16 @@ test('seed v8: nenhum Riot ID de jogador na comp nova (repo publico)', () => {
 test('seed v8: quem esta na v7 recebe a comp no topo, sem perder edicao; excluida nao volta; nao duplica', () => {
   const v7 = L.sanitizeImport(SEED7, CAT).comps;
   v7[0].nome = 'Editada';
-  const r = L.mergeSeed(dstored(v7, 7), SEED, 8, CAT);
+  const r = L.mergeSeed(dstored(v7, 7), SEED8, 8, CAT);
   assert.deepEqual(r.added, [ID]);
   assert.equal(r.seedVersao, 8);
   assert.equal(r.comps.length, 25);
   assert.equal(r.comps[0].id, ID);
   assert.equal(r.comps[1].nome, 'Editada');
-  const again = L.mergeSeed(dstored(r.comps, 8), SEED, 8, CAT);
+  const again = L.mergeSeed(dstored(r.comps, 8), SEED8, 8, CAT);
   assert.deepEqual(again.added, []);
   assert.equal(again.comps.length, 25);
-  const ex = L.mergeSeed(dstored(v7, 7, [ID]), SEED, 8, CAT);
+  const ex = L.mergeSeed(dstored(v7, 7, [ID]), SEED8, 8, CAT);
   assert.ok(!ex.comps.some((c) => c.id === ID));
 });
 
@@ -101,17 +102,17 @@ test('seed v8: usuario que reordenou ou apagou comps fixadas mantem a ordem dele
   const reord = v7.slice();
   const [mov] = reord.splice(0, 1);
   reord.push(mov);
-  const r = L.mergeSeed(dstored(reord, 7), SEED, 8, CAT);
+  const r = L.mergeSeed(dstored(reord, 7), SEED8, 8, CAT);
   assert.equal(r.comps[0].id, ID);
   assert.deepEqual(r.comps.slice(1).map((c) => c.id), reord.map((c) => c.id));
   const sem17 = v7.filter((c) => c.id !== 'seed-17');
-  const r2 = L.mergeSeed(dstored(sem17, 7, ['seed-17']), SEED, 8, CAT);
+  const r2 = L.mergeSeed(dstored(sem17, 7, ['seed-17']), SEED8, 8, CAT);
   assert.equal(r2.comps[0].id, ID);
   assert.ok(!r2.comps.some((c) => c.id === 'seed-17'));
 });
 
 test('seed v8: usuario novo recebe as 25 comps com a nova no topo', () => {
-  const r = L.mergeSeed(null, SEED, 8, CAT);
+  const r = L.mergeSeed(null, SEED8, 8, CAT);
   assert.equal(r.comps.length, 25);
   assert.equal(r.comps[0].id, ID);
 });

@@ -154,6 +154,197 @@ window.TFT_SEED = [
   }
  },
  {
+  "nome": "Feérico Vivaz Tristana",
+  "estilo": "Nível 9",
+  "nota": "Lista do Elton, sem print: 9 unidades, sem estrelas, itens ou posições (todas 1★ por padrão). Traços calculados do catálogo: Feérico 4, Vivaz 3, Caçador 2, Colosso 2, Defendente 2, Primordial 2, Vanguarda 2, Aspecto Esmeralda 1. O carry não foi informado: o nome usa a Tristana por inferência (única com Feérico, Vivaz e Caçador). Estilo Nível 9 vem das 9 unidades. Gnar é o substituto do Kobuko (flex).",
+  "fonte": "Lista do Elton (sem print)",
+  "main": [
+   {
+    "c": "DA_18_Tristana",
+    "s": 1,
+    "i": [],
+    "a": []
+   },
+   {
+    "c": "DA_18_Xayah",
+    "s": 1,
+    "i": [],
+    "a": []
+   },
+   {
+    "c": "DA_18_Rakan",
+    "s": 1,
+    "i": [],
+    "a": []
+   },
+   {
+    "c": "DA_18_Rammus",
+    "s": 1,
+    "i": [],
+    "a": []
+   },
+   {
+    "c": "DA_Vi18",
+    "s": 1,
+    "i": [],
+    "a": []
+   },
+   {
+    "c": "DA_18_Lillia",
+    "s": 1,
+    "i": [],
+    "a": []
+   },
+   {
+    "c": "DA_18_Sivir",
+    "s": 1,
+    "i": [],
+    "a": []
+   },
+   {
+    "c": "DA_18_Kobuko",
+    "s": 1,
+    "i": [],
+    "a": []
+   },
+   {
+    "c": "DA_Taric18",
+    "s": 1,
+    "i": [],
+    "a": []
+   }
+  ],
+  "flex": [
+   {
+    "c": "DA_18_GnarSmall",
+    "s": 1,
+    "i": [],
+    "a": []
+   }
+  ],
+  "id": "seed-26",
+  "desde": 9,
+  "topo": true,
+  "abaixoDe": "seed-25",
+  "fases": {
+   "inicio": [
+    "DA_18_Xayah",
+    "DA_18_Rakan",
+    "DA_18_Kobuko"
+   ],
+   "meio": [
+    "DA_18_Xayah",
+    "DA_18_Rakan",
+    "DA_18_Kobuko",
+    "DA_18_Tristana",
+    "DA_18_Rammus",
+    "DA_Vi18"
+   ],
+   "origem": "derivado",
+   "ref": "Calculado do board: início = custo 1; meio = custo até 3"
+  },
+  "dicas": {
+   "linhas": [
+    "Com as 9 unidades: Feérico 4 (Tristana, Xayah, Rakan, Lillia) e Vivaz 3 (Tristana, Rammus, Kobuko). Os outros traços ficam em 2 ou 1 unidade.",
+    "Kobuko tem custo 1 (Vivaz, Lutador). Alternativa do Elton: Gnar, custo 5 (Sabugueiro, Vivaz, Lutador). Com o Gnar o Vivaz continua 3 e o Sabugueiro chega a 2 com a Xayah (o 1º degrau é 3).",
+    "Custos: 1 Xayah, Rakan e Kobuko; 3 Tristana, Rammus e Vi; 4 Lillia e Sivir; 5 Taric. Início com os três de custo 1; meio com todos até custo 3.",
+    "Pares de traço: Rakan e Vi dão Colosso 2; Rammus e Lillia, Defendente 2; Rakan e Taric, Vanguarda 2; Tristana e Sivir, Caçador 2; Vi e Sivir, Primordial 2.",
+    "Sem estrelas, itens ou posições: a lista não trazia. Complete no editor da comp depois de jogar."
+   ],
+   "ref": "Lista do Elton (sem print) + catálogo Set 18"
+  }
+ },
+ {
+  "nome": "Colosso Reroll",
+  "estilo": "Reroll",
+  "nota": "Sugestão \"Colosso Reroll\" do Blitz (barra \"Sugerindo comp\" em refs/25.png e refs/26.png). Final com 7 unidades, lidas por match de pixels do ícone com o catálogo (refs/26.png: Rakan 0,90, Sejuani 0,82, Vi 0,82, Aronguejo 0,80, Sivir 0,67, Caitlyn 0,65). A Tristana vem do rótulo legível em refs/25.png (pixel 0,49 a 0,61, o mais fraco). Estrelas do refs/26.png; itens só com match de 0,80 ou mais. Sem posições.",
+  "fonte": "refs/25.png + refs/26.png (Blitz, Sugerindo comp)",
+  "main": [
+   {
+    "c": "DA_18_Rakan",
+    "s": 1,
+    "i": [],
+    "a": []
+   },
+   {
+    "c": "DA_18_Caitlyn",
+    "s": 2,
+    "i": [
+     "DA_GuinsoosRageblade"
+    ],
+    "a": []
+   },
+   {
+    "c": "DA_18_Sejuani",
+    "s": 2,
+    "i": [],
+    "a": []
+   },
+   {
+    "c": "DA_Scuttlecrab18",
+    "s": 2,
+    "i": [
+     "DA_GargoyleStoneplate",
+     "DA_HandOfJustice"
+    ],
+    "a": []
+   },
+   {
+    "c": "DA_Vi18",
+    "s": 1,
+    "i": [],
+    "a": []
+   },
+   {
+    "c": "DA_18_Tristana",
+    "s": 1,
+    "i": [],
+    "a": []
+   },
+   {
+    "c": "DA_18_Sivir",
+    "s": 1,
+    "i": [
+     "DA_RedBuff"
+    ],
+    "a": []
+   }
+  ],
+  "flex": [],
+  "id": "seed-27",
+  "desde": 9,
+  "topo": true,
+  "abaixoDe": "seed-26",
+  "fases": {
+   "inicio": [
+    "DA_18_Rakan",
+    "DA_18_Caitlyn",
+    "DA_18_Sejuani",
+    "DA_Scuttlecrab18",
+    "DA_Vi18"
+   ],
+   "meio": [
+    "DA_18_Rakan",
+    "DA_18_Caitlyn",
+    "DA_18_Sejuani",
+    "DA_Scuttlecrab18",
+    "DA_Vi18",
+    "DA_18_Tristana"
+   ],
+   "origem": "derivado",
+   "ref": "Início do Blitz (refs/26.png); meio = custo até 3 do board"
+  },
+  "dicas": {
+   "linhas": [
+    "O Blitz sugeriu este Final com Colosso 4 (Rakan, Sejuani, Aronguejo, Vi) e Caçador 3 (Caitlyn, Tristana, Sivir). Feérico e Primordial ficam em 2.",
+    "Início sugerido (refs/26.png): Rakan, Caitlyn, Sejuani, Aronguejo e Vi, todos de custo até 3. Tristana (custo 3) e Sivir (custo 4) completam o Final.",
+    "No refs/26.png (6-3) as 7 do Final estavam com visto verde. Caitlyn, Sejuani e Aronguejo com 2★; o refs/25.png (6-2) mostra a Aronguejo com 3★.",
+    "Itens lidos em ícones de uns 10 px (só match de 0,80 ou mais): Caitlyn com Lâmina da Fúria de Guinsoo; Aronguejo com Placa Gargolítica e Mão da Justiça; Sivir com Efeito Vermelho. Os demais itens não deu para identificar."
+   ],
+   "ref": "Blitz, Sugerindo comp \"Colosso Reroll\" (refs/25.png e 26.png)"
+  }
+ },
+ {
   "nome": "Enfeitiçador 6",
   "estilo": "Nível 8",
   "nota": "Print em combate (6-2): sem posições. Unidades deduzidas do painel de traços (Enfeitiçador 6/6, Comunhão, Sabugueiro 3, Defendente 2, Espinhos Negros 2, Lutador 2, Flora Fatalis, Lunar, Congregação). Fechar 6 Enfeitiçadores exige 1 Emblema de Enfeitiçador em Ornn, Rek'Sai ou Alistar. Itens e estrelas só onde a identificação é segura.",
@@ -2957,4 +3148,4 @@ window.TFT_SEED = [
   "fasesDesde": 6
  }
 ];
-window.TFT_SEED_VERSION = 8;
+window.TFT_SEED_VERSION = 9;
