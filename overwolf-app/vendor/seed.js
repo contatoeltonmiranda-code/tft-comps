@@ -441,6 +441,617 @@ window.TFT_SEED = [
   }
  },
  {
+  "nome": "Primitiva Sivir Nidalee Amumu",
+  "estilo": "Fast 8",
+  "nota": "Fast 8 de Nidalee e Sivir (patch 18.6). Exige 5 campeões de custo 4 (Nidalee, Sivir, Amumu, Azuporã, Lillia), então precisa de aprimoramento de economia para rolar no 8. A Nidalee ficou forte com Sedenta por Sangue e levou buff. Tanque: Amumu (Lillia 2★ ou Azuporã 2★ também servem). Estrelas não visíveis no frame (0:50).",
+  "fonte": "Vídeo Vladimin TFT (18.6) · 0:50 · refs/27.png",
+  "board": true,
+  "main": [
+   {
+    "c": "DA_18_Lillia",
+    "s": 1,
+    "i": [],
+    "a": [],
+    "p": [
+     1,
+     1
+    ]
+   },
+   {
+    "c": "DA_18_Rakan",
+    "s": 1,
+    "i": [],
+    "a": [],
+    "p": [
+     1,
+     2
+    ]
+   },
+   {
+    "c": "DA_18_Shen",
+    "s": 1,
+    "i": [],
+    "a": [],
+    "p": [
+     1,
+     3
+    ]
+   },
+   {
+    "c": "DA_Sentinel18",
+    "s": 1,
+    "i": [],
+    "a": [],
+    "p": [
+     1,
+     4
+    ]
+   },
+   {
+    "c": "DA_Amumu18",
+    "s": 1,
+    "i": [
+     "DA_WarmogsArmor",
+     "DA_SpiritVisage",
+     "DA_ProtectorsVow"
+    ],
+    "a": [],
+    "p": [
+     1,
+     5
+    ]
+   },
+   {
+    "c": "DA_Nidalee18_AP",
+    "s": 1,
+    "i": [
+     "DA_Bloodthirster",
+     "DA_EdgeOfNight",
+     "DA_SteraksGage"
+    ],
+    "a": [
+     "DA_InfinityEdge",
+     "DA_18_EmblemHunter"
+    ],
+    "p": [
+     3,
+     7
+    ]
+   },
+   {
+    "c": "DA_KogMaw18_AD",
+    "s": 1,
+    "i": [],
+    "a": [],
+    "p": [
+     4,
+     6
+    ]
+   },
+   {
+    "c": "DA_18_Sivir",
+    "s": 1,
+    "i": [
+     "DA_InfinityEdge",
+     "DA_Deathblade",
+     "DA_BlueBuff"
+    ],
+    "a": [
+     "DA_SpearOfShojin",
+     "DA_StrikersFlail"
+    ],
+    "p": [
+     4,
+     7
+    ]
+   }
+  ],
+  "flex": [],
+  "fases": {
+   "inicio": [
+    "DA_18_Rakan",
+    "DA_18_Shen",
+    "DA_KogMaw18_AD"
+   ],
+   "meio": [
+    "DA_18_Rakan",
+    "DA_18_Shen",
+    "DA_KogMaw18_AD",
+    "DA_Nidalee18_AP",
+    "DA_18_Sivir",
+    "DA_Amumu18"
+   ],
+   "origem": "derivado",
+   "ref": "Calculado do board: início = custo até 3; meio = início + Nidalee, Sivir e Amumu (custo 4)"
+  },
+  "dicas": {
+   "ref": "Vladimin TFT · Melhores comps do patch 18.6",
+   "url": "https://youtu.be/cnOw7GHt7D4?t=14",
+   "linhas": [
+    "Estilo: Fast 8. São 5 campeões de custo 4 (Nidalee, Sivir, Amumu, Azuporã, Lillia): leve aprimoramento de economia para rolar no nível 8.",
+    "Nidalee (melhor): Sedenta por Sangue + Limiar da Noite + Sinal de Sterak, sem artefatos nem emblemas. Alternativas: Gume do Infinito no lugar da Sedenta (cai bastante) ou Emblema de Caçador no lugar do Sterak.",
+    "Sivir: Gume do Infinito + Lâmina Mortal + Efeito Azul. Alternativas: Lança de Shojin no lugar do Azul, ou Gume + Mangual do Guerreiro + Azul (muita espada na build).",
+    "Amumu (tanque, melhor que Lillia e Azuporã): Armadura de Warmog + Semblante Espiritual; 3º item Juramento do Protetor ou o tanque que tiver. Com Lillia 2★ ou Azuporã 2★ dá para usar um deles de tanque.",
+    "Aprimoramentos (tela): Bronze é Vida II, Fabricante de Espadas, Fera Interior. Também citado: Placa Solo. Bronze é Vida \"melhor nesta versão\" foi ouvido, não confirmado.",
+    "Primitivo: com Sivir e Nidalee (as duas Primitivas), pegue o buff \"amarelinho\" (executa unidades abaixo de ~2% da vida; nome não confirmado)."
+   ]
+  },
+  "id": "seed-29",
+  "desde": 11,
+  "topo": true,
+  "abaixoDe": "seed-28"
+ },
+ {
+  "nome": "Primitiva Sivir Nidalee Malphite",
+  "estilo": "Fast 8",
+  "nota": "Versão Malphite da Nidalee e Sivir (patch 18.6), um pouco mais fraca que a do Amumu: só vale com Stemmaguarda e Placa Gargolítica no Malphite, que é o solo tank. Sem Inferno, a Sivir precisa de corta-cura (Efeito Vermelho). Estrelas não visíveis no frame (1:52).",
+  "fonte": "Vídeo Vladimin TFT (18.6) · 1:52 · refs/28.png",
+  "board": true,
+  "main": [
+   {
+    "c": "DA_18_Malphite",
+    "s": 1,
+    "i": [
+     "DA_Crownguard",
+     "DA_GargoyleStoneplate",
+     "DA_WarmogsArmor"
+    ],
+    "a": [],
+    "p": [
+     1,
+     5
+    ]
+   },
+   {
+    "c": "DA_Sentinel18",
+    "s": 1,
+    "i": [],
+    "a": [],
+    "p": [
+     3,
+     2
+    ]
+   },
+   {
+    "c": "DA_18_RekSai",
+    "s": 1,
+    "i": [],
+    "a": [],
+    "p": [
+     3,
+     3
+    ]
+   },
+   {
+    "c": "DA_Krug18",
+    "s": 1,
+    "i": [],
+    "a": [],
+    "p": [
+     3,
+     4
+    ]
+   },
+   {
+    "c": "DA_Cinderling18",
+    "s": 1,
+    "i": [],
+    "a": [],
+    "p": [
+     4,
+     4
+    ]
+   },
+   {
+    "c": "DA_Nidalee18_AP",
+    "s": 1,
+    "i": [
+     "DA_Bloodthirster",
+     "DA_EdgeOfNight",
+     "DA_SteraksGage"
+    ],
+    "a": [
+     "DA_InfinityEdge",
+     "DA_18_EmblemHunter"
+    ],
+    "p": [
+     3,
+     7
+    ]
+   },
+   {
+    "c": "DA_KogMaw18_AD",
+    "s": 1,
+    "i": [],
+    "a": [],
+    "p": [
+     4,
+     6
+    ]
+   },
+   {
+    "c": "DA_18_Sivir",
+    "s": 1,
+    "i": [
+     "DA_RedBuff",
+     "DA_InfinityEdge",
+     "DA_StrikersFlail"
+    ],
+    "a": [],
+    "p": [
+     4,
+     7
+    ]
+   }
+  ],
+  "flex": [],
+  "fases": {
+   "inicio": [
+    "DA_18_RekSai",
+    "DA_Cinderling18",
+    "DA_Krug18",
+    "DA_KogMaw18_AD"
+   ],
+   "meio": [
+    "DA_18_RekSai",
+    "DA_Cinderling18",
+    "DA_Krug18",
+    "DA_KogMaw18_AD",
+    "DA_Nidalee18_AP",
+    "DA_18_Sivir"
+   ],
+   "origem": "derivado",
+   "ref": "Calculado do board: início = custo até 3; meio = início + Nidalee e Sivir (custo 4)"
+  },
+  "dicas": {
+   "ref": "Vladimin TFT · Melhores comps do patch 18.6",
+   "url": "https://youtu.be/cnOw7GHt7D4?t=95",
+   "linhas": [
+    "Versão um pouco mais fraca que a do Amumu. Só compensa com Stemmaguarda e Placa Gargolítica para o Malphite (solo tank); sem esses itens, prefira a versão do Amumu.",
+    "Sem Inferno: a Sivir precisa de corta-cura. Build: Efeito Vermelho + Gume do Infinito + Mangual do Guerreiro.",
+    "Malphite (solo tank): Stemmaguarda + Placa Gargolítica + Armadura de Warmog (nomes ouvidos no áudio).",
+    "Se achar Malphite 2★ cedo, sacrifique o Krugue em Espinhos Negros para colocar o buff de Fera do Rift na Azuporã.",
+    "Nidalee igual à versão do Amumu: Sedenta por Sangue + Limiar da Noite + Sinal de Sterak.",
+    "Aprimoramentos (tela): Fabricante de Espadas, Fera Interior, Placa Solo (deixa o Malphite como tanque único).",
+    "Primitivo: com Sivir e Nidalee (as duas Primitivas), pegue o buff \"amarelinho\" (executa unidades abaixo de ~2% da vida; nome não confirmado)."
+   ]
+  },
+  "id": "seed-30",
+  "desde": 11,
+  "topo": true,
+  "abaixoDe": "seed-29"
+ },
+ {
+  "nome": "Florescer Ahri Zyra",
+  "estilo": "Fast 8 → 9",
+  "nota": "Fast 8 → 9 de Ahri e Zyra (patch 18.6). \"Melhor comp do patch\" com Bronze é Vida + Posição Mantida (buff nas backliners pelo número de peças na primeira linha); sem eles ainda garante top 4. Versão alternativa da Ahri/Morgana, com Zyra no lugar. Board do nível 8 (8:40) + Taric do nível 9 (frame 10:40, de onde veio a posição dele). Flex: trocas citadas.",
+  "fonte": "Vídeo Vladimin TFT (18.6) · 8:40 · refs/29.png e refs/30.png",
+  "board": true,
+  "main": [
+   {
+    "c": "DA_18_Lillia",
+    "s": 1,
+    "i": [],
+    "a": [],
+    "p": [
+     1,
+     1
+    ]
+   },
+   {
+    "c": "DA_Krug18",
+    "s": 1,
+    "i": [],
+    "a": [],
+    "p": [
+     1,
+     2
+    ]
+   },
+   {
+    "c": "DA_18_Yorick",
+    "s": 1,
+    "i": [],
+    "a": [],
+    "p": [
+     1,
+     3
+    ]
+   },
+   {
+    "c": "DA_Fiddlesticks18",
+    "s": 1,
+    "i": [],
+    "a": [],
+    "p": [
+     1,
+     4
+    ]
+   },
+   {
+    "c": "DA_18_Rakan",
+    "s": 1,
+    "i": [],
+    "a": [],
+    "p": [
+     1,
+     5
+    ]
+   },
+   {
+    "c": "DA_18_Sett",
+    "s": 1,
+    "i": [
+     "DA_WarmogsArmor",
+     "DA_SpiritVisage",
+     "DA_GargoyleStoneplate"
+    ],
+    "a": [],
+    "p": [
+     1,
+     6
+    ]
+   },
+   {
+    "c": "DA_Taric18",
+    "s": 1,
+    "i": [],
+    "a": [],
+    "p": [
+     1,
+     7
+    ]
+   },
+   {
+    "c": "DA_18_Ahri",
+    "s": 1,
+    "i": [
+     "DA_SpearOfShojin",
+     "DA_JeweledGauntlet",
+     "DA_StrikersFlail"
+    ],
+    "a": [
+     "DA_RabadonsDeathcap"
+    ],
+    "p": [
+     4,
+     5
+    ]
+   },
+   {
+    "c": "DA_18_Zyra",
+    "s": 1,
+    "i": [
+     "DA_Morellonomicon",
+     "DA_VoidStaff",
+     "DA_SpearOfShojin"
+    ],
+    "a": [],
+    "p": [
+     4,
+     7
+    ]
+   }
+  ],
+  "flex": [
+   {
+    "c": "DA_Amumu18",
+    "s": 1,
+    "i": [],
+    "a": []
+   },
+   {
+    "c": "DA_18_Shen",
+    "s": 1,
+    "i": [],
+    "a": []
+   },
+   {
+    "c": "DA_18_GnarSmall",
+    "s": 1,
+    "i": [],
+    "a": []
+   },
+   {
+    "c": "DA_18_Alune",
+    "s": 2,
+    "i": [],
+    "a": []
+   }
+  ],
+  "fases": {
+   "inicio": [
+    "DA_18_Yorick",
+    "DA_18_Rakan",
+    "DA_Krug18",
+    "DA_Fiddlesticks18"
+   ],
+   "meio": [
+    "DA_18_Yorick",
+    "DA_18_Rakan",
+    "DA_Krug18",
+    "DA_Fiddlesticks18",
+    "DA_18_Sett",
+    "DA_18_Ahri",
+    "DA_18_Zyra"
+   ],
+   "origem": "derivado",
+   "ref": "Calculado do board: início = custo até 3; meio = início + Sett, Ahri e Zyra (custo 4)"
+  },
+  "dicas": {
+   "ref": "Vladimin TFT · Melhores comps do patch 18.6",
+   "url": "https://youtu.be/cnOw7GHt7D4?t=462",
+   "linhas": [
+    "Fixas: Ahri, Sett, Yorick e Fiddlesticks. No nível 9 entra o Taric na maioria das vezes; Krugue vira Gnar quando achar. Sem Taric: Lux Florescer.",
+    "Trocas: Lillia ↔ Amumu (então Rakan ↔ Shen, para ter Inferno junto de Defendente e Colosso). Zyra → Alune 2★, principalmente sem Bronze é Vida.",
+    "Ahri: Lança de Shojin + Manopla Adornada (essenciais: mana e crítico na habilidade) + Mangual do Guerreiro ou Capuz da Morte de Rabadon. Zyra: Morellonomicon + Cajado do Vazio + Lança de Shojin.",
+    "Sett (tanque principal): Armadura de Warmog + Semblante Espiritual + Placa Gargolítica. O Taric pode ser linkado na backline (se focado) ou na Sett.",
+    "Aprimoramentos (tela): Bronze é Vida II, Bronze é Vida I, Posição Mantida. Eles elevam a comp porque há muita peça na primeira linha.",
+    "Flex mostrada em refs/30.png (13 unidades, Alune 2★ visível). Os itens da Ahri e da Sett vêm do áudio e dos ícones do frame de 8:40."
+   ]
+  },
+  "id": "seed-31",
+  "desde": 11,
+  "topo": true,
+  "abaixoDe": "seed-30"
+ },
+ {
+  "nome": "Invocador Soraka Zyra Malphite",
+  "estilo": "Fast 8",
+  "nota": "Fast 8 de Soraka e Zyra com Malphite solo tank (patch 18.6). Ficou mais forte porque o Malphite levou buff e entrou no meta. Exige muito Bastão Desnecessariamente Grande (Rabadon, Arcanjo e outros). Estrelas não visíveis no frame (12:10).",
+  "fonte": "Vídeo Vladimin TFT (18.6) · 12:10 · refs/31.png",
+  "board": true,
+  "main": [
+   {
+    "c": "DA_18_Malphite",
+    "s": 1,
+    "i": [
+     "DA_Crownguard",
+     "DA_GargoyleStoneplate",
+     "DA_WarmogsArmor"
+    ],
+    "a": [],
+    "p": [
+     1,
+     4
+    ]
+   },
+   {
+    "c": "DA_Amumu18",
+    "s": 1,
+    "i": [],
+    "a": [],
+    "p": [
+     3,
+     3
+    ]
+   },
+   {
+    "c": "DA_Fiddlesticks18",
+    "s": 1,
+    "i": [],
+    "a": [],
+    "p": [
+     3,
+     4
+    ]
+   },
+   {
+    "c": "DA_18_Yorick",
+    "s": 1,
+    "i": [],
+    "a": [],
+    "p": [
+     3,
+     7
+    ]
+   },
+   {
+    "c": "DA_18_Zyra",
+    "s": 1,
+    "i": [
+     "DA_SpearOfShojin",
+     "DA_ArchangelsStaff",
+     "DA_VoidStaff"
+    ],
+    "a": [
+     "DA_RabadonsDeathcap",
+     "DA_18_EmblemExecutioner"
+    ],
+    "p": [
+     4,
+     1
+    ]
+   },
+   {
+    "c": "DA_18_Soraka",
+    "s": 1,
+    "i": [
+     "DA_SpearOfShojin",
+     "DA_RabadonsDeathcap",
+     "DA_VoidStaff"
+    ],
+    "a": [
+     "DA_JeweledGauntlet",
+     "DA_NashorsTooth"
+    ],
+    "p": [
+     4,
+     2
+    ]
+   },
+   {
+    "c": "DA_18_Kennen",
+    "s": 1,
+    "i": [],
+    "a": [],
+    "p": [
+     4,
+     3
+    ]
+   },
+   {
+    "c": "DA_18_Azir",
+    "s": 1,
+    "i": [],
+    "a": [],
+    "p": [
+     4,
+     7
+    ]
+   }
+  ],
+  "flex": [
+   {
+    "c": "DA_18_Shen",
+    "s": 1,
+    "i": [],
+    "a": []
+   },
+   {
+    "c": "DA_18_Lillia",
+    "s": 1,
+    "i": [],
+    "a": []
+   }
+  ],
+  "fases": {
+   "inicio": [
+    "DA_18_Yorick",
+    "DA_Fiddlesticks18",
+    "DA_18_Azir"
+   ],
+   "meio": [
+    "DA_18_Yorick",
+    "DA_Fiddlesticks18",
+    "DA_18_Azir",
+    "DA_18_Malphite",
+    "DA_18_Zyra",
+    "DA_18_Soraka",
+    "DA_Amumu18"
+   ],
+   "origem": "derivado",
+   "ref": "Calculado do board: início = custo até 3; meio = início + Malphite, Zyra, Soraka e Amumu (custo 4)"
+  },
+  "dicas": {
+   "ref": "Vladimin TFT · Melhores comps do patch 18.6",
+   "url": "https://youtu.be/cnOw7GHt7D4?t=719",
+   "linhas": [
+    "Exige muito Bastão Desnecessariamente Grande: Rabadon, Arcanjo e outros itens de AP. O aprimoramento Extração de Itens ajuda a fabricar.",
+    "Malphite (solo tank, o buff dele é o motivo da comp): Stemmaguarda + Placa Gargolítica + Armadura de Warmog.",
+    "Zyra: Lança de Shojin + Cajado do Arcanjo + Cajado do Vazio. Alternativa: Rabadon no lugar do Arcanjo. Com Emblema de Carrasco, segundo o áudio na fala da Zyra, fica \"insana\".",
+    "Soraka: item de mana (Shojin) + Capuz de Rabadon + Cajado do Vazio. Alternativas: Rabadon + Manopla Adornada, ou Dente de Na'Shor + Shojin + Rabadon. O 3º item é flex.",
+    "Aprimoramentos (tela): Placa Solo, Extração de Itens, Atualização Épica. Placa Solo para o Malphite tankar sozinho.",
+    "Sacrifício (Espinhos Negros): Fiddlesticks 2★ é o mais interessante (ouvido, não confirmado).",
+    "Inferno: se não achar o Amumu, pode entrar Lillia ou Shen; o Shen é a versão mais barata (a comp já é cara)."
+   ]
+  },
+  "id": "seed-32",
+  "desde": 11,
+  "topo": true,
+  "abaixoDe": "seed-31"
+ },
+ {
   "nome": "Enfeitiçador 6",
   "estilo": "Nível 8",
   "nota": "Print em combate (6-2): sem posições. Unidades deduzidas do painel de traços (Enfeitiçador 6/6, Comunhão, Sabugueiro 3, Defendente 2, Espinhos Negros 2, Lutador 2, Flora Fatalis, Lunar, Congregação). Fechar 6 Enfeitiçadores exige 1 Emblema de Enfeitiçador em Ornn, Rek'Sai ou Alistar. Itens e estrelas só onde a identificação é segura.",
@@ -3244,4 +3855,4 @@ window.TFT_SEED = [
   "fasesDesde": 6
  }
 ];
-window.TFT_SEED_VERSION = 10;
+window.TFT_SEED_VERSION = 11;

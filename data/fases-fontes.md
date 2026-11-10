@@ -127,4 +127,15 @@ Derivadas: seed-26 usa custo 1 no início e custo até 3 no meio (do próprio bo
 
 Derivada: custo até 2 do próprio board (reroll); Azir (custo 3) só no final. O 8º slot é flex e não está fixado (a dica sugere Kayle).
 
+## Seed v11 (10/11/2026)
+
+| Seed | Comp do app | Origem | Comp da fonte | Jaccard | Início | Meio |
+|---|---|---|---|---|---|---|
+| seed-29 | Primitiva Sivir Nidalee Amumu | derivado | Vladimin 18.6, Sivir/Nidalee (Amumu), 0:14 | 0,33 (seed-30) | Rakan, Shen, Kog'Maw | Rakan, Shen, Kog'Maw, Nidalee, Sivir, Amumu |
+| seed-30 | Primitiva Sivir Nidalee Malphite | derivado | Vladimin 18.6, Sivir/Nidalee (Malphite), 1:35 | 0,33 (seed-29) | Rek'Sai, Rubrivirim, Krugue, Kog'Maw | Rek'Sai, Rubrivirim, Krugue, Kog'Maw, Nidalee, Sivir |
+| seed-31 | Florescer Ahri Zyra | derivado | Vladimin 18.6, Ahri/Zyra, 7:42 | 0,29 (seed-21) | Yorick, Rakan, Krugue, Fiddlesticks | Yorick, Rakan, Krugue, Fiddlesticks, Sett, Ahri, Zyra |
+| seed-32 | Invocador Soraka Zyra Malphite | derivado | Vladimin 18.6, Soraka/Zyra, 11:59 | 0,31 (seed-01) | Yorick, Fiddlesticks, Azir | Yorick, Fiddlesticks, Azir, Malphite, Zyra, Soraka, Amumu |
+
+Derivadas: o vídeo não dá início/meio, então início = custo até 3 do próprio board e meio = início + carries e tanques de custo 4 (Fast 8). Links das dicas: `https://youtu.be/cnOw7GHt7D4?t=14|95|462|719`. Aphelios/Nidalee do mesmo vídeo = seed-04 (não entrou).
+
 Dicas do vídeo (traduzidas e resumidas) ficam em `comp.dicas` no seed, com link do vídeo no minuto (`https://youtu.be/shtFyRruAHM?t=<s>`).

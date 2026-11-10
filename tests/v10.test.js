@@ -11,6 +11,7 @@ const ID = 'seed-28';
 const comp = () => SEED.find((s) => s.id === ID);
 const dstored = (comps, seedVersao, excluidos) => ({ versao: 1, seedVersao, excluidos: excluidos || [], comps });
 const SEED9 = SEED.filter((s) => !(s.desde >= 10));
+const SEED10 = SEED.filter((s) => !(s.desde >= 11));
 const champs = new Map(CAT.champs.map((c) => [c.id, c]));
 const items = new Map(CAT.items.map((i) => [i.id, i]));
 const jaccard = (a, b) => {
@@ -19,10 +20,10 @@ const jaccard = (a, b) => {
   return [...A].filter((x) => B.has(x)).length / new Set([...A, ...B]).size;
 };
 
-test('seed v10: versao 10, 28 comps, Solar 8x 3★ logo abaixo da seed-27 (ordem 25, 26, 27, 28, 17...)', () => {
-  assert.equal(window.TFT_SEED_VERSION, 10);
-  assert.equal(SEED.length, 28);
-  assert.deepEqual(SEED.slice(0, 5).map((c) => c.id), ['seed-25', 'seed-26', 'seed-27', ID, 'seed-17']);
+test('seed v10: 28 comps (a v11 acrescenta 4 abaixo), Solar 8x 3★ logo abaixo da seed-27 (ordem 25, 26, 27, 28, 17...)', () => {
+  assert.ok(window.TFT_SEED_VERSION >= 10);
+  assert.equal(SEED10.length, 28);
+  assert.deepEqual(SEED10.slice(0, 5).map((c) => c.id), ['seed-25', 'seed-26', 'seed-27', ID, 'seed-17']);
   assert.equal(SEED.filter((c) => c.desde === 10).length, 1);
   const c = comp();
   assert.equal(c.desde, 10);
@@ -121,16 +122,16 @@ test('seed v10: nenhum Riot ID de jogador na comp nova (repo publico)', () => {
 test('seed v10: quem esta na v9 recebe a comp logo abaixo da seed-27, sem perder edicao; excluida nao volta; nao duplica', () => {
   const v9 = L.sanitizeImport(SEED9, CAT).comps;
   v9[3].nome = 'Editada';
-  const r = L.mergeSeed(dstored(v9, 9), SEED, 10, CAT);
+  const r = L.mergeSeed(dstored(v9, 9), SEED10, 10, CAT);
   assert.deepEqual(r.added, [ID]);
   assert.equal(r.seedVersao, 10);
   assert.equal(r.comps.length, 28);
   assert.deepEqual(r.comps.slice(0, 5).map((c) => c.id), ['seed-25', 'seed-26', 'seed-27', ID, 'seed-17']);
   assert.equal(r.comps[4].nome, 'Editada');
-  const again = L.mergeSeed(dstored(r.comps, 10), SEED, 10, CAT);
+  const again = L.mergeSeed(dstored(r.comps, 10), SEED10, 10, CAT);
   assert.deepEqual(again.added, []);
   assert.equal(again.comps.length, 28);
-  const ex = L.mergeSeed(dstored(v9, 9, [ID]), SEED, 10, CAT);
+  const ex = L.mergeSeed(dstored(v9, 9, [ID]), SEED10, 10, CAT);
   assert.deepEqual(ex.added, []);
   assert.ok(!ex.comps.some((c) => c.id === ID));
 });
@@ -140,7 +141,7 @@ test('seed v10: usuario que reordenou mantem a ordem dele; a nova entra logo aba
   const reord = v9.slice();
   const [mov] = reord.splice(0, 1);
   reord.push(mov);
-  const r = L.mergeSeed(dstored(reord, 9), SEED, 10, CAT);
+  const r = L.mergeSeed(dstored(reord, 9), SEED10, 10, CAT);
   assert.deepEqual(r.added, [ID]);
   const ids = r.comps.map((c) => c.id);
   assert.equal(ids[ids.indexOf('seed-27') + 1], ID);
@@ -148,7 +149,7 @@ test('seed v10: usuario que reordenou mantem a ordem dele; a nova entra logo aba
 });
 
 test('seed v10: usuario novo recebe as 28 comps na ordem do seed', () => {
-  const r = L.mergeSeed(null, SEED, 10, CAT);
+  const r = L.mergeSeed(null, SEED10, 10, CAT);
   assert.equal(r.comps.length, 28);
   assert.deepEqual(r.comps.slice(0, 4).map((c) => c.id), ['seed-25', 'seed-26', 'seed-27', ID]);
 });
