@@ -92,6 +92,7 @@
 .pj-achado-info .pj-nivel{color:#8fb4f0}
 .pj-regra{color:var(--muted)!important;font-size:12px!important}
 .pj-regra a{color:var(--focus)}
+.pj-regra-vida{margin-top:2px!important}
 .pj-nao,.pj-avisos{display:grid;gap:3px;margin:0;padding-left:18px;color:var(--muted);font-size:13px}
 .pj-avisos{padding-top:6px;border-top:1px solid var(--line-soft)}
 .pj-rodape{margin-top:24px;color:var(--muted);font-size:12px}

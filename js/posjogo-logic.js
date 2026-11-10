@@ -12,6 +12,14 @@
     'sem-comp': { href: 'estrategia.html#estrategia-1-fast-8-padrao', ref: 'Estratégia padrão, seção 2 (Quando escolher)', trecho: 'Comp final de custo 4, ou nenhuma comp clara.' },
   };
 
+  // Achados de eliminacao falam de vida: citam tambem a secao 13 do Guia (data/guia-do-jogo.md, "Perda de vida").
+  // So a fonte; o gatilho do achado nao muda. tests/vida-guia.test.js confere o trecho palavra por palavra.
+  const REGRAS_VIDA = {
+    'ouro-parado': { href: 'guia.html#perda-de-vida', ref: 'Guia do Jogo, seção 13 (Perda de vida, "E daí")', trecho: 'Antes de rolar por vida, conte as derrotas. Divida a vida pelo dano de uma derrota provável. Aguenta 3 ou mais? Siga o gatilho da seção 5. Aguenta 1 ou 2? Antecipe o spike que já estava no plano. Pânico, nunca.' },
+    'caiu-antes-do-4-1': { href: 'guia.html#perda-de-vida', ref: 'Guia do Jogo, seção 13 (Perda de vida, "E daí")', trecho: 'No estágio 3, cada derrota custa o dobro. Perto de 11, contra perto de 5 no estágio 2. Esticar a loss streak para o 3 sai caro.' },
+    'nivel-baixo-tarde': { href: 'guia.html#perda-de-vida', ref: 'Guia do Jogo, seção 13 (Perda de vida, "E daí")', trecho: 'Estágio 5 em diante: vida vira o recurso escasso. Duas derrotas no 5 (18 cada) levam 36. Com 30–40 de vida, você fica por um fio.' },
+  };
+
   const FILAS = { 1090: 'Normal', 1100: 'Ranqueada', 1130: 'Hyper Roll', 1160: 'Double Up', 1220: 'Desafios da Horuja', 1230: 'Chonccosuras ou Travessuras' };
   // So Normal e Ranqueada contam como jogo regular; todo o resto (modos especiais, eventos, fila nova que ainda nao conhecemos) e "evento".
   const FILAS_REGULARES = [1090, 1100];
@@ -358,7 +366,7 @@
     const eu = r.eu;
     const out = [];
     const ord = ordemRodada(eu.rodada || '');
-    const add = (id, gravidade, texto) => out.push({ id, gravidade, texto, regra: REGRAS[id] });
+    const add = (id, gravidade, texto) => out.push({ id, gravidade, texto, regra: REGRAS[id], tambem: REGRAS_VIDA[id] || null });
     if (eu.ouroRestante != null && eu.ouroRestante >= 20 && eu.colocacao >= 5) {
       add('ouro-parado', 'aviso', `Eliminado em ${eu.colocacao}º com ${eu.ouroRestante} de ouro sobrando. O guia só libera ir abaixo de 10 quando você está morrendo: esse ouro não virou board.`);
     }
@@ -444,7 +452,7 @@
   }
 
   const api = {
-    REGRAS, ESTILOS, FILAS, FILAS_REGULARES, nomeFila, ehEvento, MIN_MONSTROS_EVENTO, contarMonstros, statusEvento, ehEventoPartida, rotuloMotivo, CHAVE_OVERRIDE, lerOverrides, definirOverride, entraNasEstatisticas, NAO_SABE, normId, indexar, mapearId, ordemRodada, rodadaEstimada, normalizarPartida,
+    REGRAS, REGRAS_VIDA, ESTILOS, FILAS, FILAS_REGULARES, nomeFila, ehEvento, MIN_MONSTROS_EVENTO, contarMonstros, statusEvento, ehEventoPartida, rotuloMotivo, CHAVE_OVERRIDE, lerOverrides, definirOverride, entraNasEstatisticas, NAO_SABE, normId, indexar, mapearId, ordemRodada, rodadaEstimada, normalizarPartida,
     sanitizarPartidas, sanitizarRegistro, resolver, compativeis, estiloDe, analisar, estatisticas, legivel,
   };
   root.TFTPosjogo = api;

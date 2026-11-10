@@ -33,6 +33,7 @@
     gpart: ['Guia · Como a partida é dividida', 'guia.html#como-a-partida-e-dividida', 'guia'],
     gjuros: ['Guia · De onde vem o ouro', 'guia.html#de-onde-vem-o-ouro', 'guia'],
     ggloss: ['Guia · Glossário rápido', 'guia.html#glossario-rapido', 'guia'],
+    gvida: ['Guia · Perda de vida', 'guia.html#perda-de-vida', 'guia'],
     xp: ['Nota do painel · custo do XP', 'estrategia.html#estrategia-2-reroll-e-slow-roll-rodada-a-rodada', 'estrategia'],
   };
 
@@ -224,6 +225,14 @@
     ['g-rolar', 'ggloss', 'Rolar', 'guia', 'Rolar (roll) | Pagar 2 de ouro para trocar a loja.'],
     ['g-pre-level', 'ggloss', 'Pré-level', 'guia', 'Pré-level | Terminar a rodada 2 XP abaixo do próximo nível.'],
 
+    // ---------- Guia do Jogo · secao 13 "Perda de vida" (citada junto das regras de vida, ver VIDA abaixo)
+    ['g-vida-conta', 'gvida', 'A conta do PvP', 'guia', 'Dano = dano base do estágio + 1 por unidade inimiga viva no fim do combate.'],
+    ['g-vida-e2', 'gvida', 'E daí · Estágio 2', 'guia', 'Estágio 2 é a hora barata de perder. Perder as 5 rodadas PvP do estágio (2-1, 2-2, 2-3, 2-5, 2-6) com 3 a 5 inimigos vivos custa 25–35 de vida. Por isso o Open Fort termina no 3-1 (seção 3).'],
+    ['g-vida-e3', 'gvida', 'E daí · Estágio 3', 'guia', 'No estágio 3, cada derrota custa o dobro. Perto de 11, contra perto de 5 no estágio 2. Esticar a loss streak para o 3 sai caro.'],
+    ['g-vida-e4', 'gvida', 'E daí · Estágio 4', 'guia', 'Estágio 4: perder todas custa caro. 5 derrotas com 6 vivos = 5 × 13 = 65. Daí os 80+ de vida no 4-1 para o Fast 9 (Set 18), que aceita perder o estágio 4.'],
+    ['g-vida-e5', 'gvida', 'E daí · Estágio 5 em diante', 'guia', 'Estágio 5 em diante: vida vira o recurso escasso. Duas derrotas no 5 (18 cada) levam 36. Com 30–40 de vida, você fica por um fio.'],
+    ['g-vida-contar', 'gvida', 'E daí · Contar as derrotas', 'guia', 'Antes de rolar por vida, conte as derrotas. Divida a vida pelo dano de uma derrota provável. Aguenta 3 ou mais? Siga o gatilho da seção 5. Aguenta 1 ou 2? Antecipe o spike que já estava no plano. Pânico, nunca.'],
+
     // ---------- interpretacoes do painel (entrada manual)
     ['pn-xp-ouro', 'xp', 'XP', 'painel', 'Nota: subir do 7 ao 8 custa 48 de ouro (Set 13).'],
     ['pn-itens-uteis', 'qual', '"itens úteis"', 'painel', 'Upgrade, itens úteis e aprimoramento de força'],
@@ -231,6 +240,32 @@
     ['pn-slamavel', 'rrq', '"slamáveis"', 'painel', 'Itens | BIS | BIS ou slamáveis que poupem vida | —'],
     ['pn-janela-reroll', 'rrr', 'Janela do reroll', 'painel', '4-1 | Última rodada de rolar.'],
   ];
+
+  // Regras que falam de vida/HP citam tambem a secao 13 do Guia (Perda de vida). So acrescenta a fonte: a logica da regra nao muda.
+  const VIDA = {
+    'q-4-1': ['g-vida-e4'],
+    'ec-3b-entrada': ['g-vida-e4'],
+    'ecm-3b-a': ['g-vida-e4'],
+    'ecm-3b-f': ['g-vida-e4'],
+    'ec-aband-80': ['g-vida-e4'],
+    'ec-aband-vida': ['g-vida-e4'],
+    'ec-piso-vida80': ['g-vida-e4'],
+    'f8-piso-vida': ['g-vida-e5'],
+    'rr-piso-atencao': ['g-vida-e5'],
+    'ecm-3a-vida': ['g-vida-e5'],
+    'p1-atencao': ['g-vida-e5'],
+    'p1-valem': ['g-vida-e2'],
+    'ecm-of-e': ['g-vida-e2', 'g-vida-e3'],
+    'ec-piso-loss': ['g-vida-e2', 'g-vida-e3'],
+    'rr-c2-2-1': ['g-vida-e2'],
+    'f8m-a': ['g-vida-contar'],
+    'rrm-f': ['g-vida-contar'],
+    'p1-folga': ['g-vida-conta'],
+    'p1-segura': ['g-vida-conta'],
+    'p1-critica': ['g-vida-contar'],
+    'pan-agir': ['g-vida-contar'],
+    'pan-panico': ['g-vida-contar'],
+  };
 
   const REGRAS = {};
   T.forEach(([id, sec, linha, origem, trecho]) => {
@@ -241,10 +276,12 @@
   function regra(id) {
     const r = REGRAS[id];
     if (!r) throw new Error('regra desconhecida: ' + id);
-    return Object.assign({}, r);
+    const out = Object.assign({}, r);
+    if (VIDA[id]) out.tambem = VIDA[id].map((x) => Object.assign({}, REGRAS[x]));
+    return out;
   }
 
-  const api = { REGRAS, regra };
+  const api = { REGRAS, VIDA, regra };
   root.TFTPainelRegras = api;
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
 })(typeof window !== 'undefined' ? window : globalThis);

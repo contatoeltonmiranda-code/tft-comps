@@ -126,6 +126,8 @@ css/painel.css        todas as classes com prefixo pn-
 | `derivada` | "derivada do guia" | o próprio `.md` marca como regra derivada (matriz vida x board do Passo 7, faixas de vida, "falta 1 peça", saída do Open Fort, Abandonar do reroll) |
 | `painel` | "critério do painel" | interpretação do painel para entrada manual que o `.md` não define (lista abaixo) |
 
+**Citação da seção 13 do Guia (Perda de vida).** As regras que falam de vida/HP citam também `guia.html#perda-de-vida`: 6 regras novas `g-vida-*` (fonte `gvida`, origem `guia`, trecho da seção 13) e o mapa `VIDA` em `painel-regras.js` liga 22 regras existentes a elas (ex.: `q-4-1`, `ec-piso-vida80` e `ecm-3b-a` → Estágio 4; `f8-piso-vida` e `p1-atencao` → Estágio 5 em diante; `ecm-of-e` e `ec-piso-loss` → Estágios 2 e 3; `f8m-a`, `p1-critica` e `pan-*` → "conte as derrotas"). `regra(id).tambem` traz a citação extra; o Painel mostra um 2º link e o trecho no "Ver o trecho do guia". No Pós-jogo, `REGRAS_VIDA` liga os 3 achados de eliminação (`ouro-parado`, `caiu-antes-do-4-1`, `nivel-baixo-tarde`) à mesma seção, numa linha "Vida". Só a fonte mudou, não o gatilho. Conferência dos números: nenhum texto do Painel, Pós-jogo ou Plano usa dano base de estágio; a tabela do guia (estágio 3 = 6, estágio 4 = 7, patch 16.1) é a única fonte. Teste: `tests/vida-guia.test.js`.
+
 Interpretações do painel (origem `painel`, para o Elton revisar):
 
 - "Muitos pares" no estágio 2 = 3+ pares (o `.md` dá "3+ pares" só para 3-2 e 3-5; parar em 14 ou 20 vem do `.md`).

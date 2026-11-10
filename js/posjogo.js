@@ -157,7 +157,8 @@
       sec3.append(h('div', { class: `pj-achado pj-achado-${x.gravidade}` },
         h('span', { class: 'pj-nivel', text: x.gravidade === 'aviso' ? 'Atenção' : 'Observação' }),
         h('p', { text: x.texto }),
-        h('p', { class: 'pj-regra' }, 'Guia: “', x.regra.trecho, '” ', href ? h('a', { href, text: x.regra.ref }) : x.regra.ref)));
+        h('p', { class: 'pj-regra' }, 'Guia: “', x.regra.trecho, '” ', href ? h('a', { href, text: x.regra.ref }) : x.regra.ref),
+        x.tambem && /^[a-z]+\.html#[\w-]+$/.test(x.tambem.href) ? h('p', { class: 'pj-regra pj-regra-vida' }, 'Vida: “', x.tambem.trecho, '” ', h('a', { href: x.tambem.href, text: x.tambem.ref })) : null));
     });
     // nao sabe
     const sec4 = h('section', { class: 'pj-sec' }, h('h4', { text: 'O que a API não mostra (não dá para saber)' }), h('ul', { class: 'pj-nao' }, a.naoSabe.map((t) => h('li', { text: t }))));

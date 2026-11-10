@@ -351,7 +351,8 @@
   function refRegra(regra, opts) {
     return h('span', { class: 'pn-ref' },
       h('a', { href: regra.href, text: regra.ref, title: `${regra.fonte === 'guia' ? 'Guia do Jogo' : 'Estratégia padrão'}: ${regra.trecho}` }),
-      marca(regra));
+      marca(regra),
+      (regra.tambem || []).map((t) => h('a', { class: 'pn-ref-vida', href: t.href, text: t.ref, title: `Guia do Jogo: ${t.trecho}` })));
   }
   const fmtRange = (r) => (r.min === r.max ? `${r.min}` : `${r.min}–${r.max}`);
 
@@ -407,7 +408,7 @@
       a.extras.length ? h('ul', { class: 'pn-extras-l' }, a.extras.map((x) => h('li', {}, x.texto, x.regra ? [' ', refRegra(x.regra)] : null))) : null,
       metricas,
       h('div', { class: 'pn-fonte' }, 'Regra: ', refRegra(a.regra)),
-      h('details', { class: 'pn-trecho' }, h('summary', { text: 'Ver o trecho do guia' }), h('blockquote', { text: a.regra.trecho })),
+      h('details', { class: 'pn-trecho' }, h('summary', { text: 'Ver o trecho do guia' }), h('blockquote', { text: a.regra.trecho }), (a.regra.tambem || []).map((t) => h('blockquote', { class: 'pn-trecho-vida', text: `${t.ref}: ${t.trecho}` }))),
       h('p', { class: 'pn-dica', text: 'Custo do XP: 1 de ouro por XP (o guia só cita 48 de ouro para o 7→8, Set 13).' }));
   }
 
