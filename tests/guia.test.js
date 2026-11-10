@@ -14,15 +14,15 @@ const PG = gen.PAGES.guia;
 const OUT = gen.render(MD, PG.render);
 const PAGE = read('guia.html');
 
-test('guia: 13 secoes h2 com ids unicos e indice com ancoras para todas', () => {
+test('guia: 15 secoes h2 com ids unicos e indice com ancoras para todas', () => {
   const h2 = [...OUT.content.matchAll(/<h2 id="([^"]+)">([^<]*)<\/h2>/g)];
-  assert.equal(h2.length, 13);
-  assert.equal(new Set(h2.map((m) => m[1])).size, 13);
+  assert.equal(h2.length, 15);
+  assert.equal(new Set(h2.map((m) => m[1])).size, 15);
   const toc = [...OUT.toc.matchAll(/<a href="#([^"]+)">([^<]*)<\/a>/g)];
   assert.deepEqual(toc.map((m) => m[1]), h2.map((m) => m[1]));
   assert.deepEqual(toc.map((m) => decode(m[2])), h2.map((m) => decode(m[2])));
   assert.equal(decode(toc[0][2]), '1. Glossário rápido');
-  assert.equal(decode(toc[12][2]), 'Notas sobre as fontes');
+  assert.equal(decode(toc[14][2]), 'Notas sobre as fontes');
 });
 
 test('guia: todo id e unico na pagina e todo href #x aponta para um id existente', () => {

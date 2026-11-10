@@ -1,8 +1,10 @@
 # Guia do Jogo — TFT Set 18
 
-Consulta rápida antes e durante a partida: economia, nível, rolagem e estilo de jogo. Set 18 "Selvas Encantadas", patch 18.6.
+Consulta rápida antes e durante a partida: economia, nível, rolagem, estilo de jogo, vida e posicionamento. Set 18 "Selvas Encantadas", patch 18.6.
 
 > **Fontes:** vídeos de guia do GattaiTFT (gravados nos Sets 12 e 13 — princípios gerais, valem para qualquer set), vídeo de comps do Vladimin (Set 18, patch 18.5C, marcado **(Set 18)**) e um resumo do Google. Em conflito, valem os vídeos. O que só o Google afirma está marcado **(Google, não confirmado)**.
+>
+> As seções 13 e 14 usam também notas de patch da Riot, sites de dados e guias de TFT da web, citados em cada seção. Ali, em conflito com o Google, vale a fonte citada.
 >
 > Os números de rodada e de ouro são a base que vale na maioria das partidas. Não é receita fixa: ajuste ao que o jogo te deu.
 
@@ -310,6 +312,7 @@ Sim para pelo menos uma, com ouro sobrando (ou vida em risco): suba. **Nunca sub
 - **Vida alta = tempo:** dá para guardar ouro, atrasar o spike e adiar XP.
 - **Vida baixa = agir já:** a margem some e o jogo cobra resposta.
 - A vida define o ritmo da sua economia. Saiba quando pode perder rodadas e quando precisa reagir.
+- Quanto cada derrota tira: seção 13.
 
 ## 10. Scout e contest
 
@@ -346,7 +349,7 @@ Sim para pelo menos uma, com ouro sobrando (ou vida em risco): suba. **Nunca sub
 ### Posicionamento
 
 - **(Set 18)** O lado do carry inimigo decide onde ficam o tanque e o controle. Peças dos cantos costumam morrer primeiro.
-- Fora isso, as fontes não cobrem posicionamento.
+- Guia completo de posicionamento: seção 14.
 
 ## 11. Armadilhas comuns
 
@@ -376,6 +379,142 @@ Sim para pelo menos uma, com ouro sobrando (ou vida em risco): suba. **Nunca sub
 | 5-1 | Roll down deu certo → nível 9. Falhou → rola de novo no 8. Fast 9 → nível 9 e rola pelos custo 5. |
 | 5-5 / 6-1 | Nível 9, se ainda não foi. Capar o board. Abaixo de 10 de ouro só morrendo. |
 
+## 13. Perda de vida
+
+Todo jogador começa com 100 de vida. Perder um PvP tira vida; o quanto depende do estágio e de quantos inimigos sobram.
+
+> **Fontes:** notas de patch da Riot (14.8 e 16.1), tabelas do Set 18 do op.gg, tftflow e TFT-Boost (atualizadas no patch 18.1), handbook do TFT Lab (Set 18), wiki Fandom de TFT e páginas da Riot sobre os modos Hyper Roll e Duplas. Nenhuma mudança de dano de jogador apareceu nos patches 18.x.
+
+### A conta do PvP
+
+**Dano = dano base do estágio + 1 por unidade inimiga viva no fim do combate.**
+
+- Cada unidade viva vale 1, seja qual for a estrela ou o custo. Regra desde o patch 14.8 (Set 11). Antes, unidade cara ou de mais estrelas tirava mais.
+- Sempre sobra pelo menos 1 unidade de quem venceu. Então toda derrota tira, no mínimo, o dano base + 1.
+- **Derrota apertada custa menos.** Cada inimigo a mais que você mata antes de cair é 1 de vida poupado.
+
+### Dano base por estágio (Set 18)
+
+| Estágio | Dano base | Leitura |
+|---|---|---|
+| 1 | 0 | Só PvE (minions). |
+| 2 | 2 | Perder é barato. Lugar da loss streak. |
+| 3 | 6 | Começa a doer. A Riot subiu de 5 para 6 no patch 16.1 para o estágio 3 pesar mais. |
+| 4 | 7 | A Riot baixou de 8 para 7 no patch 16.1 para o meio do jogo durar mais. |
+| 5 | 10 | Zona de perigo. Duas derrotas com board cheio levam mais de 30. |
+| 6 | 12 | Cada derrota tira perto de 20. |
+| 7 | 17 | Uma derrota tira 25 ou mais. Com pouca vida, elimina. |
+| 8 em diante | 150 | Na prática, quem perde sai. Uma fonte do Set 18 cita 10.000. |
+
+### Exemplos
+
+| Situação | Conta | Dano |
+|---|---|---|
+| Estágio 2, 3 inimigos vivos | 2 + 3 | 5 |
+| Estágio 3, 5 vivos | 6 + 5 | 11 |
+| Estágio 4, 6 vivos | 7 + 6 | 13 |
+| Estágio 5, 8 vivos | 10 + 8 | 18 |
+| Estágio 7, 10 vivos | 17 + 10 | 27 |
+
+> **Nota:** o Google traz o estágio 3 com 5 de base e o 4 com 8. Eram os valores antes do patch 16.1. Por isso o exemplo dele (estágio 3, 5 vivos) dá 10, e não 11.
+
+### PvE (monstros)
+
+- **Não confirmado.** O handbook do TFT Lab (Set 18) diz que PvE nunca tira vida. A wiki Fandom diz que monstros vivos tiram vida, sem dar número.
+- O "dano fixo por diferença de nível" do Google não aparece em nenhuma fonte. Ficou fora.
+- Trate o PvE como rodada de loot: o foco é matar os monstros, não poupar vida.
+
+### Outros modos
+
+| Modo | Vida | Como perde vida |
+|---|---|---|
+| Hyper Roll ("Batalha Frenética", segundo o Google) | 20 | Dano fixo por derrota: 2 nos estágios 1 a 4, 4 no 5 ao 7, 6 do 8 em diante. Unidades vivas não somam. Regra da Riot no lançamento do modo (Set 5); confira se o modo está no ar no Set 18. |
+| Duplas (Double Up) | Compartilhada pela dupla | Desde 2 de abril de 2025, funciona como no modo normal, só que dividida. A antiga "ressurreição" (a dupla seguia viva com 1 de vida depois da primeira derrota fatal) saiu. Reforços: quem vence com 3+ segundos de sobra manda as unidades vivas ajudar o parceiro; elas não somam dano. |
+
+### E daí: vida na estratégia
+
+- **Estágio 2 é a hora barata de perder.** Perder as 5 rodadas PvP do estágio (2-1, 2-2, 2-3, 2-5, 2-6) com 3 a 5 inimigos vivos custa 25–35 de vida. Por isso o Open Fort termina no 3-1 (seção 3).
+- **No estágio 3, cada derrota custa o dobro.** Perto de 11, contra perto de 5 no estágio 2. Esticar a loss streak para o 3 sai caro.
+- **Estágio 4: perder todas custa caro.** 5 derrotas com 6 vivos = 5 × 13 = 65. Daí os 80+ de vida no 4-1 para o Fast 9 **(Set 18)**, que aceita perder o estágio 4.
+- **Estágio 5 em diante: vida vira o recurso escasso.** Duas derrotas no 5 (18 cada) levam 36. Com 30–40 de vida, você fica por um fio.
+- **Antes de rolar por vida, conte as derrotas.** Divida a vida pelo dano de uma derrota provável. Aguenta 3 ou mais? Siga o gatilho da seção 5. Aguenta 1 ou 2? Antecipe o spike que já estava no plano. Pânico, nunca.
+- **Posição também poupa vida.** Matar 2 ou 3 inimigos a mais antes de cair são 2 ou 3 de vida a menos por rodada (seção 14).
+
+> **Nota:** as contas desta parte usam a tabela acima e um número típico de inimigos vivos. A régua "aguenta 3 ou mais derrotas" é deste guia, não das fontes.
+
+## 14. Posicionamento
+
+Mexer peça é de graça. Um hexágono certo pode virar uma rodada.
+
+> **Fontes:** guias de posicionamento do TFT Ninja (carry e formações), NoxuTFT (Set 18), TFT School, Metabot, Level Legendary, Blitz e Mobalytics (ganchos e assassinos, guias de sets antigos — princípios gerais). Itens do Set 18: páginas do Seemeta (patch 18.1). Fora o Zephyr e o Shroud, nada aqui é mecânica específica do Set 18.
+
+### Frente x trás
+
+| Onde | Quem | Por quê |
+|---|---|---|
+| Linha da frente | Tanques e corpo a corpo | Recebem o dano e ocupam o inimigo. |
+| Última fileira | Carry de alcance e unidades frágeis | Ficam longe do dano enquanto a frente segura. |
+| Ao lado do carry | Um tanque ou um corpo extra | Bloqueia quem chega pelo lado. |
+
+- **Carry corpo a corpo** não vai atrás: fica na frente ou na segunda fileira, junto dos tanques.
+- **Unidade-chave morreu antes de soltar a habilidade?** Recue 1 hexágono na próxima rodada.
+
+### Carry no canto
+
+- **Padrão:** carry de alcance no canto da última fileira, com tanque do lado.
+- **Por quê:** no canto, só 2 ou 3 hexágonos dão acesso a ele.
+- **O canto é previsível.** Assassinos, ganchos e o Zephyr miram ali. Viu algum deles no scout? Tire o carry 1 hexágono do canto e ponha um corpo ao lado.
+
+### Contra assassinos (quem pula na linha de trás)
+
+- Assassinos costumam pular na unidade mais distante deles. Em geral, o seu canto de trás.
+- **Isca:** uma unidade resistente no canto oposto ao carry atrai o pulo.
+- **Tanque no pouso:** ponha um tanque no hexágono onde o assassino cai. Ele chega e acha o tanque, não o carry.
+- Contra quem mergulha num alvo só, junte: tanque colado no carry.
+
+### Contra ganchos
+
+- Ganchos costumam puxar a unidade mais distante de quem lança.
+- Deixe uma unidade descartável como a mais distante. Ou afaste o carry da linha do gancho.
+- Quais campeões do Set 18 têm gancho: as fontes não listam. Confira no scout.
+
+### Contra dano em área
+
+- Espalhe a linha de trás: 1 hexágono entre as unidades. Uma habilidade não pega carry e suporte juntos.
+- **Juntar ou espalhar?** Contra mergulho, junte. Contra área, espalhe. Decida pelo que mata o seu carry primeiro.
+
+### Contra quem posicionar
+
+- **Scout antes de cada combate.** Olhe nesta ordem: assassinos, ganchos, Zephyr, dano em área. Depois, o lado do carry inimigo.
+- **(Set 18)** O lado do carry inimigo decide onde ficam o tanque e o controle.
+- **No late, posicione contra o board que pode te eliminar.** Com poucos jogadores vivos, cada posição vale uma colocação.
+
+### Itens que mexem com posição (Set 18)
+
+| Item (nome em inglês) | O que faz | Como usar |
+|---|---|---|
+| Zephyr (item de suporte) | No início do combate, um redemoinho do lado oposto da arena tira de combate, por 5 segundos, o inimigo mais próximo dele. Ignora imunidade a controle. | Com ele: posicione o portador espelhando o carry inimigo. Contra ele: não deixe o carry no hexágono espelhado ao portador. |
+| Shroud of Stillness (item de suporte) | No início do combate, dispara um feixe que corta a mana dos inimigos atingidos (30%) e dá +60 de vida ao time. | Alinhe o portador com as unidades inimigas que dependem de mana. Pode atrasar a puxada de um gancho. |
+
+> **Nota:** os números do Zephyr e do Shroud são do patch 18.1, em site agregador. Confira o texto do item no jogo antes de contar com eles.
+
+### Quando mudar a posição
+
+- Toda rodada vale revisar, nem que seja 1 hexágono.
+- Perdeu para o mesmo board, ou está perdendo um mano a mano? Troque a formação.
+- Apareceu assassino, gancho, Zephyr ou dano em área no scout.
+- Uma unidade-chave morreu antes da habilidade.
+- Entrou carry novo ou item novo no seu board.
+
+### Checklist antes do combate
+
+1. Tanques na frente, do lado do carry inimigo?
+2. Carry no canto ou 1 hexágono fora? O inimigo tem assassino, gancho ou Zephyr?
+3. Dano em área no lobby? Espalhe a linha de trás.
+4. Alguém morreu antes da habilidade na última rodada? Recue.
+5. Zephyr ou Shroud no seu board: miram o alvo certo?
+6. Scout feito no board mais forte (ou no que pode te eliminar)?
+
 ## Notas sobre as fontes
 
 ### Divergências
@@ -392,6 +531,19 @@ Sim para pelo menos uma, com ouro sobrando (ou vida em risco): suba. **Nunca sub
 | Slow roll | 50+ | 50+ na maioria; num vídeo, faixa flexível (mecânica do Set 12) | 50+ |
 | 32 → 50 em 2 rodadas | — | O vídeo diz "sempre"; a conta só com passiva + juros dá 49 | Nota no texto |
 | Pivô do custo 2 para o 8 | — | Um vídeo diz que dá; outro diz que não, se gastou muito rolando | Depende do ouro gasto |
+
+### Divergências da perda de vida (seção 13)
+
+| Tema | Google | Fontes da web | No guia |
+|---|---|---|---|
+| Dano base nos estágios 3 e 4 | 5 e 8 | 6 e 7 desde o patch 16.1 (notas da Riot); op.gg, tftflow e TFT-Boost no Set 18 | 6 e 7 |
+| Exemplo: estágio 3, 5 vivos | 10 | 6 + 5 = 11 | 11 |
+| Tabela "Set 14" | 0/2/5/7/9/11/17 | São os valores do patch 14.8 (Set 11). O 14.9 já mudou para 0/2/5/8/10/12/17 | Fora (histórico) |
+| Tabela "Set 4" | 0/0/2/3/5/8/15 | Não verificada. Antes do 14.8 o dano por unidade variava com a estrela | Fora (histórico) |
+| PvE | Dano fixo por diferença de nível | TFT Lab (Set 18): PvE não tira vida. Wiki Fandom: monstros vivos tiram vida, sem número | Não confirmado; a regra do Google ficou fora |
+| Estágio 8 em diante | — | 150 (patch 14.8; tftflow, Set 18). TFT-Boost cita 10.000 | 150; elimina na prática |
+| Duplas: ressurreição | Regra de ressurreição ativa | A Riot tirou em 2 de abril de 2025. A página de suporte da Riot ainda cita a regra antiga | Removida |
+| Hyper Roll | 2 / 4 / 6 por derrota | Igual (Riot, lançamento do modo no Set 5) | Mantido; confirmar se o modo está no ar |
 
 ### Afirmações do Google sem base nas fontes (fora do guia)
 
