@@ -138,4 +138,13 @@ Derivada: custo até 2 do próprio board (reroll); Azir (custo 3) só no final. 
 
 Derivadas: o vídeo não dá início/meio, então início = custo até 3 do próprio board e meio = início + carries e tanques de custo 4 (Fast 8). Links das dicas: `https://youtu.be/cnOw7GHt7D4?t=14|95|462|719`. Aphelios/Nidalee do mesmo vídeo = seed-04 (não entrou).
 
+## Seed v12 (10/11/2026)
+
+| Seed | Comp do app | Origem | Comp da fonte | Jaccard | Início | Meio |
+|---|---|---|---|---|---|---|
+| seed-33 | Emanador Vanguarda Morgana Rubrivira | derivado | Techzz (Short), Morgana + Rubrivira, 0:18 | 0,38 (seed-19) | Cascalho, Hecarim, Diana, Kog'Maw | Cascalho, Hecarim, Diana, Kog'Maw, Azuporã, Morgana, Rubrivira |
+| seed-34 | Sabugueiro Colosso LeBlanc | derivado | Print de partida (2º lugar), `refs/19.png` | 0,23 (seed-32) | Xayah, Ornn, LeBlanc, Vi | Xayah, Ornn, LeBlanc, Vi, Amumu, Sivir, Zyra |
+
+Derivadas: a fonte não dá início/meio, então início = custo até 3 do próprio board e meio = início + as unidades de custo 4 já em 2★ (seed-34) ou os carries e tanques de custo 4 (seed-33). Link da dica da seed-33: `https://youtu.be/ZbcIwkJpRJg?t=5`. A seed-34 não tem link (print do Elton).
+
 Dicas do vídeo (traduzidas e resumidas) ficam em `comp.dicas` no seed, com link do vídeo no minuto (`https://youtu.be/shtFyRruAHM?t=<s>`).

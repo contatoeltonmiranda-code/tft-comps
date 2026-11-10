@@ -1052,6 +1052,239 @@ window.TFT_SEED = [
   "abaixoDe": "seed-31"
  },
  {
+  "nome": "Emanador Vanguarda Morgana Rubrivira",
+  "estilo": "",
+  "nota": "Comp \"Morgana + Rubrivira\" (Congregação das Bruxas) do vídeo Techzz de 09/10/2026 (frame 0:18, tactics.tools, refs/32.png). Variante: 5 de 8 unidades iguais às da seed-19 (Taric, Hecarim, Diana, Azuporã, Morgana) e 4 às da seed-21; muda por Rubrivira, Kog'Maw e Cascalho. Sem estrelas visíveis (1★). Itens: só os do áudio (Limiar e Sterak na Rubrivira); os ícones do frame (~30 px) não passaram de 0,74 de match e ficaram vazios.",
+  "fonte": "Vídeo Techzz (Short, 09/10/2026) · 0:18 · refs/32.png",
+  "board": true,
+  "main": [
+   {
+    "c": "DA_Taric18",
+    "s": 1,
+    "i": [],
+    "a": [],
+    "p": [
+     1,
+     2
+    ]
+   },
+   {
+    "c": "DA_18_Hecarim",
+    "s": 1,
+    "i": [],
+    "a": [],
+    "p": [
+     1,
+     3
+    ]
+   },
+   {
+    "c": "DA_18_Diana",
+    "s": 1,
+    "i": [],
+    "a": [],
+    "p": [
+     1,
+     4
+    ]
+   },
+   {
+    "c": "DA_Sentinel18",
+    "s": 1,
+    "i": [],
+    "a": [],
+    "p": [
+     1,
+     5
+    ]
+   },
+   {
+    "c": "DA_18_Morgana",
+    "s": 1,
+    "i": [],
+    "a": [],
+    "p": [
+     3,
+     5
+    ]
+   },
+   {
+    "c": "DA_Brambleback18",
+    "s": 1,
+    "i": [
+     "DA_EdgeOfNight",
+     "DA_SteraksGage"
+    ],
+    "a": [],
+    "p": [
+     3,
+     6
+    ]
+   },
+   {
+    "c": "DA_18_Sentry",
+    "s": 1,
+    "i": [],
+    "a": [],
+    "p": [
+     4,
+     1
+    ]
+   },
+   {
+    "c": "DA_KogMaw18_AD",
+    "s": 1,
+    "i": [],
+    "a": [],
+    "p": [
+     4,
+     5
+    ]
+   }
+  ],
+  "flex": [],
+  "fases": {
+   "inicio": [
+    "DA_18_Sentry",
+    "DA_18_Hecarim",
+    "DA_18_Diana",
+    "DA_KogMaw18_AD"
+   ],
+   "meio": [
+    "DA_18_Sentry",
+    "DA_18_Hecarim",
+    "DA_18_Diana",
+    "DA_KogMaw18_AD",
+    "DA_Sentinel18",
+    "DA_18_Morgana",
+    "DA_Brambleback18"
+   ],
+   "origem": "derivado",
+   "ref": "Calculado do board: início = custo até 3; meio = início + Azuporã, Morgana e Rubrivira (custo 4)"
+  },
+  "dicas": {
+   "ref": "Techzz · Quais as melhores comps do novo patch de TFT (Short)",
+   "url": "https://youtu.be/ZbcIwkJpRJg?t=5",
+   "linhas": [
+    "O criador chama de \"a volta da comp de Morgana com Rubrivira\", puxada pela recompensa da sinergia das Bruxas (patch não citado; vídeo de 09/10/2026).",
+    "Itens de utilidade vão na Morgana. Itens de espada, como Limiar da Noite e Sinal de Sterak, vão na Rubrivira (o áudio chama de \"Red\").",
+    "Frame 0:18 (refs/32.png): Taric, Hecarim, Diana, Azuporã, Morgana, Rubrivira, Cascalho e Kog'Maw. Os nomes de Taric, Rubrivira e Kog'Maw estão cobertos; conferidos pela borda de custo e pelo nº de traços de cada hexágono.",
+    "Itens no frame: a Morgana tem 3, a Rubrivira 3 e a Azuporã 3, em ícones de ~30 px. O melhor match foi 0,74 (abaixo de 0,80), então só entraram os dois citados no áudio.",
+    "Sem estrelas visíveis no frame; as unidades estão como 1★."
+   ]
+  },
+  "id": "seed-33",
+  "desde": 12,
+  "topo": true,
+  "abaixoDe": "seed-32"
+ },
+ {
+  "nome": "Sabugueiro Colosso LeBlanc",
+  "estilo": "Final",
+  "nota": "Tabuleiro final de uma partida em 2º lugar (refs/19.png, tela de resultados). 8 unidades: Vi, LeBlanc e Xayah 3★; Amumu, Sivir, Zyra e Ornn 2★; Soraka sem barra de estrelas (1★). Identidade por match de pixels do retrato com o catálogo (0,67 a 0,83). Itens só com match de 0,80 ou mais. Sem posições.",
+  "fonte": "Print de partida (2º lugar) · refs/19.png",
+  "main": [
+   {
+    "c": "DA_Vi18",
+    "s": 3,
+    "i": [
+     "DA_Artifact_TheIndomitable",
+     "DA_GargoyleStoneplate",
+     "DA_SpiritVisage"
+    ],
+    "a": []
+   },
+   {
+    "c": "DA_18_LeBlanc",
+    "s": 3,
+    "i": [
+     "DA_SpearOfShojin",
+     "DA_VoidStaff",
+     "DA_NashorsTooth"
+    ],
+    "a": []
+   },
+   {
+    "c": "DA_18_Xayah",
+    "s": 3,
+    "i": [
+     "DA_18_EmblemHunter",
+     "DA_GiantSlayer",
+     "DA_KrakensFury"
+    ],
+    "a": []
+   },
+   {
+    "c": "DA_Amumu18",
+    "s": 2,
+    "i": [],
+    "a": []
+   },
+   {
+    "c": "DA_18_Sivir",
+    "s": 2,
+    "i": [
+     "DA_StrikersFlail",
+     "DA_SpearOfShojin",
+     "DA_RedBuff"
+    ],
+    "a": []
+   },
+   {
+    "c": "DA_18_Zyra",
+    "s": 2,
+    "i": [],
+    "a": []
+   },
+   {
+    "c": "DA_18_Ornn",
+    "s": 2,
+    "i": [],
+    "a": []
+   },
+   {
+    "c": "DA_18_Soraka",
+    "s": 1,
+    "i": [],
+    "a": []
+   }
+  ],
+  "flex": [],
+  "fases": {
+   "inicio": [
+    "DA_18_Xayah",
+    "DA_18_Ornn",
+    "DA_18_LeBlanc",
+    "DA_Vi18"
+   ],
+   "meio": [
+    "DA_18_Xayah",
+    "DA_18_Ornn",
+    "DA_18_LeBlanc",
+    "DA_Vi18",
+    "DA_Amumu18",
+    "DA_18_Sivir",
+    "DA_18_Zyra"
+   ],
+   "origem": "derivado",
+   "ref": "Calculado do print: início = custo até 3; meio = início + Amumu, Sivir e Zyra; Soraka só no final"
+  },
+  "dicas": {
+   "ref": "Print de partida (2º lugar) · refs/19.png",
+   "linhas": [
+    "Tela de resultados (2º lugar), sem posições. Estrelas lidas na barra de cada unidade: Vi, LeBlanc e Xayah 3★; Amumu, Sivir, Zyra e Ornn 2★; Soraka sem barra (1★).",
+    "Retratos conferidos por match de pixels com o catálogo (o 2º colocado de cada um ficou abaixo de 0,52): Vi 0,67, LeBlanc 0,76, Xayah 0,81, Amumu 0,75, Sivir 0,70, Zyra 0,81, Ornn 0,83, Soraka 0,79.",
+    "Itens em ícones de ~10 px, só com match de 0,80 ou mais: Vi com Imbatível, Placa Gargolítica e Semblante Espiritual; LeBlanc com Lança de Shojin, Cajado do Vazio e Dente de Na'Shor.",
+    "Xayah com Emblema de Caçador, Mata-Gigantes e Fúria do Cráquem; Sivir com Mangual do Guerreiro, Lança de Shojin e Efeito Vermelho. Amumu tem 2 itens que não bateram com o catálogo e ficaram vazios.",
+    "Zyra, Ornn e Soraka aparecem sem itens. Os 3 de 3★ (Vi, LeBlanc, Xayah) concentram os itens."
+   ]
+  },
+  "id": "seed-34",
+  "desde": 12,
+  "topo": true,
+  "abaixoDe": "seed-33"
+ },
+ {
   "nome": "Enfeitiçador 6",
   "estilo": "Nível 8",
   "nota": "Print em combate (6-2): sem posições. Unidades deduzidas do painel de traços (Enfeitiçador 6/6, Comunhão, Sabugueiro 3, Defendente 2, Espinhos Negros 2, Lutador 2, Flora Fatalis, Lunar, Congregação). Fechar 6 Enfeitiçadores exige 1 Emblema de Enfeitiçador em Ornn, Rek'Sai ou Alistar. Itens e estrelas só onde a identificação é segura.",
@@ -3855,4 +4088,4 @@ window.TFT_SEED = [
   "fasesDesde": 6
  }
 ];
-window.TFT_SEED_VERSION = 11;
+window.TFT_SEED_VERSION = 12;
