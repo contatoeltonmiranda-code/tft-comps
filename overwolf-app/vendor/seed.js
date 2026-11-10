@@ -345,6 +345,102 @@ window.TFT_SEED = [
   }
  },
  {
+  "nome": "Solar 8x 3★",
+  "estilo": "Reroll 3★",
+  "nota": "Pedido do Elton: 8 campeões únicos de 3★ para o Solar fazer um deles ascender a 4★ em combate. Os 7 de base são todos 3★: LeBlanc, Sejuani, Leona, Yorick, Azir, Yunara e Karma. O 8º é flex e não foi fixado (ver dicas). Itens de referência da seed-20 (Sejuani tanque, Yunara AD, Karma AP). Sem print de board e sem posições.",
+  "fonte": "Pedido do Elton + CommunityDragon (Solar) · refs/26.png",
+  "main": [
+   {
+    "c": "DA_18_LeBlanc",
+    "s": 3,
+    "i": [],
+    "a": []
+   },
+   {
+    "c": "DA_18_Sejuani",
+    "s": 3,
+    "i": [
+     "DA_GargoyleStoneplate",
+     "DA_WarmogsArmor"
+    ],
+    "a": []
+   },
+   {
+    "c": "DA_18_Leona",
+    "s": 3,
+    "i": [],
+    "a": []
+   },
+   {
+    "c": "DA_18_Yorick",
+    "s": 3,
+    "i": [],
+    "a": []
+   },
+   {
+    "c": "DA_18_Azir",
+    "s": 3,
+    "i": [],
+    "a": []
+   },
+   {
+    "c": "DA_18_Yunara",
+    "s": 3,
+    "i": [
+     "DA_Deathblade",
+     "DA_SpearOfShojin",
+     "DA_LastWhisper"
+    ],
+    "a": []
+   },
+   {
+    "c": "DA_Karma18",
+    "s": 3,
+    "i": [
+     "DA_BlueBuff",
+     "DA_RabadonsDeathcap",
+     "DA_JeweledGauntlet"
+    ],
+    "a": []
+   }
+  ],
+  "flex": [],
+  "id": "seed-28",
+  "desde": 10,
+  "topo": true,
+  "abaixoDe": "seed-27",
+  "fases": {
+   "inicio": [
+    "DA_18_Leona",
+    "DA_18_Yorick",
+    "DA_Karma18",
+    "DA_18_Sejuani",
+    "DA_18_Yunara"
+   ],
+   "meio": [
+    "DA_18_Leona",
+    "DA_18_Yorick",
+    "DA_Karma18",
+    "DA_18_Sejuani",
+    "DA_18_Yunara",
+    "DA_18_LeBlanc"
+   ],
+   "origem": "derivado",
+   "ref": "Calculado do board: início e meio = custo até 2 (reroll); Azir (custo 3) só no final"
+  },
+  "dicas": {
+   "linhas": [
+    "Condição do Solar (CommunityDragon pt_br): o traço precisa estar ativo (3 Solares) e conta Campeões de 3★ únicos. Com 3 o bônus sobe, com 5 vêm Vel. de Ataque e resistências, com 8 um Campeão de 3★ ascende a 4★ durante o combate.",
+    "Cuidado: a base tem só 2 Solares (Sejuani e Leona). Sem o 3º Solar o traço não ativa e as 8 unidades de 3★ não valem nada. O catálogo não tem Emblema de Solar.",
+    "8º slot (flex, sugestão): Kayle, custo 2 (Solar, Fumegante), é o único Solar barato e ativa o Solar 3. Lux (Solar), custo 5, também ativa, mas é cara para 3★.",
+    "Rakan e Aronguejo (Colosso 3 com Sejuani e Yorick) e Veigar (Enfeitiçador 3) são baratos e somam traço, mas não ativam o Solar. Só valem se o 3º Solar vier por outro meio.",
+    "Itens (referência da seed-20): Sejuani Placa Gargolítica + Armadura de Warmog; Yunara AD (Lâmina Mortal, Lança de Shojin, Último Sussurro); Karma AP (Efeito Azul, Capuz de Rabadon, Manopla Adornada).",
+    "Estilo reroll: os 7 são de custo 1 a 3 (só Azir custa 3). Role no nível 6 a 7 por Leona, Yorick, Karma, Sejuani e Yunara; LeBlanc e Azir por último."
+   ],
+   "ref": "CommunityDragon pt_br (Solar) + seed-20 (itens)"
+  }
+ },
+ {
   "nome": "Enfeitiçador 6",
   "estilo": "Nível 8",
   "nota": "Print em combate (6-2): sem posições. Unidades deduzidas do painel de traços (Enfeitiçador 6/6, Comunhão, Sabugueiro 3, Defendente 2, Espinhos Negros 2, Lutador 2, Flora Fatalis, Lunar, Congregação). Fechar 6 Enfeitiçadores exige 1 Emblema de Enfeitiçador em Ornn, Rek'Sai ou Alistar. Itens e estrelas só onde a identificação é segura.",
@@ -3148,4 +3244,4 @@ window.TFT_SEED = [
   "fasesDesde": 6
  }
 ];
-window.TFT_SEED_VERSION = 9;
+window.TFT_SEED_VERSION = 10;
