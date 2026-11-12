@@ -79,6 +79,20 @@ main{max-width:var(--wide);margin:0 auto;padding:4px 20px 64px}
 #count{color:var(--muted);font-size:14px;white-space:nowrap;font-variant-numeric:tabular-nums}
 .empty{padding:48px 0;text-align:center;color:var(--muted)}
 
+/* busca de varios campeoes */
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:-6px 0 14px}
+.chip{display:inline-flex;align-items:center;gap:2px;min-height:32px;padding:0 4px 0 12px;border-radius:16px;background:var(--panel-2);border:1px solid var(--gold);color:var(--text);font-size:14px;font-weight:600}
+.chip.text{border-color:var(--line);color:var(--muted);font-weight:400}
+.chip-x{display:grid;place-items:center;width:28px;height:28px;border:0;border-radius:50%;background:transparent;color:var(--muted)}
+.chip-x:hover{background:#ffffff14;color:var(--text)}
+.mscore{padding:3px 9px;border-radius:6px;background:var(--panel-2);border:1px solid var(--line);color:var(--text);font:700 14px/1.2 var(--font-body,inherit);font-variant-numeric:tabular-nums}
+.mscore.full{border-color:var(--ok);color:var(--ok)}
+.mwhere{display:flex;gap:6px 14px;flex-wrap:wrap;margin:10px 0 0;padding:0;list-style:none;font-size:13px}
+.mwhere li{display:flex;align-items:center;gap:5px;flex-wrap:wrap}
+.mwhere li.miss b{color:var(--muted);font-weight:500;text-decoration:line-through}
+.ftag{padding:1px 7px;border-radius:5px;background:#d6aa5c26;border:1px solid #d6aa5c66;color:#f3d9a4;font-size:12px}
+.ftag.none{background:transparent;border-color:var(--line);color:var(--muted)}
+
 /* lista de comps */
 #list{display:grid;gap:16px}
 .comp{min-width:0;background:var(--panel);border:1px solid var(--line-soft);border-radius:12px;padding:16px 18px 18px}

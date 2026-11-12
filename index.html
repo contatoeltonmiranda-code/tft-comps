@@ -66,10 +66,11 @@
   <div class="searchbar">
     <label for="q" class="sr">Buscar por campeão, traço ou item</label>
     <svg class="ic"><use href="#i-search"/></svg>
-    <input id="q" type="search" autocomplete="off" spellcheck="false" placeholder="Buscar campeão, traço ou item">
+    <input id="q" type="search" autocomplete="off" spellcheck="false" placeholder="Buscar campeão, traço ou item (vários: rakan, taric)">
     <span id="count" aria-live="polite"></span>
     <button type="button" class="btn ghost" id="btn-clear" hidden>Limpar</button>
   </div>
+  <div id="chips" class="chips" aria-label="Campeões buscados" hidden></div>
   <div id="list"></div>
   <p id="empty" class="empty" hidden>Nenhuma comp encontrada para essa busca.</p>
 </main>
@@ -162,7 +163,8 @@
       <div><dt><kbd>N</kbd></dt><dd>Cria uma nova comp.</dd></div>
       <div><dt><kbd>L</kbd></dt><dd>Limpa os checks “já peguei” de todas as comps (pede confirmação). Desativado quando não há checks.</dd></div>
       <div><dt><kbd>Esc</kbd></dt><dd>Fecha a janela aberta.</dd></div>
-      <div><dt>Busca na comp</dt><dd>O campo dentro de cada comp mostra só os campeões dela que batem com o texto. A busca do topo continua separada.</dd></div>
+      <div><dt>Vários campeões</dt><dd>Na busca do topo, separe por vírgula, espaço ou +: “rakan, taric” ou “kog maw sivir”. Aparecem primeiro as comps com todos, depois as que têm parte, com o indicador 2/3 e a fase onde cada um está. Os chips mostram o que foi reconhecido; o X remove.</dd></div>
+      <div><dt>Busca na comp</dt><dd>O campo dentro de cada comp mostra só os campeões dela que batem com o texto (aceita vários: rakan, taric). A busca do topo continua separada.</dd></div>
       <div><dt>Check no campeão</dt><dd>Marca “já peguei” (principal e flex). O contador mostra quantos faltam e “Limpar checks desta comp” zera só ela. “Limpar checks” no topo zera todas as comps para a próxima partida.</dd></div>
     </dl>
     <h3>Dados</h3>

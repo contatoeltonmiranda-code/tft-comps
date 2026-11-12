@@ -121,11 +121,100 @@
 
   const squash = (s) => norm(s).replace(/[^a-z0-9]/g, '');
 
+  function resolveChamps(run, catalog) {
+    if (!run) return [];
+    const names = catalog.champs.map((c) => [c.id, squash(c.n)]);
+    const exact = names.filter((x) => x[1] === run);
+    if (exact.length) return exact.map((x) => x[0]);
+    const prefix = names.filter((x) => x[1].startsWith(run));
+    if (prefix.length) return prefix.map((x) => x[0]);
+    if (run.length < 3) return [];
+    return names.filter((x) => x[1].includes(run)).map((x) => x[0]);
+  }
+
+  function parseChampQuery(query, catalog) {
+    const parts = [];
+    const seen = new Set();
+    String(query == null ? '' : query).split(/[,+;]/).forEach((seg) => {
+      const words = seg.trim().split(/\s+/).filter(Boolean);
+      let i = 0;
+      while (i < words.length) {
+        let took = 0;
+        let ids = [];
+        for (let j = words.length; j > i; j--) {
+          ids = resolveChamps(squash(words.slice(i, j).join('')), catalog);
+          if (ids.length) { took = j - i; break; }
+        }
+        if (!took) {
+          parts.push({ kind: 'text', raw: words[i] });
+          i++;
+          continue;
+        }
+        const raw = words.slice(i, i + took).join(' ');
+        const key = ids.slice().sort().join('|');
+        if (!seen.has(key)) {
+          seen.add(key);
+          const names = ids.map((id) => (catalog.champs.find((c) => c.id === id) || {}).n);
+          parts.push({ kind: 'champ', raw, ids, names, label: ids.length === 1 ? names[0] : raw });
+        } else {
+          parts.push({ kind: 'dup', raw });
+        }
+        i += took;
+      }
+    });
+    const real = parts.filter((p) => p.kind !== 'dup');
+    return { parts: real, groups: real.filter((p) => p.kind === 'champ'), rest: real.filter((p) => p.kind === 'text').map((p) => p.raw).join(' ') };
+  }
+
+  function removePart(query, catalog, index) {
+    const p = parseChampQuery(query, catalog);
+    return p.parts.filter((_, i) => i !== index).map((x) => x.raw).join(', ');
+  }
+
+  const FASE_LABELS = [['inicio', 'Início'], ['meio', 'Meio']];
+
+  function searchMulti(comps, query, catalog) {
+    const parsed = parseChampQuery(query, catalog);
+    if (parsed.groups.length < 2) {
+      return { mode: 'single', parts: parsed.parts, groups: parsed.groups, results: searchComps(comps, String(query == null ? '' : query).replace(/[,+;]/g, ' '), catalog) };
+    }
+    const base = parsed.rest ? searchComps(comps, parsed.rest, catalog) : comps.map((comp) => ({ comp, hits: { champs: new Set(), items: new Set(), traits: new Set() } }));
+    const total = parsed.groups.length;
+    const results = [];
+    base.forEach((r, order) => {
+      const where = [];
+      let score = 0;
+      parsed.groups.forEach((g) => {
+        const fases = [];
+        const f = r.comp.fases && typeof r.comp.fases === 'object' ? r.comp.fases : {};
+        FASE_LABELS.forEach(([k, label]) => {
+          if ((Array.isArray(f[k]) ? f[k] : []).some((id) => g.ids.includes(id))) fases.push(label);
+        });
+        if ((r.comp.main || []).some((x) => g.ids.includes(x.c))) fases.push('Final');
+        if ((r.comp.flex || []).some((x) => g.ids.includes(x.c))) fases.push('Flex');
+        if (fases.length) {
+          score++;
+          const own = new Set((r.comp.main || []).concat(r.comp.flex || []).map((x) => x.c).concat(f.inicio || [], f.meio || []));
+          g.ids.forEach((id) => { if (own.has(id)) r.hits.champs.add(id); });
+        }
+        where.push({ raw: g.raw, label: g.label, ids: g.ids, fases });
+      });
+      if (score) results.push({ comp: r.comp, hits: r.hits, score, total, where, order });
+    });
+    results.sort((a, b) => b.score - a.score || a.order - b.order);
+    return { mode: 'multi', parts: parsed.parts, groups: parsed.groups, results };
+  }
+
   function filterUnits(units, term, catalog) {
     const list = Array.isArray(units) ? units : [];
     const tk = squash(term);
     if (!tk) return list.slice();
     const idx = indexCatalog(catalog);
+    const groups = parseChampQuery(term, catalog).groups;
+    if (groups.length >= 2) {
+      const want = new Set(groups.flatMap((g) => g.ids));
+      return list.filter((u) => want.has(u.c));
+    }
     return list.filter((u) => {
       const champ = idx.champs.get(u.c);
       return champ && squash(champ.n).includes(tk);
@@ -476,7 +565,7 @@
     return null;
   }
 
-  const api = { newsTypes, newsPatches, filterNews, newsIcon, ROWS, COLS, MAX_ITEMS, MAX_ALT, MAX_FASE, phaseBoards, norm, indexCatalog, activeTraits, searchComps, filterUnits, sanitizeChecks, isChecked, toggleCheck, clearChecks, clearAllChecks, summarizeChecks, countChecked, phaseChampIds, duplicateComp, sanitizeImport, mergeSeed, newId, clone };
+  const api = { newsTypes, newsPatches, filterNews, newsIcon, ROWS, COLS, MAX_ITEMS, MAX_ALT, MAX_FASE, phaseBoards, norm, indexCatalog, activeTraits, searchComps, searchMulti, parseChampQuery, removePart, filterUnits, sanitizeChecks, isChecked, toggleCheck, clearChecks, clearAllChecks, summarizeChecks, countChecked, phaseChampIds, duplicateComp, sanitizeImport, mergeSeed, newId, clone };
   root.TFTLogic = api;
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
 })(typeof window !== 'undefined' ? window : globalThis);

@@ -230,7 +230,7 @@
   }
 
   /* ---------- lista ---------- */
-  function compEl(comp, hits) {
+  function compEl(comp, hits, multi) {
     const hasBoard = comp.main.some((u) => u.p);
     const open = state.boardOpen.has(comp.id) ? state.boardOpen.get(comp.id) : comp.board;
     const traits = L.activeTraits(comp, CAT);
@@ -248,7 +248,10 @@
       h('div', { class: 'chead' },
         h('h2', {}, comp.nome),
         comp.estilo ? h('span', { class: 'style' }, comp.estilo) : null,
+        multi ? h('span', { class: 'mscore' + (multi.score === multi.total ? ' full' : ''), title: multi.score + ' de ' + multi.total + ' campeões buscados' }, multi.score + '/' + multi.total) : null,
         actions),
+      multi ? h('ul', { class: 'mwhere', 'aria-label': 'Onde estão os campeões buscados' }, multi.where.map((w) => h('li', { class: w.fases.length ? 'ok' : 'miss' },
+        h('b', {}, w.label), w.fases.length ? w.fases.map((f) => h('span', { class: 'ftag' }, f)) : h('span', { class: 'ftag none' }, 'não tem')))) : null,
       traits.length ? h('div', { class: 'traits', 'aria-label': 'Traços ativos' }, traits.map((t) => traitEl(t, hits))) : null
     );
     const groups = h('div', { class: 'groups' });
@@ -258,7 +261,7 @@
     } else {
       const count = h('span', { class: 'pcount', 'aria-live': 'polite' });
       const clear = h('button', { type: 'button', class: 'btn ghost sm', 'data-act': 'clear-comp', onclick: () => { state.picks = L.clearChecks(state.picks, comp.id); savePicks(); fill(); } }, 'Limpar checks desta comp');
-      const input = h('input', { type: 'search', class: 'cq', autocomplete: 'off', spellcheck: 'false', maxlength: '40', placeholder: 'Buscar campeão na comp', 'aria-label': 'Buscar campeão em ' + comp.nome, value: state.compQuery.get(comp.id) || '' });
+      const input = h('input', { type: 'search', class: 'cq', autocomplete: 'off', spellcheck: 'false', maxlength: '80', placeholder: 'Buscar campeão na comp (rakan, taric)', 'aria-label': 'Buscar campeão em ' + comp.nome, value: state.compQuery.get(comp.id) || '' });
       const updateCount = () => {
         const { done, total } = L.countChecked(state.picks, comp);
         count.textContent = done + '/' + total + ' pegos';
@@ -315,9 +318,20 @@
     return el;
   }
 
+  function renderChips(sr) {
+    const box = $('#chips');
+    const show = sr.mode === 'multi' || sr.parts.some((p) => p.kind === 'champ');
+    box.hidden = !show;
+    box.replaceChildren(...(show ? sr.parts.map((p, i) => h('span', { class: 'chip ' + p.kind, title: p.kind === 'champ' && p.ids.length > 1 ? 'Pode ser: ' + p.names.join(', ') : false },
+      p.kind === 'champ' ? p.label + (p.ids.length > 1 ? ' (' + p.ids.length + ')' : '') : p.raw,
+      h('button', { type: 'button', class: 'chip-x', 'aria-label': 'Remover ' + (p.label || p.raw), onclick: () => { state.query = L.removePart(state.query, CAT, i); $('#q').value = state.query; render(); $('#q').focus(); } }, icon('x')))) : []));
+  }
+
   function render() {
-    const res = L.searchComps(state.comps, state.query, CAT);
-    $('#list').replaceChildren(...res.map((r) => compEl(r.comp, state.query.trim() ? r.hits : null)));
+    const sr = L.searchMulti(state.comps, state.query, CAT);
+    const res = sr.results;
+    $('#list').replaceChildren(...res.map((r) => compEl(r.comp, state.query.trim() ? r.hits : null, sr.mode === 'multi' ? r : null)));
+    renderChips(sr);
     $('#total').textContent = state.comps.length;
     const q = state.query.trim();
     $('#count').textContent = q ? res.length + ' de ' + state.comps.length : '';
