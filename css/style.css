@@ -85,6 +85,7 @@ main{max-width:var(--wide);margin:0 auto;padding:4px 20px 64px}
 .sq-chip-ico{width:22px;height:22px;border-radius:50%;object-fit:cover;flex:none}
 .sq-chip-txt{padding-left:6px}
 .sq-chip-ico + .sq-chip-txt{padding-left:0}
+.sq-chip.sq-pending{border-style:dashed;border-color:var(--line);color:var(--muted);font-weight:400;opacity:.75}
 .sq-chip.sq-text{border-color:var(--line);color:var(--muted);font-weight:400}
 .sq-chip-x{display:grid;place-items:center;flex:none;width:28px;height:28px;padding:0;border:0;border-radius:50%;background:transparent;color:var(--muted)}
 .sq-chip-x:hover{background:#ffffff14;color:var(--text)}
@@ -92,9 +93,7 @@ main{max-width:var(--wide);margin:0 auto;padding:4px 20px 64px}
 .mscore.full{border-color:var(--ok);color:var(--ok)}
 .mwhere{display:flex;gap:6px 14px;flex-wrap:wrap;margin:10px 0 0;padding:0;list-style:none;font-size:13px}
 .mwhere li{display:flex;align-items:center;gap:5px;flex-wrap:wrap}
-.mwhere li.miss b{color:var(--muted);font-weight:500;text-decoration:line-through}
 .ftag{padding:1px 7px;border-radius:5px;background:#d6aa5c26;border:1px solid #d6aa5c66;color:#f3d9a4;font-size:12px}
-.ftag.none{background:transparent;border-color:var(--line);color:var(--muted)}
 
 /* lista de comps */
 #list{display:grid;gap:16px}

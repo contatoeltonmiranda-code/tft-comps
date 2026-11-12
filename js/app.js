@@ -248,10 +248,10 @@
       h('div', { class: 'chead' },
         h('h2', {}, comp.nome),
         comp.estilo ? h('span', { class: 'style' }, comp.estilo) : null,
-        multi ? h('span', { class: 'mscore' + (multi.score === multi.total ? ' full' : ''), title: multi.score + ' de ' + multi.total + ' campeões buscados' }, multi.score + '/' + multi.total) : null,
+        multi && multi.total >= 2 ? h('span', { class: 'mscore full', title: 'Tem todos os ' + multi.total + ' campeões buscados' }, 'Tem todos') : null,
         actions),
-      multi ? h('ul', { class: 'mwhere', 'aria-label': 'Onde estão os campeões buscados' }, multi.where.map((w) => h('li', { class: w.fases.length ? 'ok' : 'miss' },
-        h('b', {}, w.label), w.fases.length ? w.fases.map((f) => h('span', { class: 'ftag' }, f)) : h('span', { class: 'ftag none' }, 'não tem')))) : null,
+      multi && multi.where.length ? h('ul', { class: 'mwhere', 'aria-label': 'Onde estão os campeões buscados' }, multi.where.map((w) => h('li', {},
+        h('b', {}, w.label), w.fases.map((f) => h('span', { class: 'ftag' }, f))))) : null,
       traits.length ? h('div', { class: 'traits', 'aria-label': 'Traços ativos' }, traits.map((t) => traitEl(t, hits))) : null
     );
     const groups = h('div', { class: 'groups' });
@@ -324,8 +324,8 @@
     box.hidden = !show;
     box.replaceChildren(...(show ? sr.parts.map((p, i) => {
       const c = p.kind === 'champ' && p.ids.length === 1 ? champ(p.ids[0]) : null;
-      const txt = p.kind === 'champ' ? p.label + (p.ids.length > 1 ? ' (' + p.ids.length + ')' : '') : p.raw;
-      return h('span', { class: 'sq-chip ' + (p.kind === 'champ' ? 'sq-champ' : 'sq-text'), title: p.kind === 'champ' && p.ids.length > 1 ? 'Pode ser: ' + p.names.join(', ') : false },
+      const txt = p.kind === 'champ' ? p.label + (p.pending ? ' (' + p.ids.length + '?)' : '') : p.raw;
+      return h('span', { class: 'sq-chip ' + (p.kind === 'champ' ? 'sq-champ' : 'sq-text') + (p.pending ? ' sq-pending' : ''), title: p.pending ? 'Ainda ambíguo, ignorado no filtro. Pode ser: ' + p.names.join(', ') : false },
         c && c.img ? img(c.img, '', 'sq-chip-ico', 22) : false,
         h('span', { class: 'sq-chip-txt' }, txt),
         h('button', { type: 'button', class: 'sq-chip-x', 'aria-label': 'Remover ' + (p.label || p.raw), onclick: () => { state.query = L.removePart(state.query, CAT, i); $('#q').value = state.query; render(); $('#q').focus(); } }, icon('x')));
@@ -342,7 +342,8 @@
     $('#count').textContent = q ? res.length + ' de ' + state.comps.length : '';
     $('#btn-clear').hidden = !q;
     $('#empty').hidden = res.length > 0;
-    $('#empty').textContent = state.comps.length ? 'Nenhuma comp encontrada para essa busca.' : 'Nenhuma comp salva. Crie uma em “Nova comp” ou restaure as originais em Atalhos.';
+    const together = sr.mode === 'multi' && sr.labels.length >= 2 ? 'Nenhuma comp tem ' + sr.labels.join(' + ') + ' juntos.' : '';
+    $('#empty').textContent = state.comps.length ? (together || 'Nenhuma comp encontrada para essa busca.') : 'Nenhuma comp salva. Crie uma em “Nova comp” ou restaure as originais em Atalhos.';
     updateClearAll();
   }
 

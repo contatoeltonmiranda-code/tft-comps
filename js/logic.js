@@ -155,7 +155,7 @@
         if (!seen.has(key)) {
           seen.add(key);
           const names = ids.map((id) => (catalog.champs.find((c) => c.id === id) || {}).n);
-          parts.push({ kind: 'champ', raw, ids, names, label: ids.length === 1 ? names[0] : raw });
+          parts.push({ kind: 'champ', raw, ids, names, pending: ids.length > 1, label: ids.length === 1 ? names[0] : raw });
         } else {
           parts.push({ kind: 'dup', raw });
         }
@@ -179,30 +179,26 @@
       return { mode: 'single', parts: parsed.parts, groups: parsed.groups, results: searchComps(comps, String(query == null ? '' : query).replace(/[,+;]/g, ' '), catalog) };
     }
     const base = parsed.rest ? searchComps(comps, parsed.rest, catalog) : comps.map((comp) => ({ comp, hits: { champs: new Set(), items: new Set(), traits: new Set() } }));
-    const total = parsed.groups.length;
+    const active = parsed.groups.filter((g) => !g.pending);
+    const total = active.length;
+    const labels = active.map((g) => g.label);
     const results = [];
     base.forEach((r, order) => {
-      const where = [];
-      let score = 0;
-      parsed.groups.forEach((g) => {
+      const f = r.comp.fases && typeof r.comp.fases === 'object' ? r.comp.fases : {};
+      const where = active.map((g) => {
         const fases = [];
-        const f = r.comp.fases && typeof r.comp.fases === 'object' ? r.comp.fases : {};
         FASE_LABELS.forEach(([k, label]) => {
           if ((Array.isArray(f[k]) ? f[k] : []).some((id) => g.ids.includes(id))) fases.push(label);
         });
         if ((r.comp.main || []).some((x) => g.ids.includes(x.c))) fases.push('Final');
         if ((r.comp.flex || []).some((x) => g.ids.includes(x.c))) fases.push('Flex');
-        if (fases.length) {
-          score++;
-          const own = new Set((r.comp.main || []).concat(r.comp.flex || []).map((x) => x.c).concat(f.inicio || [], f.meio || []));
-          g.ids.forEach((id) => { if (own.has(id)) r.hits.champs.add(id); });
-        }
-        where.push({ raw: g.raw, label: g.label, ids: g.ids, fases });
+        return { raw: g.raw, label: g.label, ids: g.ids, fases };
       });
-      if (score) results.push({ comp: r.comp, hits: r.hits, score, total, where, order });
+      if (!where.every((w) => w.fases.length)) return;
+      active.forEach((g) => g.ids.forEach((id) => r.hits.champs.add(id)));
+      results.push({ comp: r.comp, hits: r.hits, total, where, order });
     });
-    results.sort((a, b) => b.score - a.score || a.order - b.order);
-    return { mode: 'multi', parts: parsed.parts, groups: parsed.groups, results };
+    return { mode: 'multi', parts: parsed.parts, groups: parsed.groups, total, labels, results };
   }
 
   function filterUnits(units, term, catalog) {

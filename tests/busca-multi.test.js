@@ -57,24 +57,29 @@ test('parse: palavra que nao e campeao vira texto; grupos repetidos somem', () =
   assert.equal(L.parseChampQuery('rakan rakan', catalog).groups.length, 1);
 });
 
-test('multi: todos primeiro, depois parciais por quantidade, indicador n/total', () => {
+test('multi AND: so comps com todos os campeoes; parciais nao aparecem', () => {
   const r = L.searchMulti(comps, 'rakan, taric, sivir', catalog);
   assert.equal(r.mode, 'multi');
-  assert.deepEqual(ids(r), ['a', 'b', 'c', 'd']);
-  assert.deepEqual(r.results.map((x) => x.score), [3, 2, 1, 1]);
-  assert.equal(r.results[0].total, 3);
+  assert.deepEqual(ids(r), ['a']);
+  assert.equal(r.total, 3);
+  const r2 = L.searchMulti(comps, 'rakan sivir', catalog);
+  assert.deepEqual(ids(r2), ['a']);
+  assert.ok(!ids(r2).includes('b') && !ids(r2).includes('c') && !ids(r2).includes('d'));
 });
 
-test('multi: empate mantem a ordem original; comp sem nenhum some', () => {
-  const r = L.searchMulti(comps, 'rakan sivir', catalog);
-  assert.deepEqual(ids(r), ['a', 'b', 'c', 'd']);
-  assert.deepEqual(r.results.map((x) => x.score), [2, 1, 1, 1]);
-  assert.ok(!ids(r).includes('e'));
+test('multi AND: nenhuma comp com todos -> vazio, com labels para o aviso', () => {
+  const r = L.searchMulti(comps, 'taric, kog maw', catalog);
+  assert.equal(r.mode, 'multi');
+  assert.deepEqual(ids(r), ['a']);
+  const none = L.searchMulti(comps, 'sion, rakan', catalog);
+  assert.deepEqual(ids(none), []);
+  assert.deepEqual(none.labels, ['Sion', 'Rakan']);
 });
 
-test('multi: marca onde cada campeao aparece (inicio, meio, final, flex)', () => {
+test('multi AND: qualquer fase conta (inicio, meio, final, flex) e mostra onde', () => {
   const r = L.searchMulti(comps, 'rakan, taric, kog maw', catalog);
-  const a = r.results.find((x) => x.comp.id === 'a');
+  assert.deepEqual(ids(r), ['a']);
+  const a = r.results[0];
   const by = Object.fromEntries(a.where.map((w) => [w.ids[0], w.fases]));
   assert.deepEqual(by.rk, ['Meio', 'Final']);
   assert.deepEqual(by.ta, ['Flex']);
@@ -82,15 +87,41 @@ test('multi: marca onde cada campeao aparece (inicio, meio, final, flex)', () =>
   assert.deepEqual([...a.hits.champs].sort(), ['km', 'rk', 'ta']);
 });
 
-test('multi: ambiguo conta o grupo achado se qualquer candidato bate', () => {
-  const r = L.searchMulti([{ id: 'x', nome: 'X', main: [u('sn')], flex: [] }, { id: 'y', nome: 'Y', main: [u('sj'), u('ta')], flex: [] }], 'se, taric', catalog);
-  assert.deepEqual(r.results.map((x) => [x.comp.id, x.score]), [['y', 2], ['x', 1]]);
+test('multi AND: token ambiguo e pendente e ignorado no filtro (nao vira "qualquer um")', () => {
+  const comps2 = [{ id: 'x', nome: 'X', main: [u('rk'), u('sn')], flex: [] }, { id: 'y', nome: 'Y', main: [u('rk'), u('sj')], flex: [] }, { id: 'z', nome: 'Z', main: [u('ta')], flex: [] }];
+  const p = L.parseChampQuery('rakan, se', catalog);
+  assert.deepEqual(p.groups.map((g) => g.pending), [false, true]);
+  const r = L.searchMulti(comps2, 'rakan, se', catalog);
+  assert.equal(r.mode, 'multi');
+  assert.deepEqual(ids(r), ['x', 'y']);
+  assert.equal(r.total, 1);
+  assert.deepEqual(r.results.map((x) => x.where.length), [1, 1]);
+  const r2 = L.searchMulti(comps2, 'rakan, sen', catalog);
+  assert.deepEqual(ids(r2), ['x']);
+  assert.equal(r2.total, 2);
+});
+
+test('multi AND: so pendentes nao filtram nada', () => {
+  const r = L.searchMulti(comps, 'se, s', catalog);
+  assert.equal(r.mode, 'multi');
+  assert.equal(r.results.length, comps.length);
+});
+
+test('exato vence prefixo: vi = Vi, nao Viego', () => {
+  const cat = { ...catalog, champs: catalog.champs.concat([{ id: 'vi', n: 'Vi', c: 3, t: [] }, { id: 'vg', n: 'Viego', c: 4, t: [] }]) };
+  const g = L.parseChampQuery('vi, taric', cat).groups[0];
+  assert.deepEqual(g.ids, ['vi']);
+  assert.equal(g.pending, false);
+  const cs = [{ id: 'p', nome: 'P', main: [u('vg'), u('ta')], flex: [] }, { id: 'q', nome: 'Q', main: [u('vi'), u('ta')], flex: [] }];
+  assert.deepEqual(ids(L.searchMulti(cs, 'vi, taric', cat)), ['q']);
+  assert.equal(L.parseChampQuery('vie, taric', cat).groups[0].pending, false);
 });
 
 test('multi: texto restante filtra (AND) por traco/item/nome', () => {
   const r = L.searchMulti(comps, 'sion, sivir, solar', catalog);
-  assert.deepEqual(ids(r), ['e']);
-  assert.equal(r.results[0].score, 1);
+  assert.deepEqual(ids(r), []);
+  const r2 = L.searchMulti([{ id: 'e2', nome: 'Solar E', main: [u('si'), u('sv')], flex: [] }].concat(comps), 'sion, sivir, solar', catalog);
+  assert.deepEqual(ids(r2), ['e2']);
 });
 
 test('1 campeao, vazio e texto: igual a searchComps', () => {
