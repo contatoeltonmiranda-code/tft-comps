@@ -122,8 +122,8 @@
     return box;
   }
 
-  function img(src, alt, cls, size, lazy) {
-    return h('img', { src, alt, class: cls, width: size, height: size, decoding: 'async', loading: lazy ? 'lazy' : false });
+  function img(src, alt, cls, size) {
+    return h('img', { src, alt, class: cls, width: size, height: size, decoding: 'async', loading: 'lazy' });
   }
 
   function itemImg(id, alt, hits) {
@@ -230,6 +230,32 @@
   }
 
   /* ---------- lista ---------- */
+  const bodies = new WeakMap();
+  const EAGER = 4;
+  let watcher = null;
+
+  function hydrateComp(el) {
+    const fillBody = bodies.get(el);
+    if (!fillBody) return;
+    bodies.delete(el);
+    el.removeAttribute('data-pend');
+    fillBody();
+  }
+
+  const hydrator = L.createHydrator(hydrateComp);
+
+  function hydrateList(cards) {
+    if (watcher) watcher.disconnect();
+    if (!('IntersectionObserver' in window)) { hydrator.reset(cards, cards.length); return; }
+    hydrator.reset(cards, EAGER);
+    watcher = new IntersectionObserver((entries) => entries.forEach((e) => {
+      if (!e.isIntersecting) return;
+      watcher.unobserve(e.target);
+      hydrator.now(e.target);
+    }), { rootMargin: '1000px 0px' });
+    cards.slice(EAGER).forEach((c) => watcher.observe(c));
+  }
+
   function compEl(comp, hits, multi) {
     const hasBoard = comp.main.some((u) => u.p);
     const open = state.boardOpen.has(comp.id) ? state.boardOpen.get(comp.id) : comp.board;
@@ -254,67 +280,72 @@
         h('b', {}, w.label), w.fases.map((f) => h('span', { class: 'ftag' }, f))))) : null,
       traits.length ? h('div', { class: 'traits', 'aria-label': 'Traços ativos' }, traits.map((t) => traitEl(t, hits))) : null
     );
-    const groups = h('div', { class: 'groups' });
-    if (!comp.main.length && !comp.flex.length) {
-      groups.append(h('p', { class: 'muted' }, 'Sem campeões. Use Editar para adicionar.'));
-      el.append(groups);
-    } else {
-      const count = h('span', { class: 'pcount', 'aria-live': 'polite' });
-      const clear = h('button', { type: 'button', class: 'btn ghost sm', 'data-act': 'clear-comp', onclick: () => { state.picks = L.clearChecks(state.picks, comp.id); savePicks(); fill(); } }, 'Limpar checks desta comp');
-      const input = h('input', { type: 'search', class: 'cq', autocomplete: 'off', spellcheck: 'false', maxlength: '80', placeholder: 'Buscar campeão na comp (rakan, taric)', 'aria-label': 'Buscar campeão em ' + comp.nome, value: state.compQuery.get(comp.id) || '' });
-      const updateCount = () => {
-        const { done, total } = L.countChecked(state.picks, comp);
-        count.textContent = done + '/' + total + ' pegos';
-        count.classList.toggle('done', done === total);
-        clear.disabled = done === 0;
-        el.querySelectorAll('.mini').forEach((m) => {
-          const on = L.isChecked(state.picks, comp.id, m.dataset.c);
-          m.classList.toggle('picked', on);
-          const b = m.querySelector('.pick');
-          if (b) b.setAttribute('aria-pressed', String(on));
+    // Corpo (fases, campeoes, tabuleiro, notas) so e montado quando o card esta perto da tela: ver hydrateComp.
+    const fillBody = () => {
+      const groups = h('div', { class: 'groups' });
+      if (!comp.main.length && !comp.flex.length) {
+        groups.append(h('p', { class: 'muted' }, 'Sem campeões. Use Editar para adicionar.'));
+        el.append(groups);
+      } else {
+        const count = h('span', { class: 'pcount', 'aria-live': 'polite' });
+        const clear = h('button', { type: 'button', class: 'btn ghost sm', 'data-act': 'clear-comp', onclick: () => { state.picks = L.clearChecks(state.picks, comp.id); savePicks(); fill(); } }, 'Limpar checks desta comp');
+        const input = h('input', { type: 'search', class: 'cq', autocomplete: 'off', spellcheck: 'false', maxlength: '80', placeholder: 'Buscar campeão na comp (rakan, taric)', 'aria-label': 'Buscar campeão em ' + comp.nome, value: state.compQuery.get(comp.id) || '' });
+        const updateCount = () => {
+          const { done, total } = L.countChecked(state.picks, comp);
+          count.textContent = done + '/' + total + ' pegos';
+          count.classList.toggle('done', done === total);
+          clear.disabled = done === 0;
+          el.querySelectorAll('.mini').forEach((m) => {
+            const on = L.isChecked(state.picks, comp.id, m.dataset.c);
+            m.classList.toggle('picked', on);
+            const b = m.querySelector('.pick');
+            if (b) b.setAttribute('aria-pressed', String(on));
+          });
+          updateClearAll();
+        };
+        const unit = (u) => unitEl(u, hits, {
+          on: L.isChecked(state.picks, comp.id, u.c),
+          toggle: (btn, wrap) => {
+            state.picks = L.toggleCheck(state.picks, comp.id, u.c);
+            const on = L.isChecked(state.picks, comp.id, u.c);
+            btn.setAttribute('aria-pressed', String(on));
+            wrap.classList.toggle('picked', on);
+            savePicks();
+            updateCount();
+          },
         });
-        updateClearAll();
-      };
-      const unit = (u) => unitEl(u, hits, {
-        on: L.isChecked(state.picks, comp.id, u.c),
-        toggle: (btn, wrap) => {
-          state.picks = L.toggleCheck(state.picks, comp.id, u.c);
-          const on = L.isChecked(state.picks, comp.id, u.c);
-          btn.setAttribute('aria-pressed', String(on));
-          wrap.classList.toggle('picked', on);
-          savePicks();
+        const fill = () => {
+          const term = state.compQuery.get(comp.id) || '';
+          const main = L.filterUnits(comp.main, term, CAT);
+          const flex = L.filterUnits(comp.flex, term, CAT);
+          const nodes = [];
+          if (main.length) nodes.push(h('section', { class: 'group' }, h('h3', {}, 'Principal'), h('div', { class: 'units' }, main.map(unit))));
+          if (flex.length) nodes.push(h('section', { class: 'group' }, h('h3', {}, 'Flex'), h('div', { class: 'units' }, flex.map(unit))));
+          if (!nodes.length) nodes.push(h('p', { class: 'muted cnone' }, 'Nenhum campeão com esse nome nesta comp.'));
+          groups.replaceChildren(...nodes);
           updateCount();
-        },
-      });
-      const fill = () => {
-        const term = state.compQuery.get(comp.id) || '';
-        const main = L.filterUnits(comp.main, term, CAT);
-        const flex = L.filterUnits(comp.flex, term, CAT);
-        const nodes = [];
-        if (main.length) nodes.push(h('section', { class: 'group' }, h('h3', {}, 'Principal'), h('div', { class: 'units' }, main.map(unit))));
-        if (flex.length) nodes.push(h('section', { class: 'group' }, h('h3', {}, 'Flex'), h('div', { class: 'units' }, flex.map(unit))));
-        if (!nodes.length) nodes.push(h('p', { class: 'muted cnone' }, 'Nenhum campeão com esse nome nesta comp.'));
-        groups.replaceChildren(...nodes);
-        updateCount();
-      };
-      input.addEventListener('input', () => {
-        if (input.value.trim()) state.compQuery.set(comp.id, input.value); else state.compQuery.delete(comp.id);
+        };
+        input.addEventListener('input', () => {
+          if (input.value.trim()) state.compQuery.set(comp.id, input.value); else state.compQuery.delete(comp.id);
+          fill();
+        });
+        const tools = h('div', { class: 'ctools' }, input, count, clear);
+        if (pb) el.append(phasesEl(pb, hits, {
+          isOn: (id) => L.isChecked(state.picks, comp.id, id),
+          toggle: (id) => { state.picks = L.toggleCheck(state.picks, comp.id, id); savePicks(); fill(); },
+        }));
         fill();
-      });
-      const tools = h('div', { class: 'ctools' }, input, count, clear);
-      if (pb) el.append(phasesEl(pb, hits, {
-        isOn: (id) => L.isChecked(state.picks, comp.id, id),
-        toggle: (id) => { state.picks = L.toggleCheck(state.picks, comp.id, id); savePicks(); fill(); },
-      }));
-      fill();
-      if (pb) el.append(h('div', { class: 'fimhead' }, h('div', { class: 'plabel' }, h('b', {}, 'Fim'), h('small', {}, 'Board final')), tools), groups);
-      else el.append(tools, groups);
-    }
-    if (hasBoard && open) el.append(boardEl(comp.main, { hits }));
-    if (comp.nota) el.append(h('p', { class: 'note' }, comp.nota));
-    const dk = dicasEl(comp);
-    if (dk) el.append(dk);
-    if (comp.fonte) el.append(h('p', { class: 'src' }, 'Fonte: ' + comp.fonte));
+        if (pb) el.append(h('div', { class: 'fimhead' }, h('div', { class: 'plabel' }, h('b', {}, 'Fim'), h('small', {}, 'Board final')), tools), groups);
+        else el.append(tools, groups);
+      }
+      if (hasBoard && open) el.append(boardEl(comp.main, { hits }));
+      if (comp.nota) el.append(h('p', { class: 'note' }, comp.nota));
+      const dk = dicasEl(comp);
+      if (dk) el.append(dk);
+      if (comp.fonte) el.append(h('p', { class: 'src' }, 'Fonte: ' + comp.fonte));
+    };
+    el.setAttribute('data-pend', '');
+    bodies.set(el, fillBody);
     return el;
   }
 
@@ -332,10 +363,15 @@
     }) : []));
   }
 
+  const renderSoon = L.debounce(render, 120);
+
   function render() {
+    renderSoon.cancel();
     const sr = L.searchMulti(state.comps, state.query, CAT);
     const res = sr.results;
-    $('#list').replaceChildren(...res.map((r) => compEl(r.comp, state.query.trim() ? r.hits : null, sr.mode === 'multi' ? r : null)));
+    const cards = res.map((r) => compEl(r.comp, state.query.trim() ? r.hits : null, sr.mode === 'multi' ? r : null));
+    $('#list').replaceChildren(...cards);
+    hydrateList(cards);
     renderChips(sr);
     $('#total').textContent = state.comps.length;
     const q = state.query.trim();
@@ -384,7 +420,7 @@
         grid.replaceChildren(...list.map((x) => h('button', {
           type: 'button', class: 'pcell ' + (isChamp ? 'champ c' + x.c : 'itm'), 'data-id': x.id,
           onclick: () => { chosen = x.id; dlg.close(); },
-        }, img(x.img, '', '', 52, true), h('span', {}, x.n))));
+        }, img(x.img, '', '', 52), h('span', {}, x.n))));
         $('#pk-empty').hidden = list.length > 0;
       };
       const tabs = $('#pk-tabs');
@@ -611,7 +647,7 @@
     state.comps = load();
     state.picks = loadPicks();
     render();
-    $('#q').addEventListener('input', (e) => { state.query = e.target.value; render(); });
+    $('#q').addEventListener('input', (e) => { state.query = e.target.value; renderSoon(); });
     $('#btn-clear').addEventListener('click', () => { state.query = ''; $('#q').value = ''; render(); $('#q').focus(); });
     $('#btn-new').addEventListener('click', () => openEditor(null));
     $('#btn-help').addEventListener('click', toggleHelp);
@@ -644,7 +680,10 @@
     });
     $('#ed-unplace').addEventListener('click', () => { if (state.sel) { delete state.sel.p; renderEditor(); } });
     $('#pk-close').addEventListener('click', () => $('#picker').close());
+    // Busca do navegador e impressao precisam do DOM completo: hidrata todos os cards antes.
+    window.addEventListener('beforeprint', () => hydrator.all());
     document.addEventListener('keydown', (e) => {
+      if (((e.ctrlKey || e.metaKey) && !e.altKey && (e.key === 'f' || e.key === 'F')) || e.key === 'F3') { hydrator.all(); return; }
       if (e.ctrlKey || e.metaKey || e.altKey) return;
       if ((e.key === '?' || (e.key === '/' && e.shiftKey)) && !typing(e.target)) { e.preventDefault(); toggleHelp(); return; }
       if (typing(e.target) || document.querySelector('dialog[open]')) return;

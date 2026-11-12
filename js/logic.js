@@ -561,7 +561,32 @@
     return null;
   }
 
-  const api = { newsTypes, newsPatches, filterNews, newsIcon, ROWS, COLS, MAX_ITEMS, MAX_ALT, MAX_FASE, phaseBoards, norm, indexCatalog, activeTraits, searchComps, searchMulti, parseChampQuery, removePart, filterUnits, sanitizeChecks, isChecked, toggleCheck, clearChecks, clearAllChecks, summarizeChecks, countChecked, phaseChampIds, duplicateComp, sanitizeImport, mergeSeed, newId, clone };
+  // Trailing debounce com cancel/flush: a busca do topo so redesenha a lista quando a digitacao pausa.
+  function debounce(fn, ms) {
+    let timer = null;
+    let args = null;
+    const run = () => { timer = null; const a = args; args = null; fn(...a); };
+    const d = (...a) => { args = a; if (timer !== null) clearTimeout(timer); timer = setTimeout(run, ms); };
+    d.cancel = () => { if (timer !== null) clearTimeout(timer); timer = null; args = null; };
+    d.flush = () => { if (timer === null) return; clearTimeout(timer); run(); };
+    return d;
+  }
+
+  // Hidratacao sob demanda: os `eager` primeiros itens hidratam em reset(), o resto so em now() (card perto da tela)
+  // ou all() (Ctrl+F, impressao). Cada item hidrata no maximo uma vez; reset() descarta a lista anterior.
+  function createHydrator(hydrate) {
+    let items = [];
+    let done = new Set();
+    const now = (it) => { if (!items.includes(it) || done.has(it)) return; done.add(it); hydrate(it); };
+    return {
+      reset(list, eager) { items = list.slice(); done = new Set(); items.slice(0, eager).forEach(now); },
+      now,
+      all() { items.slice().forEach(now); },
+      pending: () => items.length - done.size,
+    };
+  }
+
+  const api = { createHydrator, debounce, newsTypes, newsPatches, filterNews, newsIcon, ROWS, COLS, MAX_ITEMS, MAX_ALT, MAX_FASE, phaseBoards, norm, indexCatalog, activeTraits, searchComps, searchMulti, parseChampQuery, removePart, filterUnits, sanitizeChecks, isChecked, toggleCheck, clearChecks, clearAllChecks, summarizeChecks, countChecked, phaseChampIds, duplicateComp, sanitizeImport, mergeSeed, newId, clone };
   root.TFTLogic = api;
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
 })(typeof window !== 'undefined' ? window : globalThis);

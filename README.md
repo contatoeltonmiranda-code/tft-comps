@@ -87,6 +87,18 @@ Gerenciar a tarefa (nome `TFT-Comps-Noticias-Semanal`):
 - Pós-jogo, Plano, voz e helper local (`tests/posjogo-logic`, `partidas-fonte`, `plano-logic`, `painel-voz`, `riot-lib`, `riot-server`, `riot-fetch-setup`, `novas-paginas`): `node --test tests/*.test.js`. QA de navegador (servidor do helper numa pasta temporária com partidas fictícias na porta 17871, encerrado pelo PID; reconhecedor de voz simulado, Brave simulado, navegador sem voz; 1440 e 390): `node qa/qa-pos-plano-voz.js`. Prints `qa/pos-*.png`, `qa/resultado-pos-plano-voz.json`. As páginas que chamam o helper registram `ERR_CONNECTION_REFUSED` no console do navegador quando ele está desligado (é o aviso do próprio Chrome para um `fetch` recusado, esperado; o QA só tolera esse).
 - Testes do Painel (`tests/painel-*.test.js`: base, comps, decisão, regras, página) e QA do Painel (partida simulada do 2-1 ao 4-3, critérios do "Melhor momento", reroll de custo 3 e comps salvas editadas, novas e excluídas, 1440, 1100 e 390, um Chromium só): `node qa/qa-painel.js`. Prints `qa/painel-*.png` e `qa/resultado-painel.json`.
 
+- Desempenho do Comps (`tests/perf-carga.test.js`, 13 testes) e QA de carga (`node qa/qa-perf-carga.js [raiz]`: sobe o próprio servidor, bloqueia a porta 17870, 1440 e 390; confere lazy, DOM enxuto, hidratação, busca "karma, ahri", checks no Início/Meio, Ctrl+F e impressão; `QA_FULL=<pasta>` salva a página inteira para diff de pixel). Prints `qa/perf-*.png`.
+
+## Desempenho da lista de comps (`index.html`)
+
+Medido em Chromium headless (1440 e 390, 5 execuções, mediana; CPU normal e CPU 4x mais lenta). Antes: 8.811 nós, 1.388 `<img>` carregadas de uma vez, a lista inteira refeita a cada tecla da busca.
+
+- **Imagens**: toda `<img>` gerada por `app.js`, `posjogo.js` e `noticias.js` tem `loading="lazy"`, `decoding="async"`, `width` e `height`.
+- **Hidratação sob demanda**: cada card nasce só com cabeçalho e traços (`data-pend`, altura reservada de 800px). Fases, campeões, tabuleiro, notas e dicas são montados quando o card chega a 1000px da tela (`IntersectionObserver`); os 4 primeiros nascem prontos. `Ctrl+F`, `F3` e a impressão hidratam todos antes, para a busca do navegador achar tudo.
+- **Busca do topo**: espera 120 ms de pausa na digitação (`L.debounce`); `render()` cancela a espera pendente (Limpar, chips, checks).
+- **Testado e descartado**: `content-visibility:auto` (sem ganho depois da hidratação e desloca o desenho em até 1px por causa do paint containment; sem ele o desenho fica pixel a pixel igual ao anterior) e trocar `filter:drop-shadow` das estrelas por `text-shadow` (a estrela é SVG, `text-shadow` não se aplica; sobram 22 elementos com filtro no primeiro paint, antes 107).
+- O `<img>` fora da tela não carrega: QA que precisa de todas as imagens deve forçar `loading=eager` e rolar a página (ver `carregarTudo` em `qa/qa-perf-carga.js`).
+
 ## Painel de decisão (`painel.html`)
 
 Ferramenta para usar **durante a partida**, em segundo monitor ou celular, entre rodadas. **100% manual: você digita o estado e o painel decide.** Não há API, Overwolf, captura de tela nem nada que toque o cliente (decisão consciente do Elton, ver `_brain/DECISOES.md`; `tests/painel-page.test.js` falha se aparecer `fetch`, `overwolf`, `WebSocket`, captura de tela etc. no painel). O estado fica só no `localStorage` (`tft-comps:painel:v1`); "Nova partida" zera (com confirmação).

@@ -72,7 +72,7 @@
   function card(n) {
     const ic = L.newsIcon(n, CAT);
     const box = h('div', { class: 'nicon' });
-    if (ic) box.append(h('img', { src: ic.img, alt: ic.alt, width: 48, height: 48, class: /\/traits\//.test(ic.img) ? 'trait' : false, decoding: 'async' }));
+    if (ic) box.append(h('img', { src: ic.img, alt: ic.alt, width: 48, height: 48, class: /\/traits\//.test(ic.img) ? 'trait' : false, loading: 'lazy', decoding: 'async' }));
     else box.append(icon(TIPO_ICONE[n.tipo] || 'hex'));
     const tipo = TIPO_NOME[n.tipo] || n.tipo;
     return h('article', { class: 'ncard t-' + n.tipo, 'data-id': n.id },

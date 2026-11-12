@@ -116,9 +116,9 @@
   function miniUnidade(u) {
     const itens = h('span', { class: 'pj-itens' }, u.itens.map((i) => {
       const it = i.id ? itemById.get(i.id) : null;
-      return it && it.img ? h('img', { src: it.img, alt: i.n, title: i.n, width: 20, height: 20, decoding: 'async' }) : h('span', { class: 'pj-item-x', title: i.n, text: '?' });
+      return it && it.img ? h('img', { src: it.img, alt: i.n, title: i.n, width: 20, height: 20, loading: 'lazy', decoding: 'async' }) : h('span', { class: 'pj-item-x', title: i.n, text: '?' });
     }));
-    const pic = u.img ? h('img', { class: 'pic', src: u.img, alt: u.nome, width: 44, height: 44, decoding: 'async' }) : h('span', { class: 'pj-sem-img', text: '?' });
+    const pic = u.img ? h('img', { class: 'pic', src: u.img, alt: u.nome, width: 44, height: 44, loading: 'lazy', decoding: 'async' }) : h('span', { class: 'pj-sem-img', text: '?' });
     return h('li', { class: 'pj-un', title: u.c ? `${u.nome} · custo ${u.custo} · ${u.tier}★` : `${u.nome} (não achado no catálogo)` },
       h('span', { class: 'pj-estrelas', 'aria-label': `${u.tier} estrelas`, text: '★'.repeat(u.tier) }),
       h('span', { class: `mini pj-mini c${u.custo || 1}` }, pic),
@@ -128,7 +128,7 @@
 
   function pill(t) {
     return h('li', { class: `pj-traco pj-traco-${t.estilo}`, title: `${t.nome} ${t.unidades}` },
-      t.img ? h('img', { src: t.img, alt: '', width: 16, height: 16, decoding: 'async' }) : null,
+      t.img ? h('img', { src: t.img, alt: '', width: 16, height: 16, loading: 'lazy', decoding: 'async' }) : null,
       h('span', { text: `${t.nome} ${t.unidades}` }));
   }
 

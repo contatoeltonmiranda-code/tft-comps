@@ -98,6 +98,7 @@ main{max-width:var(--wide);margin:0 auto;padding:4px 20px 64px}
 /* lista de comps */
 #list{display:grid;gap:16px}
 .comp{min-width:0;background:var(--panel);border:1px solid var(--line-soft);border-radius:12px;padding:16px 18px 18px}
+.comp[data-pend]{min-height:800px}
 .chead{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
 .comp h2{font-size:26px;line-height:1.1;color:var(--gold)}
 .style{padding:3px 9px;border-radius:6px;background:var(--panel-2);border:1px solid var(--line);color:var(--text);font-size:13px;font-weight:600;white-space:nowrap}
