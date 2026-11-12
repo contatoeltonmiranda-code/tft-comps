@@ -182,8 +182,18 @@
     return { checks: n, comps };
   }
 
+  function phaseChampIds(comp) {
+    const f = comp && comp.fases;
+    if (!f || typeof f !== 'object') return [];
+    const out = [];
+    ['inicio', 'meio'].forEach((k) => {
+      (Array.isArray(f[k]) ? f[k] : []).forEach((id) => { if (okId(id) && !out.includes(id)) out.push(id); });
+    });
+    return out;
+  }
+
   function countChecked(checks, comp) {
-    const ids = new Set(allUnits(comp).map((u) => u.c));
+    const ids = new Set(allUnits(comp).map((u) => u.c).concat(phaseChampIds(comp)));
     let done = 0;
     ids.forEach((id) => { if (isChecked(checks, comp.id, id)) done++; });
     return { done, total: ids.size };
@@ -466,7 +476,7 @@
     return null;
   }
 
-  const api = { newsTypes, newsPatches, filterNews, newsIcon, ROWS, COLS, MAX_ITEMS, MAX_ALT, MAX_FASE, phaseBoards, norm, indexCatalog, activeTraits, searchComps, filterUnits, sanitizeChecks, isChecked, toggleCheck, clearChecks, clearAllChecks, summarizeChecks, countChecked, duplicateComp, sanitizeImport, mergeSeed, newId, clone };
+  const api = { newsTypes, newsPatches, filterNews, newsIcon, ROWS, COLS, MAX_ITEMS, MAX_ALT, MAX_FASE, phaseBoards, norm, indexCatalog, activeTraits, searchComps, filterUnits, sanitizeChecks, isChecked, toggleCheck, clearChecks, clearAllChecks, summarizeChecks, countChecked, phaseChampIds, duplicateComp, sanitizeImport, mergeSeed, newId, clone };
   root.TFTLogic = api;
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
 })(typeof window !== 'undefined' ? window : globalThis);

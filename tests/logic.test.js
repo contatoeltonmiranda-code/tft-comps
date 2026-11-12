@@ -446,3 +446,29 @@ test('mergeSeed cadeia: preserva edicao, nao volta se C excluida e e idempotente
   const vista = L.mergeSeed(saved(['sA', 'sB', 's1'], 4), chainSeed, 5, catalog);
   assert.deepEqual(L.mergeSeed({ ...vista }, chainSeed, 5, catalog).comps.map((c) => c.id), ['sA', 'sB', 'sC', 's1']);
 });
+
+/* ---------- checks nas fases Inicio/Meio (mesmo estado do Final) ---------- */
+test('countChecked conta unico campeao de inicio/meio/final e inclui quem so aparece nas fases', () => {
+  const comp = { id: 'k1', main: [u('A'), u('B')], flex: [u('C')], fases: { inicio: ['D', 'A'], meio: ['D', 'E', 'A'], origem: 'fonte' } };
+  assert.deepEqual(L.countChecked({}, comp), { done: 0, total: 5 });
+  assert.deepEqual(L.countChecked({ k1: ['D'] }, comp), { done: 1, total: 5 });
+  assert.deepEqual(L.countChecked({ k1: ['A', 'D', 'E', 'ZZ'] }, comp), { done: 3, total: 5 });
+});
+
+test('phaseChampIds lista ids unicos de inicio e meio, ignora fases invalidas', () => {
+  assert.deepEqual(L.phaseChampIds({ fases: { inicio: ['D', 'C'], meio: ['D', 'E'] } }), ['D', 'C', 'E']);
+  assert.deepEqual(L.phaseChampIds({}), []);
+  assert.deepEqual(L.phaseChampIds({ fases: { inicio: 'x', meio: [1, null, 'E'] } }), ['E']);
+});
+
+test('check de campeao no inicio vale para o mesmo campeao no final (mesma chave comp+campeao)', () => {
+  const comp = { id: 'k1', main: [u('D')], flex: [], fases: { inicio: ['D'], meio: ['D'] } };
+  const s = L.toggleCheck({}, 'k1', 'D');
+  assert.equal(L.isChecked(s, 'k1', 'D'), true);
+  assert.deepEqual(L.countChecked(s, comp), { done: 1, total: 1 });
+  assert.deepEqual(L.toggleCheck(s, 'k1', 'D'), {});
+});
+
+test('picks salvos no formato antigo continuam validos', () => {
+  assert.deepEqual(L.sanitizeChecks({ k1: ['A', 'B'] }), { k1: ['A', 'B'] });
+});

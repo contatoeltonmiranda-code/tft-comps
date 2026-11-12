@@ -275,6 +275,9 @@ input[type=search]::-webkit-search-cancel-button{display:none}
 .mini img.pic{width:100%;height:100%;object-fit:cover;border-radius:4px}
 .mini .cost{min-width:13px;height:13px;padding:0 3px;border-radius:4px 0 5px 0;font-size:9px;line-height:13px}
 .mini.hit{box-shadow:0 0 0 3px var(--focus)}
+.mini .pick{left:-5px;bottom:-5px;width:18px;height:18px}
+.mini .pick::after{inset:-5px}
+.mini .pick .ic{width:11px;height:11px}
 .mini.picked{outline:2px solid var(--ok);outline-offset:1px}
 .mini.picked::after{content:"";position:absolute;inset:0;border-radius:4px;background:#5ccf8a2e;pointer-events:none}
 .porigem{margin-top:2px;font-size:11px;color:#6b7a95}

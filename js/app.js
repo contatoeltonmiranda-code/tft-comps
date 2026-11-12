@@ -194,17 +194,22 @@
       img(t.img, '', '', 20), t.n, t.bp.length ? ' ' + t.count : '');
   }
 
-  function miniEl(u, hits) {
-    const cls = 'mini c' + u.cost + (hits && hits.champs.has(u.c) ? ' hit' : '');
-    return h('span', { class: cls, 'data-c': u.c, title: u.n }, img(u.img, u.n, 'pic', 34), h('span', { class: 'cost' }, u.cost));
+  function miniEl(u, hits, pk) {
+    const on = !!(pk && pk.isOn(u.c));
+    const cls = 'mini c' + u.cost + (hits && hits.champs.has(u.c) ? ' hit' : '') + (on ? ' picked' : '');
+    const el = h('span', { class: cls, 'data-c': u.c, title: u.n }, img(u.img, u.n, 'pic', 34), h('span', { class: 'cost' }, u.cost));
+    if (pk) {
+      el.append(h('button', { type: 'button', class: 'pick', 'aria-pressed': String(on), 'aria-label': 'Já peguei ' + u.n, title: 'Já peguei', onclick: () => pk.toggle(u.c) }, icon('check')));
+    }
+    return el;
   }
 
-  function phasesEl(pb, hits) {
+  function phasesEl(pb, hits, pk) {
     const box = h('div', { class: 'phases' });
     pb.fases.filter((f) => f.key !== 'fim' && f.units.length).forEach((f) => {
       box.append(h('div', { class: 'phase ' + f.key },
         h('div', { class: 'plabel' }, h('b', {}, f.label), h('small', {}, f.hint)),
-        h('div', { class: 'minis' }, f.units.map((u) => miniEl(u, hits)))));
+        h('div', { class: 'minis' }, f.units.map((u) => miniEl(u, hits, pk)))));
     });
     const ref = pb.ref ? (pb.url ? h('a', { href: pb.url, target: '_blank', rel: 'noopener noreferrer' }, pb.ref) : pb.ref) : null;
     box.append(h('p', { class: 'porigem', title: 'De onde vêm o início e o meio' }, 'Início e meio: ', h('span', { class: 'otag ' + pb.origem }, pb.origem), ref ? ' ' : null, ref));
@@ -259,7 +264,12 @@
         count.textContent = done + '/' + total + ' pegos';
         count.classList.toggle('done', done === total);
         clear.disabled = done === 0;
-        el.querySelectorAll('.mini').forEach((m) => m.classList.toggle('picked', L.isChecked(state.picks, comp.id, m.dataset.c)));
+        el.querySelectorAll('.mini').forEach((m) => {
+          const on = L.isChecked(state.picks, comp.id, m.dataset.c);
+          m.classList.toggle('picked', on);
+          const b = m.querySelector('.pick');
+          if (b) b.setAttribute('aria-pressed', String(on));
+        });
         updateClearAll();
       };
       const unit = (u) => unitEl(u, hits, {
@@ -289,7 +299,10 @@
         fill();
       });
       const tools = h('div', { class: 'ctools' }, input, count, clear);
-      if (pb) el.append(phasesEl(pb, hits));
+      if (pb) el.append(phasesEl(pb, hits, {
+        isOn: (id) => L.isChecked(state.picks, comp.id, id),
+        toggle: (id) => { state.picks = L.toggleCheck(state.picks, comp.id, id); savePicks(); fill(); },
+      }));
       fill();
       if (pb) el.append(h('div', { class: 'fimhead' }, h('div', { class: 'plabel' }, h('b', {}, 'Fim'), h('small', {}, 'Board final')), tools), groups);
       else el.append(tools, groups);
