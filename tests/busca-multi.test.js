@@ -116,3 +116,30 @@ test('filterUnits: varios campeoes mostra qualquer um; 1 termo igual a antes', (
   assert.deepEqual(L.filterUnits(list, 'tar', catalog).map((x) => x.c), ['ta']);
   assert.deepEqual(L.filterUnits(list, '', catalog).length, 3);
 });
+
+test('chips da busca usam prefixo proprio e nao colidem com o .chip do editor (bug do circulo 34px)', () => {
+  const fs = require('node:fs');
+  const rd = (f) => fs.readFileSync(require('node:path').join(__dirname, '..', f), 'utf8');
+  const css = rd('css/style.css');
+  const html = rd('index.html');
+  const js = rd('js/app.js');
+  assert.match(html, /id="chips"\s+class="sq-chips"/);
+  const bloco = js.slice(js.indexOf('function renderChips'), js.indexOf('function render() {'));
+  const usadas = new Set([...bloco.matchAll(/'(sq-[\w-]+)/g)].map((m) => m[1]));
+  ['sq-chip', 'sq-champ', 'sq-text', 'sq-chip-x', 'sq-chip-ico'].forEach((c) => assert.ok(bloco.includes(c), 'renderChips sem ' + c));
+  assert.ok(!/class:\s*'chip/.test(bloco) && !/class: 'chip-x'/.test(bloco), 'renderChips voltou a usar .chip generico');
+  // cada seletor sq-* da busca e definido uma unica vez como regra base
+  ['.sq-chips', '.sq-chip', '.sq-chip-x', '.sq-chip-ico'].forEach((sel) => {
+    const n = [...css.matchAll(new RegExp('(^|\n)' + sel.replace('.', '\.') + '\{', 'g'))].length;
+    assert.equal(n, 1, sel + ' definido ' + n + ' vezes');
+  });
+  // nenhuma regra do editor (.chip / .chips genericos) casa com os elementos da busca
+  const sq = css.split('\n').filter((l) => /^\.sq-chip/.test(l)).join('\n');
+  assert.ok(!/(^|[\s,])\.chips?\b[^-]/m.test(sq), 'regras sq-* referenciam .chip generico');
+  assert.ok(!/\.chip\s+button/.test(sq));
+  assert.ok(usadas.size >= 5);
+  // chip precisa crescer com o conteudo: sem width/height fixos no container
+  const regraChip = css.match(/\n\.sq-chip\{([^}]*)\}/)[1];
+  assert.ok(!/(^|;)\s*(width|height)\s*:/.test(regraChip), 'sq-chip com tamanho fixo');
+  assert.ok(/white-space:nowrap/.test(regraChip));
+});

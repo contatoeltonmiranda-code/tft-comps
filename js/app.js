@@ -322,9 +322,14 @@
     const box = $('#chips');
     const show = sr.mode === 'multi' || sr.parts.some((p) => p.kind === 'champ');
     box.hidden = !show;
-    box.replaceChildren(...(show ? sr.parts.map((p, i) => h('span', { class: 'chip ' + p.kind, title: p.kind === 'champ' && p.ids.length > 1 ? 'Pode ser: ' + p.names.join(', ') : false },
-      p.kind === 'champ' ? p.label + (p.ids.length > 1 ? ' (' + p.ids.length + ')' : '') : p.raw,
-      h('button', { type: 'button', class: 'chip-x', 'aria-label': 'Remover ' + (p.label || p.raw), onclick: () => { state.query = L.removePart(state.query, CAT, i); $('#q').value = state.query; render(); $('#q').focus(); } }, icon('x')))) : []));
+    box.replaceChildren(...(show ? sr.parts.map((p, i) => {
+      const c = p.kind === 'champ' && p.ids.length === 1 ? champ(p.ids[0]) : null;
+      const txt = p.kind === 'champ' ? p.label + (p.ids.length > 1 ? ' (' + p.ids.length + ')' : '') : p.raw;
+      return h('span', { class: 'sq-chip ' + (p.kind === 'champ' ? 'sq-champ' : 'sq-text'), title: p.kind === 'champ' && p.ids.length > 1 ? 'Pode ser: ' + p.names.join(', ') : false },
+        c && c.img ? img(c.img, '', 'sq-chip-ico', 22) : false,
+        h('span', { class: 'sq-chip-txt' }, txt),
+        h('button', { type: 'button', class: 'sq-chip-x', 'aria-label': 'Remover ' + (p.label || p.raw), onclick: () => { state.query = L.removePart(state.query, CAT, i); $('#q').value = state.query; render(); $('#q').focus(); } }, icon('x')));
+    }) : []));
   }
 
   function render() {

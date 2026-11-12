@@ -80,11 +80,14 @@ main{max-width:var(--wide);margin:0 auto;padding:4px 20px 64px}
 .empty{padding:48px 0;text-align:center;color:var(--muted)}
 
 /* busca de varios campeoes */
-.chips{display:flex;gap:6px;flex-wrap:wrap;margin:-6px 0 14px}
-.chip{display:inline-flex;align-items:center;gap:2px;min-height:32px;padding:0 4px 0 12px;border-radius:16px;background:var(--panel-2);border:1px solid var(--gold);color:var(--text);font-size:14px;font-weight:600}
-.chip.text{border-color:var(--line);color:var(--muted);font-weight:400}
-.chip-x{display:grid;place-items:center;width:28px;height:28px;border:0;border-radius:50%;background:transparent;color:var(--muted)}
-.chip-x:hover{background:#ffffff14;color:var(--text)}
+.sq-chips{display:flex;gap:6px;flex-wrap:wrap;margin:-6px 0 14px}
+.sq-chip{display:inline-flex;align-items:center;gap:6px;max-width:100%;min-height:32px;padding:0 4px 0 6px;border-radius:16px;background:var(--panel-2);border:1px solid var(--gold);color:var(--text);font-size:14px;font-weight:600;white-space:nowrap}
+.sq-chip-ico{width:22px;height:22px;border-radius:50%;object-fit:cover;flex:none}
+.sq-chip-txt{padding-left:6px}
+.sq-chip-ico + .sq-chip-txt{padding-left:0}
+.sq-chip.sq-text{border-color:var(--line);color:var(--muted);font-weight:400}
+.sq-chip-x{display:grid;place-items:center;flex:none;width:28px;height:28px;padding:0;border:0;border-radius:50%;background:transparent;color:var(--muted)}
+.sq-chip-x:hover{background:#ffffff14;color:var(--text)}
 .mscore{padding:3px 9px;border-radius:6px;background:var(--panel-2);border:1px solid var(--line);color:var(--text);font:700 14px/1.2 var(--font-body,inherit);font-variant-numeric:tabular-nums}
 .mscore.full{border-color:var(--ok);color:var(--ok)}
 .mwhere{display:flex;gap:6px 14px;flex-wrap:wrap;margin:10px 0 0;padding:0;list-style:none;font-size:13px}
