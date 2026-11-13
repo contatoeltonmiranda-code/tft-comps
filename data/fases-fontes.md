@@ -147,4 +147,13 @@ Derivadas: o vídeo não dá início/meio, então início = custo até 3 do pró
 
 Derivadas: a fonte não dá início/meio, então início = custo até 3 do próprio board e meio = início + as unidades de custo 4 já em 2★ (seed-34) ou os carries e tanques de custo 4 (seed-33). Link da dica da seed-33: `https://youtu.be/ZbcIwkJpRJg?t=5`. A seed-34 não tem link (print do Elton).
 
+## Seed v13 (13/11/2026)
+
+| Seed | Comp do app | Origem | Comp da fonte | Jaccard | Início | Meio |
+|---|---|---|---|---|---|---|
+| seed-35 | Colosso Sivir Ashe | derivado | Techzz (Short), 6 colossos AD, 0:14 | 0,50 (seed-27) | Rakan, Sejuani, Vi, Aronguejo | Rakan, Sejuani, Vi, Aronguejo, Amumu, Sivir |
+| seed-36 | Colosso Zyra Azir | derivado | Techzz (Short), 6 colossos AP, 0:20 | 0,42 (seed-32) | Rakan, Yorick, Vi, Aronguejo, Azir | Rakan, Yorick, Vi, Aronguejo, Azir, Amumu, Zyra |
+
+Derivadas: o Short não dá início/meio, então início = custo até 3 do próprio board e meio = início + as unidades de custo 4 (Amumu, Sivir, Zyra). Link das dicas: `https://www.youtube.com/shorts/1Y8J0Sj7H6o`. O outro Short do pedido (qqmX_XJbOLQ, TOP 5) só tem comps que já existem (seed-29, 04, 14, 31, 15, 24).
+
 Dicas do vídeo (traduzidas e resumidas) ficam em `comp.dicas` no seed, com link do vídeo no minuto (`https://youtu.be/shtFyRruAHM?t=<s>`).

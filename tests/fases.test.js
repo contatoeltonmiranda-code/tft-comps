@@ -158,9 +158,9 @@ test('phaseBoards sem fases devolve null; ids sumidos do catalogo sao ignorados'
 });
 
 /* ---------- seed real ---------- */
-test('seed: as 34 comps tem fases; as 19 anteriores com fasesDesde 6, as novas (desde 7, 8, 9, 10, 11 e 12) ja nascem com fases', () => {
-  assert.equal(window.TFT_SEED_VERSION, 12);
-  assert.equal(SEED.length, 34);
+test('seed: as 36 comps tem fases; as 19 anteriores com fasesDesde 6, as novas (desde 7, 8, 9, 10, 11, 12 e 13) ja nascem com fases', () => {
+  assert.equal(window.TFT_SEED_VERSION, 13);
+  assert.equal(SEED.length, 36);
   SEED.forEach((s) => {
     assert.ok(s.fases, s.id);
     if (s.desde >= 7) assert.equal(s.fasesDesde, undefined, s.id);

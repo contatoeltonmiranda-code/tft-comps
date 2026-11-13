@@ -1285,6 +1285,295 @@ window.TFT_SEED = [
   "abaixoDe": "seed-33"
  },
  {
+  "nome": "Colosso Sivir Ashe",
+  "estilo": "Nível 8",
+  "nota": "Comp \"6 colossos\" do Short da Techzz (19/09/2026), versão AD: frame 0:14 (tactics.tools, refs/33.png). Seis Colossos na frente (Rakan, Sejuani, Vi, Aronguejo, Maokai, Amumu) e Ashe + Sivir atrás. Sem estrelas visíveis (1★). Itens: só os citados no áudio e mostrados na tela. Variante da seed-27 (Jaccard 0,50).",
+  "fonte": "Vídeo Techzz (Short, 19/09/2026) · 0:14 · refs/33.png",
+  "board": true,
+  "main": [
+   {
+    "c": "DA_18_Rakan",
+    "s": 1,
+    "i": [],
+    "a": [],
+    "p": [
+     1,
+     1
+    ]
+   },
+   {
+    "c": "DA_18_Sejuani",
+    "s": 1,
+    "i": [],
+    "a": [],
+    "p": [
+     1,
+     2
+    ]
+   },
+   {
+    "c": "DA_Vi18",
+    "s": 1,
+    "i": [],
+    "a": [],
+    "p": [
+     1,
+     3
+    ]
+   },
+   {
+    "c": "DA_Scuttlecrab18",
+    "s": 1,
+    "i": [],
+    "a": [],
+    "p": [
+     1,
+     4
+    ]
+   },
+   {
+    "c": "DA_18_Maokai",
+    "s": 1,
+    "i": [],
+    "a": [],
+    "p": [
+     1,
+     5
+    ]
+   },
+   {
+    "c": "DA_Amumu18",
+    "s": 1,
+    "i": [],
+    "a": [],
+    "p": [
+     1,
+     6
+    ]
+   },
+   {
+    "c": "DA_18_Ashe",
+    "s": 1,
+    "i": [
+     "DA_SpearOfShojin",
+     "DA_LastWhisper",
+     "DA_RedBuff"
+    ],
+    "a": [],
+    "p": [
+     4,
+     6
+    ]
+   },
+   {
+    "c": "DA_18_Sivir",
+    "s": 1,
+    "i": [
+     "DA_InfinityEdge",
+     "DA_StrikersFlail"
+    ],
+    "a": [],
+    "p": [
+     4,
+     7
+    ]
+   }
+  ],
+  "flex": [
+   {
+    "c": "DA_18_Tristana",
+    "s": 1,
+    "i": [],
+    "a": []
+   },
+   {
+    "c": "DA_18_Malphite",
+    "s": 1,
+    "i": [],
+    "a": []
+   }
+  ],
+  "fases": {
+   "inicio": [
+    "DA_18_Rakan",
+    "DA_18_Sejuani",
+    "DA_Vi18",
+    "DA_Scuttlecrab18"
+   ],
+   "meio": [
+    "DA_18_Rakan",
+    "DA_18_Sejuani",
+    "DA_Vi18",
+    "DA_Scuttlecrab18",
+    "DA_Amumu18",
+    "DA_18_Sivir"
+   ],
+   "origem": "derivado",
+   "ref": "Calculado do board: início = custo até 3; meio = início + Amumu e Sivir (custo 4)"
+  },
+  "dicas": {
+   "ref": "Techzz · 6 colossos é absurdo de forte no TFT (Short)",
+   "url": "https://www.youtube.com/shorts/1Y8J0Sj7H6o",
+   "linhas": [
+    "Começa com 6 Colossos na linha de frente. Complete com dano físico (Sivir + Tristana, trocando a Tristana pela Ashe quando achar) ou mágico (Zyra + Azir, seed-36). O criador chama de comp fácil e muito forte.",
+    "Comp barata: no nível 9 entra Kennen e Malphite 2★. No fim do jogo dá para descer de 6 para 4 Colossos (frame 0:31 em refs/35.png: Vi, Amumu, Aronguejo, Maokai, Kennen, Dragão Ancião, Sivir e Ashe).",
+    "A itemização é o mais importante: a comp ganha no cansaço. Sivir com itens de crítico (Gume do Infinito e Mangual do Guerreiro).",
+    "Ashe com itens de utilidade; build dos sonhos: Lança de Shojin, Último Sussurro e Efeito Vermelho (o áudio diz \"Buff Vermelho\").",
+    "O áudio diz \"trocando a Ana por uma Ashe\". Entendi como Tristana (a unidade que vem junto da Sivir). Ver dúvidas no README.",
+    "Frame 0:14 (refs/33.png): sem estrelas visíveis. Posições lidas do tabuleiro do tactics.tools. Os ícones de itens do Amumu e da Sivir no frame (~12 px) não foram lidos."
+   ]
+  },
+  "id": "seed-35",
+  "desde": 13,
+  "topo": true,
+  "abaixoDe": "seed-34"
+ },
+ {
+  "nome": "Colosso Zyra Azir",
+  "estilo": "Nível 9",
+  "nota": "Comp \"6 colossos\" do Short da Techzz (19/09/2026), versão AP: frame 0:20 (tactics.tools, refs/34.png). Seis Colossos (Rakan, Yorick, Vi, Aronguejo, Maokai, Amumu) + Kennen na frente; Azir e Zyra atrás. Sem estrelas visíveis (1★). Itens da Zyra: os 3 do áudio, confirmados na tela.",
+  "fonte": "Vídeo Techzz (Short, 19/09/2026) · 0:20 · refs/34.png",
+  "board": true,
+  "main": [
+   {
+    "c": "DA_18_Rakan",
+    "s": 1,
+    "i": [],
+    "a": [],
+    "p": [
+     1,
+     1
+    ]
+   },
+   {
+    "c": "DA_18_Yorick",
+    "s": 1,
+    "i": [],
+    "a": [],
+    "p": [
+     1,
+     2
+    ]
+   },
+   {
+    "c": "DA_Vi18",
+    "s": 1,
+    "i": [],
+    "a": [],
+    "p": [
+     1,
+     3
+    ]
+   },
+   {
+    "c": "DA_Scuttlecrab18",
+    "s": 1,
+    "i": [],
+    "a": [],
+    "p": [
+     1,
+     4
+    ]
+   },
+   {
+    "c": "DA_18_Maokai",
+    "s": 1,
+    "i": [],
+    "a": [],
+    "p": [
+     1,
+     5
+    ]
+   },
+   {
+    "c": "DA_Amumu18",
+    "s": 1,
+    "i": [],
+    "a": [],
+    "p": [
+     1,
+     6
+    ]
+   },
+   {
+    "c": "DA_18_Kennen",
+    "s": 1,
+    "i": [],
+    "a": [],
+    "p": [
+     2,
+     3
+    ]
+   },
+   {
+    "c": "DA_18_Azir",
+    "s": 1,
+    "i": [],
+    "a": [],
+    "p": [
+     4,
+     5
+    ]
+   },
+   {
+    "c": "DA_18_Zyra",
+    "s": 1,
+    "i": [
+     "DA_ArchangelsStaff",
+     "DA_HextechGunblade",
+     "DA_SpearOfShojin"
+    ],
+    "a": [],
+    "p": [
+     4,
+     7
+    ]
+   }
+  ],
+  "flex": [
+   {
+    "c": "DA_18_Malphite",
+    "s": 1,
+    "i": [],
+    "a": []
+   }
+  ],
+  "fases": {
+   "inicio": [
+    "DA_18_Rakan",
+    "DA_18_Yorick",
+    "DA_Vi18",
+    "DA_Scuttlecrab18",
+    "DA_18_Azir"
+   ],
+   "meio": [
+    "DA_18_Rakan",
+    "DA_18_Yorick",
+    "DA_Vi18",
+    "DA_Scuttlecrab18",
+    "DA_18_Azir",
+    "DA_Amumu18",
+    "DA_18_Zyra"
+   ],
+   "origem": "derivado",
+   "ref": "Calculado do board: início = custo até 3; meio = início + Amumu e Zyra (custo 4)"
+  },
+  "dicas": {
+   "ref": "Techzz · 6 colossos é absurdo de forte no TFT (Short)",
+   "url": "https://www.youtube.com/shorts/1Y8J0Sj7H6o",
+   "linhas": [
+    "Versão mágica da comp de 6 Colossos (a física é a seed-35, Sivir + Ashe). Zyra com Azir de fonte de dano.",
+    "Por ser comp barata, o ideal é chegar ao nível 9 para colocar Kennen e Malphite 2★ (o áudio cita os dois; no frame só o Kennen aparece, sem estrelas).",
+    "A comp ganha no cansaço, então a itemização é o mais importante. Build ideal da Zyra: Cajado do Arcanjo, Pistola Laminar Hextec e Lança de Shojin.",
+    "Frame 0:20 (refs/34.png): 9 unidades, sem estrelas visíveis. Posições lidas do tabuleiro do tactics.tools. Ícones de itens do Amumu e do Azir no frame (~12 px) não foram lidos."
+   ]
+  },
+  "id": "seed-36",
+  "desde": 13,
+  "topo": true,
+  "abaixoDe": "seed-35"
+ },
+ {
   "nome": "Enfeitiçador 6",
   "estilo": "Nível 8",
   "nota": "Print em combate (6-2): sem posições. Unidades deduzidas do painel de traços (Enfeitiçador 6/6, Comunhão, Sabugueiro 3, Defendente 2, Espinhos Negros 2, Lutador 2, Flora Fatalis, Lunar, Congregação). Fechar 6 Enfeitiçadores exige 1 Emblema de Enfeitiçador em Ornn, Rek'Sai ou Alistar. Itens e estrelas só onde a identificação é segura.",
@@ -4088,4 +4377,4 @@ window.TFT_SEED = [
   "fasesDesde": 6
  }
 ];
-window.TFT_SEED_VERSION = 12;
+window.TFT_SEED_VERSION = 13;
