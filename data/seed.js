@@ -1574,6 +1574,131 @@ window.TFT_SEED = [
   "abaixoDe": "seed-35"
  },
  {
+  "nome": "Figurante Rank S",
+  "estilo": "Nível 9",
+  "nota": "Comp \"Figurante Rank S\" de um app de comps (prints do Elton, refs/36 a 38). Print 36: 7 unidades lidas (estrelas e itens por match de pixels) + 2 ocultas (uma cortada e o \"+1\"). Grompe vem do early (refs/37, +8 = 9 unidades) e Yorick dos traços do tabuleiro (refs/38); os dois entram 1★ e sem item. Sem posições: o print 38 é de combate.",
+  "fonte": "Print do Elton (app de comps) · refs/36.png, refs/37.png, refs/38.png",
+  "main": [
+   {
+    "c": "DA_KogMaw18_AD",
+    "s": 3,
+    "i": [
+     "DA_GuinsoosRageblade",
+     "DA_KrakensFury",
+     "DA_Artifact_RapidFireCannon"
+    ],
+    "a": []
+   },
+   {
+    "c": "DA_18_MasterYi_AD",
+    "s": 3,
+    "i": [
+     "DA_Artifact_HellfireHatchet",
+     "DA_Artifact_InfinityForce",
+     "DA_EdgeOfNight"
+    ],
+    "a": []
+   },
+   {
+    "c": "DA_Vi18",
+    "s": 3,
+    "i": [
+     "DA_GargoyleStoneplate",
+     "DA_WarmogsArmor",
+     "DA_DragonsClaw"
+    ],
+    "a": []
+   },
+   {
+    "c": "DA_18_Ashe",
+    "s": 2,
+    "i": [
+     "DA_ThiefsGloves",
+     "DA_KrakensFury",
+     "DA_ArchangelsStaff"
+    ],
+    "a": []
+   },
+   {
+    "c": "DA_Sentinel18",
+    "s": 2,
+    "i": [
+     "DA_SpiritVisage",
+     "DA_AdaptiveHelm",
+     "DA_ProtectorsVow"
+    ],
+    "a": []
+   },
+   {
+    "c": "DA_Nidalee18_AP",
+    "s": 2,
+    "i": [
+     "DA_EdgeOfNight",
+     "DA_RedBuff",
+     "DA_NashorsTooth"
+    ],
+    "a": []
+   },
+   {
+    "c": "DA_18_Maokai",
+    "s": 2,
+    "i": [
+     "DA_ThiefsGloves",
+     "DA_IonicSpark",
+     "DA_Morellonomicon"
+    ],
+    "a": []
+   },
+   {
+    "c": "DA_Gromp18_AP",
+    "s": 1,
+    "i": [],
+    "a": []
+   },
+   {
+    "c": "DA_18_Yorick",
+    "s": 1,
+    "i": [],
+    "a": []
+   }
+  ],
+  "flex": [],
+  "fases": {
+   "inicio": [
+    "DA_18_Yorick",
+    "DA_Gromp18_AP",
+    "DA_KogMaw18_AD",
+    "DA_18_MasterYi_AD",
+    "DA_Vi18"
+   ],
+   "meio": [
+    "DA_18_Yorick",
+    "DA_Gromp18_AP",
+    "DA_KogMaw18_AD",
+    "DA_18_MasterYi_AD",
+    "DA_Vi18",
+    "DA_Sentinel18",
+    "DA_Nidalee18_AP"
+   ],
+   "origem": "derivado",
+   "ref": "Início = custo até 3 (Grompe do refs/37); meio = início + Azuporã e Nidalee (custo 4)"
+  },
+  "dicas": {
+   "ref": "Prints do Elton · refs/36.png, refs/37.png, refs/38.png",
+   "linhas": [
+    "Linha da comp (refs/36.png): Kog'Maw, Master Yi e Vi 3★; Ashe, Azuporã, Nidalee e Maokai 2★. Duas unidades ocultas (uma cortada e o \"+1\"): 9 no total. O early (refs/37.png) mostra só Grompe e \"+8\".",
+    "Itens lidos por match de pixels (0,72 a 0,99). Machadinha Infernal, Força do Infinito e Canhão Fumegante são artefatos. Semblante Espiritual tem o mesmo ícone da versão Radiante: ficou a normal.",
+    "Tabuleiro no 5-6 (refs/38.png): Adaptador 4, Cáustico 1, Florescer 3, Emanador 2, Colosso 2, Primitiva (Primordial) 2, Fera do Rift 2, Caçador 1, Invocador 1. Só fecha com Grompe e Yorick, sem o Maokai.",
+    "Por isso Grompe e Yorick entram inferidos (1★, sem item): os prints não mostram as duas unidades. Confirmar com o Elton.",
+    "Sem posições: o refs/38.png é de combate (unidades espalhadas pela arena, sem grade). Preencher com a tela de preparação."
+   ]
+  },
+  "id": "seed-37",
+  "desde": 14,
+  "topo": true,
+  "abaixoDe": "seed-36"
+ },
+ {
   "nome": "Enfeitiçador 6",
   "estilo": "Nível 8",
   "nota": "Print em combate (6-2): sem posições. Unidades deduzidas do painel de traços (Enfeitiçador 6/6, Comunhão, Sabugueiro 3, Defendente 2, Espinhos Negros 2, Lutador 2, Flora Fatalis, Lunar, Congregação). Fechar 6 Enfeitiçadores exige 1 Emblema de Enfeitiçador em Ornn, Rek'Sai ou Alistar. Itens e estrelas só onde a identificação é segura.",
@@ -4377,4 +4502,4 @@ window.TFT_SEED = [
   "fasesDesde": 6
  }
 ];
-window.TFT_SEED_VERSION = 13;
+window.TFT_SEED_VERSION = 14;

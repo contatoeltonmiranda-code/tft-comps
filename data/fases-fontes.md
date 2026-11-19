@@ -156,4 +156,12 @@ Derivadas: a fonte não dá início/meio, então início = custo até 3 do próp
 
 Derivadas: o Short não dá início/meio, então início = custo até 3 do próprio board e meio = início + as unidades de custo 4 (Amumu, Sivir, Zyra). Link das dicas: `https://www.youtube.com/shorts/1Y8J0Sj7H6o`. O outro Short do pedido (qqmX_XJbOLQ, TOP 5) só tem comps que já existem (seed-29, 04, 14, 31, 15, 24).
 
+## Seed v14 (19/11/2026)
+
+| Seed | Comp do app | Origem | Comp da fonte | Jaccard | Início | Meio |
+|---|---|---|---|---|---|---|
+| seed-37 | Figurante Rank S | derivado | Prints do Elton (refs/36 a 38) | 0,42 (seed-18) | Yorick, Grompe, Kog'Maw, Master Yi, Vi | Yorick, Grompe, Kog'Maw, Master Yi, Vi, Azuporã, Nidalee |
+
+Derivadas: o print 37 (early) só mostra Grompe; início = custo até 3 do próprio board e meio = início + as unidades de custo 4 (Azuporã e Nidalee). Ashe e Maokai (custo 5) só no final. Sem link de dica (print do Elton).
+
 Dicas do vídeo (traduzidas e resumidas) ficam em `comp.dicas` no seed, com link do vídeo no minuto (`https://youtu.be/shtFyRruAHM?t=<s>`).
