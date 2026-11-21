@@ -1699,6 +1699,160 @@ window.TFT_SEED = [
   "abaixoDe": "seed-36"
  },
  {
+  "nome": "Sabugueiro Carrasco Alune",
+  "estilo": "Nível 9",
+  "nota": "Print do stream (refs/39.png), 7-2, nível 9, fase de preparação com as casas visíveis. Mesmo núcleo da seed-05 (Sabugueiro Carrasco Reroll) mais a Alune. Unidades lidas pelo sprite, estrelas pela barra e itens por match de pixels. Os traços não fecham: faltam 1 de Carrasco, 1 de Enfeitiçador e 1 de Fumegante. A unidade vermelha 2★ da casa 4,1 não foi identificada e ficou de fora.",
+  "fonte": "Print do Elton (stream, 7-2, nível 9) · refs/39.png",
+  "board": true,
+  "main": [
+   {
+    "c": "DA_18_Ezreal",
+    "s": 1,
+    "i": [
+     "DA_VoidStaff",
+     "DA_EdgeOfNight",
+     "DA_Deathblade"
+    ],
+    "a": [],
+    "p": [
+     3,
+     6
+    ]
+   },
+   {
+    "c": "DA_18_Alune",
+    "s": 2,
+    "i": [
+     "DA_Morellonomicon"
+    ],
+    "a": [],
+    "p": [
+     4,
+     5
+    ]
+   },
+   {
+    "c": "DA_18_Aphelios",
+    "s": 1,
+    "i": [
+     "DA_GiantSlayer",
+     "DA_Quicksilver",
+     "DA_18_EmblemExecutioner"
+    ],
+    "a": [],
+    "p": [
+     4,
+     7
+    ]
+   },
+   {
+    "c": "DA_18_KhaZix",
+    "s": 3,
+    "i": [
+     "DA_HandOfJustice",
+     "DA_RabadonsDeathcap",
+     "DA_EdgeOfNight"
+    ],
+    "a": [],
+    "p": [
+     1,
+     6
+    ]
+   },
+   {
+    "c": "DA_18_Diana",
+    "s": 1,
+    "i": [],
+    "a": [],
+    "p": [
+     2,
+     5
+    ]
+   },
+   {
+    "c": "DA_18_Hecarim",
+    "s": 3,
+    "i": [
+     "DA_Evenshroud",
+     "DA_BrambleVest",
+     "DA_Crownguard"
+    ],
+    "a": [],
+    "p": [
+     1,
+     5
+    ]
+   },
+   {
+    "c": "DA_Fiddlesticks18",
+    "s": 1,
+    "i": [
+     "DA_SunfireCape"
+    ],
+    "a": [],
+    "p": [
+     2,
+     4
+    ]
+   },
+   {
+    "c": "DA_18_Ornn",
+    "s": 1,
+    "i": [],
+    "a": [],
+    "p": [
+     3,
+     4
+    ]
+   },
+   {
+    "c": "DA_18_Soraka",
+    "s": 2,
+    "i": [],
+    "a": [],
+    "p": [
+     4,
+     6
+    ]
+   }
+  ],
+  "flex": [],
+  "fases": {
+   "inicio": [
+    "DA_18_Ornn",
+    "DA_Fiddlesticks18",
+    "DA_18_Diana",
+    "DA_18_Hecarim",
+    "DA_18_KhaZix"
+   ],
+   "meio": [
+    "DA_18_Ornn",
+    "DA_Fiddlesticks18",
+    "DA_18_Diana",
+    "DA_18_Hecarim",
+    "DA_18_KhaZix",
+    "DA_18_Soraka",
+    "DA_18_Ezreal"
+   ],
+   "origem": "derivado",
+   "ref": "Início = custo até 3 do board; meio = início + Soraka e Ezreal (custo 4)"
+  },
+  "dicas": {
+   "ref": "Print do Elton · refs/39.png (stream, 7-2)",
+   "linhas": [
+    "Preparação no nível 9, 9 unidades. Posições lidas das casas hexagonais: linha 1 = frente, linha 4 = fundo, colunas da esquerda para a direita.",
+    "É o núcleo da seed-05 (Ezreal, Soraka, Diana, Hecarim, Kha'Zix, Fiddlesticks, Ornn, Aphelios) mais a Alune. Kha'Zix com Mão da Justiça e Capuz como na seed-05.",
+    "Estrelas pelo ícone da barra: Hecarim e Kha'Zix 3★; Alune e Soraka 2★; o resto 1★. Itens por match de pixels (0,80 a 0,97, ícones de ~16 px); Emblema de Carrasco na Aphelios.",
+    "Painel do print: Carrasco 4, Flora Fatalis 2, Rival 1, Comunhão 1, Lunar 3, Enfeitiçador 3, Sabugueiro 3, Fumegante 2, Defendente 2, mais 2 ocultos (no app: Vanguarda 2, Devastador 1). Faltam 1 de Carrasco, Enfeitiçador e Fumegante.",
+    "Pendente: unidade vermelha 2★ na casa 4,1 (e outra igual na bancada). Pelo chat (\"comp da Yunara\") e pela soma pode ser a Yunara, mas não entrou. Menor confiança: Ornn (3,4), Alune (4,5) e Soraka (4,6)."
+   ]
+  },
+  "id": "seed-38",
+  "desde": 15,
+  "topo": true,
+  "abaixoDe": "seed-37"
+ },
+ {
   "nome": "Enfeitiçador 6",
   "estilo": "Nível 8",
   "nota": "Print em combate (6-2): sem posições. Unidades deduzidas do painel de traços (Enfeitiçador 6/6, Comunhão, Sabugueiro 3, Defendente 2, Espinhos Negros 2, Lutador 2, Flora Fatalis, Lunar, Congregação). Fechar 6 Enfeitiçadores exige 1 Emblema de Enfeitiçador em Ornn, Rek'Sai ou Alistar. Itens e estrelas só onde a identificação é segura.",
@@ -4502,4 +4656,4 @@ window.TFT_SEED = [
   "fasesDesde": 6
  }
 ];
-window.TFT_SEED_VERSION = 14;
+window.TFT_SEED_VERSION = 15;

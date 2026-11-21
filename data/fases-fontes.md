@@ -164,4 +164,12 @@ Derivadas: o Short não dá início/meio, então início = custo até 3 do próp
 
 Derivadas: o print 37 (early) só mostra Grompe; início = custo até 3 do próprio board e meio = início + as unidades de custo 4 (Azuporã e Nidalee). Ashe e Maokai (custo 5) só no final. Sem link de dica (print do Elton).
 
+## Seed v15 (20/11/2026)
+
+| Seed | Comp do app | Origem | Comp da fonte | Jaccard | Início | Meio |
+|---|---|---|---|---|---|---|
+| seed-38 | Sabugueiro Carrasco Alune | derivado | Print do Elton (refs/39) | 0,89 (seed-05) | Ornn, Fiddlesticks, Diana, Hecarim, Kha'Zix | Ornn, Fiddlesticks, Diana, Hecarim, Kha'Zix, Soraka, Ezreal |
+
+Derivadas: início = custo até 3 do board; meio = início + Soraka e Ezreal (custo 4; Aphelios fica de fora pelo limite de 7). Sem link (print do Elton).
+
 Dicas do vídeo (traduzidas e resumidas) ficam em `comp.dicas` no seed, com link do vídeo no minuto (`https://youtu.be/shtFyRruAHM?t=<s>`).

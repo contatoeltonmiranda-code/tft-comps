@@ -15,25 +15,25 @@ test('seed: ids unicos e todos os campeoes/itens existem no catalogo', () => {
   assert.equal(comps.length, SEED.length);
 });
 
-test('seed: 15 comps originais intactas (ids 01..15 sem desde), seed-16 desde 2, seed-17 desde 3, seed-18 desde 4, seed-19 desde 5, seed-20..24 desde 7, seed-25 desde 8, seed-26..27 desde 9, seed-28 desde 10, seed-29..32 desde 11 e seed-33..34 desde 12, seed-35..36 desde 13 e seed-37 desde 14 no topo', () => {
-  assert.equal(SEED.length, 37);
-  assert.deepEqual(SEED.slice(0, 13).map((c) => c.id), ['seed-25', 'seed-26', 'seed-27', 'seed-28', 'seed-29', 'seed-30', 'seed-31', 'seed-32', 'seed-33', 'seed-34', 'seed-35', 'seed-36', 'seed-37']);
+test('seed: 15 comps originais intactas (ids 01..15 sem desde), seed-16 desde 2, seed-17 desde 3, seed-18 desde 4, seed-19 desde 5, seed-20..24 desde 7, seed-25 desde 8, seed-26..27 desde 9, seed-28 desde 10, seed-29..32 desde 11 e seed-33..34 desde 12, seed-35..36 desde 13, seed-37 desde 14 e seed-38 desde 15 no topo', () => {
+  assert.equal(SEED.length, 38);
+  assert.deepEqual(SEED.slice(0, 14).map((c) => c.id), ['seed-25', 'seed-26', 'seed-27', 'seed-28', 'seed-29', 'seed-30', 'seed-31', 'seed-32', 'seed-33', 'seed-34', 'seed-35', 'seed-36', 'seed-37', 'seed-38']);
   const byId = (id) => SEED.find((c) => c.id === id);
   for (let i = 1; i <= 15; i++) assert.equal(byId('seed-' + String(i).padStart(2, '0')).desde, undefined);
   assert.equal(byId('seed-16').desde, 2);
-  assert.equal(SEED[13].id, 'seed-17');
-  assert.equal(SEED[13].desde, 3);
-  assert.equal(SEED[13].topo, true);
-  assert.equal(SEED[14].id, 'seed-18');
-  assert.equal(SEED[14].desde, 4);
+  assert.equal(SEED[14].id, 'seed-17');
+  assert.equal(SEED[14].desde, 3);
   assert.equal(SEED[14].topo, true);
-  assert.equal(SEED[14].abaixoDe, 'seed-17');
-  assert.equal(SEED[15].id, 'seed-19');
-  assert.equal(SEED[15].desde, 5);
+  assert.equal(SEED[15].id, 'seed-18');
+  assert.equal(SEED[15].desde, 4);
   assert.equal(SEED[15].topo, true);
-  assert.equal(SEED[15].abaixoDe, 'seed-18');
-  assert.equal(SEED.filter((c) => c.topo).length, 21);
-  assert.equal(window.TFT_SEED_VERSION, 14);
+  assert.equal(SEED[15].abaixoDe, 'seed-17');
+  assert.equal(SEED[16].id, 'seed-19');
+  assert.equal(SEED[16].desde, 5);
+  assert.equal(SEED[16].topo, true);
+  assert.equal(SEED[16].abaixoDe, 'seed-18');
+  assert.equal(SEED.filter((c) => c.topo).length, 22);
+  assert.equal(window.TFT_SEED_VERSION, 15);
 });
 
 test('seed-16 (print 14): tracos batem com o painel do print', () => {
